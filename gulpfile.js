@@ -12,8 +12,10 @@ const browserSync = require("browser-sync").create();
 
 const isDev = !process.env.NODE_ENV || process.env.NODE_ENV == "dev";
 
+const appDir = "./src/";
+
 gulp.task("styles", () => {
-  return gulp.src("./frontend/sass/app.sass")
+  return gulp.src(appDir + "sass/app.sass")
     .pipe(gulpIf(isDev, sourcemaps.init()))
     .pipe(sass({
       outputStyle: "compressed"
@@ -24,14 +26,14 @@ gulp.task("styles", () => {
 });
 
 gulp.task("images", () => {
-  return gulp.src("./frontend/images/*.*", {since: gulp.lastRun("images")})
+  return gulp.src(appDir + "images/*.*", {since: gulp.lastRun("images")})
     .pipe(newer("./public/images"))
     .pipe(debug({title: "images"}))
     .pipe(gulp.dest("./public/images"));
 });
 
 gulp.task("templates", () => {
-  return gulp.src("./frontend/templates/*.*", {since: gulp.lastRun("templates")})
+  return gulp.src(appDir + "templates/*.*", {since: gulp.lastRun("templates")})
     .pipe(newer("./public/templates"))
     .pipe(debug({title: "templates"}))
     .pipe(gulp.dest("./public"));
@@ -47,9 +49,9 @@ gulp.task("build", gulp.series(
 ));
 
 gulp.task("watch", () => {
-  gulp.watch("./frontend/sass/*.sass", gulp.series("styles"));
-  gulp.watch("./frontend/images/*.*", gulp.series("images"));
-  gulp.watch("./frontend/templates/*.*", gulp.series("templates"));
+  gulp.watch(appDir + "sass/*.sass", gulp.series("styles"));
+  gulp.watch(appDir + "images/*.*", gulp.series("images"));
+  gulp.watch(appDir + "templates/*.*", gulp.series("templates"));
 });
 
 gulp.task("serve", () => {
