@@ -32,12 +32,12 @@ gulp.task("images", () => {
     .pipe(gulp.dest("./public/images"));
 });
 
-gulp.task("templates", () => {
-  return gulp.src(appDir + "templates/*.*", {since: gulp.lastRun("templates")})
-    .pipe(newer("./public/templates"))
-    .pipe(debug({title: "templates"}))
-    .pipe(gulp.dest("./public"));
-});
+// gulp.task("templates", () => {
+//   return gulp.src(appDir + "templates/*.*", {since: gulp.lastRun("templates")})
+//     .pipe(newer("./public/templates"))
+//     .pipe(debug({title: "templates"}))
+//     .pipe(gulp.dest("./public"));
+// });
 
 gulp.task("clean", () => {
   return del("./public");
@@ -45,13 +45,14 @@ gulp.task("clean", () => {
 
 gulp.task("build", gulp.series(
   "clean",
-  gulp.parallel("styles", "images", "templates")
+  gulp.parallel("styles", "images")
+  // gulp.parallel("styles", "images", "templates")
 ));
 
 gulp.task("watch", () => {
   gulp.watch(appDir + "sass/*.sass", gulp.series("styles"));
   gulp.watch(appDir + "images/*.*", gulp.series("images"));
-  gulp.watch(appDir + "templates/*.*", gulp.series("templates"));
+  // gulp.watch(appDir + "templates/*.*", gulp.series("templates"));
 });
 
 gulp.task("serve", () => {
