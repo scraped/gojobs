@@ -26,26 +26,26 @@
               </div>
               <div class="media-right">
                 <figure class="image is-48x48" style="background: rgb(213, 180, 99);">
-                  <img src="images/prize-bronze.png" alt="Image">
+                  <img src="images/prize-{{Content.Metadata.creatorMedal}}.png" alt="Image">
                 </figure>
               </div>
             </div>
 
             <div class="content">
               <p>
-                <span class="tag is-info">PC</span>
-                <span class="tag is-warning">Rating 55%</span>
-                <span class="tag">Last Team Standing</span>
+                <span class="tag is-info">{{Content.Metadata.plat}}</span>
+                <span class="tag is-warning">Rating {{Content.ratings.avg}}</span>
+                <span class="tag">{{Content.Metadata.data.mission.gen.type}} - {{Content.Metadata.data.mission.gen.mode}}</span>
               </p>
-              <p>Updated: Jul-21-2017 02:00:15 (version 149)</p>
+              <p>Updated: {{Content.Metadata.cdate}} (version {{Content.Metadata.ver}})</p>
               <p><small></small></p>
               <p><a class="button is-small">Add to bookmarks</a></p>
             </div>
           </div>
           <footer class="card-footer">
-            <div class="card-footer-item">🎮 16097</div>
-            <div class="card-footer-item">👍 4204</div>
-            <div class="card-footer-item">👎 3499</div>
+            <div class="card-footer-item">🎮 {{Content.stats.pt}}</div>
+            <div class="card-footer-item">👍 {{Content.ratings.rt_pos}}</div>
+            <div class="card-footer-item">👎 {{Content.ratings.rt_neg}}</div>
           </footer>
         </div>
       </div>
