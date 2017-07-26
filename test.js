@@ -1,34 +1,56 @@
 const request = require("request");
 
-// $heads = array(
-//   "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-//   "Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4",
-//   "Origin: https://ru.socialclub.rockstargames.com",
-//   "Referer: https://ru.socialclub.rockstargames.com/",
-//   "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36"
-// );
-
-// $ch = curl_init();
-
-// curl_setopt($ch, CURLOPT_URL, "https://ru.socialclub.rockstargames.com/");
-// curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-// curl_setopt($ch, CURLOPT_HTTPHEADER, $heads);
-// curl_setopt($ch, CURLOPT_HEADER, true);
-
-let options = {
+let options1 = {
   url: "https://ru.socialclub.rockstargames.com/",
-  method: "GET",
   headers: {
     "Accept-Language": "ru-RU,ru",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36"
   }
 };
 
-request(options, (err, res, body) => {
-  // console.log("*** ERROR:", err);
-  // console.log("*** STATUS CODE:", res && res.statusCode);
-  console.log("*** BODY:", body);
-  console.log("Код:", res && res.statusCode);
+let options2 = {
+  url: "https://ru.socialclub.rockstargames.com/games/gtav/pc/jobs/",
+  headers: {
+    "Accept-Language": "ru-RU,ru",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36"
+  }
+}
+
+let options3 = {
+  url: "https://socialclub.rockstargames.com/games/gtav/ajax/search",
+  method: "POST",
+  headers: {
+    "Accept-Language": "ru-RU,ru",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36",
+    "X-Requested-With": "XMLHttpRequest"
+  },
+  formData: {
+    "onlyCount": "false",
+    "offset": 0,
+    "SearchOptSubType": "",
+    "SearchOptPublisher": "members",
+    "SearchOptDate":"today",
+    "SearchOptSort":"Liked",
+    "SearchOptPlayers":"",
+    "SearchText":""
+  }
+}
+
+request(options1, (err, res, body) => {
+  let cookies = res.headers["set-cookie"];
+  cookies["RSWSID"] = cookies[1].match(/=([^;]*)/)[1]; // RockStarWebSessionId
+  cookies["CSRFToken"] = cookies[2].match(/=([^;]*)/)[1]; // CSRFToken
+  cookies["prod"] = cookies[3].match(/=([^;]*)/)[1]; // prod
+
+  options2.headers.Cookie = "UAGD=1/1/1990; UAGC=1; gtav_jobsview=cols; CSRFToken=" + cookies["CSRFToken"] + "; prod=" + cookies["prod"] + "; RockStarWebSessionId=" + cookies["RSWSID"] + ";";
+
+  request(options2, (err2, res2, body2) => {
+    let token = body2.match(/value="([a-zA-Z0-9_-]*)" \/>\s*<\/div/mi);
+    options3.headers.Cookie = options2.headers.Cookie;
+    options3.headers.RequestVerificationToken = token[1];
+
+    request(options3, (err3, res3, body3) => {
+      console.log(body3);
+    });
+  });
 });
