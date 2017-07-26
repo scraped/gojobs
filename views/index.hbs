@@ -1,54 +1,73 @@
 <div class="container">
-  <div class="columns is-multiline">
-    {{#each jobs}}
-      <div class="column is-half-tablet is-one-third-desktop">
-        <div class="card">
-          <div class="card-image">
-            <figure class="image is-2by1" style="background: #e1e1e1;">
-              <img src="{{Content.Metadata.thumbnail}}" alt="Job image">
-            </figure>
-          </div>
+  <h1 class="title is-4">
+    GTA Online Jobs Search
+  </h1>
+  <h2 class="title is-5">
+    Platform
+  </h2>
+  <p>
+    <span class="tag is-primary is-medium">
+      <img src="/images/PC.png"> PC
+    </span>
 
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-48x48">
-                  <img src="https://a.rsg.sc/{{Content.Metadata.avatar}}" alt="Author avatar">
-                </figure>
-              </div>
-              <div class="media-content" style="width: 1px;">
-                <p class="title is-5 cut">
-                  <a href="https://socialclub.rockstargames.com/games/gtav/pc/jobs/job/{{MissionId}}">
-                    {{Content.Metadata.name}}
-                  </a>
-                </p>
-                <p class="subtitle is-6">@{{Content.Metadata.nickname}} <span style="border-bottom: 1px solid #fa1212">&lt;{{Content.Metadata.crewtag}}&gt;</span></p>
-              </div>
-              <div class="media-right">
-                <figure class="image is-48x48" style="background: rgb(213, 180, 99);">
-                  <img src="images/prize-{{Content.Metadata.creatorMedal}}.png" alt="Image">
-                </figure>
-              </div>
-            </div>
+    <span class="tag is-medium">
+      <img src="/images/Ps4_.png"> PS4
+    </span>
 
-            <div class="content">
-              <p>
-                <span class="tag is-info">{{Content.Metadata.plat}}</span>
-                <span class="tag is-warning">Rating {{Content.ratings.avg}}</span>
-                <span class="tag">{{Content.Metadata.data.mission.gen.type}} - {{Content.Metadata.data.mission.gen.mode}}</span>
-              </p>
-              <p>Updated: {{Content.Metadata.cdate}} (version {{Content.Metadata.ver}})</p>
-              <p><small></small></p>
-              <p><a class="button is-small">Add to bookmarks</a></p>
-            </div>
-          </div>
-          <footer class="card-footer">
-            <div class="card-footer-item">🎮 {{Content.stats.pt}}</div>
-            <div class="card-footer-item">👍 {{Content.ratings.rt_pos}}</div>
-            <div class="card-footer-item">👎 {{Content.ratings.rt_neg}}</div>
-          </footer>
-        </div>
-      </div>
-    {{/each}}
-  </div>
+    <span class="tag is-medium">
+      <img src="/images/XBoxOne_.png"> Xbox One
+    </span>
+
+    <span class="tag is-medium is-white">
+      • • •
+    </span>
+  </p><br>
+  <h2 class="title is-5">
+    What do you prefer?
+  </h2>
+  {{!-- 1) Противостояние (только R*)
+2) Противоборство (только R*)
+3) Перестрелка
+	Перестрелка
+	Командный бой
+	Автоперестрелка (вообще только R*, но делают багами)
+4) Выживание (только R*)
+5) Захват (подтипы невозможно узнать у пользовательских дел!)
+	Рейд
+	Налёт
+	GTA
+	Перехват
+6) КУ
+7) Парашютизм (только R*, то, что сделано багами - в это не играют на PC)
+8) Гонка --}}
+
+  <p>
+    <span class="tag is-primary is-medium">
+      All
+    </span>
+
+    <span class="tag is-medium is-dark">
+      Race
+    </span>
+
+    <span class="tag is-medium is-dark">
+      Deathmatch
+    </span>
+
+    <span class="tag is-medium is-dark">
+      Last Team Standing
+    </span>
+
+    <span class="tag is-medium is-dark">
+      Capture
+    </span>
+
+    <span class="tag is-medium is-white">
+      • • •
+    </span>
+  </p>
+
+  <section class="section">
+    {{> jobs}}
+  </section>
 </div>

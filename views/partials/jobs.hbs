@@ -1,0 +1,66 @@
+<div class="columns is-multiline">
+  {{#each partials.jobsContext.Missions}}
+    <div class="column is-half-tablet is-one-third-desktop">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-2by1" style="background: #e1e1e1;">
+            <img src="{{Content.Metadata.thumbnail}}" alt="Job image">
+          </figure>
+        </div>
+
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img src="https://a.rsg.sc/{{Content.Metadata.avatar}}" alt="Author avatar">
+              </figure>
+            </div>
+            <div class="media-content" style="width: 1px;">
+              <p class="title is-5 cut">
+                <a href="https://socialclub.rockstargames.com/games/gtav/pc/jobs/job/{{MissionId}}">
+                  {{! Do not escape special characters! }}
+                  {{{Content.Metadata.name}}}
+                </a>
+              </p>
+              <p class="subtitle is-6">@{{Content.Metadata.nickname}}
+                {{#if Content.Metadata.crewtag}}
+                  <span style="border-bottom: 1px solid {{Content.Metadata.crewcolor}}">&lt;{{Content.Metadata.crewtag}}&gt;</span>
+                {{/if}}
+              </p>
+            </div>
+            <div class="media-right">
+              <figure class="image is-48x48" style="background: rgb(213, 180, 99);">
+                <img src="images/prize-{{Content.Metadata.creatorMedal}}.png" alt="Image">
+              </figure>
+            </div>
+          </div>
+
+          <div class="content">
+            <p>
+              <span class="tag is-info">
+                <img src="/images/{{Content.Metadata.plat}}.png" width="16" height="16"> {{Content.Metadata.plat}}
+              </span>
+              <span class="tag is-warning">
+                <img src="/images/like.png" width="16" height="16"> Rating {{Content.ratings.avg}}
+              </span>
+              <span class="tag is-dark">
+                {{Content.Metadata.data.mission.gen.type}}
+              </span>
+            </p>
+            <p>
+              <span class="tag">{{Content.Metadata.data.mission.gen.mode}}</span>
+            </p>
+            <p>Updated: {{Content.Metadata.cdate}} (version {{Content.Metadata.ver}})</p>
+            <p><small></small></p>
+            <p><a class="button is-small">Add to bookmarks</a></p>
+          </div>
+        </div>
+        <footer class="card-footer">
+          <div class="card-footer-item">🎮 {{Content.stats.pt}}</div>
+          <div class="card-footer-item">👍 {{Content.ratings.rt_pos}}</div>
+          <div class="card-footer-item">👎 {{Content.ratings.rt_neg}}</div>
+        </footer>
+      </div>
+    </div>
+  {{/each}}
+</div>
