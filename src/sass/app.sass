@@ -6,6 +6,33 @@
   overflow: hidden
   text-overflow: ellipsis
 
+// Card image
+
+.job-icon
+  position: absolute
+  top: 7px
+  right: 7px
+  z-index: 100
+  border-radius: 3px
+  padding-right: 5px
+  padding-left: 9px
+  transition: all 0.3s
+  opacity: 0.75
+  color: #ffffff
+  vertical-align: middle
+  cursor: default
+  img
+    user-select: none
+  .job-icon-type
+    opacity: 0
+  &:hover
+    background: rgba(0, 0, 0, 0.3)
+    opacity: 1
+    .job-icon-type
+      opacity: 1
+
+// Footer
+
 .footer
   background: $grey-darker
   .title, p

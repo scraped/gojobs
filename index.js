@@ -1,7 +1,15 @@
 const express = require("express");
 const hbars = require("express-handlebars").create({
   defaultLayout: "main",
-  extname: ".hbs"
+  extname: ".hbs",
+  helpers: {
+    capitalize: str => str.toUpperCase(),
+    ratingTagColor: rating => {
+      return (rating >= 67) ? "success" :
+             (rating >= 34) ? "warning" :
+             "danger";
+    }
+  }
 });
 const app = express();
 
@@ -19,37 +27,41 @@ app.set("port", process.env.PORT || 3000);
 
 // BD
 
-Jobs.find((err, jobs) => {
-  if (err) {
-    return console.error(err);
-  }
+// Jobs.find((err, jobs) => {
+//   if (err) {
+//     return console.error(err);
+//   }
 
-  if (jobs.length) {
-    return;
-  }
+//   // if (jobs.length) {
+//   //   console.log("a");
+//   //   return;
+//   // }
 
-  new Jobs({
-    name: "Работа 1",
-    desc: "Описание работы 1",
-    author: "andreww",
-    rating: 80
-  }).save();
+//   new Jobs({
+//     name: "Работа 1",
+//     desc: "Описание работы 1",
+//     author: "andreww",
+//     rating: 80,
+//     a: 1
+//   }).save();
 
-  new Jobs({
-    name: "Работа 2",
-    desc: "Описание работы 2",
-    author: "andreww",
-    rating: 60
-  }).save();
+//   new Jobs({
+//     name: "Работа 2",
+//     desc: "Описание работы 2",
+//     author: "andreww",
+//     rating: 60,
+//     a: 2
+//   }).save();
 
-  new Jobs({
-    name: "Работа 3",
-    desc: "Описание работы 3",
-    author: "wefgwgf",
-    rating: 30
-  }).save();
+//   new Jobs({
+//     name: "Работа 3",
+//     desc: "Описание работы 3",
+//     author: "wefgwgf",
+//     rating: 30,
+//     a: 3
+//   }).save();
 
-});
+// });
 
 // FILES
 
@@ -68,7 +80,7 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-// STATICS
+// Static files
 
 app.use(express.static("public"));
 

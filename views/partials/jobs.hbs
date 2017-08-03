@@ -1,8 +1,14 @@
-<div class="columns is-multiline">
+<div class="columns is-multiline" id="jobs">
   {{#each partials.jobsContext.Missions}}
     <div class="column is-half-tablet is-one-third-desktop">
       <div class="card">
-        <div class="card-image">
+        <div class="card-image" style="position: relative;">
+          <div class="job-icon">
+            <span class="job-icon-type">
+              Game mode: {{Content.Metadata.data.mission.gen.type}}
+            </span>
+            <img src="/images/job-race-white.png" width="32" height="32" style="vertical-align: middle">
+          </div>
           <figure class="image is-2by1" style="background: #e1e1e1;">
             <img src="{{Content.Metadata.thumbnail}}" alt="Job image">
           </figure>
@@ -18,41 +24,56 @@
             <div class="media-content" style="width: 1px;">
               <p class="title is-5 cut">
                 <a href="https://socialclub.rockstargames.com/games/gtav/pc/jobs/job/{{MissionId}}">
-                  {{! Do not escape special characters! }}
                   {{{Content.Metadata.name}}}
                 </a>
               </p>
-              <p class="subtitle is-6">@{{Content.Metadata.nickname}}
+              <p class="subtitle is-6">
+                <img src="/images/circle-{{Content.Metadata.creatorMedal}}.png" width="8" height="8">
+                @{{Content.Metadata.nickname}}
                 {{#if Content.Metadata.crewtag}}
-                  <span style="border-bottom: 1px solid {{Content.Metadata.crewcolor}}">&lt;{{Content.Metadata.crewtag}}&gt;</span>
+                  <span class="tag is-white" style="margin-left: 4px; border: 1px solid {{Content.Metadata.crewcolor}}">{{capitalize Content.Metadata.crewtag}}</span>
                 {{/if}}
               </p>
-            </div>
-            <div class="media-right">
-              <figure class="image is-48x48" style="background: rgb(213, 180, 99);">
-                <img src="images/prize-{{Content.Metadata.creatorMedal}}.png" alt="Image">
-              </figure>
             </div>
           </div>
 
           <div class="content">
-            <p>
-              <span class="tag is-info">
-                <img src="/images/{{Content.Metadata.plat}}.png" width="16" height="16"> {{Content.Metadata.plat}}
-              </span>
-              <span class="tag is-warning">
-                <img src="/images/like.png" width="16" height="16"> Rating {{Content.ratings.avg}}
-              </span>
-              <span class="tag is-dark">
-                {{Content.Metadata.data.mission.gen.type}}
-              </span>
+            <div class="tags">
+              <span class="tag">Rally</span>
+            </div>
+
+            <div class="field is-grouped is-grouped-multiline">
+              <div class="control">
+                <div class="tags">
+                  <span class="tag is-primary">
+                    <img src="/images/{{Content.Metadata.plat}}.png" style="margin-right: 4px">
+                    {{Content.Metadata.plat}}
+                  </span>
+                </div>
+              </div>
+              <div class="control">
+                <div class="tags has-addons">
+                  <span class="tag is-dark">Version</span>
+                  <span class="tag is-info">{{Content.Metadata.ver}}</span>
+                </div>
+              </div>
+              <div class="control">
+                <div class="tags has-addons">
+                  <span class="tag is-dark">Rating</span>
+                  <span class="tag is-{{ratingTagColor Content.ratings.avg}}">{{Content.ratings.avg}}%</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="field">
+              <small><i>
+              Updated {{Content.Metadata.cdate}}
+              </i></small>
             </p>
-            <p>
-              <span class="tag">{{Content.Metadata.data.mission.gen.mode}}</span>
+
+            <p class="field">
+              <a class="button is-light is-shadowless" data-added="0" style="width: 100%">Add to bookmarks</a>
             </p>
-            <p>Updated: {{Content.Metadata.cdate}} (version {{Content.Metadata.ver}})</p>
-            <p><small></small></p>
-            <p><a class="button is-small">Add to bookmarks</a></p>
           </div>
         </div>
         <footer class="card-footer">

@@ -8,8 +8,7 @@ let jobsProcessed = 0;
 schedule.scheduleJob("0 * * * * *", () => {
   const date = new Date();
   const currentDate = date.getDate() + "-" + (date.getMonth() + 1) + "-"
-    + date.getFullYear() + "_" + date.getHours() + "-" + date.getMinutes()
-    + "-" + date.getSeconds();
+    + date.getFullYear() + "_" + date.getHours() + "-" + date.getMinutes();
   const resFilename = "./response/" + currentDate + ".json";
 
   let options = {
@@ -25,7 +24,7 @@ schedule.scheduleJob("0 * * * * *", () => {
     "offset": jobsProcessed,
     "SearchOptSubType": "",
     "SearchOptPublisher": "members",
-    "SearchOptDate":"today",
+    "SearchOptDate":"last7",
     "SearchOptSort":"Liked",
     "SearchOptPlayers":"",
     "SearchText":""
