@@ -1,12 +1,23 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-module.exports = mongoose.model("Jobs", mongoose.Schema({
+module.exports = mongoose.model("Job", new Schema({
   jobID:    String,
+  category: Number,
   name:     String,
   desc:     String,
   image:    String,
-  gamemode: Number,
   platform: Number,
+
+  info: {
+    mode:       Number,
+    submode:    Number,
+    minlvl:     Number,
+    minplayers: Number,
+    maxplayers: Number,
+  },
+
+  details: Schema.Types.Mixed,
 
   creator: {
     nickname: String,
@@ -35,6 +46,4 @@ module.exports = mongoose.model("Jobs", mongoose.Schema({
     date:    Date,
     version: Number
   },
-
-
 }));

@@ -3,7 +3,8 @@ const hbars = require("express-handlebars").create({
   defaultLayout: "main",
   extname: ".hbs",
   helpers: {
-    capitalize: str => str.toUpperCase(),
+    upperCase: str => str.toUpperCase(),
+    lowerCase: str => str.toLowerCase(),
     ratingTagColor: rating => {
       return (rating >= 67) ? "success" :
              (rating >= 34) ? "warning" :
@@ -17,27 +18,33 @@ const mongoose = require("mongoose");
 mongoose.connect("mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs", {
   useMongoClient: true,
 });
-const Jobs = require("./models/jobs.js");
+const Job = require("./models/job.js");
 
 app.engine(".hbs", hbars.engine);
 
 app.set("view engine", ".hbs");
 app.set("port", process.env.PORT || 3000);
 
-let jobs = require("./response-example.json");
+// Промежуточное ПО
 
-app.use((req, res, next) => {
+function getJobs(req, res, next) {
   if (!res.locals.partials) {
     res.locals.partials = {};
   }
 
-  res.locals.partials.jobsContext = jobs;
-  next();
-});
+  Job.find((err, response) => {
+    if (err) {
+      console.error(err);
+    }
+
+    res.locals.partials.jobsContext = response;
+    next();
+  });
+}
 
 // Main page
 
-app.get("/", (req, res) => {
+app.get("/", getJobs, (req, res) => {
   res.render("index");
 });
 

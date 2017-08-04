@@ -1,16 +1,16 @@
 <div class="columns is-multiline" id="jobs">
-  {{#each partials.jobsContext.Missions}}
+  {{#each partials.jobsContext}}
     <div class="column is-half-tablet is-one-third-desktop">
       <div class="card">
         <div class="card-image" style="position: relative;">
           <div class="job-icon">
             <span class="job-icon-type">
-              Game mode: {{Content.Metadata.data.mission.gen.type}}
+              Game mode: {{info.mode}}
             </span>
-            <img src="/images/job-race-white.png" width="32" height="32" style="vertical-align: middle">
+            <img src="/images/{{info.submode}}-white.png" width="32" height="32" style="vertical-align: middle">
           </div>
           <figure class="image is-2by1" style="background: #e1e1e1;">
-            <img src="{{Content.Metadata.thumbnail}}" alt="Job image">
+            <img src="{{image}}" alt="Job image">
           </figure>
         </div>
 
@@ -18,20 +18,20 @@
           <div class="media">
             <div class="media-left">
               <figure class="image is-48x48">
-                <img src="https://a.rsg.sc/{{Content.Metadata.avatar}}" alt="Author avatar">
+                <img src="https://a.rsg.sc/n/{{lowerCase creator.nickname}}/s" alt="Author avatar">
               </figure>
             </div>
             <div class="media-content" style="width: 1px;">
               <p class="title is-5 cut">
                 <a href="https://socialclub.rockstargames.com/games/gtav/pc/jobs/job/{{MissionId}}">
-                  {{{Content.Metadata.name}}}
+                  {{{name}}}
                 </a>
               </p>
               <p class="subtitle is-6">
-                <img src="/images/circle-{{Content.Metadata.creatorMedal}}.png" width="8" height="8">
-                @{{Content.Metadata.nickname}}
-                {{#if Content.Metadata.crewtag}}
-                  <span class="tag is-white" style="margin-left: 4px; border: 1px solid {{Content.Metadata.crewcolor}}">{{capitalize Content.Metadata.crewtag}}</span>
+                <img src="/images/circle-{{creator.medal}}.png" width="8" height="8">
+                @{{creator.nickname}}
+                {{#if creator.crew}}
+                  <span class="tag is-white" style="margin-left: 4px; border: 1px solid #{{creator.crew.color}}">{{upperCase creator.crew.tag}}</span>
                 {{/if}}
               </p>
             </div>
@@ -39,35 +39,35 @@
 
           <div class="content">
             <div class="tags">
-              <span class="tag">Rally</span>
+              <span class="tag">{{Content.Metadata.data.mission.gen.mode}}</span>
             </div>
 
             <div class="field is-grouped is-grouped-multiline">
               <div class="control">
                 <div class="tags">
                   <span class="tag is-primary">
-                    <img src="/images/{{Content.Metadata.plat}}.png" style="margin-right: 4px">
-                    {{Content.Metadata.plat}}
+                    <img src="/images/plat-{{platform}}-white.png" style="margin-right: 4px">
+                    {{platform}}
                   </span>
                 </div>
               </div>
               <div class="control">
                 <div class="tags has-addons">
                   <span class="tag is-dark">Version</span>
-                  <span class="tag is-info">{{Content.Metadata.ver}}</span>
+                  <span class="tag is-info">{{updated.version}}</span>
                 </div>
               </div>
               <div class="control">
                 <div class="tags has-addons">
                   <span class="tag is-dark">Rating</span>
-                  <span class="tag is-{{ratingTagColor Content.ratings.avg}}">{{Content.ratings.avg}}%</span>
+                  <span class="tag is-{{ratingTagColor ratings.rating}}">{{ratings.rating}}%</span>
                 </div>
               </div>
             </div>
 
             <p class="field">
               <small><i>
-              Updated {{Content.Metadata.cdate}}
+              Updated {{updated.date}}
               </i></small>
             </p>
 
@@ -77,9 +77,9 @@
           </div>
         </div>
         <footer class="card-footer">
-          <div class="card-footer-item">🎮 {{Content.stats.pt}}</div>
-          <div class="card-footer-item">👍 {{Content.ratings.rt_pos}}</div>
-          <div class="card-footer-item">👎 {{Content.ratings.rt_neg}}</div>
+          <div class="card-footer-item">🎮 {{ratings.playedTotal}}</div>
+          <div class="card-footer-item">👍 {{ratings.likes}}</div>
+          <div class="card-footer-item">👎 {{ratings.dislikes}}</div>
         </footer>
       </div>
     </div>
