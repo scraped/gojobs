@@ -8,15 +8,14 @@ const hbars = require("express-handlebars").create({
       return (rating >= 67) ? "success" :
              (rating >= 34) ? "warning" :
              "danger";
-    }
-  }
+    },
+  },
 });
 const app = express();
 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs", {
   useMongoClient: true,
-  /* other options */
 });
 const Jobs = require("./models/jobs.js");
 
@@ -24,46 +23,6 @@ app.engine(".hbs", hbars.engine);
 
 app.set("view engine", ".hbs");
 app.set("port", process.env.PORT || 3000);
-
-// BD
-
-// Jobs.find((err, jobs) => {
-//   if (err) {
-//     return console.error(err);
-//   }
-
-//   // if (jobs.length) {
-//   //   console.log("a");
-//   //   return;
-//   // }
-
-//   new Jobs({
-//     name: "Работа 1",
-//     desc: "Описание работы 1",
-//     author: "andreww",
-//     rating: 80,
-//     a: 1
-//   }).save();
-
-//   new Jobs({
-//     name: "Работа 2",
-//     desc: "Описание работы 2",
-//     author: "andreww",
-//     rating: 60,
-//     a: 2
-//   }).save();
-
-//   new Jobs({
-//     name: "Работа 3",
-//     desc: "Описание работы 3",
-//     author: "wefgwgf",
-//     rating: 30,
-//     a: 3
-//   }).save();
-
-// });
-
-// FILES
 
 let jobs = require("./response-example.json");
 
@@ -75,6 +34,8 @@ app.use((req, res, next) => {
   res.locals.partials.jobsContext = jobs;
   next();
 });
+
+// Main page
 
 app.get("/", (req, res) => {
   res.render("index");
