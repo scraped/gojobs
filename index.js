@@ -1,3 +1,4 @@
+const moment = require("moment");
 const express = require("express");
 const hbars = require("express-handlebars").create({
   defaultLayout: "main",
@@ -5,11 +6,6 @@ const hbars = require("express-handlebars").create({
   helpers: {
     upperCase: str => str.toUpperCase(),
     lowerCase: str => str.toLowerCase(),
-    ratingTagColor: rating => {
-      return (rating >= 67) ? "success" :
-             (rating >= 34) ? "warning" :
-             "danger";
-    },
   },
 });
 const app = express();
@@ -25,19 +21,29 @@ app.engine(".hbs", hbars.engine);
 app.set("view engine", ".hbs");
 app.set("port", process.env.PORT || 3000);
 
-// Промежуточное ПО
-
 function getJobs(req, res, next) {
   if (!res.locals.partials) {
     res.locals.partials = {};
   }
 
-  Job.find((err, response) => {
+  Job.find((err, jobs) => {
     if (err) {
       console.error(err);
     }
 
-    res.locals.partials.jobsContext = response;
+    jobs = jobs.map(job => {
+      job.info.submodeName = job.getSubmodeName();
+      job.platformName = job.getPlatformName();
+      job.ratings.ratingColor = job.getRatingColor();
+      job.updated.dateString = moment(job.updated.date).fromNow();
+
+      if (!job.tags) job.tags = {};
+      if (job.category == 1) job.tags.verified = true;
+      if (job.category == 2) job.tags.rockstar = true;
+      return job;
+    });
+
+    res.locals.partials.jobsContext = jobs;
     next();
   });
 }
@@ -46,6 +52,14 @@ function getJobs(req, res, next) {
 
 app.get("/", getJobs, (req, res) => {
   res.render("index");
+});
+
+// Job page
+
+app.get("/job/:id", (req, res) => {
+  res.render("job", {
+    id: req.params.id
+  });
 });
 
 // Static files

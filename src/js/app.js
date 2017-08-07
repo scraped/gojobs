@@ -21,7 +21,7 @@ document.getElementById("jobs").onclick = (e) => {
 
     if (target.dataset.added == "0") {
       target.dataset.added = "1";
-      target.innerHTML = '<img src="/images/delete.png" style="margin-right: 4px"> Remove from bookmarks';
+      target.innerHTML = '<img src="/images/star.png" style="margin-right: 4px"> In your bookmarks';
     } else {
       target.dataset.added = "0";
       target.innerHTML = 'Add to bookmarks';

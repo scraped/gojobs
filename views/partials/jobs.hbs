@@ -3,12 +3,25 @@
     <div class="column is-half-tablet is-one-third-desktop">
       <div class="card">
         <div class="card-image" style="position: relative;">
-          <div class="job-icon">
-            <span class="job-icon-type">
-              Game mode: {{info.mode}}
+          <div class="job-info job-info-right">
+            <span>
+              {{info.submodeName}}
             </span>
-            <img src="/images/{{info.submode}}-white.png" width="32" height="32" style="vertical-align: middle">
+            <img src="/images/{{info.submode}}-white.png" width="24" height="24">
           </div>
+          {{#if category}}
+            <div class="job-info job-info-left job-{{category}}">
+              <img src="/images/rockstar.png" width="24" height="24">
+              <span class="job-icon-type">
+                {{#if tags.verified}}
+                  Rockstar Verified Job
+                {{/if}}
+                {{#if tags.rockstar}}
+                  Rockstar Job
+                {{/if}}
+              </span>
+            </div>
+          {{/if}}
           <figure class="image is-2by1" style="background: #e1e1e1;">
             <img src="{{image}}" alt="Job image">
           </figure>
@@ -23,15 +36,24 @@
             </div>
             <div class="media-content" style="width: 1px;">
               <p class="title is-5 cut">
-                <a href="https://socialclub.rockstargames.com/games/gtav/pc/jobs/job/{{MissionId}}">
+                <a href="https://socialclub.rockstargames.com/games/gtav/pc/jobs/job/{{jobID}}">
                   {{{name}}}
                 </a>
               </p>
               <p class="subtitle is-6">
-                <img src="/images/circle-{{creator.medal}}.png" width="8" height="8">
-                @{{creator.nickname}}
-                {{#if creator.crew}}
-                  <span class="tag is-white" style="margin-left: 4px; border: 1px solid #{{creator.crew.color}}">{{upperCase creator.crew.tag}}</span>
+                {{#if creator.nickname}}
+                  <img src="/images/circle-{{creator.medal}}.png" width="8" height="8">
+                  @{{creator.nickname}}
+                {{else}}
+                  {{#if tags.verified}}
+                    Rockstar Verified Job
+                  {{/if}}
+                  {{#if tags.rockstar}}
+                    Rockstar Job
+                  {{/if}}
+                {{/if}}
+                {{#if creator.crew.tag}}
+                  <span class="tag is-white" style="margin-left: 4px; border: 1px solid #{{creator.crew.color}}">{{creator.crew.tag}}</span>
                 {{/if}}
               </p>
             </div>
@@ -39,40 +61,47 @@
 
           <div class="content">
             <div class="tags">
-              <span class="tag">{{Content.Metadata.data.mission.gen.mode}}</span>
             </div>
 
             <div class="field is-grouped is-grouped-multiline">
               <div class="control">
                 <div class="tags">
                   <span class="tag is-primary">
-                    <img src="/images/plat-{{platform}}-white.png" style="margin-right: 4px">
-                    {{platform}}
+                    {{#if category}}
+                      All platforms
+                    {{else}}
+                      <img src="/images/plat-{{platform}}-white.png" style="margin-right: 4px">
+                      {{platformName}}
+                    {{/if}}
                   </span>
                 </div>
               </div>
+              {{#unless category}}
               <div class="control">
                 <div class="tags has-addons">
                   <span class="tag is-dark">Version</span>
                   <span class="tag is-info">{{updated.version}}</span>
                 </div>
               </div>
+              {{/unless}}
               <div class="control">
                 <div class="tags has-addons">
                   <span class="tag is-dark">Rating</span>
-                  <span class="tag is-{{ratingTagColor ratings.rating}}">{{ratings.rating}}%</span>
+                  <span class="tag is-{{ratings.ratingColor}}">{{ratings.rating}}%</span>
                 </div>
               </div>
             </div>
 
             <p class="field">
               <small><i>
-              Updated {{updated.date}}
+              Updated {{updated.dateString}}
               </i></small>
             </p>
 
             <p class="field">
-              <a class="button is-light is-shadowless" data-added="0" style="width: 100%">Add to bookmarks</a>
+              <a class="button is-small" data-added="0" style="width: 100%">
+                Add to bookmarks
+              </a>
             </p>
           </div>
         </div>

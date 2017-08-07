@@ -77,11 +77,15 @@ function getMedal(medal) {
 }
 
 function getCrewColor(color) {
-  if (!color) return "000000";
+  if (!color) {
+    return "000000";
+  }
+
   return (color.length > 7) ? "000000" : color.split("#")[1];
 }
 
-const jobs = require("./response/26-7-2017_22-29-0.json").Missions;
+// const jobs = require("./response/26-7-2017_22-29-0.json").Missions;
+const jobs = require("./response-example.json").Missions;
 
 jobs.forEach(job => {
   console.log("****** Processing a job:", job.Content.Metadata.name, "******");

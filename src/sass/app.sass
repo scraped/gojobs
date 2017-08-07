@@ -8,28 +8,38 @@
 
 // Card image
 
-.job-icon
+.job-1
+  background: #01498E
+.job-2
+  background: #FCAF17
+.job-info-left
+  left: 7px
+  opacity: 0.75
+.job-info-right
+  right: 7px
+  opacity: 0.75
+  span
+    opacity: 0
+  img
+    margin-left: 5px
+  &:hover
+    background: rgba(0, 0, 0, 0.4)
+    opacity: 1
+    span
+      opacity: 1
+.job-info
   position: absolute
   top: 7px
-  right: 7px
   z-index: 100
   border-radius: 3px
-  padding-right: 5px
-  padding-left: 9px
+  padding: 5px
   transition: all 0.3s
-  opacity: 0.75
   color: #ffffff
   vertical-align: middle
   cursor: default
+  user-select: none
   img
-    user-select: none
-  .job-icon-type
-    opacity: 0
-  &:hover
-    background: rgba(0, 0, 0, 0.3)
-    opacity: 1
-    .job-icon-type
-      opacity: 1
+    vertical-align: middle
 
 // Footer
 
