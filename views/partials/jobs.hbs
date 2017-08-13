@@ -30,19 +30,21 @@
         <div class="card-content">
           <div class="media">
             <div class="media-left">
-              <figure class="image is-48x48">
+              <figure class="image image-avatar is-48x48">
                 <img src="https://a.rsg.sc/n/{{lowerCase creator.nickname}}/s" alt="Author avatar">
+                {{#if creator.nickname}}
+                  <div class="image-avatar-medal" style="background: {{creator.medalColor}};"></div>
+                {{/if}}
               </figure>
             </div>
             <div class="media-content" style="width: 1px;">
               <p class="title is-5 cut">
-                <a href="https://socialclub.rockstargames.com/games/gtav/pc/jobs/job/{{jobID}}">
+                <a href="/job/{{jobID}}">
                   {{{name}}}
                 </a>
               </p>
               <p class="subtitle is-6">
                 {{#if creator.nickname}}
-                  <img src="/images/circle-{{creator.medal}}.png" width="8" height="8">
                   @{{creator.nickname}}
                 {{else}}
                   {{#if tags.verified}}

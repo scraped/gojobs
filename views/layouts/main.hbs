@@ -9,30 +9,9 @@
 </head>
 
 <body>
-  <div class="container">
-    <div class="navbar is-transparent">
-      <div class="navbar-brand">
-        <a href="/" class="navbar-item">
-          <img src="/images/logo.png" alt="Go to the main page" title="Go to the main page">
-        </a>
-
-        <div class="navbar-burger burger" data-target="mainMenu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-      </div>
-
-      <div class="navbar-menu" id="mainMenu">
-        <div class="navbar-end">
-          <a href="/bookmarks" class="navbar-item">Bookmarks</a>
-          <a href="/profile" class="navbar-item">andreww2012</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  {{!-- Menu is rendered by views as its position is not defined by default --}}
   {{{body}}}
+
   <footer class="footer">
     <div class="container">
       <h1 class="title is-5">

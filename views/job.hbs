@@ -1,1 +1,83 @@
-That'a a job #{{id}}.
+<div class="job" style="background-image: url({{image}})">
+  <div class="job-top">
+    {{> menu}}
+  </div>
+  <div class="job-bottom">
+      <div class="container">
+        <h1 class="title is-3">{{{name}}}</h1>
+      </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image image-avatar is-48x48">
+          <img src="https://a.rsg.sc/n/{{lowerCase creator.nickname}}/s" alt="Author avatar">
+          {{#if creator.nickname}}
+            <div class="image-avatar-medal" style="background-image: url(/images/circle-{{creator.medal}}.png)"></div>
+          {{/if}}
+        </figure>
+      </div>
+      <div class="media-content" style="width: 1px;">
+        <p>
+          {{#if creator.nickname}}
+            @{{creator.nickname}}
+          {{else}}
+            {{#if tags.verified}}
+              Rockstar Verified Job
+            {{/if}}
+            {{#if tags.rockstar}}
+              Rockstar Job
+            {{/if}}
+          {{/if}}
+          {{#if creator.crew.tag}}
+            <span class="tag is-white" style="margin-left: 4px; background: #{{creator.crew.color}}; color: #ffffff">{{creator.crew.tag}}</span>
+          {{/if}}
+        </p>
+
+        <p class="subtitle is-5">{{{desc}}}</p>
+      </div>
+    </div>
+
+    <br>
+    <div class="field is-grouped is-grouped-multiline">
+      <div class="control">
+        <div class="tags has-addons">
+          <span class="tag is-light is-medium">Platform</span>
+          <span class="tag is-primary is-medium">
+            {{#if category}}
+              All platforms
+            {{else}}
+              <img src="/images/plat-{{platform}}-white.png" style="margin-right: 4px">
+              {{platformName}}
+            {{/if}}
+          </span>
+        </div>
+      </div>
+      {{#unless category}}
+      <div class="control">
+        <div class="tags has-addons">
+          <span class="tag is-light is-medium">
+            Version
+          </span>
+          <span class="tag is-info is-medium">
+            {{updated.version}}
+          </span>
+        </div>
+      </div>
+      {{/unless}}
+      <div class="control">
+        <div class="tags has-addons">
+          <span class="tag is-light is-medium">
+            Rating
+          </span>
+          <span class="tag is-warning is-medium">
+            {{ratings.rating}}%
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
