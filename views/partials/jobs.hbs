@@ -5,7 +5,7 @@
         <div class="card-image" style="position: relative;">
           <div class="job-info job-info-right">
             <span>
-              {{info.submodeName}}
+              Mode: {{info.submodeName}}
             </span>
             <img src="/images/{{info.submode}}-white.png" width="24" height="24">
           </div>
@@ -31,7 +31,11 @@
           <div class="media">
             <div class="media-left">
               <figure class="image image-avatar is-48x48">
-                <img src="https://a.rsg.sc/n/{{lowerCase creator.nickname}}/s" alt="Author avatar">
+                {{#if category}}
+                  <img src="/images/rockstar-{{category}}.png" alt="Author avatar">
+                {{else}}
+                  <img src="https://a.rsg.sc/n/{{lowerCase creator.nickname}}/s" alt="Author avatar">
+                {{/if}}
                 {{#if creator.nickname}}
                   <div class="image-avatar-medal" style="background: {{creator.medalColor}};"></div>
                 {{/if}}
@@ -72,7 +76,7 @@
                     {{#if category}}
                       All platforms
                     {{else}}
-                      <img src="/images/plat-{{platform}}-white.png" style="margin-right: 4px">
+                      {{!-- <img src="/images/plat-{platform}-white.png" style="margin-right: 4px"> --}}
                       {{platformName}}
                     {{/if}}
                   </span>
