@@ -1,5 +1,6 @@
-const moment = require('moment');
 const express = require('express');
+const app = express();
+const moment = require('moment');
 const handlebars = require('express-handlebars').create({
   defaultLayout: 'main',
   extname: '.hbs',
@@ -8,7 +9,6 @@ const handlebars = require('express-handlebars').create({
     lowerCase: str => str.toLowerCase(),
   },
 });
-const app = express();
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs', {
@@ -79,8 +79,8 @@ app.use((req, res) => {
   res.status(404);
   res.render('404');
 });
-// 500
 
+// 500
 app.use((err, req, res, next) => {
   console.log(err.stack);
   res.status(500);

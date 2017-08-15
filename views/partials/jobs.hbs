@@ -77,7 +77,6 @@
             <div class="field is-grouped is-grouped-multiline">
               <div class="control">
                 <div class="tags has-addons">
-                  <span class="tag">Platform</span>
                   <span class="tag is-primary">
                     {{#if category}}
                       All platforms
@@ -88,25 +87,14 @@
                   </span>
                 </div>
               </div>
-              {{#unless category}}
-              <div class="control">
-                <div class="tags has-addons">
-                  <span class="tag">Version</span>
-                  <span class="tag is-info">{{updated.version}}</span>
-                </div>
-              </div>
-              {{/unless}}
-              <div class="control">
-                <div class="tags has-addons">
-                  <span class="tag">Rating</span>
-                  <span class="tag is-{{ratings.ratingColor}}">{{ratings.rating}}%</span>
-                </div>
-              </div>
             </div>
 
             <p class="field">
               <small><i>
-              Updated {{updated.dateString}} (version {{updated.version}})
+              Updated {{updated.dateString}}
+              {{#unless category}}
+                (version {{updated.version}})
+              {{/unless}}
               </i></small>
             </p>
 
@@ -118,9 +106,24 @@
           </div>
         </div>
         <footer class="card-footer">
-          <div class="card-footer-item">🎮 {{ratings.playedTotal}}</div>
-          <div class="card-footer-item">👍 {{ratings.likes}}</div>
-          <div class="card-footer-item">👎 {{ratings.dislikes}}</div>
+          <div class="card-footer-item">
+            <span style="font-family: 'FontAwesome'; margin-right: 3%; color: #7CB342;">
+              &#xf11b;
+            </span>
+            {{ratings.playedTotal}}
+          </div>
+          <div class="card-footer-item">
+            <span style="font-family: 'FontAwesome'; margin-right: 3%; color: #ffc83d;">
+              &#xf164;
+            </span>
+            {{ratings.likes}}
+            <span class="tag is-{{ratings.ratingColor}}" style="margin-left: 3%;">
+              {{ratings.rating}}%
+            </span>
+          </div>
+          {{!-- <div class="card-footer-item">
+            👍👎🎮 {ratings.dislikes}
+          </div> --}}
         </footer>
       </div>
     </div>

@@ -8,12 +8,19 @@ const gulpIf        = require('gulp-if');
 const newer         = require('gulp-newer');
 const autoprefixer  = require('gulp-autoprefixer');
 const notify        = require('gulp-notify');
+const eslint        = require('gulp-eslint');
 const del           = require('del');
 const browserSync   = require('browser-sync').create();
 
 const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'dev';
 
 const appDir = './src/';
+
+gulp.task('lint', () => {
+  return gulp.src(appDir + 'js/*.*')
+    .pipe(eslint())
+    .pipe(eslint.format());
+});
 
 gulp.task('styles', () => {
   return gulp.src(appDir + 'sass/app.sass')
