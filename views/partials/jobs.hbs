@@ -67,11 +67,17 @@
 
           <div class="content">
             <div class="tags">
+              {{#if tags.verified}}
+                <span class="tag" style="background: #01498E; color: #fff">
+                  Rockstar Verified Job
+                </span>
+              {{/if}}
             </div>
 
             <div class="field is-grouped is-grouped-multiline">
               <div class="control">
-                <div class="tags">
+                <div class="tags has-addons">
+                  <span class="tag">Platform</span>
                   <span class="tag is-primary">
                     {{#if category}}
                       All platforms
@@ -85,14 +91,14 @@
               {{#unless category}}
               <div class="control">
                 <div class="tags has-addons">
-                  <span class="tag is-dark">Version</span>
+                  <span class="tag">Version</span>
                   <span class="tag is-info">{{updated.version}}</span>
                 </div>
               </div>
               {{/unless}}
               <div class="control">
                 <div class="tags has-addons">
-                  <span class="tag is-dark">Rating</span>
+                  <span class="tag">Rating</span>
                   <span class="tag is-{{ratings.ratingColor}}">{{ratings.rating}}%</span>
                 </div>
               </div>
@@ -100,7 +106,7 @@
 
             <p class="field">
               <small><i>
-              Updated {{updated.dateString}}
+              Updated {{updated.dateString}} (version {{updated.version}})
               </i></small>
             </p>
 

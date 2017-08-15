@@ -7,6 +7,7 @@ const debug         = require('gulp-debug');
 const gulpIf        = require('gulp-if');
 const newer         = require('gulp-newer');
 const autoprefixer  = require('gulp-autoprefixer');
+const notify        = require('gulp-notify');
 const del           = require('del');
 const browserSync   = require('browser-sync').create();
 
@@ -17,7 +18,14 @@ const appDir = './src/';
 gulp.task('styles', () => {
   return gulp.src(appDir + 'sass/app.sass')
     .pipe(gulpIf(isDev, sourcemaps.init()))
-    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(sass({ outputStyle: 'compressed' })
+    // .on('error', sass.logError))
+    .on('error', notify.onError(err => {
+      return {
+        title: 'SASS',
+        message: err.message,
+      };
+    })))
     .pipe(autoprefixer())
     .pipe(gulpIf(isDev, sourcemaps.write()))
     .pipe(gulp.dest('./public/css'));

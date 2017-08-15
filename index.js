@@ -71,25 +71,14 @@ app.get('/job/:id', setLogo, (req, res, next) => {
   });
 });
 
-app.get('/headers', function(req,res){
-  res.set('Content-Type','text/plain');
-  var s = '';
-  for(var name in req.headers)
-  s += name + ': ' + req.headers[name] + '\n';
-  res.send(s);
-  });
-
 // Static files
-
 app.use(express.static('public'));
 
 // 404
-
 app.use((req, res) => {
   res.status(404);
   res.render('404');
 });
-
 // 500
 
 app.use((err, req, res, next) => {
