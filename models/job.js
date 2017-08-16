@@ -79,27 +79,9 @@ jobSchema.methods.getPlatformName = function() {
   }
 };
 
-jobSchema.methods.getMedalColor = function() {
-  switch (this.creator.medal) {
-    case 0: return '#E0E0E0';
-    case 1: return '#A4DDBC';
-    case 2: return '#D4B362';
-    case 3: return '#94979F';
-    case 4: return '#B28060';
-    default: return '#E0E0E0';
-  }
-}
-
 jobSchema.methods.getRatingColor = function() {
   let rating = this.ratings.rating;
-
   return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
-};
-
-jobSchema.methods.getDateString = function() {
-  let date = this.updated.date;
-
-  return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
 };
 
 module.exports = mongoose.model('Job', jobSchema);

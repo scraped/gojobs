@@ -3,22 +3,25 @@
     <div class="column is-half-tablet is-one-third-desktop">
       <div class="card">
         <div class="card-image" style="position: relative;">
+          {{!-- Left hint --}}
+          {{#unless category}}
+            <div class="job-info job-info-left job-{{category}}">
+              <img src="/images/plat-{{platform}}-white.png" width="24" height="24">
+              <span class="job-icon-type">
+                For {{platformName}} only
+              </span>
+            </div>
+          {{/unless}}
+          {{!-- Right hint --}}
           <div class="job-info job-info-right">
             <span>
               Mode: {{info.submodeName}}
             </span>
             <img src="/images/{{info.submode}}-white.png" width="24" height="24">
           </div>
-          {{#unless category}}
-            <div class="job-info job-info-left job-{{category}}">
-              <img src="/images/plat-{{platform}}-white.png" width="24" height="24">
-              <span class="job-icon-type">
-                Platform: {{platformName}}
-              </span>
-            </div>
-          {{/unless}}
-          <figure class="image is-2by1" style="background: #e1e1e1;">
-            <img src="{{image}}" alt="Job image">
+          {{!-- Main job image --}}
+          <figure class="image is-2by1">
+            <img src="{{image}}" alt="Job image" style="background-color: #e1e1e1;">
           </figure>
         </div>
 
@@ -32,7 +35,7 @@
                   <img src="https://a.rsg.sc/n/{{lowerCase creator.nickname}}/s" alt="Author avatar">
                 {{/if}}
                 {{#if creator.nickname}}
-                  <div class="image-avatar-medal" style="background: {{creator.medalColor}};"></div>
+                  <div class="image-avatar-medal tooltip tooltip-right" style="background-image: url(/images/medal-{{creator.medal}}.png)" data-tooltip="Medal"></div>
                 {{/if}}
               </figure>
             </div>
@@ -85,22 +88,19 @@
         </div>
 
         <footer class="card-footer">
-          <div class="card-footer-item">
-            {{!-- #7CB342; --}}
-            <i class="fa fa-gamepad fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
+          <div class="card-footer-item tooltip" data-tooltip="People played this: {{ratings.playedUnique}}">
+            <i class="fa fa-gamepad fa-lg" aria-hidden="true" style="margin-right: 3px;"></i>
             {{ratings.playedTotal}}
           </div>
-          <div class="card-footer-item">
-            {{!-- #FFC83D; --}}
-            <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
-            {{ratings.likes}}
-            <span class="tag is-{{ratings.ratingColor}}" style="margin-left: 3%;">
+          <div class="card-footer-item tooltip" data-tooltip="Dislikes: {{ratings.dislikes}}">
+            <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" style="margin-right: 1px;"></i>
+            <span>
+              {{ratings.likes}}
+            </span>
+            <span class="tag is-{{ratings.ratingColor}}" style="margin-left: 6px;">
               {{ratings.rating}}%
             </span>
           </div>
-          {{!-- <div class="card-footer-item">
-            👍👎🎮 {ratings.dislikes}
-          </div> --}}
         </footer>
       </div>
     </div>

@@ -1,1 +1,5 @@
-console.log(new Date("2017-07-19T11:16:53Z"));
+const mongoose = require('mongoose');
+const config = require('./config');
+
+mongoose.connect(config.mongo.connectUri, config.mongo.options);
+const JobModel = require('./models/job.js');

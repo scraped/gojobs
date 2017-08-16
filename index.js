@@ -1,6 +1,7 @@
+const config = require('./config');
 const express = require('express');
-const app = express();
 const moment = require('moment');
+const mongoose = require('mongoose');
 const handlebars = require('express-handlebars').create({
   defaultLayout: 'main',
   extname: '.hbs',
@@ -10,11 +11,10 @@ const handlebars = require('express-handlebars').create({
   },
 });
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs', {
-  useMongoClient: true,
-});
-const Job = require('./models/job.js');
+mongoose.connect(config.mongo.connectUri, config.mongo.options);
+const JobModel = require('./models/job.js');
+
+const app = express();
 
 app.engine('.hbs', handlebars.engine);
 app.disable('x-powered-by');
@@ -24,7 +24,7 @@ app.set('port', process.env.PORT || 3000);
 function getJobs(req, res, next) {
   if (!res.locals.partials) res.locals.partials = {};
 
-  Job.find((err, jobs) => {
+  JobModel.find((err, jobs) => {
     if (err) console.error(err);
 
     jobs = jobs.map(job => {
@@ -32,7 +32,6 @@ function getJobs(req, res, next) {
       job.platformName = job.getPlatformName();
       job.ratings.ratingColor = job.getRatingColor();
       job.updated.dateString = moment(job.updated.date).fromNow();
-      job.creator.medalColor = job.getMedalColor();
 
       if (!job.tags) job.tags = {};
       if (job.category == 1) job.tags.verified = true;
@@ -57,10 +56,10 @@ app.get('/', getJobs, (req, res) => {
   res.render('index');
 });
 
-// Job page
+// job page
 
 app.get('/job/:id', setLogo, (req, res, next) => {
-  Job.find({ jobID: req.params.id }, (err, job) => {
+  JobModel.find({ jobID: req.params.id }, (err, job) => {
     if (err) console.error(err);
 
     if (job.length == 1) {

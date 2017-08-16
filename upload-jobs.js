@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs', {
-  useMongoClient: true,
-});
-const Job = require('./models/job.js');
+const config = require('./config');
+
+mongoose.connect(config.mongo.connectUri, config.mongo.options);
+const JobModel = require('./models/job.js');
 
 const getCategory = { 'none': 0, 'verif': 1, 'rstar': 2 };
 
@@ -60,22 +60,21 @@ function getCrewColor(color) {
   return (color.length > 7) ? '000000' : color.split('#')[1];
 }
 
-// const jobs = require('./response/26-7-2017_22-29-0.json').Missions;
 const jobs = require('./response-example.json').Missions;
 
 jobs.forEach(job => {
   console.log('****** Processing a job:', job.Content.Metadata.name, '******');
 
-  Job.find({ jobID: job.MissionId }, (err, response) => {
+  JobModel.find({ jobID: job.MissionId }, (err, response) => {
     if (err) {
-      return console.log('!!! Error:', err);
+      return console.log('Error:', err);
     }
 
     if (response.length) {
-      return console.log('!!! Already exists:', job.Content.Metadata.name);
+      return console.log('Already exists:', job.Content.Metadata.name);
     }
 
-    new Job({
+    let job = {
       jobID:    job.MissionId,
       category: getCategory[job.Content.Metadata.cat],
       name:     job.Content.Metadata.name,
@@ -121,6 +120,10 @@ jobs.forEach(job => {
         date:    new Date(job.Content.Metadata.cdate),
         version: job.Content.Metadata.ver
       },
-    }).save(err => console.log('!!! Saving failed:', err));
+    };
+
+    job.
+
+    new JobModel(job).save(err => console.log('Saving failed:', err));
   });
 });
