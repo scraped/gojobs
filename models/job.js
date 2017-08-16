@@ -73,9 +73,9 @@ jobSchema.methods.getPlatformName = function() {
   switch (this.platform) {
     case 1: return 'PC';
     case 2: return 'PS4';
-    case 3: return 'XB1';
+    case 3: return 'Xbox One';
     case 4: return 'PS3';
-    case 5: return 'XB360';
+    case 5: return 'Xbox 360';
   }
 };
 

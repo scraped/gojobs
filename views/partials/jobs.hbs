@@ -9,19 +9,14 @@
             </span>
             <img src="/images/{{info.submode}}-white.png" width="24" height="24">
           </div>
-          {{#if category}}
+          {{#unless category}}
             <div class="job-info job-info-left job-{{category}}">
-              <img src="/images/rockstar.png" width="24" height="24">
+              <img src="/images/plat-{{platform}}-white.png" width="24" height="24">
               <span class="job-icon-type">
-                {{#if tags.verified}}
-                  Rockstar Verified Job
-                {{/if}}
-                {{#if tags.rockstar}}
-                  Rockstar Job
-                {{/if}}
+                Platform: {{platformName}}
               </span>
             </div>
-          {{/if}}
+          {{/unless}}
           <figure class="image is-2by1" style="background: #e1e1e1;">
             <img src="{{image}}" alt="Job image">
           </figure>
@@ -32,7 +27,7 @@
             <div class="media-left">
               <figure class="image image-avatar is-48x48">
                 {{#if category}}
-                  <img src="/images/rockstar-{{category}}.png" alt="Author avatar">
+                  <img src="/images/rockstar-avatar-48.png" alt="Author avatar">
                 {{else}}
                   <img src="https://a.rsg.sc/n/{{lowerCase creator.nickname}}/s" alt="Author avatar">
                 {{/if}}
@@ -52,9 +47,15 @@
                   @{{creator.nickname}}
                 {{else}}
                   {{#if tags.verified}}
+                    <span class="icon">
+                      <i class="fa fa-check fa-lg" aria-hidden="true"></i>
+                    </span>
                     Rockstar Verified Job
                   {{/if}}
                   {{#if tags.rockstar}}
+                    <span class="icon">
+                      <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    </span>
                     Rockstar Job
                   {{/if}}
                 {{/if}}
@@ -66,29 +67,6 @@
           </div>
 
           <div class="content">
-            <div class="tags">
-              {{#if tags.verified}}
-                <span class="tag" style="background: #01498E; color: #fff">
-                  Rockstar Verified Job
-                </span>
-              {{/if}}
-            </div>
-
-            <div class="field is-grouped is-grouped-multiline">
-              <div class="control">
-                <div class="tags has-addons">
-                  <span class="tag is-primary">
-                    {{#if category}}
-                      All platforms
-                    {{else}}
-                      {{!-- <img src="/images/plat-{platform}-white.png" style="margin-right: 4px"> --}}
-                      {{platformName}}
-                    {{/if}}
-                  </span>
-                </div>
-              </div>
-            </div>
-
             <p class="field">
               <small><i>
               Updated {{updated.dateString}}
@@ -105,17 +83,16 @@
             </p>
           </div>
         </div>
+
         <footer class="card-footer">
           <div class="card-footer-item">
-            <span style="font-family: 'FontAwesome'; margin-right: 3%; color: #7CB342;">
-              &#xf11b;
-            </span>
+            {{!-- #7CB342; --}}
+            <i class="fa fa-gamepad fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
             {{ratings.playedTotal}}
           </div>
           <div class="card-footer-item">
-            <span style="font-family: 'FontAwesome'; margin-right: 3%; color: #ffc83d;">
-              &#xf164;
-            </span>
+            {{!-- #FFC83D; --}}
+            <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
             {{ratings.likes}}
             <span class="tag is-{{ratings.ratingColor}}" style="margin-left: 3%;">
               {{ratings.rating}}%
