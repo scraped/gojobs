@@ -56,7 +56,13 @@ app.get('/', getJobs, (req, res) => {
   res.render('index');
 });
 
-// job page
+// Upload page
+
+app.get('/upld', (req, res) => {
+  res.render('upload');
+});
+
+// Job page
 
 app.get('/job/:id', setLogo, (req, res, next) => {
   JobModel.find({ jobID: req.params.id }, (err, job) => {
