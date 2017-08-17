@@ -6,19 +6,23 @@
       Upload jobs
     </h1>
 
-    <form action="/send" method="GET">
+    <form name="upload">
       <div class="field">
-        <label class="label">Link to the profile, crew, job or playlist</label>
+        <label class="label" for="link">
+          Link to the profile, crew, or job
+        </label>
         <div class="control">
-          <input class="input" type="text" placeholder="Link to RGSC site">
+          <input class="input" name="link" id="link" type="text" placeholder="Link to RGSC site">
         </div>
       </div>
 
       <div class="field">
         <div class="control">
-          <button class="button is-primary">Upload jobs</button>
+          <button class="button is-primary" name="send">Upload jobs</button>
         </div>
       </div>
     </form>
   </div>
 </section>
+
+<script src="/js/upload.js" async></script>
