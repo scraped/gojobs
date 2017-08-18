@@ -1,10 +1,13 @@
 const config  = require('../config');
 const express = require('express');
 const router  = express.Router();
-const downloadJobs = require('../lib/download-jobs');
+const uploadJobs = require('../lib/upload-jobs');
 
 router.get('/upld', (req, res) => {
-  if (req.query.link) {
+  if (req.query.link === '') {
+    res.set('Content-Type', 'text/plain');
+    res.send('Enter something');
+  } else if (req.query.link) {
     const link = req.query.link;
     const isUser = link.match(/\s*\/member\/(\w+)\/\s*/);
     const isCrew = link.match(/\s*\?publisher=crew(\d+)\s*$/);
@@ -13,11 +16,11 @@ router.get('/upld', (req, res) => {
     res.set('Content-Type', 'text/plain');
 
     if (isUser) {
-      downloadJobs({ member: isUser[1] });
-      res.send('User: ' + isUser[1]);
+      uploadJobs({ member: isUser[1] });
+      res.send(new Date() + ': uploading jobs for user ' + isUser[1]);
     } else if (isCrew) {
-      downloadJobs({ crew: isCrew[1] });
-      res.send('Crew: ' + isCrew[1]);
+      uploadJobs({ crew: isCrew[1] });
+      res.send(new Date() + ': uploading jobs for crew ' + isCrew[1]);
     } else if (isJob) {
       res.send('Job: ' + isJob[1]);
     } else {

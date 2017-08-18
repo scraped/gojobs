@@ -2,6 +2,7 @@ const config    = require('../config');
 const express   = require('express');
 const router    = express.Router();
 const mongoose  = require('mongoose');
+
 const JobModel  = require('../models/job.js');
 mongoose.connect(config.mongo.connectUri, config.mongo.options);
 

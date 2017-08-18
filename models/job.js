@@ -84,4 +84,4 @@ jobSchema.methods.getRatingColor = function() {
   return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
 };
 
-module.exports = mongoose.model('Job', jobSchema);
+module.exports = mongoose.model('jobs', jobSchema);
