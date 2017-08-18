@@ -1,7 +1,6 @@
-const config  = require('../config');
-const express = require('express');
-const router  = express.Router();
-const uploadJobs = require('../lib/upload-jobs');
+const config    = require('../config');
+const router    = require('express').Router();
+const fetchJobs = require('../lib/fetch-jobs');
 
 router.get('/upld', (req, res) => {
   if (req.query.link === '') {
@@ -16,15 +15,15 @@ router.get('/upld', (req, res) => {
     res.set('Content-Type', 'text/plain');
 
     if (isUser) {
-      uploadJobs({ member: isUser[1] });
-      res.send(new Date() + ': uploading jobs for user ' + isUser[1]);
+      fetchJobs({ member: isUser[1] });
+      res.send(`Uploading jobs for user ${isUser[1]}`);
     } else if (isCrew) {
-      uploadJobs({ crew: isCrew[1] });
-      res.send(new Date() + ': uploading jobs for crew ' + isCrew[1]);
+      fetchJobs({ crew: isCrew[1] });
+      res.send(`Uploading jobs for crew ${isCrew[1]}`);
     } else if (isJob) {
-      res.send('Job: ' + isJob[1]);
+      res.send(`Job ${isJob[1]}`);
     } else {
-      res.send('Error: counld\'t find anything.');
+      res.send(`Error: counld't find anything.`);
     }
   } else {
     res.render('upload');

@@ -14,7 +14,7 @@ form.onsubmit = function() {
   xhr.onreadystatechange = () => {
     if (xhr.readyState != 4) return;
     sendButton.classList.remove("is-loading");
-    response.innerHTML += `<p>${xhr.responseText}</p>`;
+    response.innerHTML = `<p>${new Date()}: ${xhr.responseText}</p>`;
   };
 
   return false;
