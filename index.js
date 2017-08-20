@@ -13,35 +13,28 @@ app.disable('x-powered-by');
 app.set('view engine', '.hbs');
 app.set('port', process.env.PORT || 3000);
 
+// Middleware
 app.use(express.static('public'));
 
+// Routing
 app.use('/', mainRouter);
 app.use('/job', jobRouter);
 app.use('/admin', adminRouter);
 
 // 404
 app.use((req, res) => {
+  console.log(`Error 404 occured at ${req.path}`);
   res.status(404);
-  res.render('error', {
-    code: 404,
-    name: 'Not Found',
-    cssClass: 'info',
-    image: true,
-  });
+  res.render('error', config.httpErrors.e404);
 });
 
 // 500
 app.use((err, req, res, next) => {
-  console.error('Error:', err.stack);
+  console.error(`Error 500 occured. Stack: ${err.stack}`);
   res.status(500);
-  res.render('error', {
-    code: 500,
-    name: 'Internal Server Error',
-    cssClass: 'warning',
-    image: true,
-  });
+  res.render('error', config.httpErrors.e500);
 });
 
 app.listen(app.get('port'), () => {
-  console.log('Server is running at http://localhost:' + app.get('port'));
+  console.log(`Server is running at http://localhost:${app.get('port')}`);
 });

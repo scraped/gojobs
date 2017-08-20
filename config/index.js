@@ -15,6 +15,21 @@ module.exports = {
     }
   },
 
+  httpErrors: {
+    e404: {
+      code: 404,
+      name: 'Not Found',
+      cssClass: 'info',
+      image: true,
+    },
+    e500: {
+      code: 500,
+      name: 'Internal Server Error',
+      cssClass: 'warning',
+      image: true,
+    }
+  },
+
   submodes: {
     11: 'Special Vehicle Race',
     12: 'Stunt Race',

@@ -2,8 +2,6 @@ const config = require('../config');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-module.exports = mongoose.model('job', jobSchema);
-
 let jobSchema = new Schema({
   jobID:    String,
   category: Number,
@@ -63,3 +61,5 @@ jobSchema.methods.getRatingColor = function() {
   let rating = this.ratings.rating;
   return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
 };
+
+module.exports = mongoose.model('job', jobSchema);

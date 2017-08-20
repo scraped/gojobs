@@ -15,14 +15,12 @@ router.use('/', (req, res, next) => {
     if (err) console.error(err);
 
     jobs = jobs.map(job => {
-      job.info.submodeName    = job.getSubmodeName();
-      job.platformName        = job.getPlatformName();
       job.ratings.ratingColor = job.getRatingColor();
       job.updated.dateString  = moment(job.updated.date).fromNow();
 
       if (!job.tags) job.tags = {};
-      if (job.category == 1) job.tags.verified = true;
-      if (job.category == 2) job.tags.rockstar = true;
+      if (job.category === 1) job.tags.verified = true;
+      if (job.category === 2) job.tags.rockstar = true;
       return job;
     });
 
