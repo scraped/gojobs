@@ -1,17 +1,23 @@
-const config  = require('./config');
+const config = require('./config');
 const express = require('express');
-const hbars   = require('express-handlebars').create(config.handlebars);
-const app     = express();
+const hbars = require('express-handlebars').create(config.handlebars);
+
+const mainRouter = require('./routers/main/main');
+const jobRouter = require('./routers/main/job');
+const adminRouter = require('./routers/admin');
+
+const app = express();
 
 app.engine('.hbs', hbars.engine);
 app.disable('x-powered-by');
 app.set('view engine', '.hbs');
 app.set('port', process.env.PORT || 3000);
 
-app.get('/', require('./routers/index'));
-app.get('/upld', require('./routers/upload'));
-app.get('/job/:id', require('./routers/job'));
 app.use(express.static('public'));
+
+app.use('/', mainRouter);
+app.use('/job', jobRouter);
+app.use('/admin', adminRouter);
 
 // 404
 app.use((req, res) => {
