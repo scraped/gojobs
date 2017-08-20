@@ -28,6 +28,6 @@ router.get('/', (req, res) => {
       res.send(`Error: counld't find anything.`);
     }
   } else {
-    res.render('upload');
+    res.render('admin');
   }
 });

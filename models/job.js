@@ -1,5 +1,8 @@
+const config = require('../config');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+
+module.exports = mongoose.model('job', jobSchema);
 
 let jobSchema = new Schema({
   jobID:    String,
@@ -48,40 +51,15 @@ let jobSchema = new Schema({
   },
 });
 
-jobSchema.methods.getSubmodeName = function() {
-  switch (this.info.submode) {
-    case 11: return 'Special Vehicle Race';
-    case 12: return 'Stunt Race';
-    case 13: return 'Air Race';
-    case 14: return 'Bike Race';
-    case 15: return 'Land Race';
-    case 16: return 'Water Race';
-    case 21: return 'Versus Mission';
-    case 22: return 'Adversary Mode';
-    case 31: return 'Capture';
-    case 41: return 'Last Team Standing';
-    case 51: return 'Deathmatch';
-    case 52: return 'Team Deathmatch';
-    case 53: return 'Vehicle Deathmatch';
-    case 61: return 'Survival';
-    case 71: return 'Parachuting';
-    case 0:  return 'Unknown';
-  }
-};
+jobSchema.virtual('submodeName').get(function() {
+  return config.submodes[this.info.submode];
+});
 
-jobSchema.methods.getPlatformName = function() {
-  switch (this.platform) {
-    case 1: return 'PC';
-    case 2: return 'PS4';
-    case 3: return 'Xbox One';
-    case 4: return 'PS3';
-    case 5: return 'Xbox 360';
-  }
-};
+jobSchema.virtual('platformName').get(function() {
+  return config.platforms[this.platform];
+});
 
 jobSchema.methods.getRatingColor = function() {
   let rating = this.ratings.rating;
   return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
 };
-
-module.exports = mongoose.model('jobs', jobSchema);
