@@ -4,6 +4,11 @@ const fetchJobs = require('../../lib/fetch-jobs');
 
 module.exports = router;
 
+router.get('/addcrew', (req, res, next) => {
+  let crewId = req.query.id;
+  if (!crewId) res.send('1');
+});
+
 router.get('/', (req, res) => {
   if (req.query.link === '') {
     res.set('Content-Type', 'text/plain');
