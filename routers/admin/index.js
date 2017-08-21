@@ -6,7 +6,9 @@ module.exports = router;
 
 router.get('/addcrew', (req, res, next) => {
   let crewId = req.query.id;
-  if (!crewId) res.send('1');
+  console.log(typeof crewId);
+  if (crewId === '') res.send('1');
+  res.send(crewId);
 });
 
 router.get('/', (req, res) => {
