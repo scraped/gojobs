@@ -2,6 +2,11 @@ const config = require('../../config');
 const router = require('express').Router();
 const fetchJobs = require('../../lib/fetch-jobs');
 
+const mongoose = require('mongoose');
+const JobRaw = require('../../models/jobRaw.js');
+const Crew = require('../../models/Crew.js');
+mongoose.connect(config.mongo.connectUri, config.mongo.options);
+
 module.exports = router;
 
 router.get('/', (req, res) => {
@@ -40,4 +45,27 @@ router.get('/addcrew', (req, res, next) => {
 router.get('/addcrew', (req, res) => {
   const crewId = req.query.crewid;
   res.send(`We'll trying to add this crew to the database.`);
+
+  fetchJobs({ searchBy: { type: 'crew', id: crewid }, once: true }, jobs => {
+    jobs.Missions.forEach(job => {
+      console.log(`Uploading job ${job.Content.Metadata.name}`);
+      console.log({
+        id: job.MissionId,
+        linkName: job.Content.Metadata.crewurl.split('/')[2],
+        abbr: job.Content.Metadata.crewtag,
+        color: job.Content.Metadata.crewcolor,
+      });
+      // JobRaw.findOneAndUpdate(
+      //   { id: job.MissionId },
+      //   {
+      //     id: job.MissionId,
+      //     linkName: job.Content.Metadata.crewurl,
+      //     abbr: job.Content.Metadata.crewtag,
+      //     color: job.Content.Metadata.crewcolor,
+      //   },
+      //   { upsert: true },
+      //   (err, doc, res) => {}
+      // )
+    });
+  });
 })

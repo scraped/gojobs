@@ -11,7 +11,7 @@ function getTimestamp(date) {
 
 let crewSchema = new Schema({
   id: { type: Number, alias: 'crewId', required: true, unique: true },
-  n:  { type: String, alias: 'name', required: true, trim: true },
+  // n:  { type: String, alias: 'name', required: true, trim: true },
   ln: { type: String, alias: 'linkName', required: true },
   ab: { type: String, alias: 'abbr', required: true, uppercase: true },
   c:  { type: String, alias: 'color', get: getColor, required: true },
