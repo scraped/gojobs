@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-function getColor(color) {
-  return (color.length > 7) ? '000000' : color.split('#')[1];
+function setColor(color) {
+  return (color.length > 6) ? '000000' : color;
 }
 
 function getTimestamp(date) {
@@ -11,10 +11,11 @@ function getTimestamp(date) {
 
 let crewSchema = new Schema({
   crewId: { type: Number, required: true, unique: true },
-  // n:  { type: String, alias: 'name', required: true, trim: true },
-  linkName: { type: String, required: true },
-  abbr: { type: String, required: true, uppercase: true },
-  color: { type: String, get: getColor, required: true },
+  name: { type: String, required: true },
+  url: { type: String, required: true },
+  tag: { type: String, required: true, uppercase: true },
+  color: { type: String, set: setColor, required: true },
+  avatar: { type: Number, required: true },
   updated: { type: Date, default: Date.now(), required: true }
 });
 

@@ -1,0 +1,18 @@
+{{#each partials.crewsContext}}
+  <article class="media">
+    <figure class="media-left">
+      <p class="image is-64x64">
+        <img src="https://prod.cloud.rockstargames.com/crews/sc/{{avatar}}/{{crewId}}/publish/emblem/emblem_128.png">
+      </p>
+    </figure>
+    <div class="media-content">
+      <div class="content">
+        <p class="subtitle">
+          <a href="https://socialclub.rockstargames.com/crew/{{url}}" target="_blank">
+            {{name}}
+            <span class="tag" style="border: 1px solid #{{color}}; background: #ffffff; margin-left: 4px;">{{tag}}</span>
+          </a>
+        </p>
+      </div>
+  </article>
+{{/each}}

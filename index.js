@@ -28,11 +28,15 @@ app.use((req, res) => {
   res.render('error', config.httpErrors.e404);
 });
 
-// 500
+// Errors
 app.use((err, req, res, next) => {
-  console.error(`Error 500 occured. Stack: ${err.stack}`);
-  res.status(500);
-  res.render('error', config.httpErrors.e500);
+  if (typeof err === 'string') {
+    res.send(err);
+  } else {
+    console.error(`Error 500 occured. Stack: ${err.stack}`);
+    res.status(500);
+    res.render('error', config.httpErrors.e500);
+  }
 });
 
 app.listen(app.get('port'), () => {

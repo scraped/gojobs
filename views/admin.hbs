@@ -6,22 +6,36 @@
       Admin panel
     </h1>
 
-    <form name="upload">
-      <div class="field">
-        <label class="label" for="url">
-          Add a crew
-        </label>
-        <div class="control">
-          <input class="input" name="url" id="url" type="text" placeholder="Crew Jobs Search URL">
+    <div class="tile is-ancestor">
+      <div class="tile is-parent is-5">
+        <div class="tile is-child box">
+          <h2 class="subtitle is-4">Add a crew</h2>
+          <form name="upload">
+            <div class="field">
+              <label class="label" for="url">
+                Crew URL
+              </label>
+              <div class="control">
+                <input class="input" name="url" id="url" type="text" placeholder="https://socialclub.rockstargames.com/crew/crew_name_here" autocomplete="off">
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <button class="button is-primary" name="send">Add a crew</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
 
-      <div class="field">
-        <div class="control">
-          <button class="button is-primary" name="send">Add a crew</button>
+      <div class="tile is-parent">
+        <div class="tile is-child box">
+          <h2 class="subtitle is-4">List of crews</h2>
+          {{> crews}}
         </div>
       </div>
-    </form>
+    </div>
 
     <p id="response"></p>
   </div>
