@@ -35,37 +35,52 @@ router.get('/', (req, res) => {
 });
 
 router.get('/addcrew', (req, res, next) => {
-  if (!Number(req.query.crewid)) {
-    res.send('Incorrect crew ID.');
+  if (!(req.query.url)) {
+    res.send('Enter URL.');
   } else {
     next();
   }
 });
 
 router.get('/addcrew', (req, res) => {
-  const crewId = req.query.crewid;
-  res.send(`We'll trying to add this crew to the database.`);
+  let url = req.query.url;
+  let urlMatch = url.match(/\s*\?publisher=crew(\d+)\s*$/);
+  if (!urlMatch) {
+    res.send('Incorrect link');
+    return;
+  }
+  let crewId = urlMatch[1];
+  let crewLinkName = url.split('/')[4];
+  res.send(`We'll trying to add this crew (${crewId}) to the database.`);
 
-  fetchJobs({ searchBy: { type: 'crew', id: crewid }, once: true }, jobs => {
+  let foundCrewInfo = false;
+
+  fetchJobs({ searchBy: { type: 'crew', id: crewId } }, jobs => {
     jobs.Missions.forEach(job => {
-      console.log(`Uploading job ${job.Content.Metadata.name}`);
-      console.log({
-        id: job.MissionId,
-        linkName: job.Content.Metadata.crewurl.split('/')[2],
-        abbr: job.Content.Metadata.crewtag,
-        color: job.Content.Metadata.crewcolor,
-      });
-      // JobRaw.findOneAndUpdate(
-      //   { id: job.MissionId },
-      //   {
-      //     id: job.MissionId,
-      //     linkName: job.Content.Metadata.crewurl,
-      //     abbr: job.Content.Metadata.crewtag,
-      //     color: job.Content.Metadata.crewcolor,
-      //   },
-      //   { upsert: true },
-      //   (err, doc, res) => {}
-      // )
+      if (foundCrewInfo) return;
+      if (crewLinkName === job.Content.Metadata.crewurl.split('/')[2]) {
+        console.log(`Found information about '${crewLinkName}' crew`);
+        foundCrewInfo = true;
+        new Crew({
+          crewId: crewId,
+          linkName: crewLinkName,
+          abbr: job.Content.Metadata.crewtag,
+          color: job.Content.Metadata.crewcolor,
+          updated: new Date()
+        }).save();
+        // Crew.findOneAndUpdate(
+        //   { crewId: crewId },
+        //   {
+        //     crewId: crewId,
+        //     linkName: crewLinkName,
+        //     abbr: job.Content.Metadata.crewtag,
+        //     color: job.Content.Metadata.crewcolor,
+        //     updated: new Date()
+        //   },
+        //   { upsert: true },
+        //   console.log
+        // );
+      }
     });
   });
-})
+});

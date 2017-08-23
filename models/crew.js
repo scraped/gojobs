@@ -10,12 +10,12 @@ function getTimestamp(date) {
 }
 
 let crewSchema = new Schema({
-  id: { type: Number, alias: 'crewId', required: true, unique: true },
+  crewId: { type: Number, required: true, unique: true },
   // n:  { type: String, alias: 'name', required: true, trim: true },
-  ln: { type: String, alias: 'linkName', required: true },
-  ab: { type: String, alias: 'abbr', required: true, uppercase: true },
-  c:  { type: String, alias: 'color', get: getColor, required: true },
-  u:  { type: Date, alias: 'updated', default: Date.now(), required: true }
+  linkName: { type: String, required: true },
+  abbr: { type: String, required: true, uppercase: true },
+  color: { type: String, get: getColor, required: true },
+  updated: { type: Date, default: Date.now(), required: true }
 });
 
 module.exports = mongoose.model('crew', crewSchema);
