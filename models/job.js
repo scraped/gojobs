@@ -3,50 +3,51 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let jobSchema = new Schema({
-  jobID:    String,
-  category: Number,
-  name:     String,
-  desc:     String,
-  image:    String,
-  platform: Number,
+  jobID: { type: String, required: true, unique: true },
+  flags: {
+    rockstar: { type: Boolean },
+    verified: { type: Boolean }
+  },
+  name: { type: String, required: true, trim: true },
+  desc: { type: String, required: true, trim: true },
+  images: {
+    thumb: { type: String, required: true, trim: true },
+    photos: { type: [String] }
+  },
+  platform: { type: Number, required: true },
 
   info: {
-    mode:       Number,
-    submode:    Number,
-    minlvl:     Number,
-    minplayers: Number,
-    maxplayers: Number,
+    mode: { type: Number, required: true },
+    submode: { type: Number, required: true },
+    minlvl: { type: Number, required: true },
+    minplayers: { type: Number, required: true },
+    maxplayers: { type: Number, required: true },
   },
 
   details: Schema.Types.Mixed,
 
   creator: {
     nickname: String,
-    medal:    Number,
-    crew: {
-      tag:  String,
-      rank: Number,
-      color: {
-        type: String,
-        default: '000000'
-      }
-    }
+    medal: { type: Number, required: true },
+    crewId: { type: Number, required: true }
   },
 
-  ratings: {
-    playedTotal:  Number,
-    playedUnique: Number,
-    quitTotal:    Number,
-    quitUnique:   Number,
-    likes:        Number,
-    dislikes:     Number,
-    rating:       Number,
+  stats: {
+    playedTot: { type: Number, required: true },
+    playedUnq: { type: Number, required: true },
+    quitTot: { type: Number, required: true },
+    quitUnq: { type: Number, required: true },
+    likes: { type: Number, required: true },
+    dislikes: { type: Number, required: true },
+    rating: { type: Number, required: true },
+    ratingReal: { type: Number, required: true }
   },
 
   updated: {
-    date:    Date,
-    version: Number
-  },
+    version: { type: Number, required: true },
+    job: { type: Date, default: Date.now(), required: true },
+    info: { type: Date, default: Date.now(), required: true }
+  }
 });
 
 jobSchema.virtual('submodeName').get(function() {

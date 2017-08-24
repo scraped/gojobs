@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let jobRawSchema = new Schema({
-  job:      Schema.Types.Mixed,
-  updated:  Date,
+  jobId: { type: String, required: true, unique: true },
+  job: { type: Schema.Types.Mixed, required: true },
+  updated: { type: Date, default: Date.now(), required: true }
 });
 
 module.exports = mongoose.model('jobs-raw', jobRawSchema);
