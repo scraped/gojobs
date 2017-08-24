@@ -1,47 +1,40 @@
 'use strict';
 
-const gulp          = require('gulp');
-const sass          = require('gulp-sass');
-const sourcemaps    = require('gulp-sourcemaps');
-const debug         = require('gulp-debug');
-const gulpIf        = require('gulp-if');
-const newer         = require('gulp-newer');
-const autoprefixer  = require('gulp-autoprefixer');
-const notify        = require('gulp-notify');
-const eslint        = require('gulp-eslint');
-const del           = require('del');
-const browserSync   = require('browser-sync').create();
+const config = require('./config');
+const gulp = require('gulp');
+const plugins = require('gulp-load-plugins')();
+const del = require('del');
+const browserSync = require('browser-sync').create();
 
 const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'dev';
-
-const appDir = './src/';
+console.log(process.env.NODE_ENV);
 
 gulp.task('lint', () => {
-  return gulp.src(appDir + 'js/*.*')
-    .pipe(eslint())
-    .pipe(eslint.format());
+  return gulp.src(`${config.appDir}js/*.*`)
+    .pipe(plugins.eslint())
+    .pipe(plugins.eslint.format());
 });
 
 gulp.task('styles', () => {
-  return gulp.src(appDir + 'sass/app.sass')
-    .pipe(gulpIf(isDev, sourcemaps.init()))
-    .pipe(sass({ outputStyle: 'compressed' })
+  return gulp.src(`${config.appDir}sass/app.sass`)
+    .pipe(plugins.if(isDev, plugins.sourcemaps.init()))
+    .pipe(plugins.sass({ outputStyle: 'compressed' })
     // .on('error', sass.logError))
-    .on('error', notify.onError(err => {
+    .on('error', plugins.notify.onError(err => {
       return {
         title: 'SASS',
         message: err.message,
       };
     })))
-    .pipe(autoprefixer())
-    .pipe(gulpIf(isDev, sourcemaps.write()))
+    .pipe(plugins.autoprefixer())
+    .pipe(plugins.if(isDev, plugins.sourcemaps.write()))
     .pipe(gulp.dest('./public/css'));
 });
 
 gulp.task('images', () => {
-  return gulp.src(appDir + '{images,js}/*.*', {since: gulp.lastRun('images')})
-    .pipe(newer('./public/images'))
-    .pipe(debug({title: 'images/scripts'}))
+  return gulp.src(`${config.appDir}{images,js}/*.*`, {since: gulp.lastRun('images')})
+    .pipe(plugins.newer('./public/images'))
+    .pipe(plugins.debug({title: 'images/scripts'}))
     .pipe(gulp.dest('./public'));
 });
 
@@ -55,13 +48,13 @@ gulp.task('build', gulp.series(
 ));
 
 gulp.task('watch', () => {
-  gulp.watch(appDir + 'sass/*.sass', gulp.series('styles'));
-  gulp.watch(appDir + '{images,js}/*.*', gulp.series('images'));
+  gulp.watch(config.appDir + 'sass/*.sass', gulp.series('styles'));
+  gulp.watch(config.appDir + '{images,js}/*.*', gulp.series('images'));
 });
 
 gulp.task('serve', () => {
   browserSync.init({
-    server: './public'
+    proxy
   });
 
   browserSync.watch('./public/**/*.*').on('change', browserSync.reload);
@@ -71,6 +64,6 @@ gulp.task('dev',
   gulp.series('build', gulp.parallel('watch', 'serve'))
 );
 
-gulp.task('dev:noserve',
+gulp.task('default',
   gulp.series('build', 'watch')
 );
