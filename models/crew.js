@@ -5,10 +5,6 @@ function setColor(color) {
   return (color.length > 6) ? '000000' : color;
 }
 
-function getTimestamp(date) {
-  return date.getTime();
-}
-
 let crewSchema = new Schema({
   crewId: { type: Number, required: true, unique: true },
   name: { type: String, required: true },
