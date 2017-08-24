@@ -10,13 +10,13 @@ const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'dev';
 console.log(process.env.NODE_ENV);
 
 gulp.task('lint', () => {
-  return gulp.src(`${config.appDir}js/*.*`)
+  return gulp.src(`${config.srcDir}js/*.*`)
     .pipe(plugins.eslint())
     .pipe(plugins.eslint.format());
 });
 
 gulp.task('styles', () => {
-  return gulp.src(`${config.appDir}sass/app.sass`)
+  return gulp.src(`${config.srcDir}sass/app.sass`)
     .pipe(plugins.if(isDev, plugins.sourcemaps.init()))
     .pipe(plugins.sass({ outputStyle: 'compressed' })
     // .on('error', sass.logError))
@@ -32,7 +32,7 @@ gulp.task('styles', () => {
 });
 
 gulp.task('images', () => {
-  return gulp.src(`${config.appDir}{images,js}/*.*`, {since: gulp.lastRun('images')})
+  return gulp.src(`${config.srcDir}{images,js}/*.*`, {since: gulp.lastRun('images')})
     .pipe(plugins.newer('./public/images'))
     .pipe(plugins.debug({title: 'images/scripts'}))
     .pipe(gulp.dest('./public'));
@@ -48,15 +48,12 @@ gulp.task('build', gulp.series(
 ));
 
 gulp.task('watch', () => {
-  gulp.watch(config.appDir + 'sass/*.sass', gulp.series('styles'));
-  gulp.watch(config.appDir + '{images,js}/*.*', gulp.series('images'));
+  gulp.watch(config.srcDir + 'sass/*.sass', gulp.series('styles'));
+  gulp.watch(config.srcDir + '{images,js}/*.*', gulp.series('images'));
 });
 
 gulp.task('serve', () => {
-  browserSync.init({
-    proxy
-  });
-
+  browserSync.init({ proxy: `localhost:${config.port}` });
   browserSync.watch('./public/**/*.*').on('change', browserSync.reload);
 });
 
@@ -64,6 +61,10 @@ gulp.task('dev',
   gulp.series('build', gulp.parallel('watch', 'serve'))
 );
 
-gulp.task('default',
+gulp.task('dev:noserve',
   gulp.series('build', 'watch')
+);
+
+gulp.task('default',
+  gulp.series('dev')
 );

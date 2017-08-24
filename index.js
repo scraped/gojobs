@@ -11,7 +11,7 @@ const app = express();
 app.engine('.hbs', hbars.engine);
 app.disable('x-powered-by');
 app.set('view engine', '.hbs');
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || config.port);
 
 // Middleware
 app.use(express.static('public'));
