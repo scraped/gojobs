@@ -1,6 +1,9 @@
 @import "fonts.sass"
 @import "bulma.sass"
 
+body
+  background: rgba(0, 0, 0, 0.05)
+
 .cut
   white-space: nowrap
   overflow: hidden
@@ -65,9 +68,11 @@
 // Card image
 
 .job-info-left
-  left: 7px
+  right: 7px
+  bottom: 7px
 .job-info-right
   right: 7px
+  top: 7px
 .job-info
   opacity: 0.75
   span
@@ -80,7 +85,6 @@
     span
       opacity: 1
   position: absolute
-  top: 7px
   z-index: 100
   border-radius: 3px
   padding: 5px

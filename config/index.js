@@ -33,6 +33,20 @@ module.exports = {
     }
   },
 
+  gamemodes: {
+    1: {
+      type: 'Race',
+      submodes: {
+        1: 'Special Vehicle Race',
+        2: 'Stunt Race',
+        3: 'Air Race',
+        4: 'Bike Race',
+        5: 'Land Race',
+        6: 'Water Race',
+      }
+    }
+  },
+
   submodes: {
     11: 'Special Vehicle Race',
     12: 'Stunt Race',
@@ -50,6 +64,10 @@ module.exports = {
     61: 'Survival',
     71: 'Parachuting',
     0: 'Unknown',
+  },
+
+  _modes: {
+
   },
 
   platforms: {
