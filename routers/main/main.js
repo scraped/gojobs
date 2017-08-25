@@ -16,7 +16,7 @@ router.use('/', (req, res, next) => {
 
     jobs = jobs.map(job => {
       job.ratings.ratingColor = job.getRatingColor();
-      job.updated.dateString  = moment(job.updated.date).fromNow();
+      job.updated.dateString = moment(job.updated.date).fromNow();
 
       if (!job.tags) job.tags = {};
       if (job.category === 1) job.tags.verified = true;
