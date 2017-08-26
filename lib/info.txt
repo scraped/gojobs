@@ -13,6 +13,7 @@
 ЦВЕТА РОКСТАР
 blue: #01498E
 yellow: #FCAF17
+gta online: #EC0000
 
 ЦВЕТА МЕДАЛЕЙ
 case 0: return '#E0E0E0';

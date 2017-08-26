@@ -12,7 +12,8 @@ let crewSchema = new Schema({
   tag: { type: String, required: true, uppercase: true },
   color: { type: String, set: setColor, required: true },
   avatar: { type: Number, required: true },
-  updated: { type: Date, default: Date.now(), required: true }
+  updated: { type: Date, default: Date.now(), required: true },
+  uploadedLast: { type: Date }
 });
 
 module.exports = mongoose.model('crew', crewSchema);

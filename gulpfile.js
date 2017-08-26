@@ -7,7 +7,6 @@ const del = require('del');
 const browserSync = require('browser-sync').create();
 
 const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'dev';
-console.log(process.env.NODE_ENV);
 
 gulp.task('lint', () => {
   return gulp.src(`${config.srcDir}js/*.*`)
