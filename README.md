@@ -79,7 +79,7 @@ Type | Description
 ## Flags
 * `u` - can be `undefined`
 * `e` - can be empty
-* `!` - can be incorrect and you don't have to use it
+* `!` - can be incorrect or needs some transformation for correct value
 
 ## Root properties
 
@@ -92,26 +92,26 @@ Property | Type | Description
 
 Property | Type | Description | Flags
 -------- | ---- | ----------- | -----
-`pt` | `Integer` | Played total   | u
-`pu` | `Integer` | Played unique  | u
-`qt` | `Integer` | Quit total     | u
-`qu` | `Integer` | Quit unique    | u
-`dt` | `Integer` | Always 0?      | u
-`du` | `Integer` | Always 0?      | u
+`pt` | `Integer` | Played total   | `u`
+`pu` | `Integer` | Played unique  | `u`
+`qt` | `Integer` | Quit total     | `u`
+`qu` | `Integer` | Quit unique    | `u`
+`dt` | `Integer` | Always 0?      | `u`
+`du` | `Integer` | Always 0?      | `u`
 
 ## `Content.ratings`
 
 Property | Type | Description | Flags
 -------- | ---- | ----------- | -----
-`rt_pos`      | `Integer` | Likes                                       | u
-`rt_neg`      | `Integer` | Dislikes ('actual dislikes + quit unique')  | u
-`rt_unq`      | `Integer` | `rt_pos` + `rt_neg`                         | u
-`rt_pos_pct`  | `Float`   | % of likes                                  | u
-`rt_neg_pct`  | `Float`   | % of 'dislikes'                             | u
-`avg`         | `String`  | `rt_pos_pct` + '%'                          | u!
-`rt_avg`      | `Float`   | 99,99% alias of `rt_pos_pct`                | u!
-`rt_tot`      | `Integer` | Always 0?                                   | u
-`bkmk_unq`    | `Integer` | People bokmarked this                       | u
+`rt_pos`      | `Integer` | Likes                                       | `u`
+`rt_neg`      | `Integer` | Dislikes ('actual dislikes + quit unique')  | `u`
+`rt_unq`      | `Integer` | `rt_pos` + `rt_neg`                         | `u`
+`rt_pos_pct`  | `Float`   | % of likes                                  | `u`
+`rt_neg_pct`  | `Float`   | % of 'dislikes'                             | `u`
+`avg`         | `String`  | `rt_pos_pct` + '%'                          | `u!`
+`rt_avg`      | `Float`   | 99,99% alias of `rt_pos_pct`                | `u!`
+`rt_tot`      | `Integer` | Always 0?                                   | `u`
+`bkmk_unq`    | `Integer` | People bokmarked this                       | `u`
 
 ## `Content.Metadata`
 
@@ -131,60 +131,60 @@ Property | Type | Description | Flags
 `rockstarId`              | `integer`   | User ID | `e`
 `isOwner`                 | `boolean`   | Always `false`?  | -
 `creatorMedal`            | `string`    | Medal | `u`
-`crewurl`                 | `integer`   | 
-`crewtag`                 | `integer`   | 
-`crewrank`                | `integer`   | 
-`crewcolor`               | `integer`   | 
-`isfoundercrew`           | `integer`   | 
-`isprivate`               | `integer`   | 
-`thumbnail`               | `integer`   | 
-`plat`                    | `integer`   | 
-`cansubscribe`            | `integer`   | 
-`subscribed`              | `integer`   | 
-`tags`                    | `integer`   | 
-`ver`                     | `integer`   | 
-`url`                     | `integer`   | 
-`bkmr`                    | `integer`   | 
-`RootContentId`           | `integer`   | 
+`crewurl`                 | `string `   | `/crew/crew_name` | `u`
+`crewtag`                 | `string`    | Crew tag (not always uppercased) | `u!`
+`crewrank`                | `integer`   | Rank from `1` to `4`, `0` is no crew | -
+`crewcolor`               | `string`    | Color like `#ffffff`, can contain `#xxxxxxxx` | `u!`
+`isfoundercrew`           | `boolean`   | Is founder | -
+`isprivate`               | `boolean`   | Is crew private, `false` also if no crew | -
+`thumbnail`               | `string`    | `https://prod.cloud.rockstargames.com/ugc/gta5mission/<unique number>/<ID>/<1 or 2>_0.jpg` | -
+`plat`                    | `string`    | `Ps3`, `Ps4`, `XBox`, `XBoxOne`, `PC` | -
+`cansubscribe`            | `boolean`   | Always `false`? | -
+`subscribed`              | `boolean`   | Always `false`? | -
+`tags`                    | `array`     | Array of tags | `e`
+`ver`                     | `integer`   | Version | -
+`url`                     | `string`    | `/games/gtav/jobs/job/<ID>` | -
+`bkmr`                    | `boolean`   | Always `false`? | -
+`RootContentId`           | `MissionId` | 49% alias of actual ID | -
 
 ## `Content.Metadata.data.mission`
 
 Property | Type | Description | Flags
 -------- | ---- | ----------- | -----
-`gen.type`      | `Integer` | 
-`gen.char`      | `Integer` | 
-`gen.endtype`   | `Integer` | 
-`gen.min`       | `Integer` | 
-`gen.mtnum`     | `Integer` | 
-`gen.num`       | `Integer` | 
-`gen.rad`       | `Integer` | 
-`gen.rank`      | `Integer` | 
-`gen.start`     | `Integer` | 
-`gen.subtype`   | `Integer` | 
-`gen.tnum`      | `Integer` | 
-`gen.photo`     | `Integer` | 
-`gen.icon`      | `Integer` | 
-`gen.mode`      | `Integer` | 
-`gen.racetype`  | `Integer` | 
-`gen.ivm`       | `Integer` | 
-`gen.adverm`    | `Integer` | 
-`race.type`     | `Integer` | 
-`race.aveh`     | `Integer` | 
-`race.gw`       | `Integer` | 
-`race.chp`      | `Integer` | 
-`race.lap`      | `Integer` | 
-`race.rdis`     | `Integer` | 
-`race.dist`     | `Integer` | 
-`race.ivm`      | `Integer` | 
-`race.clbs`     | `Integer` | 
-`rule.liv`      | `Integer` | 
-`rule.pol`      | `Integer` | 
-`rule.score`    | `Integer` | 
-`rule.tdm`      | `Integer` | 
-`rule.time`     | `Integer` | 
-`rule.tod`      | `Integer` | 
-`rule.traf`     | `Integer` | 
-`rule.vdm`      | `Integer` | 
+`gen.type`      | `string`  | `Race`, `FreeMission`, `Deathmatch`, `Parachuting`, `Survival` | -
+`gen.char`      | `integer` | Always 0? | -
+`gen.endtype`   | `integer` | `0`, `2`-`5` for Versus Mission, LTS, AM, Capture IF rockstar, else for Captures ONLY (see stats below) | -
+`gen.min`       | `integer` | Min players | -
+`gen.mtnum`     | `integer` | `1` or `2` | -
+`gen.num`       | `integer` | Max players -
+`gen.rad`       | `integer` | Always 0? | -
+`gen.rank`      | `integer` | Min rank to play a job | `!`
+`gen.start`     | `object`  | Trigger's pos (`x`, `y`, `z`) | -
+`gen.subtype`   | `integer` | Subtype ID from `0` to `13` | -
+`gen.tnum`      | `integer` | 
+`gen.photo`     | `integer` | 
+`gen.icon`      | `string`  | Icon name | -
+`gen.mode`      | `string`  | Mode name | -
+`gen.racetype`  | `string`  | `Laps`, `Point To Point` | `u`
+`gen.ivm`       | `integer` | 
+`gen.adverm`    | `integer` | 
+`race.type`     | `integer` | 
+`race.aveh`     | `integer` | 
+`race.gw`       | `integer` | 
+`race.chp`      | `integer` | 
+`race.lap`      | `integer` | 
+`race.rdis`     | `integer` | 
+`race.dist`     | `integer` | 
+`race.ivm`      | `integer` | 
+`race.clbs`     | `integer` | 
+`rule.liv`      | `integer` | 
+`rule.pol`      | `integer` | 
+`rule.score`    | `integer` | 
+`rule.tdm`      | `integer` | 
+`rule.time`     | `integer` | 
+`rule.tod`      | `integer` | 
+`rule.traf`     | `integer` | 
+`rule.vdm`      | `integer` | 
 
 ## `Content.Metadata.data.meta`
 
@@ -196,6 +196,387 @@ Property | Type | Description | Flags
 `vehcl` | `Integer` | 
 `mrule` | `Integer` | 
 `wp`    | `Integer` | 
+
+## endtype stats
+9        2, Versus Mission
+10       2, Versus Mission
+23       2, Versus Mission
+41       2, Last Team Standing
+56       2, Last Team Standing
+63       3, Adversary Mode
+70       2, Adversary Mode
+72       5, Adversary Mode
+74       2, Adversary Mode
+77       2, Adversary Mode
+80       2, Last Team Standing
+81       2, Capture
+86       2, Capture
+88       2, Last Team Standing
+94       2, Capture
+96       5, Adversary Mode
+99       2, Capture
+108      2, Capture
+115      2, Capture
+122      2, Adversary Mode
+123      2, Adversary Mode
+125      2, Adversary Mode
+127      2, Adversary Mode
+128      2, Adversary Mode
+130      2, Adversary Mode
+131      2, Adversary Mode
+142      5, Adversary Mode
+148      5, Adversary Mode
+156      5, Adversary Mode
+164      2, Last Team Standing
+168      2, Capture
+170      5, Adversary Mode
+171      5, Adversary Mode
+179      2, Capture
+180      2, Capture
+181      2, Adversary Mode
+182      2, Capture
+190      2, Capture
+194      2, Capture
+223      2, Last Team Standing
+225      3, Adversary Mode
+227      2, Last Team Standing
+229      2, Last Team Standing
+230      2, Adversary Mode
+231      2, Adversary Mode
+232      2, Adversary Mode
+237      3, Adversary Mode
+239      2, Adversary Mode
+240      2, Capture
+284      2, Adversary Mode
+288      2, Adversary Mode
+291      2, Adversary Mode
+292      2, Adversary Mode
+293      2, Adversary Mode
+295      5, Adversary Mode
+296      2, Capture
+335      2, Versus Mission
+403      2, Adversary Mode
+407      2, Adversary Mode
+408      2, Adversary Mode
+409      5, Adversary Mode
+441      2, Adversary Mode
+442      2, Last Team Standing
+445      3, Adversary Mode
+450      2, Adversary Mode
+451      2, Adversary Mode
+469      5, Adversary Mode
+476      2, Capture
+481      2, Adversary Mode
+487      5, Adversary Mode
+488      2, Adversary Mode
+489      2, Adversary Mode
+490      2, Adversary Mode
+495      2, Capture
+496      2, Last Team Standing
+506      2, Adversary Mode
+507      2, Adversary Mode
+510      2, Adversary Mode
+517      2, Adversary Mode
+518      2, Capture
+521      2, Adversary Mode
+526      3, Adversary Mode
+533      2, Adversary Mode
+535      2, Adversary Mode
+541      2, Adversary Mode
+544      5, Adversary Mode
+547      5, Adversary Mode
+548      2, Adversary Mode
+555      2, Adversary Mode
+564      5, Adversary Mode
+567      2, Capture
+569      2, Capture
+574      5, Adversary Mode
+579      5, Adversary Mode
+581      2, Adversary Mode
+582      5, Adversary Mode
+584      2, Adversary Mode
+587      2, Adversary Mode
+589      2, Adversary Mode
+591      2, Adversary Mode
+592      2, Adversary Mode
+593      5, Adversary Mode
+594      2, Adversary Mode
+595      2, Adversary Mode
+598      2, Adversary Mode
+602      2, Adversary Mode
+603      2, Capture
+604      2, Adversary Mode
+605      2, Capture
+608      2, Adversary Mode
+614      5, Adversary Mode
+619      2, Capture
+622      2, Adversary Mode
+629      2, Adversary Mode
+630      2, Capture
+631      2, Capture
+634      2, Capture
+635      2, Capture
+636      2, Adversary Mode
+637      2, Adversary Mode
+681      2, Capture
+683      2, Capture
+684      2, Capture
+685      2, Capture
+686      2, Capture
+687      2, Capture
+688      2, Capture
+690      2, Capture
+779      2, Capture
+782      2, Capture
+784      2, Capture
+787      2, Capture
+788      2, Capture
+898      2, Capture
+943      2, Capture
+956      2, Capture
+973      2, Capture
+977      2, Capture
+983      2, Capture
+989      2, Capture
+1078     2, Capture
+1092     2, Capture
+1110     2, Capture
+1160     2, Capture
+1161     2, Capture
+1165     2, Capture
+1168     2, Capture
+1171     2, Capture
+1182     2, Capture
+1210     2, Capture
+1239     2, Capture
+1251     2, Capture
+1258     2, Capture
+1259     2, Capture
+1263     2, Capture
+1268     2, Capture
+1277     2, Capture
+1281     2, Capture
+1317     2, Capture
+1326     2, Capture
+1328     2, Capture
+1329     2, Capture
+1331     2, Capture
+1334     2, Capture
+1370     2, Capture
+1388     2, Capture
+1394     2, Capture
+1399     2, Capture
+1407     2, Capture
+1408     2, Capture
+1410     2, Capture
+1413     2, Capture
+1417     2, Capture
+1425     2, Capture
+1426     2, Capture
+1439     2, Capture
+1444     2, Capture
+1448     2, Capture
+1449     2, Capture
+1452     2, Capture
+1453     2, Capture
+1492     2, Capture
+1504     2, Capture
+1526     2, Capture
+1537     2, Capture
+1547     2, Capture
+1555     2, Capture
+1557     2, Capture
+1561     2, Capture
+1579     2, Capture
+1637     2, Capture
+1639     2, Capture
+1655     2, Capture
+1667     2, Capture
+1680     2, Capture
+1685     2, Capture
+1705     2, Capture
+1706     2, Capture
+1715     2, Capture
+1723     2, Capture
+1744     2, Capture
+1747     2, Capture
+1759     2, Capture
+1762     2, Capture
+1765     2, Capture
+1767     2, Capture
+1773     2, Capture
+1787     2, Capture
+1791     2, Capture
+1799     2, Capture
+1803     2, Capture
+1804     2, Capture
+1805     2, Capture
+1815     2, Capture
+1821     2, Capture
+1825     2, Capture
+1827     2, Capture
+1861     2, Capture
+1870     2, Capture
+1875     2, Capture
+1878     2, Capture
+1884     2, Capture
+1885     2, Capture
+1886     2, Capture
+1887     2, Capture
+1891     2, Capture
+1894     2, Capture
+1895     2, Capture
+1896     2, Capture
+1903     2, Capture
+1907     2, Capture
+1917     2, Capture
+2029     2, Capture
+2052     2, Capture
+2134     2, Capture
+2211     2, Capture
+2233     2, Capture
+2260     2, Capture
+2275     2, Capture
+2297     2, Capture
+2300     2, Capture
+2301     2, Capture
+2302     2, Capture
+2309     2, Capture
+2360     2, Capture
+2361     2, Capture
+2421     2, Capture
+2422     2, Capture
+2445     2, Capture
+2447     2, Capture
+2466     2, Capture
+2544     2, Capture
+2591     2, Capture
+2598     2, Capture
+2659     2, Capture
+2706     2, Capture
+2764     2, Capture
+2772     2, Capture
+2787     2, Capture
+2812     2, Capture
+2840     2, Capture
+2865     2, Capture
+2867     2, Capture
+2868     2, Capture
+2871     2, Capture
+2879     2, Capture
+2889     2, Capture
+2892     2, Capture
+2899     2, Capture
+2929     2, Capture
+2930     2, Capture
+2932     2, Capture
+2936     2, Capture
+2972     2, Capture
+2984     2, Capture
+3044     2, Capture
+3061     2, Capture
+3063     2, Capture
+3071     2, Capture
+3075     2, Capture
+3079     2, Capture
+3086     2, Capture
+3089     2, Capture
+3107     2, Capture
+3114     2, Capture
+3146     2, Capture
+3152     2, Capture
+3163     2, Capture
+3186     2, Capture
+3190     2, Capture
+3194     2, Capture
+3203     2, Capture
+3204     2, Capture
+3206     2, Capture
+3208     2, Capture
+3209     2, Capture
+3210     2, Capture
+3214     2, Capture
+3220     2, Capture
+3222     2, Capture
+3235     2, Capture
+3243     2, Capture
+3244     2, Capture
+3260     2, Capture
+3265     2, Capture
+3281     2, Capture
+3287     2, Capture
+3291     2, Capture
+3308     2, Capture
+3313     2, Capture
+3390     2, Capture
+3454     2, Capture
+3470     2, Capture
+3511     2, Capture
+3514     2, Capture
+3545     2, Capture
+3554     2, Capture
+3555     2, Capture
+3565     2, Capture
+3639     2, Capture
+3690     2, Capture
+3692     2, Capture
+3708     2, Capture
+3746     2, Capture
+3748     2, Capture
+3759     2, Capture
+3761     2, Capture
+3783     2, Capture
+3786     2, Capture
+3794     2, Capture
+3810     2, Capture
+3820     2, Capture
+3831     2, Capture
+3849     2, Capture
+3892     2, Capture
+3895     2, Capture
+3930     2, Capture
+3942     2, Capture
+3949     2, Capture
+3950     2, Capture
+
+## Modes
+
+'Last Team Standing': true,
+  'Land Race': true,
+  'Versus Mission': true,
+  'Bike Race': true,
+  'Stunt Race': true,
+  'Team Deathmatch': true,
+  'Air Race': true,
+  Parachuting: true,
+  'Special Vehicle Race': true,
+  'Water Race': true,
+  'Vehicle Deathmatch': true,
+  Deathmatch: true,
+  'Adversary Mode': true,
+  Capture: true,
+  Survival: true 
+
+## Icon names
+
+LastTeamStanding: NaN,
+  LandRace: NaN,
+  LandRaceP2P: NaN,
+  VersusMission: NaN,
+  BikeRaceP2P: NaN,
+  StuntRace: NaN,
+  TeamDeathmatch: NaN,
+  AirRace: NaN,
+  Parachuting: NaN,
+  StuntRaceP2P: NaN,
+  WaterRace: NaN,
+  VehicleDeathmatch: NaN,
+  Deathmatch: NaN,
+  BikeRace: NaN,
+  Capture: NaN,
+  AirRaceP2P: NaN,
+  WaterRaceP2P: NaN,
+  Survival: NaN
 
 # Locations
 
