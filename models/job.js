@@ -5,13 +5,13 @@ const Schema = mongoose.Schema;
 let jobSchema = new Schema({
   jobID: { type: String, required: true, unique: true },
   flags: {
-    rockstar: { type: Boolean },
-    verified: { type: Boolean }
+    rstar: { type: Boolean },
+    rstarverif: { type: Boolean }
   },
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
   images: {
-    thumb: { type: String, required: true, trim: true },
+    rstar: { type: Number, required: true },
     photos: { type: [String] }
   },
   platform: { type: Number, required: true },
