@@ -8,4 +8,4 @@ let jobRawSchema = new Schema({
   uploaded: { type: Boolean, default: false }
 });
 
-module.exports = mongoose.model('jobs-raw', jobRawSchema);
+module.exports = mongoose.model('JobRaw', jobRawSchema, 'jobs-raws');

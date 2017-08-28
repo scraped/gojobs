@@ -16,4 +16,4 @@ let crewSchema = new Schema({
   uploadedLast: { type: Date }
 });
 
-module.exports = mongoose.model('crew', crewSchema);
+module.exports = mongoose.model('Crew', crewSchema, 'crews');

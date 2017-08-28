@@ -7,58 +7,52 @@ let jobSchema = new Schema({
 
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
-  platform: { type: Number, required: true },
-  creator: { type: String, required: true },
-  images: {
-    rstar: { type: String, required: true },
-    custom: { type: [String] }
-  },
+  plat: { type: Number, required: true, min: 1, max: 5 },
+  author: { type: String, required: true },
+  img: { type: String, required: true },
 
   job: {
     type: { type: Number, required: true },
     mode: { type: Number, required: true },
-    minplayers: { type: Number, required: true },
-    maxplayers: { type: Number, required: true },
+    flags: { type: [String] },
+    verified: { type: Number, required: true, default: 0 },
   },
 
-  flags: {
-    isRstar: { type: Boolean },
-    isRstarVerif: { type: Boolean },
-    list: { type: Schema.Types.Mixed }
-  },
-
-  // type-specific information
-  specific: {
-    raceP2P: { type: Boolean },
-    raceVehCl: { type: [Number] },
-    raceDefVehicle: { type: Number },
-    raceDistance: { type: Number },
-    raceCheckp: { type: Number },
-    raceLaps: { type: Number },
-    captureType: { type: Number, default: 0 },
-    teamsAmount: { type: Number }
+  verif: {
+    rstarJob: { type: Boolean },
+    rstarVerif: { type: Boolean },
+    ourVerif: { type: Boolean },
+    ourRecom: { type: Boolean },
   },
 
   stats: {
-    rstar: {
-      playedTot: { type: Number, required: true },
-      playedUnq: { type: Number, required: true },
-      quitTot: { type: Number, required: true },
-      quitUnq: { type: Number, required: true },
-      likes: { type: Number, required: true },
-      dislikes: { type: Number, required: true },
-      bkmk: { type: Number, required: true },
-      rating: { type: Number, required: true },
-      ratingReal: { type: Number, required: true }
-    }
+    playTot: { type: Number, required: true },
+    playUnq: { type: Number, required: true },
+    quitTot: { type: Number, required: true },
+    quitUnq: { type: Number, required: true },
+    likes: { type: Number, required: true },
+    dlikes: { type: Number, required: true },
+    bkmk: { type: Number, required: true },
+    rating: { type: Number, required: true },
+    ratingReal: { type: Number, required: true }
   },
 
   updated: {
     ver: { type: Number, required: true },
-    job: { type: Date, default: Date.now(), required: true },
-    info: { type: Date, default: Date.now(), required: true }
+    job: { type: Date, default: Date.now, required: true },
+    info: { type: Date, default: Date.now, required: true }
   }
 });
+
+jobSchema.virtual('image')
+  .set((url) => {
+    let str = str.split('/');
+    this.img = `${str[5]}.${str[7].split('_')[0]}`;
+  })
+  .get(() => {
+    let info = this.img.split('.');
+    return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${info[0]}/${this.jobId}/${info[1]}_0.jpg`;
+  });
 
 jobSchema = new Schema({
   jobID: String,
@@ -121,4 +115,4 @@ jobSchema.methods.getRatingColor = function () {
   return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
 };
 
-module.exports = mongoose.model('job', jobSchema);
+module.exports = mongoose.model('Job', jobSchema, 'jobs');

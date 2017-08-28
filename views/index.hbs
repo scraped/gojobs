@@ -2,6 +2,14 @@
 
 <section class="section">
   <div class="container">
-    {{> jobs}}
+    {{#if locals.partials.jobsContext}}
+      {{> jobs}}
+    {{else}}
+      <article class="message is-danger">
+        <div class="message-body">
+          <p class="subtitle is-4">No jobs found on your request.</p>
+        </div>
+      </article>
+    {{/if}}
   </div>
 </section>
