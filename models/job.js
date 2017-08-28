@@ -7,22 +7,16 @@ let jobSchema = new Schema({
 
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
-  plat: { type: Number, required: true, min: 1, max: 5 },
-  author: { type: String, required: true },
+  platId: { type: Number, required: true },
+  author: { type: String },
   img: { type: String, required: true },
-
-  job: {
-    type: { type: Number, required: true },
-    mode: { type: Number, required: true },
-    flags: { type: [String] },
-    verified: { type: Number, required: true, default: 0 },
-  },
+  modeId: { type: Number, required: true },
+  flags: { type: [String] },
 
   verif: {
     rstarJob: { type: Boolean },
     rstarVerif: { type: Boolean },
-    ourVerif: { type: Boolean },
-    ourRecom: { type: Boolean },
+    ourVerif: { type: Boolean, required: true, default: false }
   },
 
   stats: {
@@ -39,80 +33,46 @@ let jobSchema = new Schema({
 
   updated: {
     ver: { type: Number, required: true },
-    job: { type: Date, default: Date.now, required: true },
-    info: { type: Date, default: Date.now, required: true }
+    job: { type: Date, required: true },
+    info: { type: Date, required: true }
   }
 });
 
-jobSchema.virtual('image')
-  .set((url) => {
-    let str = str.split('/');
+jobSchema.virtual('mode')
+  .set(function(mode) {
+    this.modeId = config.modesId[mode];
+  })
+  .get(function() {
+    return {
+      name: config.modes[this.modeId].name,
+      icon: config.modes[this.modeId].icon
+    };
+  });
+
+jobSchema.virtual
+
+jobSchema.virtual('platform')
+  .set(function(platform) {
+    this.platId = {
+      'PC': 1,
+      'Ps4': 2,
+      'XBoxOne': 3,
+      'Ps3': 4,
+      'XBox': 5
+    }[platform];
+  })
+  .get(function() {
+    return config.platforms[this.platId];
+  });
+
+jobSchema.virtual('imageUrl')
+  .set(function(url) {
+    let str = url.split('/');
     this.img = `${str[5]}.${str[7].split('_')[0]}`;
   })
-  .get(() => {
+  .get(function() {
     let info = this.img.split('.');
     return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${info[0]}/${this.jobId}/${info[1]}_0.jpg`;
   });
-
-jobSchema = new Schema({
-  jobID: String,
-  category: Number,
-  name: String,
-  desc: String,
-  image: String,
-  platform: Number,
-
-  info: {
-    mode: Number,
-    submode: Number,
-    minlvl: Number,
-    minplayers: Number,
-    maxplayers: Number,
-  },
-
-  details: Schema.Types.Mixed,
-
-  creator: {
-    nickname: String,
-    medal: Number,
-    crew: {
-      tag: String,
-      rank: Number,
-      color: {
-        type: String,
-        default: '000000'
-      }
-    }
-  },
-
-  ratings: {
-    playedTotal: Number,
-    playedUnique: Number,
-    quitTotal: Number,
-    quitUnique: Number,
-    likes: Number,
-    dislikes: Number,
-    rating: Number,
-  },
-
-  updated: {
-    date: Date,
-    version: Number
-  },
-});
-
-
-jobSchema.virtual('submodeName').get(function () {
-  return config.submodes[this.info.submode];
-});
-
-jobSchema.virtual('platformName').get(function () {
-  return config.platforms[this.platform];
-});
-
-jobSchema.methods.getRatingColor = function () {
-  let rating = this.ratings.rating;
-  return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
-};
 
 module.exports = mongoose.model('Job', jobSchema, 'jobs');

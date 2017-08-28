@@ -33,41 +33,99 @@ module.exports = {
     }
   },
 
-  gamemodes: {
+  modes: {
     1: {
-      type: 'Race',
-      submodes: {
-        1: 'Special Vehicle Race',
-        2: 'Stunt Race',
-        3: 'Air Race',
-        4: 'Bike Race',
-        5: 'Land Race',
-        6: 'Water Race',
-      }
+      name: 'Adversary Mode',
+      icon: 'advm'
+    },
+
+    2: {
+      name: 'Versus Mission',
+      icon: 'advm'
+    },
+
+    3: {
+      name: 'Survival',
+      icon: 'surv'
+    },
+
+    4: {
+      name: 'Parachuting',
+      icon: 'par'
+    },
+
+    5: {
+      name: 'Capture',
+      icon: 'cap'
+    },
+
+    6: {
+      name: 'Last Team Standing',
+      icon: 'lts'
+    },
+
+    7: {
+      name: 'Deathmatch',
+      icon: 'dm'
+    },
+
+    8: {
+      name: 'Team Deathmatch',
+      icon: 'tdm'
+    },
+
+    9: {
+      name: 'Vehicle Deathmatch',
+      icon: 'vdm'
+    },
+
+    10: {
+      name: 'Land Race',
+      icon: 'landrace'
+    },
+
+    11: {
+      name: 'Bike Race',
+      icon: 'bikerace'
+    },
+
+    12: {
+      name: 'Air Race',
+      icon: 'airrace'
+    },
+
+    13: {
+      name: 'Water Race',
+      icon: 'waterrace'
+    },
+
+    14: {
+      name: 'Stunt Race',
+      icon: 'stuntrace'
+    },
+
+    15: {
+      name: 'Special Vehicle Race',
+      icon: 'stuntrace'
     }
   },
 
-  submodes: {
-    11: 'Special Vehicle Race',
-    12: 'Stunt Race',
-    13: 'Air Race',
-    14: 'Bike Race',
-    15: 'Land Race',
-    16: 'Water Race',
-    21: 'Versus Mission',
-    22: 'Adversary Mode',
-    31: 'Capture',
-    41: 'Last Team Standing',
-    51: 'Deathmatch',
-    52: 'Team Deathmatch',
-    53: 'Vehicle Deathmatch',
-    61: 'Survival',
-    71: 'Parachuting',
-    0: 'Unknown',
-  },
-
-  _modes: {
-
+  modesId: {
+    'Adversary Mode': 1,
+    'Versus Mission': 2,
+    'Survival': 3,
+    'Parachuting': 4,
+    'Capture': 5,
+    'Last Team Standing': 6,
+    'Deathmatch': 7,
+    'Team Deathmatch': 8,
+    'Vehicle Deathmatch': 9,
+    'Land Race': 10,
+    'Bike Race': 11,
+    'Air Race': 12,
+    'Water Race': 13,
+    'Stunt Race': 14,
+    'Special Vehicle Race': 15
   },
 
   platforms: {
