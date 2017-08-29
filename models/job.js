@@ -49,7 +49,11 @@ jobSchema.virtual('mode')
     };
   });
 
-jobSchema.virtual
+jobSchema.virtual('ratingTagCssClass')
+  .get(function() {
+    let rating = this.stats.rating;
+    return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
+  });
 
 jobSchema.virtual('platform')
   .set(function(platform) {
