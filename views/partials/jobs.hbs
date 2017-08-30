@@ -2,6 +2,19 @@
   GTA Online Jobs
 </h1>
 
+{{#if query.author}}
+<section class="section has-text-centered">
+  <figure class="image image-avatar is-128x128" style="margin: 0 auto; text-align: center;">
+    <img src="https://a.rsg.sc/n/{{lowerCase query.author}}/l">
+    <figcaption>
+        <a href="/">
+          @{{query.author}}
+        </a>
+    </figcaption>
+  </figure>
+</section>
+{{/if}}
+
 <div class="columns">
   <div class="column is-narrow" style="width: 250px;">
     First column
@@ -43,9 +56,13 @@
               <div class="media-content" style="width: 1px;">
                 <p class="subtitle is-6">
                   {{#if verif}}
-                    {{verification}}
+                    <a href="/?verif={{verif}}">
+                      {{verification}}
+                    </a>
                   {{else}}
-                    <a href="">@{{author}}</a>
+                    <a href="/?author={{author}}">
+                      @{{author}}
+                    </a>
                   {{/if}}
 
                   {{!--  --}}
@@ -81,20 +98,10 @@
                 <div class="icon">
                   <i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>
                 </div>
-                {{#if verif.rstarVerif}}
-                <div class="icon tooltip tooltip-left" data-tooltip="Rockstar Verified">
-                  <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                </div>
-                {{/if}}
-                {{#if verif.rstarJob}}
-                <div class="icon tooltip tooltip-left" data-tooltip="Rockstar Job">
-                  <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                </div>
-                {{/if}}
-                {{#if verif.outVerif}}
-                <div class="icon tooltip tooltip-left" data-tooltip="Verified by our team">
-                  <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                </div>
+                {{#if verif}}
+                  <div class="icon tooltip tooltip-left" data-tooltip="{{verification}}">
+                    <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                  </div>
                 {{/if}}
               </div>
             </div>
@@ -103,9 +110,13 @@
               <div class="tags">
                 <span class="tag">
                   {{#if author}}
-                    Platform: {{platform}}
+                    <a href="/?verif={{../query.verif}}&author={{../query.author}}&plat={{platId}}">
+                      Platform: {{platform}}
+                    </a>
                   {{else}}
-                    All platforms
+                    <a href="/?verif={{../query.verif}}&author={{../query.author}}">
+                      All platforms
+                    </a>
                   {{/if}}
                 </span>
                 {{!-- <span class="tag">Tag2</span>

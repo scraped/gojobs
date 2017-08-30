@@ -13,13 +13,18 @@ router.use('/', (req, res, next) => {
   res.locals.partials = res.locals.partials || {};
   res.pageNumber = Math.abs(Number(req.query.page)) || 1;
 
-  Job.find()
+  let findQuery = {};
+  req.query.author && (findQuery.author = req.query.author);
+  req.query.verif && (findQuery.verif = req.query.verif);
+  req.query.plat && (findQuery.platId = req.query.plat);
+
+  Job.find(findQuery)
     .skip(config.perPage * (res.pageNumber - 1))
     .limit(config.perPage)
     .exec((err, jobs) => {
       if (err) return next('Cannot retrieve jobs from the database');
 
-      Job.count((err, count) => {
+      Job.find(findQuery).count((err, count) => {
         if (err) return next('Cannot retrieve jobs from the database');
         res.jobsCount = count;
 
@@ -38,7 +43,10 @@ router.get('/', (req, res) => {
   let pagination = new Paginator(config.perPage, 1).build(
     res.jobsCount, res.pageNumber
   );
+
+  console.log(req.query);
   res.render('index', {
+    query: req.query,
     pagination: pagination
   });
 });
