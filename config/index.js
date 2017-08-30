@@ -1,6 +1,7 @@
 module.exports = {
   port: 3000,
   srcDir: './src/',
+  perPage: 18,
 
   mongo: {
     connectUri: 'mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs',
@@ -31,6 +32,14 @@ module.exports = {
       cssClass: 'warning',
       image: true,
     }
+  },
+
+  verif: {
+    'rstar': 1,
+    'verif': 2,
+    1: 'Rockstar Job',
+    2: 'Rockstar Verified',
+    3: 'Verified by our team'
   },
 
   modes: {

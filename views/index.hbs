@@ -2,6 +2,72 @@
   <div class="container">
     {{#if partials.jobsContext}}
       {{> jobs}}
+      {{#if pagination}}
+      <nav class="pagination is-centered is-medium" role="navigation" aria-label="pagination">
+        {{#if pagination.has_previous_page}}
+          <a class="pagination-previous" href="/?page={{pagination.previous_page}}">
+            ← Previous page
+          </a>
+        {{/if}}
+        {{#if pagination.has_next_page}}
+          <a class="pagination-next" href="/?page={{pagination.next_page}}">
+            Next page →
+          </a>
+        {{/if}}
+        <ul class="pagination-list">
+          {{#if pagination.has_previous_page}}
+            <li>
+              <a
+                class="pagination-link"
+                href="/?page=1"
+                aria-label="Goto page 1">
+                1
+              </a>
+            </li>
+            <li>
+              <span class="pagination-ellipsis">&hellip;</span>
+            </li>
+            <li>
+              <a
+                class="pagination-link"
+                aria-label="Goto page {{pagination.previous_page}}"
+                href="/?page={{pagination.previous_page}}">
+                  {{pagination.previous_page}}
+              </a>
+            </li>
+          {{/if}}
+            <li>
+              <a
+                class="pagination-link is-current"
+                aria-label="Page {{pagination.current_page}}"
+                aria-current="page">
+                  {{pagination.current_page}}
+              </a>
+            </li>
+          {{#if pagination.has_next_page}}
+            <li>
+              <a
+                class="pagination-link"
+                aria-label="Goto page {{pagination.next_page}}"
+                href="/?page={{pagination.next_page}}">
+                  {{pagination.next_page}}
+              </a>
+            </li>
+            <li>
+              <span class="pagination-ellipsis">&hellip;</span>
+            </li>
+            <li>
+              <a
+                class="pagination-link"
+                aria-label="Goto page {{pagination.total_pages}}"
+                href="/?page={{pagination.total_pages}}">
+                  {{pagination.total_pages}}
+              </a>
+            </li>
+          {{/if}}
+        </ul>
+      </nav>
+      {{/if}}
     {{else}}
       <article class="message is-danger">
         <div class="message-body">

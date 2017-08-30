@@ -1,0 +1,39 @@
+@import "./../../../../node_modules/bulma/sass/components/navbar"
+
+.container > .navbar
+  margin: 0
+
+.navbar-container
+  background: linear-gradient(45deg, $primary 25%, #000000 0, #000000 50%, $primary 0, $primary 75%, #000000 0)
+  background-size: 60px 60px
+  a
+    color: #ffffff
+    transition-duration: 0.1s
+    &:hover
+      background: rgba(255, 255, 255, 0.1)
+      color: #ffffff
+  .container
+    background: #000000
+    &::after
+      content: ''
+      position: absolute
+      left: -51px
+      bottom: 0
+      width: 0
+      height: 0
+      border-right: 52px solid #000000
+      border-bottom: 52px solid transparent
+    &::before
+      content: ''
+      position: absolute
+      right: -51px
+      bottom: 0
+      width: 0
+      height: 0
+      border-left: 52px solid #000000
+      border-top: 52px solid transparent
+
+.navbar
+  background: transparent
+  img
+    user-select: none

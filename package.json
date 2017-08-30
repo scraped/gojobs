@@ -37,12 +37,11 @@
     "gulp-sourcemaps": "^2.6.0",
     "moment": "^2.18.1",
     "mongoose": "^4.11.6",
-    "node-schedule": "^1.2.4",
+    "paginator": "^1.0.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.1"
   },
   "devDependencies": {
-    "cross-env": "^5.0.5",
     "eslint": "^4.3.0"
   }
 }

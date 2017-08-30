@@ -1,123 +1,136 @@
-<div class="columns is-multiline" id="jobs">
-  {{#each partials.jobsContext}}
-  <div class="column is-half-tablet is-one-third-desktop">
-    <div class="card">
-      <div class="card-image" style="position: relative;">
-        <a href="/job/{{jobId}}">
-        <div class="card-image-text">
-            <p class="title is-5">
-              <span class="tooltip tooltip-bottom" data-tooltip="Mode: {{mode.name}}">
-                <img class="" src="/images/mode-{{mode.icon}}-white.png" width="16" height="16" style="margin-right: 5px; margin-left: 5px;">
-              </span>
-              {{{name}}}
-            </p>
-        </div>
-        </a>
-        <figure class="image is-2by1">
-          <a href="/job/{{jobId}}"><img src="{{imageUrl}}" alt="Job image" style="background-color: #e1e1e1;"></a>
-        </figure>
-      </div>
+<h1 class="title">
+  GTA Online Jobs
+</h1>
 
-      <div class="card-content">
-        <div class="media">
-          <div class="media-left">
-            <figure class="image image-avatar is-48x48">
-              {{#if author}}
-                <img src="https://a.rsg.sc/n/{{lowerCase author}}/s" alt="Author avatar">
-                <div class="image-avatar-medal tooltip tooltip-right" style="background-image: url(/images/medal-{{creator.medal}}.png)" data-tooltip="Medal"></div>
-              {{else}}
-                <img src="/images/rockstar-avatar-48.png" alt="Author avatar">
-              {{/if}}
+<div class="columns">
+  <div class="column is-narrow" style="width: 250px;">
+    First column
+  </div>
+  <div class="column">
+    <div class="columns is-multiline" id="jobs">
+      {{#each partials.jobsContext}}
+      <div class="column is-12 is-half-desktop">
+        <div class="card">
+          <div class="card-image" style="position: relative;">
+            <a href="/job/{{jobId}}">
+            <div class="card-image-text">
+                <p class="title is-5">
+                  <span class="tooltip tooltip-bottom" data-tooltip="Mode: {{mode.name}}">
+                    <img class="" src="/images/mode-{{mode.icon}}-white.png" width="16" height="16" style="margin-right: 5px; margin-left: 5px;">
+                  </span>
+                  {{{name}}}
+                </p>
+            </div>
+            </a>
+            <figure class="image is-2by1">
+              <a href="/job/{{jobId}}"><img src="{{imageUrl}}" alt="Job image" style="background-color: #e1e1e1;"></a>
             </figure>
           </div>
 
-          <div class="media-content" style="width: 1px;">
-            <p class="subtitle is-6">
-              {{#if author}}
-                <a href="">@{{creator.nickname}}</a>
-              {{else}}
+          <div class="card-content">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image image-avatar is-48x48">
+                  {{#if verif}}
+                    <img src="/images/rockstar-avatar-48.png" alt="Author avatar">
+                  {{else}}
+                    <img src="https://a.rsg.sc/n/{{lowerCase author}}/s" alt="Author avatar">
+                    <div class="image-avatar-medal tooltip tooltip-right" style="background-image: url(/images/medal-{{creator.medal}}.png)" data-tooltip="Medal"></div>
+                  {{/if}}
+                </figure>
+              </div>
+
+              <div class="media-content" style="width: 1px;">
+                <p class="subtitle is-6">
+                  {{#if verif}}
+                    {{verification}}
+                  {{else}}
+                    <a href="">@{{author}}</a>
+                  {{/if}}
+
+                  {{!--  --}}
+                  {{!-- {#if creator.crew.tag}}
+                    <span class="tag is-white" style="margin-left: 4px; border: 1px solid #{creator.crew.color}}">
+                      {creator.crew.tag}}
+                    </span>
+                  {/if}} --}}
+                  {{!--  --}}
+
+                  <br>
+                  <small><i>
+                    {{#if verif}}
+                      Added
+                    {{else}}
+                      {{#if isFirstVersion}}
+                        Added
+                      {{else}}
+                        Updated
+                      {{/if}}
+                    {{/if}}
+                    {{updated.dateString}}
+                    {{#unless verif}}
+                      {{#unless isFirstVersion}}
+                        (version {{updated.ver}})
+                      {{/unless}}
+                    {{/unless}}
+                  </i></small>
+                </p>
+              </div>
+
+              <div class="media-right">
+                <div class="icon">
+                  <i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>
+                </div>
                 {{#if verif.rstarVerif}}
-                  Rockstar Verified Job
+                <div class="icon tooltip tooltip-left" data-tooltip="Rockstar Verified">
+                  <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                </div>
                 {{/if}}
                 {{#if verif.rstarJob}}
-                  Rockstar Job
+                <div class="icon tooltip tooltip-left" data-tooltip="Rockstar Job">
+                  <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                </div>
                 {{/if}}
-              {{/if}}
+                {{#if verif.outVerif}}
+                <div class="icon tooltip tooltip-left" data-tooltip="Verified by our team">
+                  <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                </div>
+                {{/if}}
+              </div>
+            </div>
 
-              {{!--  --}}
-              {{!-- {#if creator.crew.tag}}
-                <span class="tag is-white" style="margin-left: 4px; border: 1px solid #{creator.crew.color}}">
-                  {creator.crew.tag}}
+            <div class="content">
+              <div class="tags">
+                <span class="tag">
+                  {{#if author}}
+                    Platform: {{platform}}
+                  {{else}}
+                    All platforms
+                  {{/if}}
                 </span>
-              {/if}} --}}
-              {{!--  --}}
-
-              <br>
-              <small><i>
-                {{#if author}}
-                  Updated
-                {{else}}
-                  Added
-                {{/if}}
-                {{updated.dateString}}
-                {{#if author}}
-                  (version {{updated.ver}})
-                {{/if}}
-              </i></small>
-            </p>
+                {{!-- <span class="tag">Tag2</span>
+                <span class="tag">Tag3</span> --}}
+              </div>
+            </div>
           </div>
 
-          <div class="media-right">
-            <div class="icon">
-              <i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>
+          <footer class="card-footer">
+            <div class="card-footer-item tooltip" data-tooltip="People played this: {{stats.playUnq}}">
+              <i class="fa fa-gamepad fa-lg" aria-hidden="true" style="margin-right: 3px;"></i>
+              {{stats.playTot}}
             </div>
-            {{#if verif.rstarVerif}}
-            <div class="icon tooltip tooltip-left" data-tooltip="Rockstar Verified">
-              <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+            <div class="card-footer-item tooltip" data-tooltip="Dislikes: {{stats.dlikes}}, optimal rating: {{stats.rating}}%">
+              <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" style="margin-right: 1px;"></i>
+              {{stats.likes}}
+              <span class="tag is-{{ratingTagCssClass}}" style="margin-left: 6px;">
+                {{stats.ratingQuit}}%
+              </span>
             </div>
-            {{/if}}
-            {{#if verif.rstarJob}}
-            <div class="icon tooltip tooltip-left" data-tooltip="Rockstar Job">
-              <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-            </div>
-            {{/if}}
-            {{#if verif.outVerif}}
-            <div class="icon tooltip tooltip-left" data-tooltip="Verified by our team">
-              <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-            </div>
-            {{/if}}
-          </div>
-        </div>
-
-        <div class="content">
-          <div class="tags">
-            <span class="tag">
-              {{#if author}}
-                Platform: {{platform}}
-              {{else}}
-                All platforms
-              {{/if}}
-            </span>
-            {{!-- <span class="tag">Tag2</span>
-            <span class="tag">Tag3</span> --}}
-          </div>
+          </footer>
         </div>
       </div>
-
-      <footer class="card-footer">
-        <div class="card-footer-item tooltip" data-tooltip="People played this: {{stats.playUnq}}">
-          <i class="fa fa-gamepad fa-lg" aria-hidden="true" style="margin-right: 3px;"></i>
-          {{stats.playTot}}
-        </div>
-        <div class="card-footer-item tooltip" data-tooltip="Dislikes: {{stats.dlikes}}, optimal rating: {{stats.rating}}%">
-          <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" style="margin-right: 1px;"></i>
-          {{stats.likes}}
-          <span class="tag is-{{ratingTagCssClass}}" style="margin-left: 6px;">
-            {{stats.ratingReal}}%
-          </span>
-        </div>
-      </footer>
+      {{/each}}
     </div>
+
   </div>
-  {{/each}}
 </div>

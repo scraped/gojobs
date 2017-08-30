@@ -18,7 +18,6 @@ gulp.task('styles', () => {
   return gulp.src(`${config.srcDir}sass/app.sass`)
     .pipe(plugins.if(isDev, plugins.sourcemaps.init()))
     .pipe(plugins.sass({ outputStyle: 'compressed' })
-    // .on('error', sass.logError))
     .on('error', plugins.notify.onError(err => {
       return {
         title: 'SASS',
@@ -47,12 +46,14 @@ gulp.task('build', gulp.series(
 ));
 
 gulp.task('watch', () => {
-  gulp.watch(config.srcDir + 'sass/*.sass', gulp.series('styles'));
-  gulp.watch(config.srcDir + '{images,js}/*.*', gulp.series('images'));
+  gulp.watch(`${config.srcDir}sass/**/*.*`, gulp.series('styles'));
+  gulp.watch(`${config.srcDir}{images,js}/*.*`, gulp.series('images'));
 });
 
 gulp.task('serve', () => {
-  browserSync.init({ proxy: `localhost:${config.port}` });
+  browserSync.init({
+    proxy: `localhost:${config.port}`
+  });
   browserSync.watch('./public/**/*.*').on('change', browserSync.reload);
 });
 
@@ -64,6 +65,4 @@ gulp.task('dev:noserve',
   gulp.series('build', 'watch')
 );
 
-gulp.task('default',
-  gulp.series('dev')
-);
+gulp.task('default', gulp.series('dev'));

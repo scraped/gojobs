@@ -12,12 +12,7 @@ let jobSchema = new Schema({
   img: { type: String, required: true },
   modeId: { type: Number, required: true },
   flags: { type: [String] },
-
-  verif: {
-    rstarJob: { type: Boolean },
-    rstarVerif: { type: Boolean },
-    ourVerif: { type: Boolean, required: true, default: false }
-  },
+  verif: { type: Number },
 
   stats: {
     playTot: { type: Number, required: true },
@@ -28,7 +23,7 @@ let jobSchema = new Schema({
     dlikes: { type: Number, required: true },
     bkmk: { type: Number, required: true },
     rating: { type: Number, required: true },
-    ratingReal: { type: Number, required: true }
+    ratingQuit: { type: Number, required: true }
   },
 
   updated: {
@@ -37,6 +32,14 @@ let jobSchema = new Schema({
     info: { type: Date, required: true }
   }
 });
+
+jobSchema.virtual('verification')
+  .set(function(verifState) {
+    this.verif = config.verif[verifState] || 0;
+  })
+  .get(function() {
+    return config.verif[this.verif];
+  });
 
 jobSchema.virtual('mode')
   .set(function(mode) {
@@ -72,11 +75,16 @@ jobSchema.virtual('platform')
 jobSchema.virtual('imageUrl')
   .set(function(url) {
     let str = url.split('/');
-    this.img = `${str[5]}.${str[7].split('_')[0]}`;
+    this.img = `${str[5]}.${str[7]}`;
   })
   .get(function() {
     let info = this.img.split('.');
-    return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${info[0]}/${this.jobId}/${info[1]}_0.jpg`;
+    return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${info[0]}/${this.jobId}/${info[1]}.jpg`;
+  });
+
+jobSchema.virtual('isFirstVersion')
+  .get(function() {
+    return this.updated.ver === 1;
   });
 
 module.exports = mongoose.model('Job', jobSchema, 'jobs');
