@@ -10,7 +10,30 @@
 </head>
 
 <body>
-  {{!-- Menu is rendered by views as its position is not defined by default --}}
+  <div class="navbar-container">
+    <div class="container">
+      <div class="navbar">
+        <div class="navbar-brand">
+          <a href="/" class="navbar-item">
+            <img src="/images/logo-mixed.png" alt="Go to the main page" title="Go to the main page">
+          </a>
+
+          <div class="navbar-burger burger" data-target="mainMenu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+        </div>
+
+        <div class="navbar-menu" id="mainMenu">
+          <div class="navbar-end">
+            <a href="/login" class="navbar-item">Log in or sign up</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   {{{body}}}
 
   <footer class="footer">

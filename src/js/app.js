@@ -46,30 +46,3 @@ $(document).ready(function() {
 
 });
 
-// let navbarBurger = document.querySelector('.navbar-burger');
-// let target = document.getElementById(navbarBurger.dataset.target);
-
-// navbarBurger.onclick = () => {
-//   navbarBurger.classList.toggle('is-active');
-//   target.classList.toggle('is-active');
-// };
-
-// document.getElementById('jobs').onclick = (e) => {
-//   let target = e.target;
-
-//   if (!target.classList.contains('button')) {
-//     return;
-//   }
-
-//   target.classList.add('is-loading');
-
-//   setTimeout(() => {
-//     target.classList.remove('is-loading');
-
-//     if (target.dataset.added == '0') {
-//       target.dataset.added = '1';
-//     } else {
-//       target.dataset.added = '0';
-//     }
-//   }, 250);
-// };

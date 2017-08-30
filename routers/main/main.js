@@ -9,18 +9,17 @@ mongoose.connect(config.mongo.connectUri, config.mongo.options);
 module.exports = router;
 
 router.use('/', (req, res, next) => {
-  if (!res.locals.partials) res.locals.partials = {};
+  let pagenum = Math.abs(Number(req.query.page)) || 1;
+  res.locals.partials = res.locals.partials || {};
 
-  Job.find((err, jobs) => {
-    if (err) console.error(err);
+  Job.find()
+    .skip(18 * (pagenum - 1))
+    .limit(18)
+    .exec((err, jobs) => {
+    if (err) return next('Cannot retrieve jobs from the database');
 
     jobs = jobs.map(job => {
-      // job.ratings.ratingColor = job.getRatingColor();
       job.updated.dateString = moment(job.updated.job).fromNow();
-
-      // if (!job.tags) job.tags = {};
-      // if (job.category === 1) job.tags.verified = true;
-      // if (job.category === 2) job.tags.rockstar = true;
       return job;
     });
 
