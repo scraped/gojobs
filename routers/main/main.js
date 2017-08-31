@@ -44,9 +44,9 @@ router.get('/', (req, res) => {
     res.jobsCount, res.pageNumber
   );
 
-  console.log(req.query);
   res.render('index', {
     query: req.query,
-    pagination: pagination
+    pagination: pagination,
+
   });
 });

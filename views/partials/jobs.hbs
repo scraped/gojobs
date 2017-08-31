@@ -2,23 +2,43 @@
   GTA Online Jobs
 </h1>
 
-{{#if query.author}}
-<section class="section has-text-centered">
-  <figure class="image image-avatar is-128x128" style="margin: 0 auto; text-align: center;">
-    <img src="https://a.rsg.sc/n/{{lowerCase query.author}}/l">
-    <figcaption>
-        <a href="/">
-          @{{query.author}}
-        </a>
-    </figcaption>
-  </figure>
-</section>
-{{/if}}
-
 <div class="columns">
-  <div class="column is-narrow" style="width: 250px;">
-    First column
+  <div class="column is-3">
+    <div class="box" id="left-menu">
+      <form action="/">
+        <div class="field">
+          <label class="label" for="author">Author</label>
+          <div class="control has-icons-left">
+            <input class="input" name="author" id="author" type="text" placeholder="Nickname" value="{{query.author}}">
+            <span class="icon is-small is-left">
+              <i class="fa fa-at"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <input class="is-checkbox is-circle" id="rstar" type="checkbox" name="rstar">
+          <label for="rstar">Rockstar Job</label>
+        </div>
+
+        <div class="field">
+          <input class="is-checkbox is-circle" id="rstarverif" type="checkbox" name="rstarverif">
+          <label for="rstarverif">Rockstar Verified Job</label>
+        </div>
+
+        <div class="field">
+          <label class="label">Platform</label>
+            <div class="tags">
+              <span class="tag is-primary">Any</span>
+              <span class="tag is-dark">PC</span>
+              <span class="tag is-dark">PS4</span>
+              <span class="tag is-dark">XB1</span>
+            </div>
+        </div>
+      </form>
+    </div>
   </div>
+
   <div class="column">
     <div class="columns is-multiline" id="jobs">
       {{#each partials.jobsContext}}
@@ -27,12 +47,12 @@
           <div class="card-image" style="position: relative;">
             <a href="/job/{{jobId}}">
             <div class="card-image-text">
-                <p class="title is-5">
-                  <span class="tooltip tooltip-bottom" data-tooltip="Mode: {{mode.name}}">
-                    <img class="" src="/images/mode-{{mode.icon}}-white.png" width="16" height="16" style="margin-right: 5px; margin-left: 5px;">
-                  </span>
-                  {{{name}}}
-                </p>
+              <p class="title is-5">
+                <span class="tooltip tooltip-bottom" data-tooltip="Mode: {{mode.name}}">
+                  <img class="" src="/images/mode-{{mode.icon}}-white.png" width="16" height="16" style="margin-right: 5px; margin-left: 5px;">
+                </span>
+                {{{name}}}
+              </p>
             </div>
             </a>
             <figure class="image is-2by1">
@@ -48,7 +68,9 @@
                     <img src="/images/rockstar-avatar-48.png" alt="Author avatar">
                   {{else}}
                     <img src="https://a.rsg.sc/n/{{lowerCase author}}/s" alt="Author avatar">
-                    <div class="image-avatar-medal tooltip tooltip-right" style="background-image: url(/images/medal-{{creator.medal}}.png)" data-tooltip="Medal"></div>
+                    <div class="image-avatar-medal">
+                      <div class="tooltip tooltip-right" style="background-image: url(/images/medal-{{creator.medal}}.png)" data-tooltip="Medal"></div>
+                    </div>
                   {{/if}}
                 </figure>
               </div>
@@ -133,7 +155,7 @@
             <div class="card-footer-item tooltip" data-tooltip="Dislikes: {{stats.dlikes}}, optimal rating: {{stats.rating}}%">
               <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" style="margin-right: 1px;"></i>
               {{stats.likes}}
-              <span class="tag is-{{ratingTagCssClass}}" style="margin-left: 6px;">
+              <span class="tag is-white is-border-{{ratingTagCssClass}}" style="margin-left: 6px;">
                 {{stats.ratingQuit}}%
               </span>
             </div>

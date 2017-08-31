@@ -1,4 +1,58 @@
-@import "variables"
-@import "fonts"
-@import "bulma/_all"
-@import "general"
+//
+// 1. Import&change bulma&our variables & fonts
+//
+
+@import "./../../node_modules/bulma/sass/utilities/initial-variables"
+@import "./../../node_modules/bulma/sass/utilities/functions"
+@import "./variables"
+@import "./fonts"
+
+$body-background-color: $white-ter
+$family-sans-serif: "Source Sans Pro", $family-sans-serif
+
+$primary: #EB0000
+$primary-invert: findColorInvert($primary)
+
+//
+// 2. Import Bulma framework
+//
+
+// 2. 1. Utilities & base
+@import "./../../node_modules/bulma/sass/utilities/_all"
+@import "./../../node_modules/bulma/sass/base/_all"
+
+// 2. 2. Components
+@import "./bulma/components/card"
+@import "./../../node_modules/bulma/sass/components/media"
+@import "./../../node_modules/bulma/sass/components/message"
+@import "./bulma/components/navbar"
+@import "./../../node_modules/bulma/sass/components/pagination"
+
+// 2. 3. Elements
+@import "./../../node_modules/bulma/sass/elements/box"
+@import "./../../node_modules/bulma/sass/elements/button"
+@import "./../../node_modules/bulma/sass/elements/form"
+@import "./../../node_modules/bulma/sass/elements/icon"
+@import "./../../node_modules/bulma/sass/elements/image"
+@import "./../../node_modules/bulma/sass/elements/notification"
+@import "./../../node_modules/bulma/sass/elements/other"
+@import "./bulma/elements/tag"
+@import "./../../node_modules/bulma/sass/elements/title"
+
+// 2. 4. Grid
+@import "./../../node_modules/bulma/sass/grid/_all"
+
+// 2. 5. Layout
+@import "./bulma/layout/footer"
+@import "./../../node_modules/bulma/sass/layout/hero"
+@import "./../../node_modules/bulma/sass/layout/section"
+
+// 2. 6. Bulma extensions
+@import "./bulma/ext/bulma-tooltip"
+@import "./bulma/ext/checkradio"
+
+//
+// 3. Import our stylesheets
+//
+
+@import "./general"

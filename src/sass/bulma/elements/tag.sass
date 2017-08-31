@@ -1,13 +1,10 @@
 @import "./../../../../node_modules/bulma/sass/elements/tag"
 
-.tag
-  color: #000000 !important
-.tag.is-success
-  background: none
-  border: 1px solid #23D160
-.tag.is-warning
-  background: none
-  border: 1px solid #FFDD57
-.tag.is-danger
-  background: none
-  border: 1px solid #FF3860
+.tag:not(body)
+  @each $name, $pair in $colors
+    $color: nth($pair, 1)
+    $color-invert: nth($pair, 2)
+    &.is-border-#{$name}
+      border: 1px solid $color
+      background: transparent
+      color: $black
