@@ -130,17 +130,15 @@
 
             <div class="content">
               <div class="tags">
-                <span class="tag">
-                  {{#if author}}
-                    <a href="/?verif={{../query.verif}}&author={{../query.author}}&plat={{platId}}">
-                      Platform: {{platform}}
-                    </a>
-                  {{else}}
-                    <a href="/?verif={{../query.verif}}&author={{../query.author}}">
-                      All platforms
-                    </a>
-                  {{/if}}
-                </span>
+                {{#if author}}
+                  <a class="tag" href="/?verif={{../query.verif}}&author={{../query.author}}&plat={{platId}}">
+                    Platform: {{platform}}
+                  </a>
+                {{else}}
+                  <a class="tag" href="/?verif={{../query.verif}}&author={{../query.author}}">
+                    All platforms
+                  </a>
+                {{/if}}
                 {{!-- <span class="tag">Tag2</span>
                 <span class="tag">Tag3</span> --}}
               </div>
