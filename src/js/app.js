@@ -48,16 +48,16 @@ $(document).ready(function() {
   // Body navbar margin
   document.body.style.marginTop = document.getElementById('navbar').offsetHeight + 'px';
 
-  // Left menu fixing
+  // Left menu fixation
   const leftmenu = document.getElementById('left-menu');
-  const leftmenuBottomPageCoord = leftmenu.getBoundingClientRect().bottom +
-    window.pageYOffset;
+  const leftmenuBottomPageCoord = 91; window.pageYOffset + leftmenu.offsetHeight;
 
   document.onscroll = function(e) {
     const isFixed = leftmenu.classList.contains("menu-fixed");
 
-    if (!isFixed && window.pageYOffset > leftmenuBottomPageCoord
-      || isFixed && window.pageYOffset < leftmenuBottomPageCoord) {
+    if (!isFixed && window.pageYOffset >= leftmenuBottomPageCoord
+      || isFixed && window.pageYOffset <= leftmenuBottomPageCoord) {
+        leftmenu.style.width = leftmenu.offsetWidth + 'px';
         leftmenu.classList.toggle("menu-fixed");
     }
   };

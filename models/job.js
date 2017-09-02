@@ -2,6 +2,12 @@ const config = require('../config');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+function setPlayers(pl) {
+  if (pl < 1) return 1;
+  if (pl > 30) return 30;
+  return pl;
+}
+
 let jobSchema = new Schema({
   jobId: { type: String, required: true, unique: true },
 
@@ -10,20 +16,27 @@ let jobSchema = new Schema({
   platId: { type: Number, required: true },
   author: { type: String },
   img: { type: String, required: true },
-  modeId: { type: Number, required: true },
-  flags: { type: [String] },
   verif: { type: Number },
 
+  job: {
+    flags: { type: [String] },
+    modeId: { type: Number, required: true },
+    minpl: { type: Number, required: true, set: setPlayers },
+    maxpl: { type: Number, required: true, set: setPlayers },
+  },
+
   stats: {
+    ratingPoints: { type: Number, required: true },
     playTot: { type: Number, required: true },
     playUnq: { type: Number, required: true },
     quitTot: { type: Number, required: true },
     quitUnq: { type: Number, required: true },
     likes: { type: Number, required: true },
     dlikes: { type: Number, required: true },
-    bkmk: { type: Number, required: true },
+    dlikesQuit: { type: Number, required: true },
     rating: { type: Number, required: true },
-    ratingQuit: { type: Number, required: true }
+    ratingQuit: { type: Number, required: true },
+    bkmk: { type: Number, required: true },
   },
 
   updated: {
@@ -43,12 +56,12 @@ jobSchema.virtual('verification')
 
 jobSchema.virtual('mode')
   .set(function(mode) {
-    this.modeId = config.modesId[mode];
+    this.job.modeId = config.modesId[mode];
   })
   .get(function() {
     return {
-      name: config.modes[this.modeId].name,
-      icon: config.modes[this.modeId].icon
+      name: config.modes[this.job.modeId].name,
+      icon: config.modes[this.job.modeId].icon
     };
   });
 
