@@ -139,6 +139,7 @@
                     All platforms
                   </a>
                 {{/if}}
+                <span class="tag">{{stats.ratingPoints}}</span>
                 {{!-- <span class="tag">Tag2</span>
                 <span class="tag">Tag3</span> --}}
               </div>
@@ -150,11 +151,11 @@
               <i class="fa fa-gamepad fa-lg" aria-hidden="true" style="margin-right: 3px;"></i>
               {{stats.playTot}}
             </div>
-            <div class="card-footer-item tooltip" data-tooltip="Dislikes: {{stats.dlikes}}, optimal rating: {{stats.rating}}%">
+            <div class="card-footer-item tooltip" data-tooltip="Dislikes: {{stats.dlikes}}, optimal rating: {{stats.ratingQuit}}%">
               <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" style="margin-right: 1px;"></i>
               {{stats.likes}}
               <span class="tag is-white is-border-{{ratingTagCssClass}}" style="margin-left: 6px;">
-                {{stats.ratingQuit}}%
+                {{stats.rating}}%
               </span>
             </div>
           </footer>
