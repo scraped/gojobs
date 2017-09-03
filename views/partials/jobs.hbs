@@ -44,24 +44,24 @@
       {{#each partials.jobsContext}}
       <div class="column is-12 is-half-desktop">
         <div class="card">
-          <div class="card-image" style="position: relative;">
-            <a href="/job/{{jobId}}">
+          <a href="/job/{{jobId}}">
+            <div class="card-image" style="position: relative;">
               <div class="card-image-text">
                 <p class="title is-5">
                   <span class="tooltip tooltip-bottom" data-tooltip="Mode: {{mode.name}}">
-                    <img class="" src="/images/mode-{{mode.icon}}-white.png" width="16" height="16" style="margin-right: 5px; margin-left: 5px;">
+                    <img class="" src="/images/mode-{{mode.icon}}-white.png" width="16" height="16" style="margin: 0 5px;">
                   </span>
                   {{{name}}}
                 </p>
               </div>
+
+              <div style="position: absolute; top: 0; left: 0; background: #23d160; z-index: 100; width: {{stats.rating}}%; height: 4px;">
+              </div>
+
+              <figure class="image is-2by1">
+                <img src="{{imageUrl}}" alt="Job image" style="background-color: #e1e1e1;">
+              </figure>
             </a>
-
-            <div style="position: absolute; top: 0; left: 0; background: #23d160; z-index: 100; width: {{stats.rating}}%; height: 4px;">
-            </div>
-
-            <figure class="image is-2by1">
-              <a href="/job/{{jobId}}"><img src="{{imageUrl}}" alt="Job image" style="background-color: #e1e1e1;"></a>
-            </figure>
           </div>
 
           <div class="card-content">

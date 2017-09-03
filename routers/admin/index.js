@@ -2,9 +2,11 @@ const config = require('../../config');
 const router = require('express').Router();
 const request = require('request-promise');
 const fetchJobs = require('../../lib/fetch-jobs');
+const uploadJobs = require('../../lib/upload-jobs');
 
 const mongoose = require('mongoose');
-const Crew = require('../../models/Crew.js');
+const JobRaw = require('../../models/job-raw');
+const Crew = require('../../models/crew');
 mongoose.connect(config.mongo.connectUri, config.mongo.options);
 
 module.exports = router;
@@ -15,6 +17,73 @@ router.get('/', (req, res) => {
     res.locals.partials.crewsContext = crews;
     res.render('admin');
   });
+});
+
+router.get('/uploadraw', (req, res, next) => {
+  uploadJobs();
+  res.send('Check out the console log!');
+});
+
+router.get('/fetch', (req, res, next) => {
+  let params = {};
+  let updatedCrewInfo = false;
+
+  req.query = req.query || {};
+  params.searchBy = {};
+  params.searchBy.type = req.query.type;
+  params.searchBy.id = req.query.id;
+  params.platform = req.query.platform;
+  params.period = req.query.period;
+  params.once = Boolean(req.query.once);
+  params.limit = Number(req.query.limit);
+
+  let i = 0;
+
+  fetchJobs(params, jobs => {
+    let total = params.once ? Math.min(jobs.Total, 20) : jobs.Total;
+    let count = jobs.Count;
+    console.log(`Should be ${total} jobs, ${jobs.Count} now [LIMIT: ` +
+      `${params.limit}]; ONCE: ${params.once}, PLATFORM: ${params.platform}`);
+
+    jobs.Missions.forEach(job => {
+      let jobId = job.Content.Metadata.RootContentId;
+      let jobCurrId = job.MissionId;
+
+      JobRaw.findOneAndUpdate(
+        { jobId: jobId },
+        {
+          jobId: jobId,
+          jobCurrId: jobCurrId,
+          job: job,
+          updated: new Date(),
+          uploaded: false
+        },
+        {
+          upsert: true,
+          new: true,
+          setDefaultsOnInsert: true,
+          runSettersOnQuery: true
+        },
+        (err, doc) => {
+          if (err) console.log(`Error: ${err.code}`);
+          console.log(`${++i} \t ${jobId} uploaded`);
+        }
+      );
+    });
+
+    if (!updatedCrewInfo && params.searchBy.type === 'crew') {
+      updatedCrewInfo = true;
+
+      Crew.findOneAndUpdate(
+        { crewId: params.searchBy.id },
+        { uploadedLast: new Date() },
+        {},
+        (err, doc) => {}
+      );
+    }
+  });
+
+  res.send(`Got it, check out the console log!`);
 });
 
 router.get('/addcrew', (req, res, next) => {

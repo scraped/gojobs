@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -19,6 +21,12 @@ let crewSchema = new Schema({
 crewSchema.virtual('avatarUrl')
   .get(function() {
     return `https://prod.cloud.rockstargames.com/crews/sc/${this.avatar}/${this.crewId}/publish/emblem/emblem_128.png`;
+  });
+
+crewSchema.virtual('uploadedDateString')
+  .get(function() {
+    if (!this.uploadedLast) return;
+    return `Fetched ${moment(this.uploadedLast).fromNow()}`;
   });
 
 module.exports = mongoose.model('Crew', crewSchema, 'crews');

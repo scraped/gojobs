@@ -95,7 +95,7 @@ jobSchema.virtual('imageUrl')
   })
   .get(function() {
     let info = this.img.split('.');
-    return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${info[0]}/${this.jobId}/${info[1]}.jpg`;
+    return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${info[0]}/${this.jobCurrId}/${info[1]}.jpg`;
   });
 
 jobSchema.virtual('updatedDateString')

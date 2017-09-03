@@ -1,19 +1,34 @@
-{{#each partials.crewsContext}}
-  <article class="media">
-    <figure class="media-left">
-      <p class="image is-64x64">
-        <img src="https://prod.cloud.rockstargames.com/crews/sc/{{avatar}}/{{crewId}}/publish/emblem/emblem_128.png">
-      </p>
-    </figure>
-    <div class="media-content">
-      <div class="content">
-        <p class="subtitle">
-          <a href="https://socialclub.rockstargames.com/crew/{{url}}" target="_blank">
-            {{name}}
-            <span class="tag" style="border: 1px solid #{{color}}; background: #ffffff; margin-left: 4px;">{{tag}}</span>
-          </a>
-        </p>
-        {{crewId}}
+<div class="column">
+  <div class="columns is-multiline" id="jobs">
+    {{#each partials.crewsContext}}
+      <div class="column is-half">
+        <article class="media">
+          <figure class="media-left">
+            <p class="image is-64x64">
+              <img src="https://prod.cloud.rockstargames.com/crews/sc/{{avatar}}/{{crewId}}/publish/emblem/emblem_128.png">
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <p class="subtitle is-6">
+                <a href="https://socialclub.rockstargames.com/crew/{{url}}" target="_blank">
+                  {{name}}
+                  <span class="tag" style="border: 1px solid #{{color}}; background: #ffffff; margin-left: 4px;">{{tag}}</span>
+                </a>
+                <br>
+                <a href="/admin/fetch?type=crew&id={{crewId}}" target="_blank">
+                  Fetch jobs
+                </a>
+                <br>
+                {{#if uploadedDateString}}
+                  <i>{{uploadedDateString}}</i>
+                {{else}}
+                  <span class="tag is-warning">Fetching is needed</span>
+                {{/if}}
+              </p>
+            </div>
+        </article>
       </div>
-  </article>
-{{/each}}
+    {{/each}}
+  </div>
+</div>
