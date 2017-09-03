@@ -1,14 +1,14 @@
 const config = require('../../config');
 const router = require('express').Router();
 
-const mongoose  = require('mongoose');
+const mongoose = require('mongoose');
 const Job = require('../../models/job.js');
 mongoose.connect(config.mongo.connectUri, config.mongo.options);
 
 module.exports = router;
 
 router.param('id', (req, res, next, id) => {
-  Job.find({ jobID: req.params.id }, (err, job) => {
+  Job.find({ jobId: req.params.id }, (err, job) => {
     if (err) next(err);
     req.job = job;
     next();

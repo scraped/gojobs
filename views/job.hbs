@@ -1,4 +1,4 @@
-<div class="job" style="background-image: url({{image}})">
+<div class="job" style="background-image: url({{imageUrl}})">
   <div class="job-top">
   </div>
   <div class="job-bottom">
@@ -10,72 +10,78 @@
 
 <section class="section">
   <div class="container">
-    <div class="media">
-      <div class="media-left">
-        <figure class="image image-avatar is-48x48">
-          <img src="https://a.rsg.sc/n/{{lowerCase creator.nickname}}/s" alt="Author avatar">
-          {{#if creator.nickname}}
-            <div class="image-avatar-medal" style="background-image: url(/images/medal-{{creator.medal}}.png)"></div>
-          {{/if}}
-        </figure>
-      </div>
-      <div class="media-content" style="width: 1px;">
-        <p>
-          {{#if creator.nickname}}
-            @{{creator.nickname}}
-          {{else}}
-            {{#if tags.verified}}
-              Rockstar Verified Job
-            {{/if}}
-            {{#if tags.rockstar}}
-              Rockstar Job
-            {{/if}}
-          {{/if}}
-          {{#if creator.crew.tag}}
-            <span class="tag is-white" style="margin-left: 4px; background: #{{creator.crew.color}}; color: #ffffff">{{creator.crew.tag}}</span>
-          {{/if}}
-        </p>
+    <div class="columns">
+      <div class="column is-4">
+        <div class="media">
+          <div class="media-left">
+            <figure class="image image-avatar is-48x48">
+              {{#if verif}}
+                <img src="/images/rockstar-avatar-48.png" alt="Author avatar">
+              {{else}}
+                <img src="https://a.rsg.sc/n/{{lowerCase author}}/s" alt="Author avatar">
+                <div class="image-avatar-medal">
+                  <div class="tooltip tooltip-right" style="background-image: url(/images/medal-{{creator.medal}}.png)" data-tooltip="Medal"></div>
+                </div>
+              {{/if}}
+            </figure>
+          </div>
 
-        <p class="subtitle is-5">{{{desc}}}</p>
-      </div>
-    </div>
+          <div class="media-content" style="width: 1px;">
+            <p class="subtitle is-6">
+              {{#if verif}}
+                <a href="/?verif={{verif}}">
+                  {{verification}}
+                </a>
+              {{else}}
+                <a href="/?author={{author}}">
+                  @{{author}}
+                </a>
+              {{/if}}
 
-    <br>
-    <div class="field is-grouped is-grouped-multiline">
-      <div class="control">
-        <div class="tags has-addons">
-          <span class="tag is-light is-medium">Platform</span>
-          <span class="tag is-primary is-medium">
-            {{#if category}}
-              All platforms
-            {{else}}
-              <img src="/images/plat-{{platform}}-white.png" style="margin-right: 4px">
-              {{platformName}}
+              {{!--  --}}
+              {{!-- {#if creator.crew.tag}}
+                <span class="tag is-white" style="margin-left: 4px; border: 1px solid #{creator.crew.color}}">
+                  {creator.crew.tag}}
+                </span>
+              {/if}} --}}
+              {{!--  --}}
+
+              <br>
+              <small><i>
+                {{#if verif}}
+                  Added
+                {{else}}
+                  {{#if isFirstVersion}}
+                    Added
+                  {{else}}
+                    Updated
+                  {{/if}}
+                {{/if}}
+                {{updated.dateString}}
+                {{#unless verif}}
+                  {{#unless isFirstVersion}}
+                    (version {{updated.ver}})
+                  {{/unless}}
+                {{/unless}}
+              </i></small>
+            </p>
+          </div>
+
+          <div class="media-right">
+            <div class="icon">
+              <i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>
+            </div>
+            {{#if verif}}
+              <div class="icon tooltip tooltip-left" data-tooltip="{{verification}}">
+                <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+              </div>
             {{/if}}
-          </span>
+          </div>
         </div>
       </div>
-      {{#unless category}}
-      <div class="control">
-        <div class="tags has-addons">
-          <span class="tag is-light is-medium">
-            Version
-          </span>
-          <span class="tag is-info is-medium">
-            {{updated.version}}
-          </span>
-        </div>
-      </div>
-      {{/unless}}
-      <div class="control">
-        <div class="tags has-addons">
-          <span class="tag is-light is-medium">
-            Rating
-          </span>
-          <span class="tag is-warning is-medium">
-            {{ratings.rating}}%
-          </span>
-        </div>
+
+      <div class="column">
+        {{{desc}}}
       </div>
     </div>
   </div>
