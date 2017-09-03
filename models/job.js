@@ -1,4 +1,6 @@
 const config = require('../config');
+const moment = require('moment');
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -10,6 +12,7 @@ function setPlayers(pl) {
 
 let jobSchema = new Schema({
   jobId: { type: String, required: true, unique: true },
+  jobCurrId: { type: String, required: true },
 
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
@@ -67,7 +70,7 @@ jobSchema.virtual('mode')
 
 jobSchema.virtual('ratingTagCssClass')
   .get(function() {
-    let rating = this.stats.rating;
+    let rating = this.stats.ratingQuit;
     return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
   });
 
@@ -95,9 +98,14 @@ jobSchema.virtual('imageUrl')
     return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${info[0]}/${this.jobId}/${info[1]}.jpg`;
   });
 
-jobSchema.virtual('isFirstVersion')
+jobSchema.virtual('updatedDateString')
   .get(function() {
-    return this.updated.ver === 1;
+    let dateString = moment(this.updated.job).fromNow();
+    if (this.verif || this.updated.ver === 1) {
+      return `Added ${dateString}`;
+    } else {
+      return `Updated ${dateString} (version ${this.updated.ver})`;
+    }
   });
 
 module.exports = mongoose.model('Job', jobSchema, 'jobs');

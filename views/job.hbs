@@ -47,23 +47,7 @@
               {{!--  --}}
 
               <br>
-              <small><i>
-                {{#if verif}}
-                  Added
-                {{else}}
-                  {{#if isFirstVersion}}
-                    Added
-                  {{else}}
-                    Updated
-                  {{/if}}
-                {{/if}}
-                {{updated.dateString}}
-                {{#unless verif}}
-                  {{#unless isFirstVersion}}
-                    (version {{updated.ver}})
-                  {{/unless}}
-                {{/unless}}
-              </i></small>
+              <small><i>{{updatedDateString}}</i></small>
             </p>
           </div>
 

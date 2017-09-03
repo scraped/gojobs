@@ -1,6 +1,5 @@
 const config = require('../../config');
 const router = require('express').Router();
-const moment = require('moment');
 const Paginator = require('paginator');
 
 const mongoose = require('mongoose');
@@ -30,12 +29,6 @@ router.use('/', (req, res, next) => {
       Job.find(findQuery).count((err, count) => {
         if (err) return next('Cannot retrieve jobs from the database');
         res.jobsCount = count;
-
-        jobs = jobs.map(job => {
-          job.updated.dateString = moment(job.updated.job).fromNow();
-          return job;
-        });
-
         res.locals.partials.jobsContext = jobs;
         next();
       });

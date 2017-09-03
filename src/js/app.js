@@ -13,40 +13,47 @@ function createToast(options) {
 }
 
 $(document).ready(function() {
+  // Body margin-top from navbar
+  $('body').css('margin-top', $('#navbar').outerHeight());
+
+  //*****
+
+  // Toggle navbar
   $('.navbar-burger').on('click', function() {
-    $(this).toggleClass('is-active');
-    $('#' + $(this).data('target')).toggleClass('is-active');
+    let _this = $(this);
+
+    _this.toggleClass('is-active');
+    $(`#${_this.data('target')}`).toggleClass('is-active');
   });
 
-  let form = document.forms.upload;
+  // let form = document.forms.upload;
 
-  form.onsubmit = function() {
-    let sendButton = this.elements.send;
-    const query = 'admin/addcrew?url=' + encodeURIComponent(this.elements.url.value);
+  // form.onsubmit = function() {
+  //   let sendButton = this.elements.send;
+  //   const query = 'admin/addcrew?url=' + encodeURIComponent(this.elements.url.value);
 
-    let xhr = new XMLHttpRequest();
+  //   let xhr = new XMLHttpRequest();
 
-    xhr.open('GET', query, true);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.send();
-    sendButton.classList.add('is-loading');
+  //   xhr.open('GET', query, true);
+  //   xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  //   xhr.send();
+  //   sendButton.classList.add('is-loading');
 
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState != 4) return;
-      sendButton.classList.remove('is-loading');
-      createToast({
-        title: 'Info',
-        message: xhr.responseText,
-        type: 'success'
-      });
-    };
+  //   xhr.onreadystatechange = () => {
+  //     if (xhr.readyState != 4) return;
+  //     sendButton.classList.remove('is-loading');
+  //     createToast({
+  //       title: 'Info',
+  //       message: xhr.responseText,
+  //       type: 'success'
+  //     });
+  //   };
 
-    return false;
-  };
+  //   return false;
+  // };
 
 
-  // Body navbar margin
-  document.body.style.marginTop = document.getElementById('navbar').offsetHeight + 'px';
+
 
   // Left menu fixation
   const leftmenu = document.getElementById('left-menu');
