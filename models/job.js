@@ -10,6 +10,12 @@ function setPlayers(pl) {
   return pl;
 }
 
+function formatNumber(num) {
+  if (num >= 1000000) return (num / 1000000).toFixed(2) + 'm';
+  if (num >= 1000) return (num / 1000).toFixed(2) + 'k';
+  return num;
+}
+
 let jobSchema = new Schema({
   jobId: { type: String, required: true, unique: true },
   jobCurrId: { type: String, required: true },
@@ -30,13 +36,13 @@ let jobSchema = new Schema({
 
   stats: {
     ratingPoints: { type: Number, required: true },
-    playTot: { type: Number, required: true },
-    playUnq: { type: Number, required: true },
+    playTot: { type: Number, required: true, get: formatNumber },
+    playUnq: { type: Number, required: true, get: formatNumber },
     quitTot: { type: Number, required: true },
     quitUnq: { type: Number, required: true },
-    likes: { type: Number, required: true },
-    dlikes: { type: Number, required: true },
-    dlikesQuit: { type: Number, required: true },
+    likes: { type: Number, required: true, get: formatNumber },
+    dlikes: { type: Number, required: true, get: formatNumber },
+    dlikesQuit: { type: Number, required: true, get: formatNumber },
     rating: { type: Number, required: true },
     ratingQuit: { type: Number, required: true },
     bkmk: { type: Number, required: true },
@@ -68,7 +74,7 @@ jobSchema.virtual('mode')
     };
   });
 
-jobSchema.virtual('ratingTagCssClass')
+jobSchema.virtual('ratingCssClass')
   .get(function() {
     let rating = this.stats.ratingQuit;
     return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';

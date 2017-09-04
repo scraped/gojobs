@@ -1,6 +1,7 @@
 const config = require('../../config');
 const router = require('express').Router();
 const Paginator = require('paginator');
+const paginate = require('../../lib/paginate');
 
 const mongoose = require('mongoose');
 const Job = require('../../models/job');
@@ -39,10 +40,17 @@ router.get('/', (req, res) => {
   let pagination = new Paginator(config.perPage, 1).build(
     res.jobsCount, res.pageNumber
   );
+  pagination.pages = paginate(pagination.total_pages, pagination.current_page);
 
-  res.render('index', {
+  let context = {
     query: req.query,
     pagination: pagination,
+  };
 
-  });
+  if (req.xhr) {
+    context.layout = null;
+    context.xhr = true;
+  }
+
+  res.render('index', context);
 });

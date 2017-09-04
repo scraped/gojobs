@@ -1,79 +1,118 @@
-<section class="section">
-  <div class="container">
-    {{#if partials.jobsContext}}
-      {{> jobs}}
-      {{#if pagination}}
-      <nav class="pagination is-centered is-medium" role="navigation" aria-label="pagination">
-        {{#if pagination.has_previous_page}}
-          <a class="pagination-previous" href="/?page={{pagination.previous_page}}">
-            ← Previous page
-          </a>
-        {{/if}}
-        {{#if pagination.has_next_page}}
-          <a class="pagination-next" href="/?page={{pagination.next_page}}">
-            Next page →
-          </a>
-        {{/if}}
-        <ul class="pagination-list">
-          {{#if pagination.has_previous_page}}
-            <li>
-              <a
-                class="pagination-link"
-                href="/?page=1"
-                aria-label="Goto page 1">
-                1
-              </a>
-            </li>
-            <li>
-              <span class="pagination-ellipsis">&hellip;</span>
-            </li>
-            <li>
-              <a
-                class="pagination-link"
-                aria-label="Goto page {{pagination.previous_page}}"
-                href="/?page={{pagination.previous_page}}">
-                  {{pagination.previous_page}}
-              </a>
-            </li>
-          {{/if}}
-            <li>
-              <a
-                class="pagination-link is-current"
-                aria-label="Page {{pagination.current_page}}"
-                aria-current="page">
-                  {{pagination.current_page}}
-              </a>
-            </li>
-          {{#if pagination.has_next_page}}
-            <li>
-              <a
-                class="pagination-link"
-                aria-label="Goto page {{pagination.next_page}}"
-                href="/?page={{pagination.next_page}}">
-                  {{pagination.next_page}}
-              </a>
-            </li>
-            <li>
-              <span class="pagination-ellipsis">&hellip;</span>
-            </li>
-            <li>
-              <a
-                class="pagination-link"
-                aria-label="Goto page {{pagination.total_pages}}"
-                href="/?page={{pagination.total_pages}}">
-                  {{pagination.total_pages}}
-              </a>
-            </li>
-          {{/if}}
-        </ul>
-      </nav>
-      {{/if}}
-    {{else}}
-      <article class="message is-danger">
-        <div class="message-body">
-          <p class="subtitle is-4">No jobs found on your request.</p>
+{{#if xhr}}
+  {{> jobs}}
+{{else}}
+  <section class="section">
+    <div class="container">
+      {{#if partials.jobsContext}}
+        <h1 class="title">
+          GTA Online Jobs
+        </h1>
+
+        <div class="columns">
+          <div class="column is-3">
+            <div class="box" id="left-menu">
+              <form action="/">
+                <div class="field">
+                  <label class="label" for="author">Author</label>
+                  <div class="control has-icons-left">
+                    <input class="input" name="author" id="author" type="text" placeholder="Nickname" value="{{query.author}}">
+                    <span class="icon is-small is-left">
+                      <i class="fa fa-at"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <input class="is-checkbox is-circle" id="rstar" type="checkbox" name="rstar">
+                  <label for="rstar">Rockstar Job</label>
+                </div>
+
+                <div class="field">
+                  <input class="is-checkbox is-circle" id="rstarverif" type="checkbox" name="rstarverif">
+                  <label for="rstarverif">Rockstar Verified Job</label>
+                </div>
+
+                <div class="field">
+                  <label class="label">Platform</label>
+                    <div class="tags">
+                      <span class="tag is-primary">Any</span>
+                      <span class="tag is-dark">PC</span>
+                      <span class="tag is-dark">PS4</span>
+                      <span class="tag is-dark">XB1</span>
+                    </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="column" id="jobsList">
+            {{> jobs}}
+          </div>
         </div>
-      </article>
-    {{/if}}
-  </div>
-</section>
+
+        <div class="box is-shadowless">
+        <section class="section">
+          <a class="button is-medium" style="width: 100%;" id="loadJobsList" data-current-page="{{pagination.current_page}}">
+            Show more
+            <span class="icon" style="margin-left: 5px;">
+              <i class="fa fa-angle-down"></i>
+            </span>
+          </a>
+        </section>
+        {{#if pagination}}
+        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+          {{#if pagination.has_previous_page}}
+            <a class="pagination-previous" href="/?page={{pagination.previous_page}}">
+              ← Previous page
+            </a>
+          {{/if}}
+          <ul class="pagination-list">
+            {{#each pagination.pages}}
+              {{#if page}}
+                {{#if isCurrent}}
+                  <li>
+                    <a
+                      class="pagination-link is-current"
+                      aria-label="Page {{page}}"
+                      aria-current="page">
+                        {{page}}
+                    </a>
+                  </li>
+                {{else}}
+                  <li>
+                    <a
+                      class="pagination-link"
+                      href="/?page={{page}}"
+                      aria-label="Goto page {{page}}">
+                      {{page}}
+                    </a>
+                  </li>
+                {{/if}}
+              {{else}}
+                <li>
+                  <span class="pagination-ellipsis">&hellip;</span>
+                </li>
+              {{/if}}
+            {{/each}}
+          </ul>
+
+
+          {{#if pagination.has_next_page}}
+            <a class="pagination-next" href="/?page={{pagination.next_page}}">
+              Next page →
+            </a>
+          {{/if}}
+
+        </nav>
+        {{/if}}
+      {{else}}
+        <article class="message is-danger">
+          <div class="message-body">
+            <p class="subtitle is-4">No jobs found on your request.</p>
+          </div>
+        </article>
+      {{/if}}
+      </div>
+    </div>
+  </section>
+{{/if}}

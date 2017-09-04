@@ -26,6 +26,21 @@ $(document).ready(function() {
     $(`#${_this.data('target')}`).toggleClass('is-active');
   });
 
+  //*****
+  let loadJobsListButton = $('#loadJobsList');
+  loadJobsListButton.on('click', function() {
+    let pageToLoad = Number(loadJobsListButton.data('current-page')) + 1;
+    console.log(pageToLoad);
+    loadJobsListButton.toggleClass('is-loading');
+
+    $.get(`/?page=${pageToLoad}`, (data, status) => {
+      $('#jobsList').append(data);
+      loadJobsListButton.toggleClass('is-loading');
+      loadJobsListButton.data('current-page', pageToLoad);
+    });
+  });
+
+
   // let form = document.forms.upload;
 
   // form.onsubmit = function() {
