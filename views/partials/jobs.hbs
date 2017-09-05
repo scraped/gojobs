@@ -7,8 +7,8 @@
         <div class="card-image" style="position: relative;">
           <div class="card-image-text">
             <p class="title is-5">
-              <span class="tooltip tooltip-bottom" data-tooltip="Mode: {{mode.name}}">
-                <img class="" src="/images/mode-{{mode.icon}}-white.png" width="16" height="16" style="margin: 0 5px;">
+              <span class="tooltip tooltip-bottom" data-tooltip="Mode: {{job.mode.name}}">
+                <img class="" src="/images/mode-{{job.mode.icon}}-white.png" width="16" height="16" style="margin: 0 5px;">
               </span>
               {{{name}}}
             </p>
@@ -41,7 +41,7 @@
             <p class="subtitle is-6">
               {{#if verif}}
                 <a href="/?verif={{verif}}">
-                  {{verification}}
+                  {{verifText}}
                 </a>
               {{else}}
                 <a href="/?author={{author}}">
@@ -67,7 +67,7 @@
               <i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>
             </div></div>
             {{#if verif}}
-              <div><div class="icon tooltip tooltip-left" data-tooltip="{{verification}}">
+              <div><div class="icon tooltip tooltip-left" data-tooltip="{{verifText}}">
                 <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
               </div></div>
             {{/if}}

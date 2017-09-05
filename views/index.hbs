@@ -45,20 +45,22 @@
             </div>
           </div>
 
-          <div class="column" id="jobsList">
-            {{> jobs}}
+          <div class="column">
+            <div id="jobsList">
+              {{> jobs}}
+            </div>
+
+            <br>
+            <a class="button is-medium" style="width: 100%;" id="loadJobsList" data-current-page="{{pagination.current_page}}">
+              Show more
+              <span class="icon" style="margin-left: 5px;">
+                <i class="fa fa-angle-down"></i>
+              </span>
+            </a>
           </div>
         </div>
 
         <div class="box is-shadowless">
-        <section class="section">
-          <a class="button is-medium" style="width: 100%;" id="loadJobsList" data-current-page="{{pagination.current_page}}">
-            Show more
-            <span class="icon" style="margin-left: 5px;">
-              <i class="fa fa-angle-down"></i>
-            </span>
-          </a>
-        </section>
         {{#if pagination}}
         <nav class="pagination is-centered" role="navigation" aria-label="pagination">
           {{#if pagination.has_previous_page}}

@@ -36,8 +36,18 @@
       <div class="tile is-parent">
         <div class="tile is-child box">
           <h2 class="subtitle is-4">List of crews</h2>
-          <p><a href="/admin/fetch?type=rockstar">Fetch rockstar jobs</a></p>
-          <p><a href="/admin/fetch?type=rstarverified">Fetch rstarverif jobs</a></p>
+          <div class="field is-grouped">
+            <p class="control">
+              <a class="button is-primary is-small" href="/admin/fetch?type=rockstar" target="_blank">
+                Fetch rockstar jobs
+              </a>
+            </p>
+            <p class="control">
+              <a class="button is-primary is-small" href="/admin/fetch?type=rockstar" target="_blank">
+                Fetch rockstar verified jobs
+              </a>
+            </p>
+          </div>
           {{> crews}}
         </div>
       </div>

@@ -8,7 +8,12 @@ module.exports = {
     options: {
       useMongoClient: true,
       keepAlive: true,
-    }
+    },
+    standardUpdateOptions: {
+      upsert: true,
+      setDefaultsOnInsert: true,
+      runSettersOnQuery: true
+    },
   },
 
   handlebars: {
@@ -38,7 +43,7 @@ module.exports = {
     'rstar': 1,
     'verif': 2,
     1: 'Rockstar Job',
-    2: 'Rockstar Verified',
+    2: 'Rockstar Verified Job',
     3: 'Verified by our team'
   },
 

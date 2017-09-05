@@ -58,12 +58,7 @@ router.get('/fetch', (req, res, next) => {
           updated: new Date(),
           uploaded: false
         },
-        {
-          upsert: true,
-          new: true,
-          setDefaultsOnInsert: true,
-          runSettersOnQuery: true
-        },
+        config.standardUpdateOptions,
         (err, doc) => {
           if (err) console.log(`Error: ${err.code}`);
           console.log(`${++i} \t ${jobId} uploaded`);
@@ -76,8 +71,9 @@ router.get('/fetch', (req, res, next) => {
 
       Crew.findOneAndUpdate(
         { crewId: params.searchBy.id },
-        { uploadedLast: new Date() },
-        {},
+        {
+          uploadedLast: new Date()
+        },
         (err, doc) => {}
       );
     }
@@ -117,18 +113,14 @@ router.get('/addcrew', (req, res, next) => {
       Crew.findOneAndUpdate(
         { crewId: crew.crewId },
         crew,
-        {
-          upsert: true,
-          new: true,
-          setDefaultsOnInsert: true,
-          runSettersOnQuery: true
-        },
-        (err, doc) => {
-          if (err) {
-            console.log(err);
-            return next(`Error ${err.code} occured. Try again later`);
-          }
-          res.send(`Crew '<a href="https://socialclub.rockstargames.com/crew/${crew.url}" target="_blank">${crew.name}</a>' has been successfully added/updated.`);
+        config.standardUpdateOptions,
+        (err, res) => {
+          if (err) return next(`Error ${err.code} occured. Try again later`);
+
+          let text = (res) ? 'updated' : 'added';
+          res.send(`Crew '<a href="https://socialclub.rockstargames.com/crew/` +
+          `${crew.url}" target="_blank">${crew.name}</a>' has been ` +
+          `successfully ${text}.`);
         }
       );
     })
