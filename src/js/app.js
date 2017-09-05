@@ -1,18 +1,46 @@
-function createToast(options) {
+function Toast(options) {
   let title = options.title || '';
   let message = options.message || '';
   let type = options.type || 'primary';
+  this.duration = Math.abs(Number(options.duration)) || 10;
 
-  document.getElementById('notify-box').innerHTML += `
-    <div class="notification is-warning">
-      <button class="delete"></button>
-      <p><b>${title}</b></p>
-      <p>${message}</p>
-    </div>
-  `;
+  let notifyDiv = document.createElement('div');
+  notifyDiv.classList.add('notification');
+  notifyDiv.classList.add(`is-${type}`);
+  notifyDiv.hidden = true;
+
+  notifyDiv.addEventListener('click', function() {
+    this.hidden = true;
+  });
+
+  let notifyText = '<button class="delete"></button>';
+  if (title) notifyText += `<p><b>${title}</b></p>`;
+  notifyText += `<p>${message}</p>`;
+
+  notifyDiv.innerHTML = notifyText;
+  this.toast = notifyDiv;
 }
 
+Toast.prototype.show = function() {
+  let toast = this.toast;
+
+  toast.hidden = false;
+  document.getElementById('toast-box').innerHTML += toast.outerHTML;
+
+  setTimeout(function() {
+    toast.hidden = true;
+  }, 1000);
+};
+
 $(document).ready(function() {
+  window.onerror = function(message, url, lineNumber) {
+    new Toast({
+      title: 'Javascript error occured',
+      message: message + "\n(" + url + ":" + lineNumber + ")",
+      type: 'danger'
+    }).show();
+  };
+
   // Body margin-top from navbar
   $('body').css('margin-top', $('#navbar').outerHeight());
 
