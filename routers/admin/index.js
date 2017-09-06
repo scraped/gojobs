@@ -26,7 +26,6 @@ router.get('/uploadraw', (req, res, next) => {
 
 router.get('/fetch', (req, res, next) => {
   let params = {};
-  let updatedCrewInfo = false;
 
   req.query = req.query || {};
   params.searchBy = {};
@@ -37,6 +36,8 @@ router.get('/fetch', (req, res, next) => {
   params.once = Boolean(req.query.once);
   params.limit = Number(req.query.limit);
 
+  let isCrew = (params.searchBy.type === 'crew');
+  let updatedCrewInfo = false;
   let i = 0;
 
   fetchJobs(params, jobs => {
@@ -58,15 +59,19 @@ router.get('/fetch', (req, res, next) => {
           updated: new Date(),
           uploaded: false
         },
-        config.standardUpdateOptions,
-        (err, doc) => {
-          if (err) console.log(`Error: ${err.code}`);
-          console.log(`${++i} \t ${jobId} uploaded`);
+        config.mongo.standardUpdateOptions,
+        (err, res) => {
+          if (err) {
+            console.log(`Error: ${err.code}`);
+          } else {
+            let text = (res) ? 'updated' : 'added';
+            console.log(`${++i} \t ${jobId} ${text}`);
+          }
         }
       );
     });
 
-    if (!updatedCrewInfo && params.searchBy.type === 'crew') {
+    if (isCrew && !updatedCrewInfo) {
       updatedCrewInfo = true;
 
       Crew.findOneAndUpdate(
@@ -74,6 +79,7 @@ router.get('/fetch', (req, res, next) => {
         {
           uploadedLast: new Date()
         },
+        config.mongo.standardUpdateOptions,
         (err, doc) => {}
       );
     }

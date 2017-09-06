@@ -9,8 +9,11 @@ function Toast(options) {
   notifyDiv.classList.add(`is-${type}`);
   notifyDiv.hidden = true;
 
-  notifyDiv.addEventListener('click', function() {
-    this.hidden = true;
+  notifyDiv.addEventListener('click', function(e) {
+    let target = e.target;
+    if (target.classList.contains('delete')) {
+      this.hidden = true;
+    }
   });
 
   let notifyText = '<button class="delete"></button>';
@@ -25,11 +28,11 @@ Toast.prototype.show = function() {
   let toast = this.toast;
 
   toast.hidden = false;
-  document.getElementById('toast-box').innerHTML += toast.outerHTML;
+  document.getElementById('toast-box').appendChild(toast);
 
   setTimeout(function() {
     toast.hidden = true;
-  }, 1000);
+  }, 1000 * this.duration);
 };
 
 $(document).ready(function() {
