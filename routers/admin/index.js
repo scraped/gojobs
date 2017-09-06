@@ -43,8 +43,12 @@ router.get('/fetch', (req, res, next) => {
   fetchJobs(params, jobs => {
     let total = params.once ? Math.min(jobs.Total, 20) : jobs.Total;
     let count = jobs.Count;
-    console.log(`Should be ${total} jobs, ${jobs.Count} now [LIMIT: ` +
-      `${params.limit}]; ONCE: ${params.once}, PLATFORM: ${params.platform}`);
+    console.log(`Should be ${total} jobs, ${jobs.Count} now (LIMIT: ` +
+      `${params.limit}], ONCE: ${params.once}, PLATFORM: ${params.platform})`);
+
+    if (isCrew) {
+
+    }
 
     jobs.Missions.forEach(job => {
       let jobId = job.Content.Metadata.RootContentId;
