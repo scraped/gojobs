@@ -1,7 +1,7 @@
 module.exports = {
   port: 3000,
   srcDir: './src/',
-  perPage: 30,
+  perPage: 32,
 
   mongo: {
     connectUri: 'mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs',

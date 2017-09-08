@@ -99,21 +99,5 @@ $(document).ready(function() {
   // };
 
 
-
-
-  // Left menu fixation
-  const leftmenu = document.getElementById('left-menu');
-  const leftmenuBottomPageCoord = 91; window.pageYOffset + leftmenu.offsetHeight;
-
-  document.onscroll = function(e) {
-    const isFixed = leftmenu.classList.contains("menu-fixed");
-
-    if (!isFixed && window.pageYOffset >= leftmenuBottomPageCoord
-      || isFixed && window.pageYOffset <= leftmenuBottomPageCoord) {
-        leftmenu.style.width = leftmenu.offsetWidth + 'px';
-        leftmenu.classList.toggle("menu-fixed");
-    }
-  };
-
 });
 

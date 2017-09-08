@@ -10,41 +10,40 @@
 
         <div class="columns">
           <div class="column is-3">
-            <div class="box" id="left-menu">
-              <form action="/">
-                <div class="field">
-                  <label class="label" for="author">Author</label>
-                  <div class="control has-icons-left">
-                    <input class="input" name="author" id="author" type="text" placeholder="Nickname" value="{{query.author}}">
-                    <span class="icon is-small is-left">
-                      <i class="fa fa-at"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="field">
-                  <input class="is-checkbox is-circle" id="rstar" type="checkbox" name="rstar">
-                  <label for="rstar">Rockstar Job</label>
-                </div>
-
-                <div class="field">
-                  <input class="is-checkbox is-circle" id="rstarverif" type="checkbox" name="rstarverif">
-                  <label for="rstarverif">Rockstar Verified Job</label>
-                </div>
-
-                <div class="field">
-                  <label class="label">Platform</label>
-                    <div class="tags">
-                      <span class="tag is-primary">Any</span>
-                      <span class="tag is-dark">PC</span>
-                      <span class="tag is-dark">PS4</span>
-                      <span class="tag is-dark">XB1</span>
-                    </div>
-                </div>
-              </form>
+            <div class="field">
+              <label class="label" for="author">Author</label>
+              <div class="control has-icons-left">
+                <input class="input" name="author" id="author" type="text" placeholder="Nickname" value="{{query.author}}">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-at"></i>
+                </span>
+              </div>
             </div>
           </div>
+          <div class="column is-3">
+            <div class="field">
+              <input class="is-checkbox is-circle" id="rstar" type="checkbox" name="rstar">
+              <label for="rstar">Rockstar Job</label>
+            </div>
+            <div class="field">
+              <input class="is-checkbox is-circle" id="rstarverif" type="checkbox" name="rstarverif">
+              <label for="rstarverif">Rockstar Verified Job</label>
+            </div>
+          </div>
+          <div class="column is-3">
+            <div class="field">
+            <label class="label">Platform</label>
+              <div class="tags">
+                <span class="tag is-primary">Any</span>
+                <span class="tag is-dark">PC</span>
+                <span class="tag is-dark">PS4</span>
+                <span class="tag is-dark">XB1</span>
+              </div>
+          </div>
+          </div>
+        </div>
 
+        <div class="columns">
           <div class="column">
             <div id="jobsList">
               {{> jobs}}
