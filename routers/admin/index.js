@@ -5,6 +5,7 @@ const fetchJobs = require('../../lib/fetch-jobs');
 const uploadJobs = require('../../lib/upload-jobs');
 
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 const JobRaw = require('../../models/job-raw');
 const Crew = require('../../models/crew');
 mongoose.connect(config.mongo.connectUri, config.mongo.options);
@@ -12,16 +13,25 @@ mongoose.connect(config.mongo.connectUri, config.mongo.options);
 module.exports = router;
 
 router.get('/', (req, res) => {
-  Crew.find((err, crews) => {
-    if (err) return next('Cannot fetch data from database');
-    res.locals.partials.crewsContext = crews;
-    res.render('admin');
-  });
+  Crew
+    .find()
+    .then(crews => {
+      res.locals.partials.crewsContext = crews;
+      res.render('admin');
+    })
+    .catch(err => {
+      return next('Cannot fetch data from database');
+    });
 });
 
 router.get('/uploadraw', (req, res, next) => {
-  uploadJobs();
-  res.send('Check out the console log!');
+  uploadJobs()
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      return next(err);
+    });
 });
 
 router.get('/fetch', (req, res, next) => {
@@ -40,15 +50,11 @@ router.get('/fetch', (req, res, next) => {
   let updatedCrewInfo = false;
   let i = 0;
 
-  fetchJobs(params, jobs => {
+  function recordJobs(jobs) {
     let total = params.once ? Math.min(jobs.Total, 20) : jobs.Total;
     let count = jobs.Count;
     console.log(`Should be ${total} jobs, ${jobs.Count} now (LIMIT: ` +
       `${params.limit}], ONCE: ${params.once}, PLATFORM: ${params.platform})`);
-
-    if (isCrew) {
-
-    }
 
     jobs.Missions.forEach(job => {
       let jobId = job.Content.Metadata.RootContentId;
@@ -87,9 +93,15 @@ router.get('/fetch', (req, res, next) => {
         (err, doc) => {}
       );
     }
-  });
+  }
 
-  res.send(`Got it, check out the console log!`);
+  fetchJobs(params, recordJobs)
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      return next(err);
+    });
 });
 
 router.get('/addcrew', (req, res, next) => {
@@ -110,7 +122,7 @@ router.get('/addcrew', (req, res, next) => {
       let colorMatch = body.match(/\\"crewColor\\":\\"#(\w+)\\"/);
 
       if (!idAndAvatarMatch || !nameMatch || !tagMatch || !colorMatch) {
-        return next(`Cannot find the '${crew.url}' crew`);
+        throw new Error(`Cannot find the '${crew.url}' crew`);
       }
 
       crew.crewId = idAndAvatarMatch[2];

@@ -21,18 +21,19 @@ router.use('/', (req, res, next) => {
   Job.find(findQuery)
     .skip(config.perPage * (res.pageNumber - 1))
     .limit(config.perPage)
-    .sort({
-      'stats.ratingPoints': -1
-    })
-    .exec((err, jobs) => {
-      if (err) return next('Cannot retrieve jobs from the database');
-
-      Job.find(findQuery).count((err, count) => {
-        if (err) return next('Cannot retrieve jobs from the database');
-        res.jobsCount = count;
-        res.locals.partials.jobsContext = jobs;
-        next();
+    .sort({ 'stats.ratingPoints': -1 })
+    .then(jobs => {
+      Job
+        .find(findQuery)
+        .count((err, count) => {
+          if (err) throw new Error('Cannot retrieve jobs from the database');
+          res.jobsCount = count;
+          res.locals.partials.jobsContext = jobs;
+          next();
       });
+    })
+    .catch(err => {
+      next('Cannot retrieve jobs from the database');
     });
 });
 

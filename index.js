@@ -24,19 +24,18 @@ app.use('/admin', adminRouter);
 // 404
 app.use((req, res) => {
   console.log(`Error 404 occured at ${req.path}`);
-  res.status(404);
-  res.render('error', config.httpErrors.e404);
+  res
+    .status(404)
+    .render('error', config.httpErrors.e404);
 });
 
 // Errors
 app.use((err, req, res, next) => {
-  if (typeof err === 'string') {
-    res.send(err);
-  } else {
-    console.error(`Error 500 occured. Stack: ${err.stack}`);
-    res.status(500);
-    res.render('error', config.httpErrors.e500);
-  }
+  if (typeof err === 'string') return res.send(err);
+  console.error(`Error 500 occured. Stack: ${err.stack}`);
+  res
+    .status(500)
+    .render('error', config.httpErrors.e500);
 });
 
 app.listen(app.get('port'), () => {
