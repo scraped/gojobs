@@ -14,10 +14,14 @@ gulp.task('lint', () => {
     .pipe(plugins.eslint.format());
 });
 
+let sassOptions = {
+  outputStyle: 'compressed',
+};
+if (isDev) sassOptions.outputStyle = 'expanded';
 gulp.task('styles', () => {
   return gulp.src(`${config.srcDir}sass/app.sass`)
     .pipe(plugins.if(isDev, plugins.sourcemaps.init()))
-    .pipe(plugins.sass({ outputStyle: 'compressed' })
+    .pipe(plugins.sass(sassOptions)
     .on('error', plugins.notify.onError(err => {
       return {
         title: 'SASS',
