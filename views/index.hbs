@@ -8,56 +8,68 @@
           GTA Online Jobs
         </h1>
 
-        <div class="columns">
-          <div class="column is-3">
-            <div class="field">
-              <label class="label" for="author">Author</label>
-              <p class="control">
-                <input class="input" name="author" id="author" type="text" placeholder="Username" value="{{query.author}}">
-              </p>
-            </div>
-            <div class="field">
-              <div class="tags">
-                <span class="tag is-dark is-rounded">Rockstar</span>
-                <span class="tag is-dark is-rounded">Rockstar Verified</span>
+        <aricle class="message is-primary is-medium">
+          <div class="message-header">
+            <p>Parameters</p>
+          </div>
+
+          <div class="message-body">
+            <div class="columns">
+              <div class="column is-half">
+                <div class="field">
+                  <p class="label">By</p>
+                  <input class="is-radio is-primary is-small" type="radio" name="by" id="by-any" checked>
+                  <label for="by-any">Any</label>
+                  <input class="is-radio is-primary is-small" type="radio" name="by" id="by-members">
+                  <label for="by-members">Members</label>
+                  <input class="is-radio is-primary is-small" type="radio" name="by" id="by-rockstar" >
+                  <label for="by-rockstar">Rockstar</label>
+                  <input class="is-radio is-primary is-small" type="radio" name="by" id="by-rockstarverified" >
+                  <label for="by-rockstarverified">Rockstar Verified</label>
+                </div>
+                <div class="field">
+                  <input class="is-checkbox has-background-color is-primary is-small" id="verif" type="checkbox" name="vedrif">
+                  <label for="verif">Verified by our team</label>
+                </div>
+                <div class="field">
+                  <label class="label" for="author">Author</label>
+                  <p class="control">
+                    <input class="input" name="author" id="author" type="text" placeholder="Username" value="{{query.author}}" autocomplete="off">
+                  </p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                  <p class="label">Platform</p>
+                  <input class="is-radio has-background-color is-primary is-small" id="any" type="radio" name="platform" checked>
+                  <label for="any">Any</label>
+                  <input class="is-radio has-background-color is-primary is-small" id="pc" type="radio" name="platform" checked>
+                  <label for="pc">PC</label>
+                  <input class="is-radio has-background-color is-primary is-small" id="ps4" type="radio" name="platform">
+                  <label for="ps4">PS4</label>
+                  <input class="is-radio has-background-color is-primary is-small" id="xboxone" type="radio" name="platform">
+                  <label for="xboxone">Xbox One</label>
+                  <input class="is-radio has-background-color is-primary is-small" id="ps3" type="radio" name="platform">
+                  <label for="ps3">PS3</label>
+                  <input class="is-radio has-background-color is-primary is-small" id="xbox360" type="radio" name="platform">
+                  <label for="xbox360">Xbox 360</label>
+                </div>
+                <div class="field">
+                  <p class="label">Modes</p>
+                  {{#each modes}}
+                    <a class="button is-white is-circle tooltip tooltip-bottom" data-tooltip="{{name}}" onclick="this.classList.toggle('is-dark')">
+                    <span class="icon icon-gta">&#x{{icon}};</span>
+                  </a>
+                  {{/each}}
+                </div>
+                <div class="field">
+                  <input class="is-checkbox has-background-color is-primary is-small" id="anymode" type="checkbox" name="anymode" checked disabled>
+                  <label for="anymode">Any</label>
+                </div>
               </div>
             </div>
           </div>
-          <div class="column">
-            <div class="field">
-              <p class="label">Type</p>
-              <input class="is-checkbox has-background-color is-primary is-small" id="" type="checkbox" name="">
-              <label for="">Adversary Mode</label>
-              <input class="is-checkbox has-background-color is-primary is-small" id="" type="checkbox" name="">
-              <label for="">Versus Mission</label>
-              <input class="is-checkbox has-background-color is-primary is-small" id="" type="checkbox" name="">
-              <label for="">Survival</label>
-              <input class="is-checkbox has-background-color is-primary is-small" id="" type="checkbox" name="">
-              <label for="">Parachuting</label>
-              <input class="is-checkbox has-background-color is-primary is-small" id="" type="checkbox" name="">
-              <label for="">Capture</label>
-              <input class="is-checkbox has-background-color is-primary is-small" id="" type="checkbox" name="">
-              <label for="">Last Team Standing</label>
-              <input class="is-checkbox has-background-color is-primary is-small" id="" type="checkbox" name="">
-              <label for="">Deathmatch</label>
-              <input class="is-checkbox has-background-color is-primary is-small" id="" type="checkbox" name="">
-              <label for="">Team Deathmatch</label>
-              <input class="is-checkbox has-background-color is-primary is-small" id="" type="checkbox" name="">
-              <label for="">Vehicle Deathmatch</label>
-              <input class="is-checkbox has-background-color is-primary is-small" id="" type="checkbox" name="">
-              <label for="">Land Race</label>
-              <input class="is-checkbox has-background-color is-primary is-small" id="" type="checkbox" name="">
-              <label for="">Bike Race</label>
-            </div>
-            <div class="field">
-              <p class="label">Platform</p>
-              <input class="is-checkbox has-background-color is-primary is-small" id="rstarverif" type="checkbox" name="rstarverif">
-              <label for="rstarverif">PC</label>
-              <input class="is-checkbox has-background-color is-primary is-small" id="rstarverif" type="checkbox" name="rstarverif">
-              <label for="rstarverif">PS4</label>
-            </div>
-          </div>
-        </div>
+        </aricle>
 
         <div class="columns">
           <div class="column">

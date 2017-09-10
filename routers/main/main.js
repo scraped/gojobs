@@ -46,6 +46,7 @@ router.get('/', (req, res) => {
   let context = {
     query: req.query,
     pagination: pagination,
+    modes: config.modes,
   };
 
   if (req.xhr) {

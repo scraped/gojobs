@@ -47,87 +47,76 @@ module.exports = {
     3: 'Verified by our team'
   },
 
-  modes: {
-    1: {
-      name: 'Adversary Mode',
-      icon: 'advm'
+  modes: [
+    {
+      name: 'Adversary Mode/Versus Mission',
+      icon: 'f11b'
     },
 
-    2: {
-      name: 'Versus Mission',
-      icon: 'advm'
-    },
-
-    3: {
-      name: 'Survival',
-      icon: 'surv'
-    },
-
-    4: {
+    {
       name: 'Parachuting',
-      icon: 'par'
+      icon: 'f107'
     },
 
-    5: {
+    {
       name: 'Capture',
-      icon: 'cap'
+      icon: 'f113'
     },
 
-    6: {
+    {
       name: 'Last Team Standing',
-      icon: 'lts'
+      icon: 'f16a'
     },
 
-    7: {
+    {
       name: 'Deathmatch',
-      icon: 'dm'
+      icon: 'f167'
     },
 
-    8: {
+    {
       name: 'Team Deathmatch',
-      icon: 'tdm'
+      icon: 'f197'
     },
 
-    9: {
+    {
       name: 'Vehicle Deathmatch',
-      icon: 'vdm'
+      icon: 'f1a1'
     },
 
-    10: {
+     {
       name: 'Land Race',
-      icon: 'landrace'
+      icon: 'f168'
     },
 
-    11: {
+    {
       name: 'Bike Race',
-      icon: 'bikerace'
+      icon: 'f109'
     },
 
-    12: {
+    {
       name: 'Air Race',
-      icon: 'airrace'
+      icon: 'f102'
     },
 
-    13: {
+    {
       name: 'Water Race',
-      icon: 'waterrace'
+      icon: 'f1a5'
     },
 
-    14: {
+    {
       name: 'Stunt Race',
-      icon: 'stuntrace'
+      icon: 'e600'
     },
 
-    15: {
+    {
       name: 'Special Vehicle Race',
-      icon: 'stuntrace'
+      icon: 'f123'
     }
-  },
+  ],
 
   modesId: {
     'Adversary Mode': 1,
     'Versus Mission': 2,
-    'Survival': 3,
     'Parachuting': 4,
     'Capture': 5,
     'Last Team Standing': 6,

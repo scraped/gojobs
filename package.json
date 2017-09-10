@@ -18,7 +18,7 @@
   "homepage": "https://github.com/andreww2012/gojobs#readme",
   "dependencies": {
     "browser-sync": "^2.18.13",
-    "bulma": "^0.5.0",
+    "bulma": "^0.5.1",
     "cookie": "^0.3.1",
     "del": "^3.0.0",
     "eslint": "^4.4.1",

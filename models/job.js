@@ -80,7 +80,13 @@ function setVerif(verifState) {
 }
 
 function setMode(mode) {
-  return config.modesId[mode];
+  let modeId;
+
+  config.modes.forEach((item, i) => {
+    if (item.name === mode) modeId = i;
+  });
+
+  return modeId;
 }
 
 function getMode(mode) {
