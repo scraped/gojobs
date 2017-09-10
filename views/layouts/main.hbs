@@ -20,8 +20,15 @@
       <nav class="navbar">
         <div class="navbar-brand">
           <a href="/" class="navbar-item">
-            <img src="/images/logo-mixed.png" alt="Go to the main page" title="Go to the main page">
+            <img src="/images/gtaonline-logo-mini.png" alt="Go to the main page" title="Go to the main page">
           </a>
+          <span class="navbar-item">
+            {{#each modes}}
+              <a class="button is-black is-circle tooltip tooltip-bottom" data-tooltip="{{name}}" onclick="this.classList.toggle('is-danger')">
+                <span class="icon icon-gta">&#x{{icon}};</span>
+              </a>
+            {{/each}}
+          </span>
 
           <div class="navbar-burger burger" data-target="mainMenu">
               <span></span>
