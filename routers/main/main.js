@@ -16,7 +16,8 @@ router.use('/', (req, res, next) => {
   let findQuery = {};
   req.query.author && (findQuery.author = req.query.author);
   req.query.verif && (findQuery.verif = req.query.verif);
-  req.query.plat && (findQuery.platId = req.query.plat);
+  req.query.platform && (findQuery.platform = req.query.platform);
+  req.query.mode && (findQuery['job.mode'] = req.query.mode);
 
   Job.find(findQuery)
     .skip(config.perPage * (res.pageNumber - 1))
@@ -48,6 +49,9 @@ router.get('/', (req, res) => {
     pagination: pagination,
     modes: config.modes,
   };
+  if (config.modes[Number(req.query.mode)]) {
+    context.modes[Number(req.query.mode)].isSet = true;
+  }
 
   if (req.xhr) {
     context.layout = null;

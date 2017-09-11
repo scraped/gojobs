@@ -22,12 +22,16 @@
           <a href="/" class="navbar-item">
             <img src="/images/gtaonline-logo-mini.png" alt="Go to the main page" title="Go to the main page">
           </a>
-          <span class="navbar-item">
+          <span class="navbar-item is-hidden-touch">
+            <div class="field is-grouped" id="search-by-mode">
             {{#each modes}}
-              <a class="button is-black is-circle tooltip tooltip-bottom" data-tooltip="{{name}}" onclick="this.classList.toggle('is-danger')">
-                <span class="icon icon-gta">&#x{{icon}};</span>
-              </a>
+              <p class="control">
+                <a class="button is-circle tooltip tooltip-bottom is-{{#if isSet}}primary{{else}}black{{/if}}" href="/?mode={{" data-tooltip="{{name}}">
+                  <span class="icon icon-gta">&#x{{icon}};</span>
+                </a>
+              </p>
             {{/each}}
+            </div>
           </span>
 
           <div class="navbar-burger burger" data-target="mainMenu">

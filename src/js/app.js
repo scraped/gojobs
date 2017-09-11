@@ -36,6 +36,7 @@ Toast.prototype.show = function() {
 };
 
 $(document).ready(function() {
+  // JS error notifications
   window.onerror = function(message, url, lineNumber) {
     new Toast({
       title: 'Javascript error occured',
@@ -43,6 +44,10 @@ $(document).ready(function() {
       type: 'danger'
     }).show();
   };
+
+  //*****
+
+  //*****
 
   // Body margin-top from navbar
   $('body').css('margin-top', $('#navbar').outerHeight());
@@ -58,6 +63,8 @@ $(document).ready(function() {
   });
 
   //*****
+
+  // Loading pages
   let loadJobsListButton = $('#loadJobsList');
   loadJobsListButton.on('click', function() {
     let pageToLoad = Number(loadJobsListButton.data('current-page')) + 1;
