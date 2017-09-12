@@ -17,31 +17,33 @@
 <body>
   <div class="navbar-container" id="navbar">
     <div class="container">
-      <nav class="navbar">
+      <nav class="navbar is-black">
         <div class="navbar-brand">
           <a href="/" class="navbar-item">
             <img src="/images/gtaonline-logo-mini.png" alt="Go to the main page" title="Go to the main page">
           </a>
-          <span class="navbar-item is-hidden-touch">
-            <div class="field is-grouped" id="search-by-mode">
-            {{#each modes}}
-              <p class="control">
-                <a class="button is-circle tooltip tooltip-bottom is-{{#if isSet}}primary{{else}}black{{/if}}" href="/?mode=" data-tooltip="{{name}}">
-                  <span class="icon icon-gta">&#x{{icon}};</span>
-                </a>
-              </p>
-            {{/each}}
-            </div>
-          </span>
 
           <div class="navbar-burger burger" data-target="mainMenu">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
 
         <div class="navbar-menu" id="mainMenu">
+          <div class="navbar-start">
+            <div class="navbar-item is-hidden-touch">
+              <div class="field is-grouped" id="search-by-mode">
+              {{#each modes}}
+                <p class="control">
+                  <a class="button is-circle tooltip tooltip-bottom is-{{#if isSet}}primary{{else}}black{{/if}}" href="/?mode=" data-tooltip="{{name}}">
+                    <span class="icon icon-gta">&#x{{icon}};</span>
+                  </a>
+                </p>
+              {{/each}}
+              </div>
+            </div>
+          </div>
           <div class="navbar-end">
             <a href="/admin" class="navbar-item">Admin</a>
             <a href="/login" class="navbar-item">Log in or sign up</a>

@@ -31,19 +31,24 @@
           </div>
         </h1>
 
-        <div class="field is-hidden-desktop">
+        <div class="field">
           {{#each modes}}
-            <a class="button is-circle tooltip" data-tooltip="{{name}}" onclick="this.classList.toggle('is-primary')">
+            <a class="button is-white is-circle tooltip" data-tooltip="{{name}}">
             <span class="icon icon-gta">&#x{{icon}};</span>
           </a>
           {{/each}}
         </div>
-        <div class="field">
-          <div class="tags">
-            <span class="tag is-primary">Members</span>
-            <span class="tag">Rockstar</span>
-            <span class="tag">Rockstar Verified</span>
-          </div>
+        <div class="field is-grouped">
+          <p class="control">
+            <a class="button is-light">
+              Rockstar Jobs
+            </a>
+          </p>
+          <p class="control">
+            <a class="button is-light">
+              Rockstar Verified Jobs
+            </a>
+          </p>
         </div>
 
         <div class="columns">
