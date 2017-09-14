@@ -1,8 +1,13 @@
 ::selection
   background: $selection-color
 
-a:focus
-  outline: 3px solid $selection-color
+// radio with button
+.label-mode
+  input
+    display: none
+    &:checked + .button
+      background: $dark
+      color: $white
 
 // menu
 .menu-fixed
