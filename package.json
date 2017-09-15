@@ -42,6 +42,7 @@
     "request-promise": "^4.2.1"
   },
   "devDependencies": {
-    "eslint": "^4.3.0"
+    "eslint": "^4.3.0",
+    "nodemon": "^1.12.1"
   }
 }
