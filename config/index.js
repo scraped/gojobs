@@ -48,8 +48,10 @@ module.exports = {
   },
 
   modes: [
+    ,
+
     {
-      name: 'Adversary Mode/Versus Mission',
+      name: 'Adversary Mode or Versus Mission',
       icon: 'f11b'
     },
 
@@ -114,28 +116,29 @@ module.exports = {
     }
   ],
 
-  modesId: {
-    'Adversary Mode': 1,
-    'Versus Mission': 2,
-    'Parachuting': 4,
-    'Capture': 5,
-    'Last Team Standing': 6,
-    'Deathmatch': 7,
-    'Team Deathmatch': 8,
-    'Vehicle Deathmatch': 9,
-    'Land Race': 10,
-    'Bike Race': 11,
-    'Air Race': 12,
-    'Water Race': 13,
-    'Stunt Race': 14,
-    'Special Vehicle Race': 15
-  },
+  platforms: [
+    {
+      name: 'Any'
+    },
 
-  platforms: {
-    1: 'PC',
-    2: 'PS4',
-    3: 'Xbox One',
-    4: 'PS3',
-    5: 'Xbox 360',
-  },
+    {
+      name: 'PC',
+    },
+
+    {
+      name: 'PS4',
+    },
+
+    {
+      name: 'Xbox One',
+    },
+
+    {
+      name: 'PS3',
+    },
+
+    {
+      name: 'Xbox 360',
+    },
+  ]
 };

@@ -206,12 +206,12 @@ This property can be set not only for races, but for DM & Parachuting.
 Property | Type | Description | Flags
 -------- | ---- | ----------- | -----
 `liv`      | `integer` | Always 0? | -
-`pol`      | `integer` | `0`-`5` (?) | -
+`pol`      | `integer` | `0`-`5` (police?) | -
 `score`    | `integer` | Up to `19` for DM, `0` otherwise (?) | -
 `tdm`      | `integer` | `1` if Team DM & other cases `0` otherwise (?) | -
 `time`     | `integer` | `1`-`6` only for DM (?) | -
-`tod`      | `integer` | `0`-`4` (?) | -
-`traf`     | `integer` | `0`-`5` (?) | -
+`tod`      | `integer` | `0`-`4` (time of day?: `0` - current, `1` - morning, `2` - night) | -
+`traf`     | `integer` | `0`-`5` (traffic?: `0` - default, `1` - off, `2` - low) | -
 `vdm`      | `integer` | `1` if Vehicle DM, `0` otherwise | -
 
 ## `Content.Metadata.data.meta`
