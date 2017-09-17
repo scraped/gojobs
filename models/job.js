@@ -1,5 +1,7 @@
 const config = require('../config');
 const moment = require('moment');
+const array = require('lodash/array');
+const number = require('lodash/number');
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -13,20 +15,19 @@ let jobSchema = new Schema({
   platform: { type: Number, required: true, set: setPlat, get: getPlat },
   author: { type: String },
   image: { type: String, required: true, set: setImage },
-  verif: { type: Number, set: setVerif },
+  categ: { type: String, enum: ['rstar', 'verif'] },
 
   job: {
-    flags: { type: [String] },
-    // type: { type: Number, required: true, set: setType, get: setType },
     mode: { type: Number, required: true, set: setMode, get: getMode },
-    minpl: { type: Number, required: true, set: setPlayers },
-    maxpl: { type: Number, required: true, set: setPlayers },
+    minpl: { type: Number, required: true, set: n => number.clamp(n, 1, 30) },
+    maxpl: { type: Number, required: true, set: n => number.clamp(n, 1, 30) },
+    flags: { type: [String] },
   },
 
   stats: {
-    ratingPoints: { type: Number, required: true },
-    playTot: { type: Number, required: true, get: formatNumber },
-    playUnq: { type: Number, required: true, get: formatNumber },
+    points: { type: Number, required: true },
+    pldTot: { type: Number, required: true, get: formatNumber },
+    pldUnq: { type: Number, required: true, get: formatNumber },
     quitTot: { type: Number, required: true },
     quitUnq: { type: Number, required: true },
     likes: { type: Number, required: true, get: formatNumber },
@@ -34,7 +35,6 @@ let jobSchema = new Schema({
     dlikesQuit: { type: Number, required: true, get: formatNumber },
     rating: { type: Number, required: true },
     ratingQuit: { type: Number, required: true },
-    bkmk: { type: Number, required: true },
   },
 
   updated: {
@@ -44,12 +44,6 @@ let jobSchema = new Schema({
   }
 });
 
-function setPlayers(pl) {
-  if (pl < 1) return 1;
-  if (pl > 30) return 30;
-  return pl;
-}
-
 function formatNumber(num) {
   if (num >= 1000000) return (num / 1000000).toFixed(2) + 'm';
   if (num >= 1000) return (num / 1000).toFixed(2) + 'k';
@@ -57,17 +51,11 @@ function formatNumber(num) {
 }
 
 function setPlat(platform) {
-  return {
-    'PC': 1,
-    'Ps4': 2,
-    'XBoxOne': 3,
-    'Ps3': 4,
-    'XBox': 5
-  }[platform];
+  return array.indexOf(config.platforms, platform);
 }
 
-function getPlat(platform) {
-  return config.platforms[platform];
+function getPlat(platformId) {
+  return config.platforms[platformId];
 }
 
 function setImage(url) {

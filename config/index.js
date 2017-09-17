@@ -132,13 +132,9 @@ module.exports = {
     {
       name: 'Xbox One',
     },
+  ],
 
-    {
-      name: 'PS3',
-    },
-
-    {
-      name: 'Xbox 360',
-    },
-  ]
+  tags: {
+    rsver: 'Rockstar Verified',
+  },
 };
