@@ -12,9 +12,9 @@ let jobSchema = new Schema({
 
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
-  platform: { type: Number, required: true, set: setPlat, get: getPlat },
-  author: { type: String },
-  image: { type: String, required: true, set: setImage },
+  platf: { type: Number, required: true, set: setPlat, get: getPlat },
+  author: { type: String, required: true, trim: true },
+  img: { type: String, required: true, set: setImage },
   categ: { type: String, enum: ['rstar', 'verif'] },
 
   job: {
@@ -22,6 +22,12 @@ let jobSchema = new Schema({
     minpl: { type: Number, required: true, set: n => number.clamp(n, 1, 30) },
     maxpl: { type: Number, required: true, set: n => number.clamp(n, 1, 30) },
     flags: { type: [String] },
+
+    race: {
+      dist: { type: Number },
+      laps: { type: Number, set: laps => number.clamp(1, 99) },
+      checkp: { type: Number, set: num => number.clamp(num, 1, 68) },
+    },
   },
 
   stats: {
@@ -51,11 +57,11 @@ function formatNumber(num) {
 }
 
 function setPlat(platform) {
-  return array.indexOf(config.platforms, platform);
+  return array.findIndex(config.platforms, plat => plat.name === platform);
 }
 
 function getPlat(platformId) {
-  return config.platforms[platformId];
+  return config.platforms[platformId].name;
 }
 
 function setImage(url) {
@@ -63,32 +69,22 @@ function setImage(url) {
   return `${str[5]}.${str[7]}`;
 }
 
-function setVerif(verifState) {
-  return config.verif[verifState] || 0;
-}
-
 function setMode(mode) {
-  let modeId;
-
-  config.modes.forEach((item, i) => {
-    if (item.name === mode) modeId = i;
-  });
-
-  return modeId;
+  return array.findIndex(config.modes, m => m.name === mode);
 }
 
 function getMode(mode) {
   return config.modes[mode];
 }
 
-jobSchema.virtual('verifText')
-  .get(function() {
-    return config.verif[this.verif];
-  });
+// jobSchema.virtual('verifText')
+//   .get(function() {
+//     return config.verif[this.verif];
+//   });
 
 jobSchema.virtual('imageUrl')
   .get(function() {
-    let info = this.image.split('.');
+    let info = this.img.split('.');
     return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${info[0]}/${this.jobCurrId}/${info[1]}.jpg`;
   });
 

@@ -184,9 +184,9 @@ Property | Type | Description | Flags
 
 Property | Type | Description | Flags
 -------- | ---- | ----------- | -----
-`chp`      | `integer`  | Chekpoints amount | -
+`chp`      | `integer`  | Checkpoints amount | -
 `lap`      | `integer`  | Default laps amount if not P2P | -
-`rdis`     | `float`    | Distance in km | -
+`rdis`     | `float`    | Distance in m | -
 |
 |
 `type`     | `string`   | See below | -

@@ -39,19 +39,19 @@ module.exports = {
     }
   },
 
-  verif: {
-    'rstar': 1,
-    'verif': 2,
-    1: 'Rockstar Job',
-    2: 'Rockstar Verified Job',
-    3: 'Verified by our team'
-  },
-
   modes: [
-    ,
+    {
+      name: 'Any',
+      icon: ''
+    },
 
     {
-      name: 'Adversary Mode or Versus Mission',
+      name: 'Adversary Mode',
+      icon: 'f11b'
+    },
+
+    {
+      name: 'Versus Mission',
       icon: 'f11b'
     },
 
@@ -134,7 +134,25 @@ module.exports = {
     },
   ],
 
-  tags: {
-    rsver: 'Rockstar Verified',
-  },
+  tags: [
+    {
+      name: 'r_laps',
+      desc: 'Lap race'
+    },
+
+    {
+      name: 'r_p2p',
+      desc: 'Point to point race'
+    },
+
+    {
+      name: 'r_shared',
+      desc: 'Shared sections',
+    },
+
+    {
+      name: 'r_pitlane',
+      desc: 'Pitlane',
+    },
+  ]
 };
