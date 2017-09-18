@@ -35,57 +35,52 @@ router.get('/uploadraw', (req, res, next) => {
 });
 
 router.get('/fetch', (req, res, next) => {
-  let params = {};
-
   req.query = req.query || {};
-  params.searchBy = {};
-  params.searchBy.type = req.query.type;
-  params.searchBy.id = req.query.id;
+
+  let params = {};
+  params.by = req.query.type;
+  params.id = req.query.id;
   params.platform = req.query.platform;
   params.period = req.query.period;
   params.once = Boolean(req.query.once);
   params.limit = Number(req.query.limit);
 
-  let isCrew = (params.searchBy.type === 'crew');
+  let isCrew = (params.by === 'crew');
   let updatedCrewInfo = false;
   let i = 0;
 
   function recordJobs(jobs) {
-    let total = params.once ? Math.min(jobs.Total, 20) : jobs.Total;
-    let count = jobs.Count;
-    console.log(`Should be ${total} jobs, ${jobs.Count} now (LIMIT: ` +
-      `${params.limit}], ONCE: ${params.once}, PLATFORM: ${params.platform})`);
+    let jobsAmount = jobs.Count;
 
     jobs.Missions.forEach(job => {
       let jobId = job.Content.Metadata.RootContentId;
       let jobCurrId = job.MissionId;
 
+      let jobRaw = {
+        jobId: jobId,
+        jobCurrId: jobCurrId,
+        job: job,
+        updated: new Date(),
+        uploaded: false
+      }
+
       JobRaw.findOneAndUpdate(
-        { jobId: jobId },
-        {
-          jobId: jobId,
-          jobCurrId: jobCurrId,
-          job: job,
-          updated: new Date(),
-          uploaded: false
-        },
-        config.mongo.standardUpdateOptions,
-        (err, res) => {
-          if (err) {
-            console.log(`Error: ${err.code}`);
-          } else {
-            let text = (res) ? 'updated' : 'added';
-            console.log(`${++i} \t ${jobId} ${text}`);
-          }
-        }
-      );
+        { jobId: jobId }, jobRaw, config.mongo.standardUpdateOptions
+      )
+        .then(res => {
+          let text = (res) ? 'updated' : 'added';
+          console.log(`${++i} \t ${jobId} ${text}`);
+        })
+        .catch(err => {
+          console.log(`Error: ${err.code}`);
+        });
     });
 
     if (isCrew && !updatedCrewInfo) {
       updatedCrewInfo = true;
 
       Crew.findOneAndUpdate(
-        { crewId: params.searchBy.id },
+        { crewId: params.id },
         {
           uploadedLast: new Date()
         },
@@ -96,12 +91,7 @@ router.get('/fetch', (req, res, next) => {
   }
 
   fetchJobs(params, recordJobs)
-    .then(result => {
-      res.send(result);
-    })
-    .catch(err => {
-      return next(err);
-    });
+  res.send('Started fetching jobs...');
 });
 
 router.get('/addcrew', (req, res, next) => {

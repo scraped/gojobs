@@ -134,25 +134,8 @@ module.exports = {
     },
   ],
 
-  tags: [
-    {
-      name: 'r_laps',
-      desc: 'Lap race'
-    },
-
-    {
-      name: 'r_p2p',
-      desc: 'Point to point race'
-    },
-
-    {
-      name: 'r_shared',
-      desc: 'Shared sections',
-    },
-
-    {
-      name: 'r_pitlane',
-      desc: 'Pitlane',
-    },
-  ]
+  flags: {
+    r_laps: 'Lap race',
+    r_p2p: 'Point to point race',
+  }
 };

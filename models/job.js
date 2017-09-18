@@ -12,16 +12,16 @@ let jobSchema = new Schema({
 
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
-  platf: { type: Number, required: true, set: setPlat, get: getPlat },
-  author: { type: String, required: true, trim: true },
+  plat: { type: Number, required: true, set: setPlat, get: getPlat },
+  author: { type: String },
   img: { type: String, required: true, set: setImage },
-  categ: { type: String, enum: ['rstar', 'verif'] },
+  category: { type: String, enum: ['rstar', 'verif'], get: getCategory },
 
   job: {
     mode: { type: Number, required: true, set: setMode, get: getMode },
     minpl: { type: Number, required: true, set: n => number.clamp(n, 1, 30) },
     maxpl: { type: Number, required: true, set: n => number.clamp(n, 1, 30) },
-    flags: { type: [String] },
+    flags: { type: [String], get: getFlags },
 
     race: {
       dist: { type: Number },
@@ -56,12 +56,22 @@ function formatNumber(num) {
   return num;
 }
 
+function getCategory(cat) {
+  return {
+    shortname: cat,
+    name: (cat === 'rstar') ? 'Rockstar Job' : 'Rockstar Verified Job'
+  }
+}
+
 function setPlat(platform) {
   return array.findIndex(config.platforms, plat => plat.name === platform);
 }
 
 function getPlat(platformId) {
-  return config.platforms[platformId].name;
+  return {
+    name: config.platforms[platformId].name,
+    id: platformId
+  }
 }
 
 function setImage(url) {
@@ -77,10 +87,9 @@ function getMode(mode) {
   return config.modes[mode];
 }
 
-// jobSchema.virtual('verifText')
-//   .get(function() {
-//     return config.verif[this.verif];
-//   });
+function getFlags(flags) {
+  return flags.map(elem => config.flags[elem]);
+}
 
 jobSchema.virtual('imageUrl')
   .get(function() {
@@ -97,7 +106,7 @@ jobSchema.virtual('ratingCssClass')
 jobSchema.virtual('updatedDateString')
   .get(function() {
     let dateString = moment(this.updated.job).fromNow();
-    if (this.verif || this.updated.ver === 1) {
+    if (this.category || this.updated.ver === 1) {
       return `Added ${dateString}`;
     } else {
       return `Updated ${dateString} (version ${this.updated.ver})`;

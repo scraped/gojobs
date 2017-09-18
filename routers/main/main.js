@@ -22,7 +22,7 @@ router.use('/', (req, res, next) => {
   Job.find(findQuery)
     .skip(config.perPage * (res.pageNumber - 1))
     .limit(config.perPage)
-    .sort({ 'stats.ratingPoints': -1 })
+    .sort({ 'stats.points': -1 })
     .then(jobs => {
       Job
         .find(findQuery)

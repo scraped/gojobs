@@ -26,26 +26,26 @@
         <div class="media">
           <div class="media-left">
             <figure class="image image-avatar is-48x48">
-              {{#if verif}}
-                <img src="/images/rockstar-avatar-48.png" alt="Author avatar">
-              {{else}}
+              {{#if author}}
                 <img src="https://a.rsg.sc/n/{{lowerCase author}}/s" alt="Author avatar">
                 <div class="image-avatar-medal">
                   <div class="tooltip tooltip-right" style="background-image: url(/images/medal-{{creator.medal}}.png)" data-tooltip="Medal"></div>
                 </div>
+              {{else}}
+                <img src="/images/rockstar-avatar-48.png" alt="Author avatar">
               {{/if}}
             </figure>
           </div>
 
           <div class="media-content" style="width: 1px;">
             <p class="subtitle is-6">
-              {{#if verif}}
-                <a href="/?verif={{verif}}">
-                  {{verifText}}
-                </a>
-              {{else}}
+              {{#if author}}
                 <a href="/?author={{author}}">
                   @{{author}}
+                </a>
+              {{else}}
+                <a href="/?category={{category.shortname}}">
+                  {{category.name}}
                 </a>
               {{/if}}
 
@@ -66,8 +66,8 @@
             <div><div class="icon">
               <i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>
             </div></div>
-            {{#if verif}}
-              <div><div class="icon tooltip tooltip-left" data-tooltip="{{verifText}}">
+            {{#if category}}
+              <div><div class="icon tooltip tooltip-left" data-tooltip="{{category.name}}">
                 <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
               </div></div>
             {{/if}}
@@ -77,8 +77,8 @@
         <div class="content">
           <div class="tags">
             {{#if author}}
-              <a class="tag" href="/?verif={{../query.verif}}&author={{../query.author}}&plat={{platId}}">
-                Platform: {{platform}}
+              <a class="tag" href="/?verif={{../query.verif}}&author={{../query.author}}&plat={{plat.id}}">
+                Platform: {{plat.name}}
               </a>
             {{else}}
               <a class="tag" href="/?verif={{../query.verif}}&author={{../query.author}}">
@@ -90,9 +90,9 @@
       </div>
 
       <footer class="card-footer">
-        <div class="card-footer-item tooltip" data-tooltip="People played this: {{stats.playUnq}}">
+        <div class="card-footer-item tooltip" data-tooltip="People played this: {{stats.pldUnq}}">
           <i class="fa fa-gamepad fa-lg" aria-hidden="true" style="margin-right: 3px;"></i>
-          {{stats.playTot}}
+          {{stats.pldTot}}
         </div>
         <div class="card-footer-item tooltip" data-tooltip="Dislikes: {{stats.dlikes}}, optimal rating: {{stats.ratingQuit}}%">
           <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" style="margin-right: 1px;"></i>
