@@ -14,8 +14,8 @@ router.use('/', (req, res, next) => {
   res.pageNumber = Math.abs(Number(req.query.page)) || 1;
 
   let findQuery = {};
+  findQuery.category = req.query.category || '';
   req.query.author && (findQuery.author = req.query.author);
-  req.query.verif && (findQuery.verif = req.query.verif);
   req.query.platform && (findQuery.platform = req.query.platform);
   req.query.mode && (findQuery['job.mode'] = req.query.mode);
 
@@ -27,14 +27,14 @@ router.use('/', (req, res, next) => {
       Job
         .find(findQuery)
         .count((err, count) => {
-          if (err) throw new Error('Cannot retrieve jobs from the database');
+          if (err) throw new Error(`Cannot retrieve jobs from the database`);
           res.jobsCount = count;
           res.locals.partials.jobsContext = jobs;
           next();
       });
     })
     .catch(err => {
-      next('Cannot retrieve jobs from the database');
+      next(`${err.stack} Cannot retrieve jobs from the database`);
     });
 });
 

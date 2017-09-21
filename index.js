@@ -32,7 +32,7 @@ app.use((req, res) => {
 // Errors
 app.use((err, req, res, next) => {
   if (typeof err === 'string') return res.send(err);
-  console.error(`Error 500 occured. Stack: ${err.stack}`);
+  console.error(`Error 500 occured: ${err.stack}`);
   res
     .status(500)
     .render('error', config.httpErrors.e500);

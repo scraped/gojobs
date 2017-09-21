@@ -76,15 +76,11 @@
 
         <div class="content">
           <div class="tags">
-            {{#if author}}
-              <a class="tag" href="/?verif={{../query.verif}}&author={{../query.author}}&plat={{plat.id}}">
-                Platform: {{plat.name}}
+            {{#unless category}}
+              <a class="tag" href="/?author={{../query.author}}&plat={{plat.id}}">
+                {{plat.name}}
               </a>
-            {{else}}
-              <a class="tag" href="/?verif={{../query.verif}}&author={{../query.author}}">
-                All platforms
-              </a>
-            {{/if}}
+            {{/unless}}
           </div>
         </div>
       </div>

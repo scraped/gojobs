@@ -15,7 +15,7 @@ let jobSchema = new Schema({
   plat: { type: Number, required: true, set: setPlat, get: getPlat },
   author: { type: String },
   img: { type: String, required: true, set: setImage },
-  category: { type: String, enum: ['rstar', 'verif'], get: getCategory },
+  category: { type: String, required: true, default: '', get: getCategory },
 
   job: {
     mode: { type: Number, required: true, set: setMode, get: getMode },

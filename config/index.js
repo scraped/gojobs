@@ -42,7 +42,7 @@ module.exports = {
   modes: [
     {
       name: 'Any',
-      icon: ''
+      icon: 'f17f'
     },
 
     {

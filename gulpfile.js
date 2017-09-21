@@ -56,7 +56,8 @@ gulp.task('watch', () => {
 
 gulp.task('serve', () => {
   browserSync.init({
-    proxy: `localhost:${config.port}`
+    proxy: `localhost:${config.port}`,
+    port: 3001
   });
   browserSync.watch('./public/**/*.*').on('change', browserSync.reload);
 });
