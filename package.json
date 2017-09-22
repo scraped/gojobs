@@ -38,6 +38,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "mongoose": "^4.11.6",
+    "morgan": "^1.8.2",
     "paginator": "^1.0.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.1"
