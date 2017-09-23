@@ -54,20 +54,31 @@ gulp.task('watch', () => {
   gulp.watch(`${config.srcDir}{images,js}/*.*`, gulp.series('images'));
 });
 
-gulp.task('serve', () => {
-  browserSync.init({
-    proxy: `localhost:${config.port}`,
-    port: 3001
+gulp.task('nodemon', () => {
+  return plugins.nodemon({ script: 'index.js' }).on('start', function() {
+    browserSync.init({
+      proxy: `localhost:${config.port}`,
+      port: 3001
+    });
+    browserSync.watch('./public/**/*.*').on('change', browserSync.reload);
   });
-  browserSync.watch('./public/**/*.*').on('change', browserSync.reload);
 });
 
+//
+// Main task right here: build + browserSync + nodemon
+//
 gulp.task('dev',
-  gulp.series('build', gulp.parallel('watch', 'serve'))
+  gulp.series('build', gulp.parallel('watch', 'nodemon'))
 );
 
+//
+// dev task without browserSync
+//
 gulp.task('dev:noserve',
   gulp.series('build', 'watch')
 );
 
+//
+// dev is a default task (gulp = gulp dev)
+//
 gulp.task('default', gulp.series('dev'));
