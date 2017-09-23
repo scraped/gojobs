@@ -4,7 +4,7 @@
   "description": "No description yet",
   "main": "index.js",
   "scripts": {
-    "build": "cross-evn NODE_ENV=production"
+    "build": "cross-evn NODE_ENV=production gulp"
   },
   "repository": {
     "type": "git",
