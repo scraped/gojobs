@@ -54,19 +54,14 @@ gulp.task('watch', () => {
   gulp.watch(`${config.srcDir}{images,js}/*.*`, gulp.series('images'));
 });
 
-let started = false;
-
 gulp.task('nodemon', (cb) => {
   return plugins.nodemon({ script: 'index.js' }).on('start', function() {
     browserSync.init({
       proxy: `localhost:${config.port}`,
-      port: 3001
+      port: 4000
     }, cb);
     browserSync.watch('./public/**/*.*').on('change', browserSync.reload);
   })
-});
-
-gulp.task('serve', (cb) => {
 });
 
 //

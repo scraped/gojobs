@@ -10,10 +10,10 @@ let jobSchema = new Schema({
   jobId: { type: String, required: true, unique: true },
   jobCurrId: { type: String, required: true },
 
+  author: { type: Schema.Types.ObjectId, ref: 'User' },
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
   plat: { type: Number, required: true, set: setPlat, get: getPlat },
-  author: { type: String },
   img: { type: String, required: true, set: setImage },
   category: { type: String, required: true, default: '', get: getCategory },
 

@@ -24,8 +24,7 @@ router.use('/', (req, res, next) => {
     .limit(config.perPage)
     .sort({ 'stats.points': -1 })
     .then(jobs => {
-      Job
-        .find(findQuery)
+      Job.find(findQuery)
         .count((err, count) => {
           if (err) throw new Error(`Cannot retrieve jobs from the database`);
           res.jobsCount = count;
