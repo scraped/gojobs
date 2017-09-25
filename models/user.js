@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let userSchema = new Schema({
-  userId: { type: Number, required: true, unique: true },
-  nickname: { type: String, required: true },
-  crew: { type: Number },
-  updated: { type: Date, default: Date.now(), required: true },
+  username: { type: String, required: true, unique: true },
+  crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
+  updated: { type: Date, required: true },
 });
 
 userSchema.virtual('avatarSmallUrl')

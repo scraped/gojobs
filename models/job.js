@@ -10,18 +10,19 @@ let jobSchema = new Schema({
   jobId: { type: String, required: true, unique: true },
   jobCurrId: { type: String, required: true },
 
-  author: { type: Schema.Types.ObjectId, ref: 'User' },
+  author: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
-  plat: { type: Number, required: true, set: setPlat, get: getPlat },
+  platform: { type: Number, required: true, set: setPlatform },
   img: { type: String, required: true, set: setImage },
-  category: { type: String, required: true, default: '', get: getCategory },
+  verif: { type: Number, required: true, default: '' },
 
   job: {
     mode: { type: Number, required: true, set: setMode, get: getMode },
+    flags: { type: [String], get: getFlags },
+
     minpl: { type: Number, required: true, set: n => number.clamp(n, 1, 30) },
     maxpl: { type: Number, required: true, set: n => number.clamp(n, 1, 30) },
-    flags: { type: [String], get: getFlags },
 
     race: {
       dist: { type: Number },
@@ -56,28 +57,36 @@ function formatNumber(num) {
   return num;
 }
 
-function getCategory(cat) {
-  return {
-    shortname: cat,
-    name: (cat === 'rstar') ? 'Rockstar Job' : 'Rockstar Verified Job'
-  }
+//
+// Platform
+//
+function setPlatform(platform) {
+  return 1 + array.findIndex(config.platforms, plat => plat.name === platform);
 }
 
-function setPlat(platform) {
-  return array.findIndex(config.platforms, plat => plat.name === platform);
-}
+jobSchema.virtual('platformName').get(function() {
+  return config.platforms[1 + this.plat].name;
+});
 
-function getPlat(platformId) {
-  return {
-    name: config.platforms[platformId].name,
-    id: platformId
-  }
-}
-
+//
+// Image
+//
 function setImage(url) {
   let str = url.split('/');
   return `${str[5]}.${str[7]}`;
 }
+
+jobSchema.virtual('imageUrl').get(function() {
+  let info = this.img.split('.');
+  return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${info[0]}/${this.jobCurrId}/${info[1]}.jpg`;
+});
+
+//
+// Verification State
+//
+jobSchema.virtual('verifText').get(function() {
+  return (this.verif === 'rstar') ? 'Rockstar Job' : 'Rockstar Verified Job'
+});
 
 function setMode(mode) {
   return array.findIndex(config.modes, m => m.name === mode);
@@ -90,12 +99,6 @@ function getMode(mode) {
 function getFlags(flags) {
   return flags.map(elem => config.flags[elem]);
 }
-
-jobSchema.virtual('imageUrl')
-  .get(function() {
-    let info = this.img.split('.');
-    return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${info[0]}/${this.jobCurrId}/${info[1]}.jpg`;
-  });
 
 jobSchema.virtual('ratingCssClass')
   .get(function() {

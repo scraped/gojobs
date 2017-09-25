@@ -41,48 +41,59 @@ module.exports = {
 
   modes: [
     {
-      name: 'Any',
-      icon: 'f17f'
-    },
-
-    {
-      name: 'Adversary Mode',
-      icon: 'f11b'
-    },
-
-    {
-      name: 'Versus Mission',
-      icon: 'f11b'
+      name: 'Adversary Mode/Versus Mission',
+      icon: 'f11b',
+      nocustoms: true,
+      flags: {
+        ad: 'Adversary Mode',
+        ver: 'Versus Mission'
+      }
     },
 
     {
       name: 'Parachuting',
-      icon: 'f107'
+      icon: 'f107',
+      nocustoms: true
+    },
+
+    {
+      name: 'Survival',
+      icon: '',
+      nocustoms: true
     },
 
     {
       name: 'Capture',
-      icon: 'f113'
+      icon: 'f113',
+      flags: {
+        c_raid: 'Raid Capture',
+        c_gta: 'GTA Capture',
+        c_contend: 'Contend Capture',
+        c_hold: 'Hold Capture'
+      }
     },
 
     {
       name: 'Last Team Standing',
-      icon: 'f16a'
+      icon: 'f16a',
+      flags: {
+        tod: 'Trail of death',
+      }
     },
 
     {
       name: 'Deathmatch',
-      icon: 'f167'
+      icon: 'f167',
     },
 
     {
       name: 'Team Deathmatch',
-      icon: 'f197'
+      icon: 'f197',
     },
 
     {
       name: 'Vehicle Deathmatch',
-      icon: 'f1a1'
+      icon: 'f1a1',
     },
 
      {
@@ -118,10 +129,6 @@ module.exports = {
 
   platforms: [
     {
-      name: 'Any'
-    },
-
-    {
       name: 'PC',
     },
 
@@ -132,10 +139,5 @@ module.exports = {
     {
       name: 'Xbox One',
     },
-  ],
-
-  flags: {
-    r_laps: 'Lap race',
-    r_p2p: 'Point to point race',
-  }
+  ]
 };

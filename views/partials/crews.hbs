@@ -12,7 +12,7 @@
           <div class="media-content">
             <div class="content">
               <p class="subtitle is-6">
-                <a href="https://socialclub.rockstargames.com/crew/{{url}}" target="_blank">
+                <a href="https://socialclub.rockstargames.com/crew/{{crewUrl}}" target="_blank">
                   {{name}}
                   <span class="tag is-white" style="border: 1px solid #{{color}}; margin-left: 4px;">{{tag}}</span>
                 </a>
@@ -23,7 +23,7 @@
                     <a class="button is-small is-light" href="/admin/fetch?type=crew&id={{crewId}}" target="_blank">
                       Fetch jobs
                     </a>
-                     ({{uploadedDateString}}, {{fetched}}/{{jobs}})
+                     ({{uploadedDateString}}, {{jobsAmount.fetched}}/{{jobsAmount.total}})
                   {{else}}
                     <a class="button is-small is-warning" href="/admin/fetch?type=crew&id={{crewId}}" target="_blank">
                       Fetch jobs

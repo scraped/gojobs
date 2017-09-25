@@ -6,11 +6,40 @@ const uploadJobs = require('../../lib/upload-jobs');
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-const JobRaw = require('../../models/job-raw');
 const Crew = require('../../models/crew');
+const User = require('../../models/user');
+const JobRaw = require('../../models/job-raw');
 mongoose.connect(config.mongo.connectUri, config.mongo.options);
 
 module.exports = router;
+
+function recordJobs(jobs) {
+  jobs.Missions.forEach(job => {
+    let jobId = job.Content.Metadata.RootContentId;
+
+    let newJobRaw = {
+      jobId: jobId,
+      jobCurrId: job.MissionId,
+      job: job.Content,
+      updated: new Date(),
+      uploaded: false
+    };
+
+    JobRaw.findOneAndUpdate(
+      { jobId: jobId },
+      newJobRaw,
+      config.mongo.standardUpdateOptions
+    )
+      .exec()
+      .then(res => {
+        let text = (res) ? 'updated' : 'added';
+        console.log(`${jobId} ${text}`);
+      })
+      .catch(err => {
+        console.log(`Error: ${err.stack}`);
+      });
+  });
+}
 
 router.get('/', (req, res) => {
   Crew
@@ -45,53 +74,38 @@ router.get('/fetch', (req, res, next) => {
   params.once = Boolean(req.query.once);
   params.limit = Number(req.query.limit);
 
-  let isCrew = (params.by === 'crew');
-  let updatedCrewInfo = false;
-  let i = 0;
+  fetchJobs(params)
+    .then(jobs => {
+      let updateCrewPromise = Promise.resolve(true);
+      let isCrew = (params.by === 'crew');
 
-  function recordJobs(jobs) {
-    let jobsAmount = jobs.Count;
-
-    jobs.Missions.forEach(job => {
-      let jobId = job.Content.Metadata.RootContentId;
-      let jobCurrId = job.MissionId;
-
-      let jobRaw = {
-        jobId: jobId,
-        jobCurrId: jobCurrId,
-        job: job,
-        updated: new Date(),
-        uploaded: false
+      if (isCrew) {
+        console.log('CREW!!');
+        updateCrewPromise = Crew.findOneAndUpdate(
+          { crewId: params.id },
+          {
+            uploadedLast: new Date(),
+            jobsAmount: {
+              total: jobs.total,
+              fetched: jobs.fetched,
+            }
+          },
+          config.mongo.standardUpdateOptions,
+        ).exec();
       }
 
-      JobRaw.findOneAndUpdate(
-        { jobId: jobId }, jobRaw, config.mongo.standardUpdateOptions
-      )
-        .then(res => {
-          let text = (res) ? 'updated' : 'added';
-          console.log(`${++i} \t ${jobId} ${text}`);
-        })
+      updateCrewPromise.then(res => {
+        jobs.jobs.forEach(recordJobs);
+      })
         .catch(err => {
-          console.log(`Error: ${err.code}`);
+          console.log(`Couldt record jobs: ${err.stack}`);
         });
+
+      res.send('Jobs is being uploaded')
+    })
+    .catch(err => {
+      res.send(`Error: ${err.stack}`);
     });
-
-    if (isCrew && !updatedCrewInfo) {
-      updatedCrewInfo = true;
-
-      Crew.findOneAndUpdate(
-        { crewId: params.id },
-        {
-          uploadedLast: new Date()
-        },
-        config.mongo.standardUpdateOptions,
-        (err, doc) => {}
-      );
-    }
-  }
-
-  fetchJobs(params, recordJobs)
-  res.send('Started fetching jobs...');
 });
 
 router.get('/addcrew', (req, res, next) => {

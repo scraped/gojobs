@@ -139,7 +139,7 @@ Property | Type | Description | Flags
 `crewcolor`               | `string`    | Color like `#ffffff`, can contain `#xxxxxxxx` | `u!`
 `isfoundercrew`           | `boolean`   | Is founder | -
 `isprivate`               | `boolean`   | Is crew private, `false` also if no crew | -
-`thumbnail`               | `string`    | `https://prod.cloud.rockstargames.com/ugc/gta5mission/<unique number>/<ID>/<1 or 2>_0.jpg` | -
+`thumbnail`               | `string`    | `https://prod.cloud.rockstargames.com/ugc/gta5mission/<unique number>/<ID>/<1, 2 or 3>_0.jpg` | -
 `plat`                    | `string`    | `Ps3`, `Ps4`, `XBox`, `XBoxOne`, `PC` | -
 `tags`                    | `[string]`  | Array of tags | `e`
 `ver`                     | `integer`   | Version | -

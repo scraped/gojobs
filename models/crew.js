@@ -4,24 +4,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let crewSchema = new Schema({
-  crewId: { type: Number, required: true, unique: true },
+  crewUrl: { type: String, required: true, unique: true },
+  crewId: { type: String, unique: true },
 
-  name: { type: String, required: true },
-  url: { type: String, required: true },
+  name: { type: String, trim: true },
   tag: { type: String, required: true, uppercase: true },
-  color: { type: String, required: true, set: setColor },
-  avatar: { type: String, required: true },
+  color: { type: String, required: true, set: color => color.substr(0, 6) },
+  avatar: { type: String },
 
-  jobs: { type: Number },
-  fetched: { type: Number },
+  jobsAmount: {
+    total: { type: Number, required: true, default: 0 },
+    fetched: { type: Number, required: true, default: 0 },
+  },
 
   updated: { type: Date, required: true },
   uploadedLast: { type: Date },
 });
-
-function setColor(color) {
-  return (color.length > 6) ? '000000' : color;
-}
 
 crewSchema.virtual('avatarUrl')
   .get(function() {
