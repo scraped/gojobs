@@ -29,8 +29,7 @@ function recordJobs(jobs) {
       { jobId: jobId },
       newJobRaw,
       config.mongo.standardUpdateOptions
-    )
-      .exec()
+    ).exec()
       .then(res => {
         let text = (res) ? 'updated' : 'added';
         console.log(`${jobId} ${text}`);
@@ -74,38 +73,42 @@ router.get('/fetch', (req, res, next) => {
   params.once = Boolean(req.query.once);
   params.limit = Number(req.query.limit);
 
-  fetchJobs(params)
-    .then(jobs => {
-      let updateCrewPromise = Promise.resolve(true);
-      let isCrew = (params.by === 'crew');
+  res.send('Jobs is being uploaded');
 
-      if (isCrew) {
-        console.log('CREW!!');
-        updateCrewPromise = Crew.findOneAndUpdate(
-          { crewId: params.id },
-          {
-            uploadedLast: new Date(),
-            jobsAmount: {
-              total: jobs.total,
-              fetched: jobs.fetched,
-            }
-          },
-          config.mongo.standardUpdateOptions,
-        ).exec();
-      }
+  fetchJobs(params).then(jobs => {
+    let crewUpd = {
+      uploadedLast: new Date(),
+      jobsAmount: { total: jobs.total, fetched: jobs.fetched }
+    };
 
-      updateCrewPromise.then(res => {
-        jobs.jobs.forEach(recordJobs);
-      })
-        .catch(err => {
-          console.log(`Couldt record jobs: ${err.stack}`);
-        });
+    let updateCrewPromise = (params.by !== 'crew')
+      ? Promise.resolve(true)
+      : Crew.findOneAndUpdate(
+        { crewId: params.id },
+        crewUpd,
+        config.mongo.standardUpdateOptions,
+      ).exec();
 
-      res.send('Jobs is being uploaded')
+    updateCrewPromise.then(res => {
+      let username = job.Content.Metadata.nickname;
+
+      return User.findOneAndUpdate(
+        { username: username },
+        { username: username, updated: new Date() },
+        config.mongo.standardUpdateOptions
+      ).exec();
+    })
+    .then(res => {
+      jobs.jobs.forEach(recordJobs);
     })
     .catch(err => {
-      res.send(`Error: ${err.stack}`);
+      console.log(`Can't record jobs: ${err.stack}`);
     });
+  })
+  .catch(err => {
+    console.log(`Can't fetch jobs: ${err.stack}`);
+    res.send(`Can't fetch jobs: ${err.message}`);
+  });
 });
 
 router.get('/addcrew', (req, res, next) => {
