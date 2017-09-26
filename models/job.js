@@ -13,7 +13,7 @@ let jobSchema = new Schema({
   author: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
-  platform: { type: Number, required: true, set: setPlatform },
+  platform: { type: Number, set: setPlatform },
   img: { type: String, required: true, set: setImage },
   verif: { type: Number, required: true, default: '' },
 
@@ -26,7 +26,7 @@ let jobSchema = new Schema({
 
     race: {
       dist: { type: Number },
-      laps: { type: Number, set: laps => number.clamp(1, 99) },
+      laps: { type: Number, set: laps => number.clamp(laps, 1, 99) },
       checkp: { type: Number, set: num => number.clamp(num, 1, 68) },
     },
   },

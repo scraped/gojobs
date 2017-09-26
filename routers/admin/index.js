@@ -17,7 +17,7 @@ function recordJobs(jobs) {
   jobs.Missions.forEach(job => {
     let jobId = job.Content.Metadata.RootContentId;
 
-    let newJobRaw = {
+    let jobRawInfo = {
       jobId: jobId,
       jobCurrId: job.MissionId,
       job: job.Content,
@@ -27,7 +27,7 @@ function recordJobs(jobs) {
 
     JobRaw.findOneAndUpdate(
       { jobId: jobId },
-      newJobRaw,
+      jobRawInfo,
       config.mongo.standardUpdateOptions
     ).exec()
       .then(res => {
@@ -40,7 +40,12 @@ function recordJobs(jobs) {
   });
 }
 
-router.get('/', (req, res) => {
+router.all((req, res, next) => {
+  req.query = req.query || {};
+  next();
+});
+
+router.get('/', (req, res, next) => {
   Crew
     .find()
     .then(crews => {
@@ -48,23 +53,21 @@ router.get('/', (req, res) => {
       res.render('admin');
     })
     .catch(err => {
+      console.log(`Cannot fetch data from database: ${err.stack}`);
       return next('Cannot fetch data from database');
     });
 });
 
-router.get('/uploadraw', (req, res, next) => {
-  uploadJobs()
-    .then(result => {
-      res.send(result);
-    })
-    .catch(err => {
-      return next(err);
-    });
+router.get('/uploadraw', (req, res) => {
+  res.send('Jobs is being uploaded');
+  uploadJobs();
 });
 
-router.get('/fetch', (req, res, next) => {
-  req.query = req.query || {};
+// router.get('/test', (req, res) => {
+//   res.send('test');
+// });
 
+router.get('/fetch', (req, res) => {
   let params = {};
   params.by = req.query.type;
   params.id = req.query.id;
@@ -75,40 +78,43 @@ router.get('/fetch', (req, res, next) => {
 
   res.send('Jobs is being uploaded');
 
-  fetchJobs(params).then(jobs => {
-    let crewUpd = {
-      uploadedLast: new Date(),
-      jobsAmount: { total: jobs.total, fetched: jobs.fetched }
-    };
+  let isCrew = (params.by === 'crew');
+  let getCrewInfoPromise = Promise.resolve(false);
+  let crewInfo = {};
 
-    let updateCrewPromise = (params.by !== 'crew')
-      ? Promise.resolve(true)
-      : Crew.findOneAndUpdate(
+  if (isCrew) {
+    getCrewInfoPromise = Crew.findOne({ crewId: params.id });
+  }
+
+  getCrewInfoPromise
+    .then(crew => {
+      console.log(crew);
+      if (crew) {
+        crewInfo = crew;
+        params.skip = crewInfo.jobsAmount ? Number(crewInfo.jobsAmount.fetched) : 0;
+      }
+
+      return fetchJobs(params);
+    })
+    .then(jobs => {
+      jobs.jobs.forEach(recordJobs);
+
+      if (!isCrew) return false;
+
+      return Crew.findOneAndUpdate(
         { crewId: params.id },
-        crewUpd,
-        config.mongo.standardUpdateOptions,
-      ).exec();
-
-    updateCrewPromise.then(res => {
-      let username = job.Content.Metadata.nickname;
-
-      return User.findOneAndUpdate(
-        { username: username },
-        { username: username, updated: new Date() },
+        {
+          uploadedLast: new Date(),
+          'jobsAmount.total': jobs.total,
+          'jobsAmount.fetched': jobs.fetched + params.skip
+        },
         config.mongo.standardUpdateOptions
       ).exec();
     })
-    .then(res => {
-      jobs.jobs.forEach(recordJobs);
-    })
+    .then(res => {})
     .catch(err => {
-      console.log(`Can't record jobs: ${err.stack}`);
+      console.log(`Cannot record jobs: ${err.stack}`);
     });
-  })
-  .catch(err => {
-    console.log(`Can't fetch jobs: ${err.stack}`);
-    res.send(`Can't fetch jobs: ${err.message}`);
-  });
 });
 
 router.get('/addcrew', (req, res, next) => {

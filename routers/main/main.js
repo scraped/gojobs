@@ -14,8 +14,8 @@ router.use('/', (req, res, next) => {
   res.pageNumber = Math.abs(Number(req.query.page)) || 1;
 
   let findQuery = {};
-  findQuery.category = req.query.category || '';
-  req.query.author && (findQuery.author = req.query.author);
+  findQuery.verif = req.query.verif || '';
+  // req.query.author && (findQuery.author = req.query.author);
   req.query.platform && (findQuery.platform = req.query.platform);
   req.query.mode && (findQuery['job.mode'] = req.query.mode);
 
@@ -23,21 +23,33 @@ router.use('/', (req, res, next) => {
     .skip(config.perPage * (res.pageNumber - 1))
     .limit(config.perPage)
     .sort({ 'stats.points': -1 })
+    .populate({
+      path: 'author',
+      populate: { path: 'crew' }
+    })
+    .populate('crew')
+    .exec()
     .then(jobs => {
-      Job.find(findQuery)
-        .count((err, count) => {
-          if (err) throw new Error(`Cannot retrieve jobs from the database`);
-          res.jobsCount = count;
-          res.locals.partials.jobsContext = jobs;
-          next();
-      });
+      if (!jobs) throw new Error('No jobs found');
+      res.locals.partials.jobsContext = jobs;
+      console.log(res.locals.partials.jobsContext);
+
+      return Job.find(findQuery)
+        .count()
+        .exec();
+    })
+    .then(count => {
+      res.jobsCount = count;
+      next();
     })
     .catch(err => {
-      next(`${err.stack} Cannot retrieve jobs from the database`);
+      console.log(`Cannot retrieve jobs from the database: ${err.stack}`);
+      next();
     });
 });
 
 router.get('/', (req, res) => {
+  console.log(res.locals.partials.jobsContext);
   let pagination = new Paginator(config.perPage, 1).build(
     res.jobsCount, res.pageNumber
   );

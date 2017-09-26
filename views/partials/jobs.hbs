@@ -26,36 +26,33 @@
         <div class="media">
           <div class="media-left">
             <figure class="image image-avatar is-48x48">
-              {{#if author}}
-                <img src="https://a.rsg.sc/n/{{lowerCase author}}/s" alt="Author avatar">
+              {{#unless verif}}
+                <img src="https://a.rsg.sc/n/{{lowerCase author.username}}/s" alt="Author avatar">
                 <div class="image-avatar-medal">
                   <div class="tooltip tooltip-right" style="background-image: url(/images/medal-{{creator.medal}}.png)" data-tooltip="Medal"></div>
                 </div>
               {{else}}
                 <img src="/images/rockstar-avatar-48.png" alt="Author avatar">
-              {{/if}}
+              {{/unless}}
             </figure>
           </div>
 
           <div class="media-content" style="width: 1px;">
             <p class="subtitle is-6">
-              {{#if author}}
-                <a href="/?author={{author}}">
-                  @{{author}}
+              {{#unless verif}}
+                <a href="/?author={{author.username}}">
+                  @{{author.username}}
+                  {{#if author.crew}}
+                    <span class="tag is-white" style="border: 1px solid #{{author.crew.color}}; margin-left: 4px;">
+                      {{author.crew.tag}}
+                    </span>
+                  {{/if}}
                 </a>
               {{else}}
-                <a href="/?category={{category.shortname}}">
-                  {{category.name}}
+                <a href="/?category={{verif}}">
+                  {{verifText}}
                 </a>
-              {{/if}}
-
-              {{!--  --}}
-              {{!-- {#if creator.crew.tag}}
-                <span class="tag is-white" style="margin-left: 4px; border: 1px solid #{creator.crew.color}}">
-                  {creator.crew.tag}}
-                </span>
-              {/if}} --}}
-              {{!--  --}}
+              {{/unless}}
 
               <br>
               <small><i>{{updatedDateString}}</i></small>
@@ -66,8 +63,8 @@
             <div><div class="icon">
               <i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>
             </div></div>
-            {{#if category}}
-              <div><div class="icon tooltip tooltip-left" data-tooltip="{{category.name}}">
+            {{#if verif}}
+              <div><div class="icon tooltip tooltip-left" data-tooltip="{{verifText}}">
                 <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
               </div></div>
             {{/if}}
@@ -76,7 +73,7 @@
 
         <div class="content">
           <div class="tags">
-            {{#unless category}}
+            {{#unless verif}}
               <a class="tag" href="/?author={{../query.author}}&plat={{plat.id}}">
                 {{plat.name}}
               </a>

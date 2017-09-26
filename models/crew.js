@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 
 let crewSchema = new Schema({
   crewUrl: { type: String, required: true, unique: true },
-  crewId: { type: String, unique: true },
+  crewId: { type: Number },
+  url: { type: String },
 
   name: { type: String, trim: true },
   tag: { type: String, required: true, uppercase: true },
