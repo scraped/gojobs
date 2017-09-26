@@ -65,7 +65,7 @@ function setPlatform(platform) {
 }
 
 jobSchema.virtual('platformName').get(function() {
-  return config.platforms[1 + this.plat].name;
+  return config.platforms[this.platform - 1].name;
 });
 
 //

@@ -3,8 +3,8 @@ const express = require('express');
 const hbars = require('express-handlebars').create(config.handlebars);
 const logger = require('morgan');
 
-const mainRouter = require('./routers/main/main');
-const jobRouter = require('./routers/main/job');
+const mainRouter = require('./routers/main');
+const jobRouter = require('./routers/job');
 const adminRouter = require('./routers/admin');
 
 const app = express();

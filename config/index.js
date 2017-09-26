@@ -139,5 +139,27 @@ module.exports = {
     {
       name: 'Xbox One',
     },
+  ],
+
+  medals: [
+    {
+      name: 'white'
+    },
+
+    {
+      name: 'bronze'
+    },
+
+    {
+      name: 'silver'
+    },
+
+    {
+      name: 'gold'
+    },
+
+    {
+      name: 'platinum'
+    }
   ]
 };

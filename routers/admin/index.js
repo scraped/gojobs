@@ -48,6 +48,7 @@ router.all((req, res, next) => {
 router.get('/', (req, res, next) => {
   Crew
     .find()
+    .sort({ 'jobsAmount.total': -1 })
     .then(crews => {
       res.locals.partials.crewsContext = crews;
       res.render('admin');

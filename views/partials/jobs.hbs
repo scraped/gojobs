@@ -28,8 +28,10 @@
             <figure class="image image-avatar is-48x48">
               {{#unless verif}}
                 <img src="https://a.rsg.sc/n/{{lowerCase author.username}}/s" alt="Author avatar">
-                <div class="image-avatar-medal">
-                  <div class="tooltip tooltip-right" style="background-image: url(/images/medal-{{creator.medal}}.png)" data-tooltip="Medal"></div>
+                <div
+                  class="tooltip tooltip-right image-avatar-medal"
+                  style="background-image: url(/images/medal-{{author.medal}}.png)"
+                  data-tooltip="Creator medal">
                 </div>
               {{else}}
                 <img src="/images/rockstar-avatar-48.png" alt="Author avatar">
@@ -74,10 +76,14 @@
         <div class="content">
           <div class="tags">
             {{#unless verif}}
-              <a class="tag" href="/?author={{../query.author}}&plat={{plat.id}}">
-                {{plat.name}}
+              <a
+                class="tag"
+                href="/?author={{../query.author}}&plat={{platform}}">
+                {{platformName}}
               </a>
             {{/unless}}
+
+            <span class="tag">Up to {{job.maxpl}} players</span>
           </div>
         </div>
       </div>

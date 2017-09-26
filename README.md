@@ -132,7 +132,7 @@ Property | Type | Description | Flags
 `nickname`                | `string`    | Author nickname       | -
 `avatar`                  | `string`    | `n/lowecased_nickname` or link to the default avatar | -
 `rockstarId`              | `integer`   | User ID | `e`
-`creatorMedal`            | `string`    | Medal | `u`
+`creatorMedal`            | `string`    | `white`, `bronze`, `silver`, `gold`, `platinum` | `u`
 `crewurl`                 | `string `   | `/crew/<crew_name>` | `u`
 `crewtag`                 | `string`    | Crew tag (not always uppercased) | `u!`
 `crewrank`                | `integer`   | Rank from `1` to `4`, `0` is no crew | -
