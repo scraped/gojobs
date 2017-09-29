@@ -1,5 +1,3 @@
-'use strict';
-
 const config = require('./config');
 const gulp = require('gulp');
 const plugins = require('gulp-load-plugins')();
@@ -49,26 +47,41 @@ gulp.task('build',
   gulp.series('clean', gulp.parallel('styles', 'images'))
 );
 
-gulp.task('watch', () => {
+gulp.task('watch', (cb) => {
   gulp.watch(`${config.srcDir}sass/**/*.*`, gulp.series('styles'));
   gulp.watch(`${config.srcDir}{images,js}/*.*`, gulp.series('images'));
+  cb();
 });
+
+let called = false;
 
 gulp.task('nodemon', (cb) => {
   return plugins.nodemon({ script: 'index.js' }).on('start', function() {
-    browserSync.init({
-      proxy: `localhost:${config.port}`,
-      port: 4000
-    }, cb);
-    browserSync.watch('./public/**/*.*').on('change', browserSync.reload);
+    if (!called) {
+      called = true;
+      cb();
+    }
   })
+  .on('restart', function() {
+    setTimeout(function() {
+      browserSync.reload();
+    }, 2500);
+});
+});
+
+gulp.task('browserSync', (cb) => {
+  browserSync.init({
+    proxy: `localhost:${config.port}`,
+    port: 4000
+  }, cb);
+  browserSync.watch('./public/**/*.*').on('change', browserSync.reload);
 });
 
 //
 // Main task: build + browserSync + nodemon
 //
 gulp.task('dev',
-  gulp.series('build', gulp.parallel('watch', 'nodemon'))
+  gulp.series('build', 'nodemon', gulp.parallel('watch', 'browserSync'))
 );
 
 //
