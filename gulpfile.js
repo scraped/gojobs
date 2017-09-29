@@ -66,7 +66,7 @@ gulp.task('nodemon', (cb) => {
     setTimeout(function() {
       browserSync.reload();
     }, 2500);
-});
+  });
 });
 
 gulp.task('browserSync', (cb) => {
