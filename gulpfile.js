@@ -31,12 +31,12 @@ gulp.task('styles', () => {
 
 gulp.task('images', () => {
   return gulp.src(
-    `${config.srcDir}{images,js}/*.*`,
+    `${config.srcDir}images/*.*`,
     { since: gulp.lastRun('images') }
   )
     .pipe(plugins.newer('./public/images'))
-    .pipe(plugins.debug({title: 'images/scripts'}))
-    .pipe(gulp.dest('./public'));
+    .pipe(plugins.debug({title: 'images'}))
+    .pipe(gulp.dest('./public/images'));
 });
 
 gulp.task('clean', () => {
