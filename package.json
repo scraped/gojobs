@@ -21,8 +21,7 @@
     "bulma": "^0.5.3",
     "cookie": "^0.3.1",
     "del": "^3.0.0",
-    "eslint": "^4.4.1",
-    "express": "^4.15.4",
+    "express": "^4.16.1",
     "express-handlebars": "^3.0.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "^4.0.0",
@@ -46,7 +45,6 @@
     "request-promise": "^4.2.1"
   },
   "devDependencies": {
-    "eslint": "^4.3.0",
     "nodemon": "^1.12.1",
     "webpack": "^3.6.0"
   }

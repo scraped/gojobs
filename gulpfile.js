@@ -6,12 +6,6 @@ const browserSync = require('browser-sync').create();
 
 const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'dev';
 
-gulp.task('lint', () => {
-  return gulp.src(`${config.srcDir}js/*.*`)
-    .pipe(plugins.eslint())
-    .pipe(plugins.eslint.format());
-});
-
 gulp.task('styles', () => {
   return gulp.src(`${config.srcDir}sass/app.sass`)
     .pipe(plugins.if(isDev, plugins.sourcemaps.init()))
@@ -53,10 +47,9 @@ gulp.task('watch', (cb) => {
   cb();
 });
 
-let called = false;
-
 gulp.task('nodemon', (cb) => {
   return plugins.nodemon({ script: 'index.js' }).on('start', function() {
+    let called = false;
     if (!called) {
       called = true;
       cb();
