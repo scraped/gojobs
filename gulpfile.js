@@ -25,6 +25,7 @@ gulp.task('styles', () => {
       })))
     .pipe(autoprefixer())
     .pipe(gulpIf(isDev, sourcemaps.write()))
+    .pipe(debug({ title: 'styles' }))
     .pipe(gulp.dest('./public/css'));
 });
 
@@ -53,7 +54,7 @@ gulp.task('watch', callback => {
 });
 
 gulp.task('nodemon', callback => {
-  nodemon({ script: 'index.js' }).on('start', function () {
+  nodemon({ script: './app' }).on('start', function () {
     let called = false;
     if (!called) {
       called = true;
