@@ -1,6 +1,13 @@
 const config = require('./config');
 const gulp = require('gulp');
-const plugins = require('gulp-load-plugins')();
+const gulpIf = require('gulp-if');
+const sass = require('gulp-sass');
+const sourcemaps = require('gulp-sourcemaps');
+const autoprefixer = require('gulp-autoprefixer');
+const notify = require('gulp-notify');
+const newer = require('gulp-newer');
+const debug = require('gulp-debug');
+const nodemon = require('gulp-nodemon');
 const del = require('del');
 const browserSync = require('browser-sync').create();
 
@@ -8,18 +15,16 @@ const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'dev';
 
 gulp.task('styles', () => {
   return gulp.src(`${config.srcDir}sass/app.sass`)
-    .pipe(plugins.if(isDev, plugins.sourcemaps.init()))
-    .pipe(plugins.sass({
-      outputStyle: isDev ? 'expanded' : 'compressed'
-    })
-    .on('error', plugins.notify.onError(err => {
-      return {
-        title: 'SASS Error',
-        message: err.message,
-      };
-    })))
-    .pipe(plugins.autoprefixer())
-    .pipe(plugins.if(isDev, plugins.sourcemaps.write()))
+    .pipe(gulpIf(isDev, sourcemaps.init()))
+    .pipe(sass({ outputStyle: isDev ? 'expanded' : 'compressed' })
+      .on('error', notify.onError(err => {
+        return {
+          title: 'SASS Error',
+          message: err.message,
+        };
+      })))
+    .pipe(autoprefixer())
+    .pipe(gulpIf(isDev, sourcemaps.write()))
     .pipe(gulp.dest('./public/css'));
 });
 
@@ -28,8 +33,8 @@ gulp.task('images', () => {
     `${config.srcDir}images/*.*`,
     { since: gulp.lastRun('images') }
   )
-    .pipe(plugins.newer('./public/images'))
-    .pipe(plugins.debug({title: 'images'}))
+    .pipe(newer('./public/images'))
+    .pipe(debug({ title: 'images' }))
     .pipe(gulp.dest('./public/images'));
 });
 
@@ -41,32 +46,32 @@ gulp.task('build',
   gulp.series('clean', gulp.parallel('styles', 'images'))
 );
 
-gulp.task('watch', (cb) => {
+gulp.task('watch', callback => {
   gulp.watch(`${config.srcDir}sass/**/*.*`, gulp.series('styles'));
   gulp.watch(`${config.srcDir}{images,js}/*.*`, gulp.series('images'));
-  cb();
+  callback();
 });
 
-gulp.task('nodemon', (cb) => {
-  return plugins.nodemon({ script: 'index.js' }).on('start', function() {
+gulp.task('nodemon', callback => {
+  nodemon({ script: 'index.js' }).on('start', function () {
     let called = false;
     if (!called) {
       called = true;
-      cb();
+      callback();
     }
   })
-  .on('restart', function() {
-    setTimeout(function() {
-      browserSync.reload();
-    }, 2500);
-  });
+    .on('restart', function () {
+      setTimeout(function () {
+        browserSync.reload();
+      }, 2500);
+    });
 });
 
-gulp.task('browserSync', (cb) => {
+gulp.task('serve', callback => {
   browserSync.init({
     proxy: `localhost:${config.port}`,
-    port: 4000
-  }, cb);
+    port: config.port + 1
+  }, callback);
   browserSync.watch('./public/**/*.*').on('change', browserSync.reload);
 });
 
@@ -74,7 +79,11 @@ gulp.task('browserSync', (cb) => {
 // Main task: build + browserSync + nodemon
 //
 gulp.task('dev',
-  gulp.series('build', 'nodemon', gulp.parallel('watch', 'browserSync'))
+  gulp.series('build', 'nodemon', gulp.parallel('watch', 'serve'))
+);
+
+gulp.task('dev:noserve',
+  gulp.series('build', 'nodemon', 'watch')
 );
 
 //
