@@ -155,7 +155,6 @@
         "no-negated-condition": "error",
         "no-negated-in-lhs": "error",
         "no-nested-ternary": "off",
-        "no-new": "error",
         "no-new-func": "error",
         "no-new-object": "error",
         "no-new-require": "error",
@@ -250,7 +249,6 @@
             "error",
             "last"
         ],
-        "sort-imports": "error",
         "sort-keys": "off",
         "sort-vars": "off",
         "space-before-blocks": "error",
