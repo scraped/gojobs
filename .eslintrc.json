@@ -13,7 +13,6 @@
             "never"
         ],
         "array-callback-return": "off",
-        "array-element-newline": "error",
         "arrow-body-style": "off",
         "arrow-parens": "off",
         "arrow-spacing": "off",

@@ -1,7 +1,65 @@
-// Arimo font
-@import url('https://fonts.googleapis.com/css?family=Arimo:400,400i,700,700i&subset=cyrillic,cyrillic-ext,latin-ext');
+//
+// 1. Import&change Bulma&our variables&fonts
+//
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Arimo', 'Arial';
-  font-size: 16px;
-}
+// 1. 1. Import Bulma initial vars, functions & our general styles
+@import "./bulma/utilities/initial-variables";
+@import "./bulma/utilities/functions";
+
+@import "./fonts";
+
+// 1. 2. Set Bulma's initial vars
+$primary: #1974d2; // eb0000
+$primary-invert: findColorInvert($primary);
+
+// 1. 3. Set Bulma's derived vars
+// General vars
+$family-sans-serif: "Arimo", $family-sans-serif;
+
+// <input>
+$input-hover-border-color: $grey-lighter;
+$input-shadow: none;
+
+// button
+$button-focus-box-shadow-size: 0;
+
+//
+// 2. Import Bulma framework
+//
+
+// 2. 1. Utilities & base
+@import "./bulma/utilities/_all";
+@import "./bulma/base/_all";
+
+// 2. 2. Components
+@import "./bulma/components/card";
+@import "./bulma/components/dropdown";
+@import "./bulma/components/media";
+@import "./bulma/components/menu";
+@import "./bulma/components/message";
+@import "./bulma/components/navbar";
+@import "./bulma/components/pagination";
+
+// 2. 3. Elements
+@import "./bulma/elements/box";
+@import "./bulma/elements/button";
+@import "./bulma/elements/container";
+@import "./bulma/elements/form";
+@import "./bulma/elements/icon";
+@import "./bulma/elements/image";
+@import "./bulma/elements/notification";
+@import "./bulma/elements/other";
+@import "./bulma/elements/tag";
+@import "./bulma/elements/title";
+
+// 2. 4. Grid
+@import "./bulma/grid/_all";
+
+// 2. 5. Layout
+@import "./bulma/layout/footer";
+@import "./bulma/layout/hero";
+@import "./bulma/layout/section";
+
+// 2. 6. Bulma extensions
+// @import "./bulma/ext/tooltip";
+// @import "./bulma/ext/checkradio";
