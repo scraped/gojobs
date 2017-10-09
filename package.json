@@ -48,6 +48,7 @@
     "mongoose": "^4.12.0",
     "morgan": "^1.9.0",
     "node-sass": "^4.5.3",
+    "normalize-css": "^2.3.1",
     "paginator": "^1.0.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.1",
@@ -56,11 +57,12 @@
     "vue": "^2.4.4",
     "vue-loader": "^13.0.5",
     "vue-router": "^2.7.0",
-    "vue-template-compiler": "^2.4.4",
-    "webpack-dev-server": "^2.9.1"
+    "vue-template-compiler": "^2.4.4"
   },
   "devDependencies": {
+    "html-webpack-plugin": "^2.30.1",
     "nodemon": "^1.12.1",
-    "webpack": "^3.6.0"
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
   }
 }

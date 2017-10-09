@@ -1,16 +1,19 @@
+const config = require('./config');
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const extractSass = new ExtractTextPlugin('main.css');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const extractSass = new ExtractTextPlugin('[name]-[contenthash].css');
 
 module.exports = {
-  entry: './src/main.js',
+  entry: config.srcDir + 'main.js',
 
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js'
+    path: path.resolve(__dirname, config.distDir),
+    publicPath: config.distDir,
+    filename: 'build-[hash].js'
   },
 
   module: {
@@ -43,7 +46,7 @@ module.exports = {
       },
       {
         test: /\.scss/,
-        use: ExtractTextPlugin.extract({
+        use: extractSass.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'sass-loader']
         })
@@ -52,7 +55,14 @@ module.exports = {
   },
 
   plugins: [
-    extractSass
+    extractSass,
+    new HtmlWebpackPlugin({
+      template: config.srcDir + 'index.html',
+      filename: 'index.html',
+      minify: {
+        collapseWhitespace: true
+      }
+    })
   ],
 
   resolve: {
@@ -86,12 +96,14 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
+
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       compress: {
         warnings: false
       }
     }),
+
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })

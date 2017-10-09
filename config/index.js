@@ -1,6 +1,7 @@
 module.exports = {
   port: 3000,
   srcDir: './src/',
+  distDir: './dist/assets/',
   perPage: 30,
 
   mongo: {
