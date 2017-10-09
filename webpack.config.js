@@ -5,15 +5,17 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const extractSass = new ExtractTextPlugin('[name]-[contenthash].css');
+const jsName = 'assets/js/build-[hash].js';
+const cssName = 'assets/css/[name]-[contenthash].css';
+const imagesName = 'assets/images/[name].[hash].[ext]';
 
 module.exports = {
   entry: config.srcDir + 'main.js',
 
   output: {
     path: path.resolve(__dirname, config.distDir),
-    publicPath: config.distDir,
-    filename: 'build-[hash].js'
+    publicPath: '/',
+    filename: jsName
   },
 
   module: {
@@ -32,30 +34,43 @@ module.exports = {
           // other vue-loader options go here
         }
       },
+
       {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
       },
+
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
+        loader: 'url-loader',
         options: {
-          name: '[name].[ext]?[hash]'
+          limit: 8192,
+          fallback: `file-loader?name=${imagesName}`
         }
       },
+
       {
         test: /\.scss/,
-        use: extractSass.extract({
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
+          use: [{
+            loader: 'css-loader'
+          }, {
+            loader: 'resolve-url-loader',
+            options: { root: path.resolve(__dirname, 'src'), sourceMap: true }
+          }, {
+            loader: 'sass-loader',
+            options: { sourceMap: true }
+          }]
         })
       }
     ]
   },
 
   plugins: [
-    extractSass,
+    new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin(cssName),
     new HtmlWebpackPlugin({
       template: config.srcDir + 'index.html',
       filename: 'index.html',
@@ -89,6 +104,7 @@ module.exports = {
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map';
+
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
