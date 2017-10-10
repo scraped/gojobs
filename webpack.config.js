@@ -1,5 +1,4 @@
 const config = require('./config');
-const path = require('path');
 const webpack = require('webpack');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -9,11 +8,14 @@ const jsName = 'assets/js/build-[hash].js';
 const cssName = 'assets/css/[name]-[contenthash].css';
 const imagesName = 'assets/images/[name].[hash].[ext]';
 
+const isDevelopment = !process.env.NODE_ENV
+  || process.env.NODE_ENV === 'development';
+
 module.exports = {
-  entry: config.srcDir + 'main.js',
+  entry: `${config.srcDir}/main.js`,
 
   output: {
-    path: path.resolve(__dirname, config.distDir),
+    path: config.distDir,
     publicPath: '/',
     filename: jsName
   },
@@ -45,8 +47,9 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'url-loader',
         options: {
-          limit: 8192,
-          fallback: `file-loader?name=${imagesName}`
+          limit: 1024,
+          name: imagesName,
+          fallback: 'file-loader'
         }
       },
 
@@ -55,10 +58,11 @@ module.exports = {
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [{
-            loader: 'css-loader'
+            loader: 'css-loader',
+            options: { sourceMap: true }
           }, {
             loader: 'resolve-url-loader',
-            options: { root: path.resolve(__dirname, 'src'), sourceMap: true }
+            options: { root: config.srcDir, sourceMap: true }
           }, {
             loader: 'sass-loader',
             options: { sourceMap: true }
@@ -72,11 +76,9 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin(cssName),
     new HtmlWebpackPlugin({
-      template: config.srcDir + 'index.html',
+      template: `${config.srcDir}/index.html`,
       filename: 'index.html',
-      minify: {
-        collapseWhitespace: true
-      }
+      minify: { collapseWhitespace: true }
     })
   ],
 
@@ -102,7 +104,7 @@ module.exports = {
 // Production section
 //
 
-if (process.env.NODE_ENV === 'production') {
+if (!isDevelopment) {
   module.exports.devtool = '#source-map';
 
   // http://vue-loader.vuejs.org/en/workflow/production.html
