@@ -1,9 +1,7 @@
-const path = require('path');
-
 module.exports = {
-  port: 3000,
-  srcDir: path.resolve(__dirname, '../src'),
-  distDir: path.resolve(__dirname, '../dist'),
+  port: process.env.PORT || 3000,
+  srcDir: './src',
+  distDir: './dist',
 
   mongo: {
     connectUri: 'mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs',

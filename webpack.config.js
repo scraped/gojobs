@@ -1,11 +1,13 @@
 const config = require('./config');
+const path = require('path');
 const webpack = require('webpack');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const jsName = 'assets/js/build-[hash].js';
-const cssName = 'assets/css/[name]-[contenthash].css';
+const jsName = 'assets/js/build.[hash].js';
+const cssName = 'assets/css/[name].[contenthash].css';
 const imagesName = 'assets/images/[name].[hash].[ext]';
 
 const isDevelopment = !process.env.NODE_ENV
@@ -15,7 +17,7 @@ module.exports = {
   entry: `${config.srcDir}/main.js`,
 
   output: {
-    path: config.distDir,
+    path: path.resolve(__dirname, config.distDir),
     publicPath: '/',
     filename: jsName
   },
@@ -44,10 +46,10 @@ module.exports = {
       },
 
       {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(png|jpe?g|gif|svg)$/,
         loader: 'url-loader',
         options: {
-          limit: 1024,
+          limit: isDevelopment ? 1 : 4096,
           name: imagesName,
           fallback: 'file-loader'
         }
@@ -73,6 +75,7 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(config.distDir),
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin(cssName),
     new HtmlWebpackPlugin({
@@ -97,7 +100,7 @@ module.exports = {
     hints: false
   },
 
-  devtool: '#eval-source-map'
+  devtool: isDevelopment ? '#cheap-inline-module-source-map' : 'none'
 };
 
 //
@@ -105,8 +108,6 @@ module.exports = {
 //
 
 if (!isDevelopment) {
-  module.exports.devtool = '#source-map';
-
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({

@@ -21,9 +21,9 @@ app.use(express.static(config.distDir));
 //
 // Routing
 //
-app.all('*', (err, req, res, next) => {
-  res.sendFile(config.distDir + 'index.html');
-});
+// app.all('*', (err, req, res, next) => {
+//   res.sendFile(config.distDir + 'index.html');
+// });
 // app.use('/', mainRouter);
 // app.use('/job', jobRouter);
 // app.use('/admin', adminRouter);
