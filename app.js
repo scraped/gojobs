@@ -10,11 +10,15 @@ const logger = require('morgan');
 const app = express();
 
 app.disable('x-powered-by');
-app.set('port', process.env.PORT || config.port);
+app.set('port', config.port);
 
 //
 // Middleware
 //
+// body-parser
+// cookie-parser
+// serve-favicon
+// session
 app.use(logger('combined'));
 app.use(express.static(config.distDir));
 
