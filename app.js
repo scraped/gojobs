@@ -1,6 +1,9 @@
 const config = require('./config');
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const logger = require('morgan');
 
 // const mainRouter = require('./routers/main');
@@ -15,12 +18,11 @@ app.set('port', config.port);
 //
 // Middleware
 //
-// body-parser
-// cookie-parser
-// serve-favicon
-// session
-app.use(logger('combined'));
-app.use(express.static(config.distDir));
+app.use(logger('dev'));
+app.use(bodyParser());
+app.use(cookieParser());
+// app.use(session());
+app.use(express.static(path.resolve(__dirname, config.distDir)));
 
 //
 // Routing
