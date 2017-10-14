@@ -5,6 +5,8 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const notifier = require('node-notifier');
 
 const jsName = 'assets/js/build.[hash].js';
 const cssName = 'assets/css/[name].[contenthash].css';
@@ -75,6 +77,18 @@ module.exports = {
   },
 
   plugins: [
+    new FriendlyErrorsWebpackPlugin({
+      onErrors: (severity, errors) => {
+        if (severity !== 'error') return;
+        errors.forEach(error => {
+          notifier.notify({
+            title: error.name,
+            message: error.message,
+            subtitle: error.file || ''
+          });
+        });
+      }
+    }),
     new CleanWebpackPlugin(config.distDir),
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin(cssName),
@@ -85,15 +99,10 @@ module.exports = {
     })
   ],
 
-  resolve: {
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js'
-    }
-  },
-
   devServer: {
     historyApiFallback: true,
-    noInfo: true
+    noInfo: true,
+    quiet: true
   },
 
   performance: {
