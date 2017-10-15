@@ -9,9 +9,8 @@ import VueProgressBar from 'vue-progressbar'
 
 Vue.use(vueBulmaComponents);
 Vue.use(VueProgressBar, {
-  color: 'rgb(143, 255, 199)',
-  failedColor: 'red',
-  height: '2px'
+  color: '#EB0000',
+  failedColor: 'red'
 });
 
 new Vue({
