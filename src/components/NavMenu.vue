@@ -6,9 +6,9 @@
           <img src="../images/gtaonline-logo-mini.png" alt="" title="">
         </router-link>
 
-        <navbar navbar-burger data-target="mainMenu">
+        <navbar-burger data-target="mainMenu">
           <span></span><span></span><span></span>
-        </navbar>
+        </navbar-burger>
       </navbar-brand>
 
       <navbar-menu id="mainMenu">
@@ -25,7 +25,7 @@
 import { bulmaComponentGenerator } from 'vue-bulma-components';
 
 export default {
-  name: 'NavMenu',
+  name: 'nav-menu',
   // missing components
   components: {
     'navbar-menu': bulmaComponentGenerator('navbar-menu'),
@@ -36,6 +36,7 @@ export default {
 
 <style scoped>
   .navbar {
+    margin-bottom: 20px;
     box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.1);
   }
 </style>
