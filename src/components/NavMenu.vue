@@ -26,7 +26,7 @@ import { bulmaComponentGenerator } from 'vue-bulma-components';
 
 export default {
   name: 'nav-menu',
-  // missing components
+
   components: {
     'navbar-menu': bulmaComponentGenerator('navbar-menu'),
     'navbar-end': bulmaComponentGenerator('navbar-end'),

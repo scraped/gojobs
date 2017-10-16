@@ -3,7 +3,8 @@ const moment = require('moment');
 const array = require('lodash/array');
 const number = require('lodash/number');
 
-const mongoose = require('mongoose');
+const mongoose = require('../lib/db');
+require('./user');
 const Schema = mongoose.Schema;
 
 let jobSchema = new Schema({

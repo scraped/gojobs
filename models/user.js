@@ -2,6 +2,7 @@ const config = require('../config');
 const array = require('lodash/array');
 
 const mongoose = require('mongoose');
+require('./crew');
 const Schema = mongoose.Schema;
 
 let userSchema = new Schema({

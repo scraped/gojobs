@@ -1,6 +1,6 @@
 const moment = require('moment');
 
-const mongoose = require('mongoose');
+const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
 let crewSchema = new Schema({

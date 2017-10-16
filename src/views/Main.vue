@@ -1,9 +1,11 @@
 <template>
   <container>
     <columns is-multiline>
-      <column is-one-third-desktop is-half-tablet>
-        <card-job></card-job>
-      </column>
+      <template v-for="job in jobs">
+        <column is-one-third-desktop is-half-tablet>
+          <card-job :job-obj="job"></card-job>
+        </column>
+      </template>
     </columns>
   </container>
 </template>
@@ -13,11 +15,23 @@ import CardJob from '../components/CardJob.vue';
 
 export default {
   components: {
-    'card-job': CardJob
+    CardJob
   },
 
   data() {
-    return {};
+    return {
+      jobs: []
+    };
+  },
+
+  created: function() {
+    this.$http.get('http://localhost:3000/jobs')
+      .then(jobs => {
+        this.jobs = jobs.data;
+      })
+      .catch(error => {
+        console.warn('Cannot get jobs', error);
+      });
   }
 };
 </script>

@@ -1,12 +1,11 @@
 <template>
   <card>
     <card-image>
-      <card-image-text>
-        <b-title is-5>Mode</b-title>
-      </card-image-text>
+      <b-title is-5>name: <span v-html="job.name"></span></b-title>
+      <!-- <card-image-text></card-image-text> -->
       <!-- <card-image-strip></card-image-strip> -->
       <b-image is-2by1>
-        <img src="https://prod.cloud.rockstargames.com/ugc/gta5mission/2017/-fgf607CfEKynnaUS_GJ7Q/2_0.jpg">
+        <img :src="job.imageUrl" :title="job.name" width="200" height="300">
       </b-image>
     </card-image>
 
@@ -47,12 +46,20 @@
 </template>
 
 <script>
+import { bulmaComponentGenerator } from 'vue-bulma-components';
+
 export default {
   name: 'card-job',
 
+  components: {
+    'tags': bulmaComponentGenerator('tags'),
+  },
+
+  props: ['jobObj'],
+
   data () {
     return {
-
+      job: this.jobObj
     };
   }
 };

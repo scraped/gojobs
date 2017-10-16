@@ -4,10 +4,12 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 
-import vueBulmaComponents from 'vue-bulma-components';
+import VueResource from 'vue-resource';
+import VueBulmaComponents from 'vue-bulma-components';
 import VueProgressBar from 'vue-progressbar'
 
-Vue.use(vueBulmaComponents);
+Vue.use(VueResource);
+Vue.use(VueBulmaComponents);
 Vue.use(VueProgressBar, {
   color: '#EB0000',
   failedColor: 'red'

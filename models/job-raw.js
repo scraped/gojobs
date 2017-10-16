@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
 let jobRawSchema = new Schema({
