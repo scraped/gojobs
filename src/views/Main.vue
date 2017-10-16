@@ -25,7 +25,7 @@ export default {
   },
 
   created: function() {
-    this.$http.get('http://localhost:3000/jobs')
+    this.$http.get('/api/jobs')
       .then(jobs => {
         this.jobs = jobs.data;
       })

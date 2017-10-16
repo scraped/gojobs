@@ -22,7 +22,7 @@ app.use(bodyParser());
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, config.distDir)));
 
-app.use('/jobs', jobsRouter);
+app.use('/api/jobs', jobsRouter);
 
 app.use(history());
 

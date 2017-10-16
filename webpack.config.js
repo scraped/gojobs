@@ -102,7 +102,11 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    quiet: true
+    quiet: true,
+    compress: true,
+    proxy: {
+      '/api': `http://localhost:${config.port}`
+    }
   },
 
   performance: {
