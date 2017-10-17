@@ -1,13 +1,13 @@
 <template>
-  <container>
-    <columns is-multiline>
+  <b-container>
+    <b-columns is-multiline>
       <template v-for="job in jobs">
-        <column is-one-third-desktop is-half-tablet>
+        <b-column is-one-third-desktop is-half-tablet>
           <card-job :job-obj="job"></card-job>
-        </column>
+        </b-column>
       </template>
-    </columns>
-  </container>
+    </b-columns>
+  </b-container>
 </template>
 
 <script>

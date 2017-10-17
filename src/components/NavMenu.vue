@@ -1,24 +1,24 @@
 <template>
-  <navbar>
-    <container>
-      <navbar-brand>
+  <b-navbar>
+    <b-container>
+      <b-navbar-brand>
         <router-link to="/" class="navbar-item">
           <img src="../images/gtaonline-logo-mini.png" alt="" title="">
         </router-link>
 
-        <navbar-burger data-target="mainMenu">
+        <b-navbar-burger data-target="mainMenu">
           <span></span><span></span><span></span>
-        </navbar-burger>
-      </navbar-brand>
+        </b-navbar-burger>
+      </b-navbar-brand>
 
-      <navbar-menu id="mainMenu">
-        <navbar-end>
+      <b-navbar-menu id="mainMenu">
+        <b-navbar-end>
           <router-link to="/admin" class="navbar-item">Admin</router-link>
           <router-link to="/login" class="navbar-item">Log in or sign up</router-link>
-        </navbar-end>
-      </navbar-menu>
-    </container>
-  </navbar>
+        </b-navbar-end>
+      </b-navbar-menu>
+    </b-container>
+  </b-navbar>
 </template>
 
 <script>
@@ -28,8 +28,8 @@ export default {
   name: 'nav-menu',
 
   components: {
-    'navbar-menu': bulmaComponentGenerator('navbar-menu'),
-    'navbar-end': bulmaComponentGenerator('navbar-end'),
+    'b-navbar-menu': bulmaComponentGenerator('navbar-menu'),
+    'b-navbar-end': bulmaComponentGenerator('navbar-end'),
   }
 };
 </script>

@@ -9,7 +9,9 @@ import VueBulmaComponents from 'vue-bulma-components';
 import VueProgressBar from 'vue-progressbar'
 
 Vue.use(VueResource);
-Vue.use(VueBulmaComponents);
+Vue.use(VueBulmaComponents, {
+  prefix: 'b-'
+});
 Vue.use(VueProgressBar, {
   color: '#EB0000',
   failedColor: 'red'

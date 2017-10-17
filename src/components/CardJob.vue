@@ -1,6 +1,6 @@
 <template>
-  <card>
-    <card-image>
+  <b-card>
+    <b-card-image>
       <div class="rating-strip"></div>
       <div class="name">
         <b-title is-5 v-html="job.name"></b-title>
@@ -8,42 +8,42 @@
       <b-image is-2by1>
         <img :src="image" :title="job.name" width="200" height="300">
       </b-image>
-    </card-image>
+    </b-card-image>
 
-    <card-content>
-      <media>
-        <media-left>
+    <b-card-content>
+      <b-media>
+        <b-media-left>
           <b-image image-avatar is-48x48>
             <img :src="avatar" class="avatar">
           </b-image>
-        </media-left>
+        </b-media-left>
 
-        <media-content>
-          <subtitle is-6>
+        <b-media-content>
+          <b-subtitle is-6>
             <a href="">@{{ job.author.username }}</a>
-            <tag is-white style="border: 1px solid #f892da">{{ job.author.crew.tag }}</tag>
-          </subtitle>
-        </media-content>
+            <b-tag is-white style="border: 1px solid #f892da">{{ job.author.crew.tag }}</b-tag>
+          </b-subtitle>
+        </b-media-content>
 
-        <media-right>
+        <b-media-right>
           <div class="icon">ICON</div>
-        </media-right>
-      </media>
+        </b-media-right>
+      </b-media>
 
-      <tags>
-        <tag>Up to 30 players</tag>
-      </tags>
-    </card-content>
+      <b-tags>
+        <b-tag>Up to 30 players</b-tag>
+      </b-tags>
+    </b-card-content>
 
-    <card-footer>
-      <card-footer-item>
+    <b-card-footer>
+      <b-card-footer-item>
         Сыграно
-      </card-footer-item>
-      <card-footer-item>
+      </b-card-footer-item>
+      <b-card-footer-item>
         Лайки
-      </card-footer-item>
-    </card-footer>
-  </card>
+      </b-card-footer-item>
+    </b-card-footer>
+  </b-card>
 </template>
 
 <script>
@@ -53,7 +53,7 @@ export default {
   name: 'card-job',
 
   components: {
-    'tags': bulmaComponentGenerator('tags'),
+    'b-tags': bulmaComponentGenerator('tags'),
   },
 
   props: ['jobObj'],

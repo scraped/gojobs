@@ -1,7 +1,7 @@
 <template>
-  <div>
-    Adminka
-  </div>
+  <b-container>
+    Admin panel will come here.
+  </b-container>
 </template>
 
 <script>

@@ -13,13 +13,11 @@ export default {
   name: 'app',
 
   components: {
-    'nav-menu': NavMenu
+    NavMenu
   },
 
   data () {
-    return {
-      message: 'Welcome to Your Vue.js App'
-    };
+    return {};
   },
 
   mounted () {
