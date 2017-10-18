@@ -34,13 +34,13 @@ let jobSchema = new Schema({
 
   stats: {
     points: { type: Number, required: true },
-    pldTot: { type: Number, required: true, get: formatNumber },
-    pldUnq: { type: Number, required: true, get: formatNumber },
+    pldTot: { type: Number, required: true },
+    pldUnq: { type: Number, required: true },
     quitTot: { type: Number, required: true },
     quitUnq: { type: Number, required: true },
-    likes: { type: Number, required: true, get: formatNumber },
-    dlikes: { type: Number, required: true, get: formatNumber },
-    dlikesQuit: { type: Number, required: true, get: formatNumber },
+    likes: { type: Number, required: true },
+    dlikes: { type: Number, required: true },
+    dlikesQuit: { type: Number, required: true },
     rating: { type: Number, required: true },
     ratingQuit: { type: Number, required: true },
   },
@@ -51,12 +51,6 @@ let jobSchema = new Schema({
     info: { type: Date, required: true }
   }
 });
-
-function formatNumber(num) {
-  if (num >= 1000000) return (num / 1000000).toFixed(2) + 'm';
-  if (num >= 1000) return (num / 1000).toFixed(2) + 'k';
-  return num;
-}
 
 //
 // Platform
@@ -76,11 +70,6 @@ function setImage(url) {
   let str = url.split('/');
   return `${str[5]}.${str[7]}`;
 }
-
-jobSchema.virtual('imageUrl').get(function() {
-  let info = this.img.split('.');
-  return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${info[0]}/${this.jobCurrId}/${info[1]}.jpg`;
-});
 
 //
 // Verification State

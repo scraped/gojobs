@@ -1,27 +1,30 @@
 <template>
   <b-card>
     <b-card-image>
-      <div class="rating-strip"></div>
-      <div class="name">
-        <b-title is-5 v-html="job.name"></b-title>
+      <div class="card-strip"></div>
+      <div class="card-title">
+        <b-b-title is-5 v-html="job.name"></b-b-title>
       </div>
-      <b-image is-2by1>
+      <b-b-image is-2by1>
         <img :src="image" :title="job.name" width="200" height="300">
-      </b-image>
+      </b-b-image>
     </b-card-image>
 
     <b-card-content>
       <b-media>
         <b-media-left>
-          <b-image image-avatar is-48x48>
-            <img :src="avatar" class="avatar">
-          </b-image>
+          <figure class="image is-48x48 media-left-avatar">
+            <img :src="authorAvatar">
+          </figure>
         </b-media-left>
 
         <b-media-content>
           <b-subtitle is-6>
             <a href="">@{{ job.author.username }}</a>
-            <b-tag is-white style="border: 1px solid #f892da">{{ job.author.crew.tag }}</b-tag>
+            <b-tag
+              is-white
+              :style="'border: 1px solid #' + job.author.crew.color">
+              {{ job.author.crew.tag }}</b-tag>
           </b-subtitle>
         </b-media-content>
 
@@ -31,17 +34,17 @@
       </b-media>
 
       <b-tags>
-        <b-tag>Up to 30 players</b-tag>
+        <b-tag>{{ job.job.maxpl }} players</b-tag>
       </b-tags>
     </b-card-content>
 
     <b-card-footer>
       <b-card-footer-item>
-        Сыграно
-      </b-card-footer-item>
+        <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
+        {{ job.stats.pldTot | formatNumber }}</b-card-footer-item>
       <b-card-footer-item>
-        Лайки
-      </b-card-footer-item>
+        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+        {{ job.stats.likes | formatNumber }}</b-card-footer-item>
     </b-card-footer>
   </b-card>
 </template>
@@ -61,15 +64,40 @@ export default {
   data () {
     return {
       job: this.jobObj,
-      image: `https://prod.cloud.rockstargames.com/ugc/gta5mission/${this.jobObj.img.split('.')[0]}/${this.jobObj.jobCurrId}/${this.jobObj.img.split('.')[1]}.jpg`,
-      avatar: 'https://a.rsg.sc/n/' + this.jobObj.author.username.toLowerCase() + '/s'
+      image: this.getImage(),
+      authorAvatar: this.getAuthorAvatar()
     };
+  },
+
+  filters: {
+    formatNumber (num) {
+      if (num >= 1000000) return (num / 1000000).toFixed(2) + 'm';
+      if (num >= 1000) return (num / 1000).toFixed(2) + 'k';
+      return num;
+    }
+  },
+
+  methods: {
+    getImage () {
+      let img = this.jobObj.img.split('.');
+      let id = this.jobObj.jobCurrId;
+      return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${id}/${img[1]}.jpg`;
+    },
+
+    getAuthorAvatar () {
+      let username = this.jobObj.author.username.toLowerCase();
+      return `https://a.rsg.sc/n/${username}/s`;
+    }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-.name {
+<style lang="scss">
+// TO REMOVE!!!!!!!!!!!!!!
+.fa {
+  padding: 5px;
+}
+.card-title {
   position: absolute;
   z-index: 1;
   right: 0;
@@ -83,9 +111,13 @@ export default {
   }
 }
 
-.avatar {
-  border-radius: 100%;
-  width: 48px;
-  height: 48px;
+.card-strip {
+
+}
+
+.media-left-avatar {
+  img {
+    border-radius: 100%;
+  }
 }
 </style>
