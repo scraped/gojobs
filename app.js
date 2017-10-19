@@ -18,7 +18,9 @@ app.set('port', config.port);
 
 app.use(logger('dev'));
 app.use(cors());
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, config.distDir)));
 

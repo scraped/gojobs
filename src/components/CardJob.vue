@@ -3,7 +3,12 @@
     <b-card-image>
       <div class="card-strip"></div>
       <div class="card-title">
-        <b-b-title is-5 v-html="job.name"></b-b-title>
+        <b-b-title is-5>
+          <b-icon style="font-family: 'gtav-icon-font';">
+            {{ '&#x' + mode.icon }};
+          </b-icon>
+          <span v-html="job.name"></span>
+        </b-b-title>
       </div>
       <b-b-image is-2by1>
         <img :src="image" :title="job.name" width="200" height="300">
@@ -23,7 +28,8 @@
             <a href="">@{{ job.author.username }}</a>
             <b-tag
               is-white
-              :style="'border: 1px solid #' + job.author.crew.color">
+              :style="'border: 1px solid #' + job.author.crew.color"
+              v-if="job.author.crew">
               {{ job.author.crew.tag }}</b-tag>
           </b-subtitle>
         </b-media-content>
@@ -51,6 +57,7 @@
 
 <script>
 import { bulmaComponentGenerator } from 'vue-bulma-components';
+import modes from '../../config/modes';
 
 export default {
   name: 'card-job',
@@ -65,7 +72,8 @@ export default {
     return {
       job: this.jobObj,
       image: this.getImage(),
-      authorAvatar: this.getAuthorAvatar()
+      authorAvatar: this.getAuthorAvatar(),
+      mode: modes[this.jobObj.job.mode]
     };
   },
 
