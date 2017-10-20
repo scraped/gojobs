@@ -4,9 +4,7 @@
       <div class="card-strip"></div>
       <div class="card-title">
         <b-b-title is-5>
-          <b-icon style="font-family: 'gtav-icon-font';">
-            {{ '&#x' + mode.icon }};
-          </b-icon>
+          <b-icon style="font-family: 'gtav-icon-font';" v-html="'&#x' + mode.icon + ';'"></b-icon>
           <span v-html="job.name"></span>
         </b-b-title>
       </div>
@@ -35,7 +33,7 @@
         </b-media-content>
 
         <b-media-right>
-          <div class="icon">ICON</div>
+          Test
         </b-media-right>
       </b-media>
 
@@ -114,7 +112,7 @@ export default {
   padding: 1rem 1.5rem;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
   .title {
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.85);
     text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
   }
 }
