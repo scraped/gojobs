@@ -1,4 +1,5 @@
 <template>
+  <section class="section">
   <b-container>
     <b-columns is-multiline>
       <template v-for="job in jobs">
@@ -8,6 +9,7 @@
       </template>
     </b-columns>
   </b-container>
+  </section>
 </template>
 
 <script>

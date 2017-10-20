@@ -29,6 +29,9 @@
               :style="'border: 1px solid #' + job.author.crew.color"
               v-if="job.author.crew">
               {{ job.author.crew.tag }}</b-tag>
+            <div class="subtitle-date">
+              {{ dateReadable }}
+            </div>
           </b-subtitle>
         </b-media-content>
 
@@ -54,6 +57,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { bulmaComponentGenerator } from 'vue-bulma-components';
 import modes from '../../config/modes';
 
@@ -71,7 +75,8 @@ export default {
       job: this.jobObj,
       image: this.getImage(),
       authorAvatar: this.getAuthorAvatar(),
-      mode: modes[this.jobObj.job.mode]
+      mode: modes[this.jobObj.job.mode],
+      dateReadable: this.getDateReadable()
     };
   },
 
@@ -93,6 +98,16 @@ export default {
     getAuthorAvatar () {
       let username = this.jobObj.author.username.toLowerCase();
       return `https://a.rsg.sc/n/${username}/s`;
+    },
+
+    getDateReadable () {
+      let job = this.jobObj;
+      let dateString = moment(job.updated.job).fromNow();
+      if (job.category || job.updated.ver === 1) {
+        return `Added ${dateString}`;
+      } else {
+        return `Updated ${dateString} (version ${job.updated.ver})`;
+      }
     }
   }
 };
@@ -103,6 +118,10 @@ export default {
 .fa {
   padding: 5px;
 }
+.card {
+  box-shadow: none;
+}
+
 .card-title {
   position: absolute;
   z-index: 1;
@@ -125,5 +144,11 @@ export default {
   img {
     border-radius: 100%;
   }
+}
+
+.subtitle-date {
+  margin-top: 2px;
+  font-size: 0.9em;
+  font-style: italic;
 }
 </style>
