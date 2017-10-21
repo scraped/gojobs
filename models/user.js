@@ -14,6 +14,15 @@ let userSchema = new Schema({
   updated: { type: Date, required: true },
 });
 
+userSchema.set('toObject', {
+  virtual: true,
+  versionKey: false,
+  transform: (doc, ret) => {
+    Reflect.deleteProperty(ret, "_id");
+    return ret;
+  }
+});
+
 function setMedal(medal) {
   medal = medal || 'white';
   return 1 + array.findIndex(config.medals, med => med.name === medal);

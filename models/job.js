@@ -52,6 +52,16 @@ let jobSchema = new Schema({
   }
 });
 
+jobSchema.set('toObject', {
+  virtual: true,
+  versionKey: false,
+  transform: (doc, ret) => {
+    Reflect.deleteProperty(ret, "_id");
+    ret.platform = config.platforms[ret.platform - 1].name;
+    return ret;
+  }
+});
+
 //
 // Platform
 //

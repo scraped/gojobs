@@ -35,11 +35,11 @@ export default {
       this.$http.get('/api/jobs')
         .then(jobs => {
           this.jobs = jobs.data;
-          // this.$Progress.finish();
+          this.$Progress.finish();
         })
         .catch(error => {
           console.warn('Cannot get jobs', error);
-          // this.$Progress.fail();
+          this.$Progress.fail();
         });
     }
   },

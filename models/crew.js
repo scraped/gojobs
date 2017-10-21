@@ -22,6 +22,15 @@ let crewSchema = new Schema({
   uploadedLast: { type: Date },
 });
 
+crewSchema.set('toObject', {
+  virtual: true,
+  versionKey: false,
+  transform: (doc, ret) => {
+    Reflect.deleteProperty(ret, "_id");
+    return ret;
+  }
+});
+
 crewSchema.virtual('avatarUrl')
   .get(function() {
     return `https://prod.cloud.rockstargames.com/crews/sc/${this.avatar}/${this.crewId}/publish/emblem/emblem_128.png`;
