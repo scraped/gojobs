@@ -15,7 +15,9 @@ router.get('/', (req, res, next) => {
     })
     .populate('crew')
     .then(jobs => {
-      res.send(jobs);
+      setTimeout(() => {
+        res.send(jobs);
+      }, 3000);
     })
     .catch(err => {
       console.log(`Cannot retrieve jobs from the database: ${err.stack}`);

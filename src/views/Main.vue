@@ -27,14 +27,22 @@ export default {
   },
 
   created: function() {
-    this.$http.get('/api/jobs')
-      .then(jobs => {
-        this.jobs = jobs.data;
-      })
-      .catch(error => {
-        console.warn('Cannot get jobs', error);
-      });
-  }
+    this.fetchJobs();
+  },
+
+  methods: {
+    fetchJobs () {
+      this.$http.get('/api/jobs')
+        .then(jobs => {
+          this.jobs = jobs.data;
+          // this.$Progress.finish();
+        })
+        .catch(error => {
+          console.warn('Cannot get jobs', error);
+          // this.$Progress.fail();
+        });
+    }
+  },
 };
 </script>
 
