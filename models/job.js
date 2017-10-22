@@ -55,7 +55,7 @@ let jobSchema = new Schema({
 function getPlatform(platformId) {
   return {
     id: platformId,
-    name: config.platforms[platformId - 1]
+    name: config.platforms[platformId - 1].name
   };
 }
 
@@ -73,7 +73,7 @@ function getImage(job) {
 function getType(typeId) {
   return {
     id: typeId,
-    name: modes[typeId].name
+    name: modes[typeId - 1].name
   };
 }
 
@@ -85,10 +85,10 @@ jobSchema.set('toObject', {
     Reflect.deleteProperty(ret, "id");
 
     ret.image = getImage(ret);
-    ret.job.mode = {
-      id: ret.job.mode,
-      name: modes[ret.job.type].modes[ret.job.mode]
-    };
+    ret.job.mode = _.assign(
+      modes[ret.job.type.id - 1].modes[ret.job.mode - 1],
+      { id: ret.job.mode }
+    );
 
     return ret;
   }

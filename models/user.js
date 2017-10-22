@@ -1,5 +1,5 @@
 const config = require('../config');
-const array = require('lodash/array');
+const _ = require('lodash');
 
 const mongoose = require('mongoose');
 require('./crew');
@@ -15,7 +15,7 @@ let userSchema = new Schema({
 });
 
 userSchema.set('toObject', {
-  virtual: true,
+  getters: true,
   versionKey: false,
   transform: (doc, ret) => {
     Reflect.deleteProperty(ret, "_id");
@@ -25,19 +25,16 @@ userSchema.set('toObject', {
 
 function setMedal(medal) {
   medal = medal || 'white';
-  return 1 + array.findIndex(config.medals, med => med.name === medal);
+  return 1 + _.findIndex(config.medals, med => med.name === medal);
 }
 
-userSchema.virtual('avatarSmall')
+userSchema.virtual('avatar')
   .get(function() {
-    const username = this.nickname.toLowerCase();
-    return `https://a.rsg.sc/n/${username}/s`;
-  });
-
-userSchema.virtual('avatarLarge')
-  .get(function() {
-    const username = this.nickname.toLowerCase();
-    return `https://a.rsg.sc/n/${username}/l`;
+    const username = this.username.toLowerCase();
+    return {
+      small: `https://a.rsg.sc/n/${username}/s`,
+      large: `https://a.rsg.sc/n/${username}/l`
+    }
   });
 
 module.exports = mongoose.model('User', userSchema, 'users');

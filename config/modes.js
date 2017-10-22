@@ -1,5 +1,6 @@
 module.exports = [
   {
+    id: 1,
     name: 'Race',
     icon: 'f168',
     modes: [
@@ -17,6 +18,7 @@ module.exports = [
   },
 
   {
+    id: 2,
     name: 'Deathmatch',
     icon: 'f167',
     modes: [
@@ -28,25 +30,27 @@ module.exports = [
   },
 
   {
+    id: 3,
     name: 'Last Team Standing',
     icon: 'f16a',
-    modes: [],
-    flags: []
-  },
-
-  {
-    name: 'Capture',
-    icon: 'f113',
     modes: [
-      { icon: 'f113', name: 'Raid' },
-      { icon: 'f113', name: 'GTA' },
-      { icon: 'f113', name: 'Contend' },
-      { icon: 'f113', name: 'Hold' },
+      { icon: 'f16a', name: 'Last Team Standing' }
     ],
     flags: []
   },
 
   {
+    id: 4,
+    name: 'Capture',
+    icon: 'f113',
+    modes: [
+      { icon: 'f113', name: 'Capture' },
+    ],
+    flags: []
+  },
+
+  {
+    id: 5,
     name: 'Mission',
     icon: 'f11b',
     modes: [
@@ -57,16 +61,22 @@ module.exports = [
   },
 
   {
+    id: 6,
     name: 'Parachuting',
     icon: 'f107',
-    modes: [],
+    modes: [
+      { icon: 'f107', name: 'Parachuting' }
+    ],
     flags: []
   },
 
   {
+    id: 7,
     name: 'Survival',
     icon: '',
-    modes: [],
+    modes: [
+      { icon: '', name: 'Survival' }
+    ],
     flags: []
   }
 ];

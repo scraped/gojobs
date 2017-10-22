@@ -4,12 +4,12 @@
       <div class="card-strip"></div>
       <div class="card-title">
         <b-b-title is-5>
-          <b-icon style="font-family: 'gtav-icon-font';" v-html="'&#x' + mode.icon + ';'"></b-icon>
+          <b-icon style="font-family: 'gtav-icon-font';" v-html="'&#x' + job.job.mode.icon + ';'"></b-icon>
           <span v-html="job.name"></span>
         </b-b-title>
       </div>
       <b-b-image is-2by1>
-        <img :src="job.img" :title="job.name" width="200" height="300">
+        <img :src="job.image" :title="job.name">
       </b-b-image>
     </b-card-image>
 
@@ -17,7 +17,7 @@
       <b-media>
         <b-media-left>
           <figure class="image is-48x48 media-left-avatar">
-            <img :src="authorAvatar">
+            <img :src="job.author.avatar.small">
           </figure>
         </b-media-left>
 
@@ -41,7 +41,10 @@
       </b-media>
 
       <b-tags>
-        <b-tag>{{ job.job.maxpl }} players</b-tag>
+        <b-tag>{{ job.platform.name }}</b-tag>
+        <b-tag style="position: relative;">{{ job.job.maxpl }} players
+          <div :style="'position: absolute; top: 0; height: 2px; background: grey; width: ' + job.job.maxpl / 0.3 + '%;'"></div>
+        </b-tag>
       </b-tags>
     </b-card-content>
 
@@ -73,8 +76,6 @@ export default {
   data () {
     return {
       job: this.jobObj,
-      authorAvatar: this.getAuthorAvatar(),
-      mode: modes[this.jobObj.job.mode],
       dateReadable: this.getDateReadable()
     };
   },
@@ -88,11 +89,6 @@ export default {
   },
 
   methods: {
-    getAuthorAvatar () {
-      let username = this.jobObj.author.username.toLowerCase();
-      return `https://a.rsg.sc/n/${username}/s`;
-    },
-
     getDateReadable () {
       let job = this.jobObj;
       let dateString = moment(job.updated.job).fromNow();
