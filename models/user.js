@@ -28,14 +28,16 @@ function setMedal(medal) {
   return 1 + array.findIndex(config.medals, med => med.name === medal);
 }
 
-userSchema.virtual('avatarSmallUrl')
+userSchema.virtual('avatarSmall')
   .get(function() {
-    return `https://a.rsg.sc/n/${this.nickname.toLowerCase()}/s`;
+    const username = this.nickname.toLowerCase();
+    return `https://a.rsg.sc/n/${username}/s`;
   });
 
-userSchema.virtual('avatarLargeUrl')
+userSchema.virtual('avatarLarge')
   .get(function() {
-    return `https://a.rsg.sc/n/${this.nickname.toLowerCase()}/l`;
+    const username = this.nickname.toLowerCase();
+    return `https://a.rsg.sc/n/${username}/l`;
   });
 
 module.exports = mongoose.model('User', userSchema, 'users');

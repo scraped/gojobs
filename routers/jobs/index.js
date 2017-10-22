@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const object = require('lodash/object');
+const uploadJobs = require('../../lib/upload-jobs');
 
 const Job = require('../../models/job');
 
@@ -19,23 +19,32 @@ router.get('/', (req, res, next) => {
       jobs = jobs.map(j => j.toObject());
 
       setTimeout(() => {
-        res.send({
+        res.json({
           jobs: jobs
         });
-      }, 0);
+      }, 2000);
     })
     .catch(err => {
-      console.log(`Cannot retrieve jobs from the database: ${err.stack}`);
+      console.log(`Can't retrieve jobs from the database: ${err.stack}`);
       next();
     });
 });
 
-// router.get('/:id', (req, res, next) => {
-//   Job.findOne()
-//     .exec()
-//     .then(res.send)
-//     .catch(err => {
-//       console.log(`Cannot show job: ${err.message}`);
-//       next();
-//     });
-// });
+router.get('/id/:id', (req, res, next) => {
+  let id = req.params.id;
+
+  Job.findOne({ jobId: id })
+    .then(job => {
+      job = job.map(j => j.toObject());
+      res.json(job);
+    })
+    .catch(err => {
+      console.log(`Cant' show job: ${err.message}`);
+      next();
+    });
+});
+
+router.get('/upload', (req, res, next) => {
+  res.send('Jobs is being uploaded');
+  uploadJobs();
+});

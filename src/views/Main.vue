@@ -33,8 +33,8 @@ export default {
   methods: {
     fetchJobs () {
       this.$http.get('/api/jobs')
-        .then(jobs => {
-          this.jobs = jobs.data;
+        .then(response => {
+          this.jobs = response.data.jobs;
           this.$Progress.finish();
         })
         .catch(error => {

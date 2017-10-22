@@ -9,7 +9,7 @@
         </b-b-title>
       </div>
       <b-b-image is-2by1>
-        <img :src="image" :title="job.name" width="200" height="300">
+        <img :src="job.img" :title="job.name" width="200" height="300">
       </b-b-image>
     </b-card-image>
 
@@ -73,7 +73,6 @@ export default {
   data () {
     return {
       job: this.jobObj,
-      image: this.getImage(),
       authorAvatar: this.getAuthorAvatar(),
       mode: modes[this.jobObj.job.mode],
       dateReadable: this.getDateReadable()
@@ -89,12 +88,6 @@ export default {
   },
 
   methods: {
-    getImage () {
-      let img = this.jobObj.img.split('.');
-      let id = this.jobObj.jobCurrId;
-      return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${id}/${img[1]}.jpg`;
-    },
-
     getAuthorAvatar () {
       let username = this.jobObj.author.username.toLowerCase();
       return `https://a.rsg.sc/n/${username}/s`;
