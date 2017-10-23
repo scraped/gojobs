@@ -1,11 +1,11 @@
 <template>
-  <b-container>
-    <b-b-title>Admin panel</b-b-title>
+  <div class="container">
+    <div class="title">Admin panel</div>
     <a
       class="button is-primary is-outlined"
       href="/api/jobs/upload"
       target="_blank">Upload all raw jobs</a>
-  </b-container>
+  </div>
 </template>
 
 <script>

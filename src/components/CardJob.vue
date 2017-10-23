@@ -4,7 +4,7 @@
       <div class="card-strip"></div>
       <div class="card-title">
         <div class="title is-5">
-          <i class="icon" style="font-family: 'gtav-icon-font';" v-html="'&#x' + job.job.mode.icon + ';'"></i>
+          <span class="icon" style="font-family: 'gtav-icon-font';" v-html="'&#x' + job.job.mode.icon + ';'"></span>
           <span v-html="job.name"></span>
         </div>
       </div>
@@ -27,10 +27,10 @@
             <span class="tag is-white"
               :style="'border: 1px solid #' + job.author.crew.color"
               v-if="job.author.crew">
-              {{ job.author.crew.tag }}</span>
-            <div class="subtitle-date">
+              {{ job.author.crew.tag }}</span><br>
+            <span class="subtitle-date">
               {{ dateReadable }}
-            </div>
+            </span>
           </p>
         </div>
 

@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import bus from './bus';
 import NavMenu from './components/NavMenu.vue';
 
 export default {
@@ -22,17 +23,33 @@ export default {
     return {};
   },
 
+  mounted () {
+    if (!bus.loading) bus.$emit('finish-loading');
+  },
+
   created () {
-    this.$Progress.start();
+    bus.$on('start-loading', function() {
+      console.log('чекаем старт');
+      this.$Progress.start();
+      bus.loading = true;
+    });
+
+    bus.$on('finish-loading', function() {
+      console.log('чекаем конец');
+      this.$Progress.finish();
+      bus.loading = false;
+    });
+
+    bus.$emit('start-loading');
 
     this.$router.beforeEach((to, from, next) => {
-      this.$Progress.start();
+      console.log('beforeEach: ' + bus.loading);
+      if (!bus.loading) bus.$emit('start-loading');
       next();
     });
 
-    this.$router.afterEach((to, from, next) => {
-      this.$Progress.finish();
-      next();
+    this.$router.afterEach((to, from) => {
+      if (!bus.loading) bus.$emit('finish-loading');
     });
   }
 }

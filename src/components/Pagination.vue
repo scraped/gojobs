@@ -1,49 +1,51 @@
 <template>
   <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-    <router-link
-      :to="{ path: '/', query: { page: prevPage }}"
+    <a
       class="pagination-previous"
-      :aria-label="'Go to page ' + prevPage"
-      v-if="hasPrev()">
+      v-if="hasPrev()"
+      @click.prevent="changePage(prevPage)"
+      :aria-label="'Go to page ' + prevPage">
         ←
-    </router-link>
-    <router-link
-      :to="{ path: '/', query: { page: nextPage }}"
+    </a>
+    <a
       class="pagination-next"
+      v-if="hasNext()"
+      @click.prevent="changePage(nextPage)"
       :aria-label="'Go to page ' + nextPage"
-      v-if="hasNext()">
+      >
         →
-    </router-link>
+    </a>
     <ul class="pagination-list">
       <li v-if="hasFirst()">
-        <router-link
-          to="/"
+        <a
           class="pagination-link"
+          @click.prevent="changePage(1)"
           aria-label="Goto page 1">
             1
-        </router-link>
+        </a>
       </li>
       <li v-if="hasFirst()">
         <span class="pagination-ellipsis">&hellip;</span>
       </li>
       <li v-for="page in pages" :key="page">
-        <router-link
-          :to="{ path: '/', query: { page: page }}"
+        <a
           class="pagination-link"
+          @click.prevent="changePage(page)"
           :class="{ 'is-current': currPage === page }"
           :aria-label="'Go to page ' + page">
             {{ page }}
-        </router-link>
+        </a>
       </li>
       <li v-if="hasLast()">
         <span class="pagination-ellipsis">&hellip;</span>
       </li>
       <li v-if="hasLast()">
-        <router-link
-          :to="{ path: '/', query: { page: totalPages }}" class="pagination-link"
+        <a
+          class="pagination-link"
+          @click.prevent="changePage(totalPages)"
           :aria-label="'Go to page ' + totalPages">
             {{ totalPages }}
-        </router-link>
+        </a>
       </li>
     </ul>
   </nav>
@@ -94,7 +96,6 @@ export default {
 
   methods: {
     hasFirst: function() {
-      console.log('hasFirst' + this.leftBound !== 1)
       return this.leftBound !== 1;
     },
 
@@ -109,6 +110,10 @@ export default {
     hasNext: function() {
       return this.currPage < this.totalPages;
     },
+
+    changePage: function(page) {
+      this.$emit('page-changed', page);
+    }
   }
 }
 </script>
