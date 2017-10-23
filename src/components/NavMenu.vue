@@ -1,37 +1,28 @@
 <template>
-  <b-navbar>
-    <b-container>
-      <b-navbar-brand>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-brand">
         <router-link to="/" class="navbar-item">
           <img src="../images/gtaonline-logo-mini.png" alt="" title="">
         </router-link>
 
-        <b-navbar-burger data-target="mainMenu">
+        <div class="navbar-burger" data-target="mainMenu">
           <span></span><span></span><span></span>
-        </b-navbar-burger>
-      </b-navbar-brand>
+        </div>
+      </div>
 
-      <b-navbar-menu id="mainMenu">
-        <b-navbar-end>
+      <div class="navbar-menu" id="mainMenu">
+        <div class="navbar-end">
           <router-link to="/admin" class="navbar-item">Admin</router-link>
           <router-link to="/login" class="navbar-item">Log in or sign up</router-link>
-        </b-navbar-end>
-      </b-navbar-menu>
-    </b-container>
-  </b-navbar>
+        </div>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>
-import { bulmaComponentGenerator } from 'vue-bulma-components';
-
-export default {
-  name: 'nav-menu',
-
-  components: {
-    'b-navbar-menu': bulmaComponentGenerator('navbar-menu'),
-    'b-navbar-end': bulmaComponentGenerator('navbar-end'),
-  }
-};
+export default {};
 </script>
 
 <style scoped>

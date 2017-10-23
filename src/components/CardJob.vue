@@ -1,75 +1,67 @@
 <template>
-  <b-card>
-    <b-card-image>
+  <div class="card">
+    <div class="card-image">
       <div class="card-strip"></div>
       <div class="card-title">
-        <b-b-title is-5>
-          <b-icon style="font-family: 'gtav-icon-font';" v-html="'&#x' + job.job.mode.icon + ';'"></b-icon>
+        <div class="title is-5">
+          <i class="icon" style="font-family: 'gtav-icon-font';" v-html="'&#x' + job.job.mode.icon + ';'"></i>
           <span v-html="job.name"></span>
-        </b-b-title>
+        </div>
       </div>
-      <b-b-image is-2by1>
+      <div class="image is-2by1">
         <img :src="job.image" :title="job.name">
-      </b-b-image>
-    </b-card-image>
+      </div>
+    </div>
 
-    <b-card-content>
-      <b-media>
-        <b-media-left>
+    <div class="card-content">
+      <div class="media">
+        <div class="media-left">
           <figure class="image is-48x48 media-left-avatar">
             <img :src="job.author.avatar.small">
           </figure>
-        </b-media-left>
+        </div>
 
-        <b-media-content>
-          <b-subtitle is-6>
+        <div class="media-content">
+          <p class="subtitle is-6">
             <a href="">@{{ job.author.username }}</a>
-            <b-tag
-              is-white
+            <span class="tag is-white"
               :style="'border: 1px solid #' + job.author.crew.color"
               v-if="job.author.crew">
-              {{ job.author.crew.tag }}</b-tag>
+              {{ job.author.crew.tag }}</span>
             <div class="subtitle-date">
               {{ dateReadable }}
             </div>
-          </b-subtitle>
-        </b-media-content>
+          </p>
+        </div>
 
-        <b-media-right>
+        <!-- <div class="media-right">
           Test
-        </b-media-right>
-      </b-media>
+        </div> -->
+      </div>
 
-      <b-tags>
-        <b-tag>{{ job.platform.name }}</b-tag>
-        <b-tag style="position: relative;">{{ job.job.maxpl }} players
-          <div :style="'position: absolute; top: 0; height: 2px; background: grey; width: ' + job.job.maxpl / 0.3 + '%;'"></div>
-        </b-tag>
-      </b-tags>
-    </b-card-content>
+      <div class="tags">
+        <span class="tag">{{ job.platform.name }}</span>
+        <span class="tag">{{ job.job.maxpl }} players</span>
+      </div>
+    </div>
 
-    <b-card-footer>
-      <b-card-footer-item>
+    <div class="card-footer">
+      <div class="card-footer-item">
         <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
-        {{ job.stats.pldTot | formatNumber }}</b-card-footer-item>
-      <b-card-footer-item>
+        {{ job.stats.pldTot | formatNumber }}</div>
+      <div class="card-footer-item">
         <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-        {{ job.stats.likes | formatNumber }}</b-card-footer-item>
-    </b-card-footer>
-  </b-card>
+        {{ job.stats.likes | formatNumber }}</div>
+    </div>
+  </div>
 </template>
 
 <script>
 import moment from 'moment';
-import { bulmaComponentGenerator } from 'vue-bulma-components';
 import modes from '../../config/modes';
 
 export default {
   name: 'card-job',
-
-  components: {
-    'b-tags': bulmaComponentGenerator('tags'),
-  },
 
   props: ['jobObj'],
 
