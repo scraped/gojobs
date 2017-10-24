@@ -14,16 +14,16 @@ Vue.use(VueProgressBar, {
   color: '#EB0000',
   failedColor: 'red',
 });
-// Vue.use(VueResourceProgressBarInterceptor);
+Vue.use(VueResourceProgressBarInterceptor);
 
-Vue.http.interceptors.push(function(request, next) {
-  console.log('эмитнул старт')
-  bus.$emit('start-loading');
-  next(() => {
-    console.log('эмитнул финиш')
-    bus.$emit('finish-loading');
-  });
-});
+// Vue.http.interceptors.push(function(request, next) {
+//   console.log('эмитнул старт')
+//   bus.$emit('start-loading');
+//   next(() => {
+//     console.log('эмитнул финиш')
+//     bus.$emit('finish-loading');
+//   });
+// });
 
 new Vue({
   el: '#app',

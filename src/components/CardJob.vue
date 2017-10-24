@@ -4,7 +4,13 @@
       <div class="card-strip"></div>
       <div class="card-title">
         <div class="title is-5">
-          <span class="icon" style="font-family: 'gtav-icon-font';" v-html="'&#x' + job.job.mode.icon + ';'"></span>
+          <span class="tooltip" :data-tooltip="'Mode: ' + job.job.mode.name">
+          <span
+            class="icon tooltip"
+            style="font-family: 'gtav-icon-font';"
+            v-html="'&#x' + job.job.mode.icon + ';'"
+            ></span>
+          </span>
           <span v-html="job.name"></span>
         </div>
       </div>

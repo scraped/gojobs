@@ -1,9 +1,9 @@
 <template>
-  <b-container>
-    <b-notification is-warning>
+  <div class="container">
+    <div class="notification is-warning">
       404 Not Found
-    </b-notification>
-  </b-container>
+    </div>
+  </div>
 </template>
 
 <script>
