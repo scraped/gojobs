@@ -73,9 +73,9 @@ module.exports = [
   {
     id: 7,
     name: 'Survival',
-    icon: '',
+    icon: 'f196',
     modes: [
-      { icon: '', name: 'Survival' }
+      { icon: 'f196', name: 'Survival' }
     ],
     flags: []
   }

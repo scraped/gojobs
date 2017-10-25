@@ -4,12 +4,14 @@
       <div class="card-strip"></div>
       <div class="card-title">
         <div class="title is-5">
-          <span class="tooltip" :data-tooltip="'Mode: ' + job.job.mode.name">
           <span
-            class="icon tooltip"
-            style="font-family: 'gtav-icon-font';"
-            v-html="'&#x' + job.job.mode.icon + ';'"
-            ></span>
+            class="tooltip"
+            :data-tooltip="'Mode: ' + job.job.mode.name">
+              <span
+                class="icon tooltip"
+                style="font-family: 'gtav-icon-font';"
+                v-html="'&#x' + job.job.mode.icon + ';'"
+                ></span>
           </span>
           <span v-html="job.name"></span>
         </div>
@@ -29,7 +31,10 @@
 
         <div class="media-content">
           <p class="subtitle is-6">
-            <a href="">@{{ job.author.username }}</a>
+            <router-link
+              :to="{ path: '/', query: genQuery({ author: job.author.username }) }">
+                @{{ job.author.username }}
+            </router-link>
             <span class="tag is-white"
               :style="'border: 1px solid #' + job.author.crew.color"
               v-if="job.author.crew">
@@ -87,6 +92,10 @@ export default {
   },
 
   methods: {
+    genQuery (obj) {
+      return Object.assign({}, this.$route.query, { page: 1 }, obj);
+    },
+
     getDateReadable () {
       let job = this.jobObj;
       let dateString = moment(job.updated.job).fromNow();

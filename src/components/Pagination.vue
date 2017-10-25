@@ -3,6 +3,7 @@
     <div class="subtitle is-hidden-tablet" v-if="short">
       Page {{ currPage }} of {{ totalPages }}
     </div>
+
     <nav
       class="pagination"
       role="navigation"
@@ -10,7 +11,7 @@
       <router-link
         class="pagination-previous"
         v-if="hasPrev()"
-        :to="{ path: '/', query: { page: prevPage }}"
+        :to="{ path: '/', query: genQuery(prevPage) }"
         :aria-label="'Go to page ' + prevPage">
           <i class="icon fa fa-angle-left"></i>
           <template v-if="short">Previous page</template>
@@ -19,7 +20,7 @@
       <router-link
         class="pagination-next"
         v-if="hasNext()"
-        :to="{ path: '/', query: { page: nextPage }}"
+        :to="{ path: '/', query: genQuery(nextPage) }"
         :aria-label="'Go to page ' + nextPage">
           <template v-if="short">Next page</template>
           <i class="icon fa fa-angle-right"></i>
@@ -33,7 +34,7 @@
         <li v-if="hasFirst()">
           <router-link
             class="pagination-link"
-            :to="{ path: '/', query: { page: 1 }}"
+            :to="{ path: '/', query: genQuery(1) }"
             :aria-label="'Go to page 1'">
               1
           </router-link>
@@ -45,9 +46,10 @@
         <li v-for="page in pages" :key="page">
           <router-link
             class="pagination-link"
-            :to="{ path: '/', query: { page: page }}"
+            :to="{ path: '/', query: genQuery(page) }"
             :class="{ 'is-current': currPage === page }"
-            :aria-label="'Go to page ' + page">
+            :aria-label="'Go to page ' + page"
+            append>
               {{ page }}
           </router-link>
         </li>
@@ -58,7 +60,7 @@
         <li v-if="hasLast()">
           <router-link
             class="pagination-link"
-            :to="{ path: '/', query: { page: totalPages }}"
+            :to="{ path: '/', query: genQuery(totalPages) }"
             :aria-label="'Go to page ' + totalPages">
               {{ totalPages }}
           </router-link>
@@ -70,6 +72,8 @@
 </template>
 
 <script>
+import _ from 'lodash';
+
 export default {
   props: {
     currPage: { type: Number, default: 1 },
@@ -114,6 +118,10 @@ export default {
   },
 
   methods: {
+    genQuery: function(page) {
+      return Object.assign({}, this.$route.query, { page: page });
+    },
+
     hasFirst: function() {
       return this.leftBound !== 1;
     },

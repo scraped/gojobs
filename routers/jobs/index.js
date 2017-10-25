@@ -2,6 +2,7 @@ const router = require('express').Router();
 const mongoose = require('../../lib/db');
 const uploadJobs = require('../../lib/upload-jobs');
 
+const User = require('../../models/user');
 const Job = require('../../models/job');
 
 module.exports = router;
@@ -12,22 +13,40 @@ router.get('/', (req, res, next) => {
   let count = 0;
 
   let searchOptions = {};
+
+  let initialPromise = Promise.resolve();
   let author = req.query.author;
+  // let crew = req.query.crew;
 
-  console.log(author);
+  if (author) {
+    initialPromise = User.findOne({ username: author });
+  }
 
-  Job.count()
+  initialPromise
+    .then(result => {
+      if (result) {
+        author = result._id;
+        if (author) searchOptions.author = mongoose.Types.ObjectId(author);
+      }
+
+      return Job.count(searchOptions);
+    })
     .then(amount => {
       count = amount;
-      return Job.find({})
+
+      return Job.find(searchOptions)
         .skip((page - 1) * perPage)
         .limit(perPage)
         .sort({ 'stats.points': -1 })
-        .populate({ path: 'author', populate: { path: 'crew' } })
+        .populate({
+          path: 'author',
+          populate: { path: 'crew' }
+        })
         .populate('crew');
     })
     .then(jobs => {
-      jobs = jobs.map(j => j.toObject());
+      jobs = jobs
+        .map(job => job.toObject());
 
       setTimeout(() => {
         res.json({

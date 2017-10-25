@@ -7,7 +7,7 @@
         :total-items="count"></pagination>
     </section>
 
-    <loading v-if="loading"></loading>
+    <loading-spinner v-if="loading"></loading-spinner>
     <div class="columns is-multiline" v-else>
       <template v-for="job in jobs">
         <div class="column is-half" :key="job.jobId">
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import Loading from '../components/Loading.vue';
+import LoadingSpinner from '../components/Loading.vue';
 import CardJob from '../components/CardJob.vue';
 import Pagination from '../components/Pagination.vue';
 
 export default {
   components: {
-    Loading,
+    LoadingSpinner,
     CardJob,
     Pagination
   },
@@ -55,10 +55,11 @@ export default {
 
   methods: {
     fetchJobs() {
+      let author = this.$route.query.author || '';
       this.page = Number(this.$route.query.page) || 1;
       this.loading = true;
 
-      this.$http.get(`/api/jobs?page=${this.page}`)
+      this.$http.get(`/api/jobs?page=${this.page}&author=${author}`)
         .then(response => {
           this.jobs = response.data.jobs;
           this.count = response.data.count;
