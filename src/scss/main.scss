@@ -16,7 +16,7 @@ $primary-invert: findColorInvert($primary);
 // General vars
 $family-sans-serif: "Arimo", $family-sans-serif;
 
-// <input>
+// input
 $input-hover-border-color: $grey-lighter;
 $input-shadow: none;
 
@@ -68,4 +68,3 @@ $section-padding: 1.5rem 0; // 3rem 1.5rem
 
 // 2. 6. Bulma extensions
 @import "./bulma/extensions/tooltip";
-// @import "./bulma/ext/checkradio";

@@ -4,6 +4,7 @@ const _ = require('lodash');
 
 const mongoose = require('../lib/db');
 require('./user');
+require('./crew');
 const Schema = mongoose.Schema;
 
 let jobSchema = new Schema({
@@ -11,6 +12,7 @@ let jobSchema = new Schema({
   jobCurrId: { type: String, required: true },
 
   author: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+  crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
   platform: { type: Number, get: getPlatform },

@@ -1,12 +1,13 @@
 <template>
   <div class="card">
-    <div class="card-image">
-      <div class="card-strip"></div>
+    <div class="card-image" style="position: relative;">
+      <div :class="'card-strip is-' + ratingCssClass" :style="'width: ' + job.stats.rating + '%;'"></div>
       <div class="card-title">
         <div class="title is-5">
           <span
             class="tooltip"
-            :data-tooltip="'Mode: ' + job.job.mode.name">
+            style="font-weight: normal;"
+            :data-tooltip="job.job.mode.name">
               <span
                 class="icon tooltip"
                 style="font-family: 'gtav-icon-font';"
@@ -25,7 +26,10 @@
       <div class="media">
         <div class="media-left">
           <figure class="image is-48x48 media-left-avatar">
-            <img :src="job.author.avatar.small">
+            <router-link
+              :to="{ path: '/', query: genQuery({ author: job.author.username }) }">
+                <img :src="job.author.avatar.small">
+            </router-link>
           </figure>
         </div>
 
@@ -35,10 +39,16 @@
               :to="{ path: '/', query: genQuery({ author: job.author.username }) }">
                 @{{ job.author.username }}
             </router-link>
-            <span class="tag is-white"
-              :style="'border: 1px solid #' + job.author.crew.color"
-              v-if="job.author.crew">
-              {{ job.author.crew.tag }}</span><br>
+            <router-link
+              :to="{ path: '/', query: genQuery({ crew: job.crew.crewUrl }) }"
+              v-if="job.crew">
+            <span
+              class="tag is-white tooltip is-tooltip-right"
+              :style="'border: 1px solid #' + job.crew.color"
+              v-if="job.crew"
+              :data-tooltip="job.crew.name">
+              {{ job.crew.tag }}</span>
+            </router-link><br>
             <span class="subtitle-date">
               {{ dateReadable }}
             </span>
@@ -57,10 +67,15 @@
     </div>
 
     <div class="card-footer">
-      <div class="card-footer-item">
+      <div
+        class="card-footer-item tooltip"
+        :data-tooltip="'People played this: ' + job.stats.pldUnq">
         <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
         {{ job.stats.pldTot | formatNumber }}</div>
-      <div class="card-footer-item">
+
+      <div
+        class="card-footer-item tooltip"
+        :data-tooltip="'Dislikes: ' + job.stats.dlikes + ', optimal rating: ' + job.stats.ratingQuit + '%'">
         <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
         {{ job.stats.likes | formatNumber }}</div>
     </div>
@@ -81,6 +96,13 @@ export default {
       job: this.jobObj,
       dateReadable: this.getDateReadable()
     };
+  },
+
+  computed: {
+    ratingCssClass () {
+      let rating = this.job.stats.ratingQuit;
+      return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
+    }
   },
 
   filters: {
@@ -110,6 +132,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../scss/bulma/utilities/variables";
+
 // TO REMOVE!!!!!!!!!!!!!!
 .fa {
   padding: 5px;
@@ -133,7 +157,21 @@ export default {
 }
 
 .card-strip {
-
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 5px;
+  opacity: 0.6;
+  &.is-success {
+    background: $success;
+  }
+  &.is-warning {
+    background: $warning;
+  }
+  &.is-danger {
+    background: $danger;
+  }
 }
 
 .media-left-avatar {

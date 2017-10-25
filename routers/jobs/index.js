@@ -1,59 +1,73 @@
+const config = require('../../config');
 const router = require('express').Router();
 const mongoose = require('../../lib/db');
 const uploadJobs = require('../../lib/upload-jobs');
+const utils = require('../../lib/utils');
 
 const User = require('../../models/user');
+const Crew = require('../../models/crew');
 const Job = require('../../models/job');
 
 module.exports = router;
 
 router.get('/', (req, res, next) => {
-  const perPage = 30;
-  const page = Math.abs(Number(req.query.page)) || 1;
+  let searchOptions = {};
   let count = 0;
 
-  let searchOptions = {};
+  const perPage = utils.formatInt(req.query.perPage) || config.perPage;
+  const page = utils.formatInt(req.query.page) || 1;
+
+  const author = req.query.author;
+  const crew = req.query.crew;
+  const platform = utils.formatInt(req.query.platform) || 1;
+  const type = utils.formatInt(req.query.type);
+  const mode = utils.formatInt(req.query.mode);
+  const maxpl = utils.formatInt(req.query.maxpl);
+
+  searchOptions.platform = platform;
+  if (type) searchOptions['job.type'] = type;
+  if (mode) searchOptions['job.mode'] = mode;
+  if (maxpl) searchOptions['job.maxpl'] = { $lte: maxpl };
 
   let initialPromise = Promise.resolve();
-  let author = req.query.author;
-  // let crew = req.query.crew;
 
   if (author) {
     initialPromise = User.findOne({ username: author });
+  } else if (crew) {
+    initialPromise = Crew.findOne({ crewUrl: crew });
   }
 
   initialPromise
     .then(result => {
       if (result) {
-        author = result._id;
-        if (author) searchOptions.author = mongoose.Types.ObjectId(author);
+        if (author) {
+          searchOptions.author = mongoose.Types.ObjectId(result._id)
+        } else {
+          searchOptions.crew = mongoose.Types.ObjectId(result._id);
+        }
       }
 
       return Job.count(searchOptions);
     })
-    .then(amount => {
-      count = amount;
+    .then(number => {
+      count = number;
 
       return Job.find(searchOptions)
         .skip((page - 1) * perPage)
         .limit(perPage)
         .sort({ 'stats.points': -1 })
-        .populate({
-          path: 'author',
-          populate: { path: 'crew' }
-        })
+        .populate('author')
         .populate('crew');
     })
     .then(jobs => {
-      jobs = jobs
-        .map(job => job.toObject());
+      jobs = jobs.map(job => job.toObject());
 
       setTimeout(() => {
         res.json({
           count: count,
           jobs: jobs,
         });
-      }, 2000);
+      }, 1500);
     })
     .catch(err => {
       console.log(`Can't retrieve jobs from the database: ${err.stack}`);

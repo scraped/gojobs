@@ -3,6 +3,8 @@ module.exports = {
   srcDir: './src',
   distDir: './dist',
 
+  perPage: 30,
+
   mongo: {
     connectUri: 'mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs',
 
