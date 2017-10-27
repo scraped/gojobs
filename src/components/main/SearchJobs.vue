@@ -1,6 +1,25 @@
 <template>
   <div>
     <div class="title is-5">Type</div>
+    <aside class="menu">
+      <ul class="menu-list">
+        <li><a>Any</a></li>
+        <li v-for="(item, i) in modes" :key="i">
+        <router-link
+          :class="{ 'is-active': i + 1 === type }"
+          :to="{ path: '/', query: genQuery({ type: i + 1, mode: 0 }) }">
+              <span
+                class="icon"
+                style="font-family: 'gtav-icon-font';"
+                v-html="'&#x' + item.icon + ';'"
+                ></span>
+              {{ item.name }}
+            </span>
+        </router-link>
+      </li>
+      </ul>
+    </aside>
+
     <div class="field is-grouped is-grouped-multiline">
       <div class="control" v-for="(item, i) in modes" :key="i">
         <router-link

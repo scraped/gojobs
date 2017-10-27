@@ -1,6 +1,12 @@
 <template>
   <div>
-    {{  crew }}
+    <div class="tabs">
+      <ul>
+        <li class="is-active"><a>Members Jobs</a></li>
+        <li><a>R* Jobs</a></li>
+        <li><a>R* Verified Jobs</a></li>
+      </ul>
+    </div>
     <section class="section">
       <pagination
         :curr-page="page"
