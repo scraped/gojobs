@@ -1,7 +1,9 @@
 <template>
   <div>
-    <div class="subtitle is-hidden-tablet" v-if="short">
-      Page {{ currPage }} of {{ totalPages }}
+    <div
+      v-if="short"
+      class="subtitle is-hidden-tablet">
+      Page {{ currPage }} of {{ totalPages }} — {{ totalItems }} items
     </div>
 
     <nav
@@ -27,9 +29,9 @@
       </router-link>
 
       <div
-        class="subtitle pagination-list is-hidden-mobile"
-        v-if="short">
-        Page {{ currPage }} of {{ totalPages }}</div>
+        v-if="short"
+        class="subtitle pagination-list is-hidden-mobile">
+        {{ totalItems }} items — page {{ currPage }} of {{ totalPages }}</div>
       <ul class="pagination-list" v-else>
         <li v-if="hasFirst()">
           <router-link
