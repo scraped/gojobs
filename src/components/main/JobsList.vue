@@ -1,23 +1,9 @@
 <template>
   <div>
-    <div class="tabs">
-      <ul>
-        <li :class="{ 'is-active': !author && !crew }"><a>Members</a></li>
-        <li
-          v-if="author"
-          class="is-active">
-          <a>@{{ author }}</a>
-        </li>
-        <li><a>R*</a></li>
-        <li><a>R* Verified</a></li>
-      </ul>
-    </div>
-
-
-      <pagination
-        :curr-page="page"
-        :short="true"
-        :total-items="count"></pagination><br>
+    <pagination
+      :curr-page="page"
+      :short="true"
+      :total-items="count"></pagination><br>
 
     <loading-spinner v-if="loading"></loading-spinner>
     <div class="columns is-multiline" v-else>

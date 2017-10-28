@@ -13,7 +13,6 @@ $primary: #1974d2; // eb0000
 $primary-invert: findColorInvert($primary);
 
 // 1. 3. Set Bulma's derived vars
-// General vars
 $family-sans-serif: "Arimo", $family-sans-serif;
 
 // input
@@ -27,11 +26,15 @@ $button-focus-box-shadow-size: 0;
 $pagination-margin: 0;
 
 // section
-$section-padding: 1.5rem 0; // 3rem 1.5rem
+$section-padding: 1rem 0; // 3rem 1.5rem
 
 // tabs
-$tabs-border-bottom-width: 2px;
-$tabs-link-padding: 0.5em 0.5em; // 0.5em 1em
+// $tabs-border-bottom-width: 2px; // 1px
+// $tabs-border-bottom-color: transparent; // $border
+// $tabs-link-padding: 0.5em 0em; // 0.5em 1em
+
+// menu
+// $menu-item-radius: 0; // $radius-small
 
 //
 // 2. Import Bulma framework
@@ -45,11 +48,9 @@ $tabs-link-padding: 0.5em 0.5em; // 0.5em 1em
 @import "./bulma/components/card";
 @import "./bulma/components/dropdown";
 @import "./bulma/components/media";
-@import "./bulma/components/menu";
 @import "./bulma/components/message";
 @import "./bulma/components/navbar";
 @import "./bulma/components/pagination";
-@import "./bulma/components/tabs";
 
 // 2. 3. Elements
 @import "./bulma/elements/box";
