@@ -28,6 +28,9 @@ $pagination-margin: 0;
 // section
 $section-padding: 1rem 0; // 3rem 1.5rem
 
+// tags
+$tag-delete-margin: 0; // 1px
+
 // tabs
 // $tabs-border-bottom-width: 2px; // 1px
 // $tabs-border-bottom-color: transparent; // $border
@@ -74,3 +77,7 @@ $section-padding: 1rem 0; // 3rem 1.5rem
 
 // 2. 6. Bulma extensions
 @import "./bulma/extensions/tooltip";
+
+a.tag:hover {
+  text-decoration: none;
+}

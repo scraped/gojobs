@@ -14,7 +14,7 @@
       </ul>
     </div> -->
       <div class="columns is-multiline">
-        <div class="column is-full is-one-quarter-widescreen is-one-third-desktop is-one-third-tablet">
+        <div class="column is-full is-one-quarter-widescreen is-one-third-desktop">
           <search-jobs
             :author="author"
             :crew="crew"

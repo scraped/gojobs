@@ -2,13 +2,13 @@
   <div
     class="notification notification-box is-black"
     :style="`background-image: url(${background})`">
-    <h2 class="subtitle is-2">{{ textd }}</h2>
+    <h2 class="subtitle is-2">{{ text }}</h2>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['background', 'textd']
+  props: ['background', 'text']
 }
 </script>
 

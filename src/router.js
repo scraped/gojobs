@@ -11,8 +11,8 @@ function propsMain(r) {
   let { page, author, crew, type, mode, platform, maxpl } = r.query;
   return {
     page: Number(page) || 1,
-    author,
-    crew,
+    author: author || '',
+    crew: crew || '',
     type: Number(type),
     mode: Number(mode),
     platform: Number(platform) || 1,

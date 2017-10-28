@@ -5,14 +5,9 @@
       <div class="card-title">
         <div class="title is-5">
           <span
-            class="tooltip"
-            style="font-weight: normal;"
+            class="tooltip has-text-weight-normal"
             :data-tooltip="job.job.mode.name">
-              <span
-                class="icon tooltip"
-                style="font-family: 'gtav-icon-font';"
-                v-html="'&#x' + job.job.mode.icon + ';'"
-                ></span>
+              <icon-gta :icon="job.job.mode.icon"></icon-gta>
           </span>
           <span v-html="job.name"></span>
         </div>
@@ -46,7 +41,7 @@
               class="tag is-white tooltip is-tooltip-right"
               :style="'border: 1px solid #' + job.crew.color"
               v-if="job.crew"
-              :data-tooltip="job.crew.name">
+              :data-tooltip="job.crew.name ? job.crew.name : '<Name not loaded>'">
               {{ job.crew.tag }}</span>
             </router-link><br>
             <span class="subtitle-date">
@@ -85,11 +80,14 @@
 <script>
 import moment from 'moment';
 import modes from '../../config/modes';
+import IconGta from './IconGta.vue';
 
 export default {
-  name: 'card-job',
-
   props: ['jobObj'],
+
+  components: {
+    IconGta
+  },
 
   data () {
     return {

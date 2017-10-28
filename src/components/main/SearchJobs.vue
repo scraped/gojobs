@@ -17,67 +17,53 @@
       </div>
     </div>
 
-    <!-- <div class="field">
-    <div class="columns is-multiline is-gapless">
-      <div
-        class="column is-3 has-text-centered"
-        v-for="(item, i) in modes" :key="i">
-          <a class="button is-white" style="border-radius: 100%;">
-          <span
-            class="icon"
-            style="font-family: 'gtav-icon-font'; font-size: 24px;"
-            v-html="'&#x' + item.icon + ';'"
-            ></span>
-          </a>
-      </div>
-    </div>
-    </div> -->
-
     <jobtype-box
       v-if="type && modes[type - 1].image"
       :background="modes[type - 1].image"
-      :textd="modes[type - 1].name">
+      :text="modes[type - 1].name">
     </jobtype-box>
 
-    <div class="tags">
-      <router-link
-        class="tag is-medium is-light is-rounded"
-        v-for="(item, i) in modes" :key="i"
-        :to="{ path: '/', query: genQuery({ type: i + 1, mode: 0 }) }">
-        <span
-          class="icon"
-          style="font-family: 'gtav-icon-font'; color: #EB0000;"
-          v-html="'&#x' + item.icon + ';'"
-          ></span>
-        {{ item.name }}
-      </router-link>
+    <div class="field">
+    <div class="dropdown" id="dropdown">
+      <div class="dropdown-trigger">
+        <button class="button" @click="onDropdown">
+          <span>Job type</span>
+          <span class="icon is-small">
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu" role="menu">
+        <div class="dropdown-content">
+          <a class="dropdown-item" v-for="(item, i) in modes" :key="i">
+            <icon-gta :icon="item.icon"></icon-gta>
+              {{ item.name }}
+          </a>
+        </div>
+      </div>
+    </div>
     </div>
 
+
     <template v-if="type">
-    <div class="label">Mode</div>
     <div class="field is-grouped is-grouped-multiline">
-      <div
+      <p
         class="control"
         v-for="(item, i) in modes[type - 1].modes"
         :key="i">
-          <router-link
-            class="control"
-            :to="{ path: '/', query: genQuery({ mode: i + 1 }) }">
-            <div class="tags has-addons">
-              <span
-                class="tag is-rounded"
-                :class="{ 'is-primary': i + 1 === mode }"
-                :key="i">
-                <span
-                  class="icon"
-                  style="font-family: 'gtav-icon-font';"
-                  v-html="'&#x' + item.icon + ';'"
-                  ></span>
-                {{ item.name }}
-              </span>
-            </div>
-          </router-link>
-      </div>
+          <span class="tags has-addons">
+            <router-link
+              class="tag is-rounded"
+              :class="{ 'is-primary': i + 1 === mode }"
+              :to="{ path: '/', query: genQuery({ mode: i + 1 }) }">
+              <icon-gta :icon="item.icon"></icon-gta>
+              {{ item.name }}
+            </router-link>
+            <a
+              v-if="i + 1 === mode"
+              class="tag is-delete is-rounded"></a>
+          </span>
+      </p>
     </div>
     </template>
   </div>
@@ -86,6 +72,7 @@
 <script>
 import modes from '../../../config/modes';
 import JobtypeBox from './JobtypeBox.vue';
+import IconGta from '../IconGta.vue';
 
 export default {
    props: [
@@ -98,7 +85,8 @@ export default {
   ],
 
   components: {
-    JobtypeBox
+    JobtypeBox,
+    IconGta
   },
 
   data () {
@@ -110,6 +98,10 @@ export default {
   methods: {
     genQuery (obj) {
       return Object.assign({}, this.$route.query, obj);
+    },
+
+    onDropdown (e) {
+      document.getElementById('dropdown').classList.toggle('is-active');
     }
   }
 }
