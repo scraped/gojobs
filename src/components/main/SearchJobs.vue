@@ -1,33 +1,33 @@
 <template>
   <div>
-    <div class="dropdown-content" v-if="author">
-      <span class="dropdown-item">
-      <div class="label">Author
-        <a class="button is-danger is-outlined is-small is-pulled-right">Reset</a>
-      </div>
-      </span>
-      <div class="notification is-light">
-        <div class="media">
-          <div class="media-left">
-            <figure class="image is-48x48 media-left-avatar">
-              <img :src="'https://a.rsg.sc/n/' + author.toLowerCase() + '/l'">
-            </figure>
+    <div class="field" v-if="author">
+      <div class="dropdown-content">
+        <span class="dropdown-item">
+          <div class="label">
+            Author<a class="button is-danger is-outlined is-small is-pulled-right">Reset</a>
           </div>
+        </span>
+        <div class="notification is-light">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48 media-left-avatar">
+                <img :src="'https://a.rsg.sc/n/' + author.toLowerCase() + '/l'">
+              </figure>
+            </div>
 
-          <div class="media-content">
-            <h2 class="subtitle is-5">@{{ author }}</h2>
+            <div class="media-content">
+              <h2 class="subtitle is-5">@{{ author }}</h2>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-
-
     <div class="field">
       <div class="dropdown-content">
         <span class="dropdown-item">
-          <div class="label">Type
-            <a class="button is-danger is-outlined is-small is-pulled-right">Reset</a>
+          <div class="label">
+            Type<a class="button is-danger is-outlined is-small is-pulled-right">Reset</a>
           </div>
         </span>
         <jobtype-box
@@ -35,46 +35,63 @@
           :background="modes[type - 1].image"
           :text="modes[type - 1].name">
         </jobtype-box>
-        <template
-          v-for="(item, i) in modes">
+
+        <template v-for="(typeInfo, i) in modes">
           <router-link
             :to="{ path: '/', query: genQuery({ type: i + 1 }) }"
-            :class="{ 'is-active': i + 1 === type }"
             class="dropdown-item"
+            :class="{ 'is-active': type === i + 1 }"
             :key="i">
-              <icon-gta :icon="item.icon"></icon-gta>
-              {{ item.name }}
+              <icon-gta :icon="typeInfo.icon"></icon-gta>
+              {{ typeInfo.name }}
           </router-link>
 
           <span
+            v-if="type && type === i + 1"
             class="dropdown-item"
-            v-if="type && i + 1 === type"
-            :key="i">
-            <div
-              class="field is-grouped is-grouped-multiline"
-              :key="i">
+            :key="-i">
+            <div class="field is-grouped is-grouped-multiline">
               <p
                 class="control"
-                v-for="(item2, j) in modes[type - 1].modes"
+                v-for="(modeInfo, j) in modes[type - 1].modes"
                 :key="j">
-                  <span class="tags has-addons">
-                    <router-link
-                      class="tag is-rounded"
-                      :class="{ 'is-primary': j + 1 === mode }"
-                      :to="{ path: '/', query: genQuery({ mode: j + 1 }) }">
-                      <icon-gta :icon="item2.icon"></icon-gta>
-                      {{ item2.name }}
-                    </router-link>
-                    <a
-                      v-if="j + 1 === mode"
-                      class="tag is-delete is-rounded"></a>
-                  </span>
+                <span class="tags has-addons">
+                  <router-link
+                    :to="{ path: '/', query: genQuery({ mode: j + 1 }) }"
+                    class="tag is-rounded"
+                    :class="{ 'is-primary': mode === j + 1 }">
+                    <icon-gta :icon="modeInfo.icon"></icon-gta>
+                    {{ modeInfo.name }}
+                  </router-link>
+                  <a
+                    v-if="j + 1 === mode"
+                    class="tag is-delete is-rounded"></a>
+                </span>
               </p>
             </div>
           </span>
-
         </template>
       </div>
+    </div>
+
+    <div class="field">
+      <div class="dropdown-content">
+        <span class="dropdown-item">
+          <div class="label">Amount of players</div>
+        </span>
+
+        <span class="dropdown-item">
+          ewfwf
+        </span>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="label">Platform<div class="tags is-pulled-right">
+        <span class="tag is-rounded is-dark">PC</span>
+        <span class="tag is-rounded">PS4</span>
+        <span class="tag is-rounded">Xbox One</span>
+      </div></div>
     </div>
   </div>
 </template>

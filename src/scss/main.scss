@@ -31,6 +31,15 @@ $section-padding: 1rem; // 3rem 1.5rem
 // tags
 $tag-delete-margin: 0; // 1px
 
+// dropdown
+$dropdown-content-shadow: none;
+$dropdown-item-active-background-color: $white-ter;
+$dropdown-item-active-color: $grey-dark;
+
+.is-rounded {
+  border-radius: 100%;
+}
+
 // tabs
 // $tabs-border-bottom-width: 2px; // 1px
 // $tabs-border-bottom-color: transparent; // $border
@@ -58,6 +67,11 @@ $tag-delete-margin: 0; // 1px
 // 2. 3. Elements
 @import "./bulma/elements/box";
 @import "./bulma/elements/button";
+
+.button {
+  transition-duration: $speed;
+}
+
 @import "./bulma/elements/container";
 @import "./bulma/elements/form";
 @import "./bulma/elements/icon";

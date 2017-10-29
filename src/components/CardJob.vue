@@ -20,10 +20,15 @@
     <div class="card-content">
       <div class="media">
         <div class="media-left">
-          <figure class="image is-48x48 media-left-avatar">
+          <figure class="image image-avatar is-48x48">
+            <div
+              class="image-avatar-medal tooltip is-tooltip-right"
+              :style="`background: url('/images/medal-${job.author.medal}.png')`"
+              data-tooltip="Creator Rockstar Medal">
+            </div>
             <router-link
               :to="{ path: '/', query: genQuery({ author: job.author.username }) }">
-                <img :src="job.author.avatar.small">
+                <img class="is-rounded" :src="job.author.avatar.small">
             </router-link>
           </figure>
         </div>
@@ -131,11 +136,6 @@ export default {
 
 <style lang="scss">
 @import "../scss/bulma/utilities/variables";
-
-// TO REMOVE!!!!!!!!!!!!!!
-.fa {
-  padding: 5px;
-}
 .card {
   box-shadow: none;
 }
@@ -172,15 +172,24 @@ export default {
   }
 }
 
-.media-left-avatar {
-  img {
-    border-radius: 100%;
-  }
-}
-
 .subtitle-date {
   margin-top: 2px;
   font-size: 0.9em;
   font-style: italic;
+}
+
+.image-avatar {
+  position: relative;
+  .image-avatar-medal {
+    position: absolute;
+    z-index: 100;
+    background: red;
+    right: 1%;
+    bottom: 1%;
+    width: 13px;
+    height: 13px;
+    border: 3px solid #ffffff;
+    border-radius: 100%;
+  }
 }
 </style>
