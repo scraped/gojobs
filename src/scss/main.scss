@@ -26,7 +26,7 @@ $button-focus-box-shadow-size: 0;
 $pagination-margin: 0;
 
 // section
-$section-padding: 1rem 0; // 3rem 1.5rem
+$section-padding: 1rem; // 3rem 1.5rem
 
 // tags
 $tag-delete-margin: 0; // 1px
@@ -77,7 +77,3 @@ $tag-delete-margin: 0; // 1px
 
 // 2. 6. Bulma extensions
 @import "./bulma/extensions/tooltip";
-
-a.tag:hover {
-  text-decoration: none;
-}
