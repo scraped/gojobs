@@ -23,71 +23,55 @@
       </div>
     </div>
 
-    <div class="field">
-      <div class="dropdown-content">
-        <span class="dropdown-item">
-          <div class="label">
-            Type<a class="button is-danger is-outlined is-small is-pulled-right">Reset</a>
-          </div>
+    <aside class="menu">
+      <template v-for="(typeInfo, i) in modes">
+      <p class="menu-label" :key="i">
+        {{ typeInfo.name }}
+      </p>
+      <div class="tags">
+        <span
+          class="tag"
+          :class="{ 'is-light': mode === j + 1 }"
+          v-for="(modeInfo, i) in modes[i].modes" :key="j">
+          {{ modeInfo.name }}
         </span>
-        <jobtype-box
+      </div>
+      </template>
+    </aside>
+
+    <div class="field">
+      <div class="subtitle">Creator</div>
+      <div class="dropdown-content">
+        <a class="dropdown-item is-selected">Members</a>
+        <a class="dropdown-item">Rockstar</a>
+        <a class="dropdown-item">R* Verified</a>
+      </div>
+    </div>
+
+    <div class="field">
+        <div class="subtitle">Type</div>
+        <!-- <jobtype-box
           v-if="type && modes[type - 1].image"
           :background="modes[type - 1].image"
           :text="modes[type - 1].name">
-        </jobtype-box>
+        </jobtype-box> -->
 
-        <template v-for="(typeInfo, i) in modes">
-          <router-link
-            :to="{ path: '/', query: genQuery({ type: i + 1 }) }"
-            class="dropdown-item"
-            :class="{ 'is-active': type === i + 1 }"
-            :key="i">
-              <icon-gta :icon="typeInfo.icon"></icon-gta>
-              {{ typeInfo.name }}
-          </router-link>
-
-          <span
-            v-if="type && type === i + 1"
-            class="dropdown-item"
-            :key="-i">
-            <div class="field is-grouped is-grouped-multiline">
-              <p
-                class="control"
-                v-for="(modeInfo, j) in modes[type - 1].modes"
-                :key="j">
-                <span class="tags has-addons">
-                  <router-link
-                    :to="{ path: '/', query: genQuery({ mode: j + 1 }) }"
-                    class="tag is-rounded"
-                    :class="{ 'is-primary': mode === j + 1 }">
-                    <icon-gta :icon="modeInfo.icon"></icon-gta>
-                    {{ modeInfo.name }}
-                  </router-link>
-                  <a
-                    v-if="j + 1 === mode"
-                    class="tag is-delete is-rounded"></a>
-                </span>
-              </p>
-            </div>
-          </span>
-        </template>
-      </div>
+          <div class="tags">
+            <span
+              class="tag is-small is-text"
+              :class="{ 'is-light': type === i + 1 }"
+              v-for="(typeInfo, i) in modes" :key="i">
+                {{ typeInfo.name }}
+              </span>
+          </div>
     </div>
 
     <div class="field">
-      <div class="dropdown-content">
-        <span class="dropdown-item">
-          <div class="label">Amount of players</div>
-        </span>
-
-        <span class="dropdown-item">
-          ewfwf
-        </span>
-      </div>
+      <div class="subtitle">Players</div>
     </div>
 
     <div class="field">
-      <div class="label">Platform<div class="tags is-pulled-right">
+      <div class="subtitle">Platform<div class="tags is-pulled-right">
         <span class="tag is-rounded is-dark">PC</span>
         <span class="tag is-rounded">PS4</span>
         <span class="tag is-rounded">Xbox One</span>

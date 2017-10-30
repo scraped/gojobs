@@ -26,7 +26,7 @@ $button-focus-box-shadow-size: 0;
 $pagination-margin: 0;
 
 // section
-$section-padding: 1rem; // 3rem 1.5rem
+$section-padding: 1rem 0rem; // 3rem 1.5rem
 
 // tags
 $tag-delete-margin: 0; // 1px
@@ -35,6 +35,9 @@ $tag-delete-margin: 0; // 1px
 $dropdown-content-shadow: none;
 $dropdown-item-active-background-color: $white-ter;
 $dropdown-item-active-color: $grey-dark;
+
+// notification
+$notification-padding: 0.5rem; // 1.25rem 2.5rem 1.25rem 1.5rem
 
 .is-rounded {
   border-radius: 100%;
@@ -60,9 +63,11 @@ $dropdown-item-active-color: $grey-dark;
 @import "./bulma/components/card";
 @import "./bulma/components/dropdown";
 @import "./bulma/components/media";
+@import "./bulma/components/menu";
 @import "./bulma/components/message";
 @import "./bulma/components/navbar";
 @import "./bulma/components/pagination";
+@import "./bulma/components/tabs";
 
 // 2. 3. Elements
 @import "./bulma/elements/box";

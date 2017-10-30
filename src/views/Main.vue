@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+    <div class="container">
       <div class="columns is-multiline">
         <div class="column is-full is-one-quarter-widescreen is-one-third-desktop">
           <search-jobs
@@ -22,17 +22,20 @@
             :maxpl="maxpl"></jobs-list>
         </div>
       </div>
-  </section>
+    </div>
 </template>
 
 <script>
+import modes from '../../config/modes';
 import SearchJobs from '../components/main/SearchJobs.vue';
 import JobsList from '../components/main/JobsList.vue';
+import IconGta from '../components/IconGta.vue';
 
 export default {
   components: {
     SearchJobs,
-    JobsList
+    JobsList,
+    IconGta
   },
 
   props: [
@@ -43,6 +46,12 @@ export default {
     'mode',
     'platform',
     'maxpl'
-  ]
+  ],
+
+  data () {
+    return {
+      modes
+    }
+  },
 };
 </script>

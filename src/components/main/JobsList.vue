@@ -1,9 +1,13 @@
 <template>
   <div>
-    <pagination
-      :curr-page="page"
-      :short="true"
-      :total-items="count"></pagination><br>
+    <h1 class="subtitle">{{ count }} jobs found
+
+    </h1>
+    <section class="section">
+      <pagination
+        :curr-page="page"
+        :total-items="count"></pagination>
+    </section>
 
     <loading-spinner v-if="loading"></loading-spinner>
     <div class="columns is-multiline" v-else>
