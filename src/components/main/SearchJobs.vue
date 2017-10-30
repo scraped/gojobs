@@ -1,82 +1,71 @@
 <template>
-  <div>
-    <div class="field" v-if="author">
-      <div class="dropdown-content">
-        <span class="dropdown-item">
-          <div class="label">
-            Author<a class="button is-danger is-outlined is-small is-pulled-right">Reset</a>
-          </div>
-        </span>
-        <div class="notification is-light">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-48x48 media-left-avatar">
-                <img :src="'https://a.rsg.sc/n/' + author.toLowerCase() + '/l'">
-              </figure>
-            </div>
+  <div class="columns">
+      <div v-if="author" class="column is-3">
+        <div class="box">
+          <div class="subtitle">Author</div>
+          <div class="dropdown-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-48x48 media-left-avatar">
+                    <img class="is-rounded" :src="'https://a.rsg.sc/n/' + author.toLowerCase() + '/l'">
+                  </figure>
+                </div>
 
-            <div class="media-content">
-              <h2 class="subtitle is-5">@{{ author }}</h2>
-            </div>
+                <div class="media-content">
+                  <h2 class="subtitle is-6">@{{ author }}</h2>
+                </div>
+              </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <aside class="menu">
-      <template v-for="(typeInfo, i) in modes">
-      <p class="menu-label" :key="i">
-        {{ typeInfo.name }}
-      </p>
-      <div class="tags">
-        <span
-          class="tag"
-          :class="{ 'is-light': mode === j + 1 }"
-          v-for="(modeInfo, i) in modes[i].modes" :key="j">
-          {{ modeInfo.name }}
-        </span>
-      </div>
-      </template>
-    </aside>
-
-    <div class="field">
-      <div class="subtitle">Creator</div>
-      <div class="dropdown-content">
-        <a class="dropdown-item is-selected">Members</a>
-        <a class="dropdown-item">Rockstar</a>
-        <a class="dropdown-item">R* Verified</a>
-      </div>
-    </div>
-
-    <div class="field">
-        <div class="subtitle">Type</div>
-        <!-- <jobtype-box
-          v-if="type && modes[type - 1].image"
-          :background="modes[type - 1].image"
-          :text="modes[type - 1].name">
-        </jobtype-box> -->
-
-          <div class="tags">
-            <span
-              class="tag is-small is-text"
-              :class="{ 'is-light': type === i + 1 }"
-              v-for="(typeInfo, i) in modes" :key="i">
-                {{ typeInfo.name }}
-              </span>
+      <div class="column is-3">
+        <div class="box">
+          <div class="subtitle">Game mode<template v-if="type">: {{ modes[type - 1].name }}
+            </template>
           </div>
-    </div>
+          <div class="buttons">
+            <router-link
+              v-for="(typeInfo, i) in modes"
+              :key="i"
+              :to="{ path: '/', query: genQuery({ type: i + 1}) }"
+              class="button is-white tooltip"
+              :class="{ 'is-dark': type === i + 1 }"
+              style="margin: 0 0.1rem;"
+              :data-tooltip="typeInfo.name">
+              <icon-gta :icon="typeInfo.icon"></icon-gta>
+              <span v-if="type === i + 1">{{ modes[type - 1].name }}</span>
+            </router-link>
+          </div>
+        </div>
+      </div>
 
-    <div class="field">
-      <div class="subtitle">Players</div>
-    </div>
+      <div v-if="type && modes[type - 1]" class="column is-3">
+        <div class="box">
+          <div class="tags">
+            <router-link
+              v-for="(modeInfo, i) in modes[type - 1].modes"
+              :key="i"
+              :to="{ path: '/', query: genQuery({ mode: i + 1 }) }"
+              class="tag"
+              :class="{ 'is-primary': mode === i + 1 }">
+              <icon-gta :icon="modeInfo.icon"></icon-gta>
+              {{ modeInfo.name }}
+            </router-link>
+          </div>
+        </div>
+      </div>
 
-    <div class="field">
-      <div class="subtitle">Platform<div class="tags is-pulled-right">
-        <span class="tag is-rounded is-dark">PC</span>
-        <span class="tag is-rounded">PS4</span>
-        <span class="tag is-rounded">Xbox One</span>
-      </div></div>
-    </div>
+      <div class="column is-3">
+        <div class="box">
+          <div class="subtitle">Players</div>
+          <div class="tags">
+            <span class="tag">8-</span>
+            <span class="tag">16-</span>
+            <span class="tag">30-</span>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 

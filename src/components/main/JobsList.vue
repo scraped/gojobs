@@ -1,18 +1,23 @@
 <template>
   <div>
-    <h1 class="subtitle">{{ count }} jobs found
 
+    <div class="box">
+    <h1 class="title is-4">{{ count }} jobs found on PC
     </h1>
-    <section class="section">
-      <pagination
-        :curr-page="page"
-        :total-items="count"></pagination>
-    </section>
+    <div class="is-size-7">You can switch to <a>PS4</a> or <a>Xbox One</a>.</div>
+    </div>
 
+      <search-jobs
+      :author="author"
+      :crew="crew"
+      :platform="platform"
+      :type="type"
+      :mode="mode"
+      :maxpl="maxpl"></search-jobs>
     <loading-spinner v-if="loading"></loading-spinner>
     <div class="columns is-multiline" v-else>
       <template v-for="job in jobs">
-        <div class="column is-half" :key="job.jobId">
+        <div class="column is-one-third" :key="job.jobId">
           <card-job :job-obj="job"></card-job>
         </div>
       </template>
@@ -30,12 +35,14 @@
 import LoadingSpinner from '../Loading.vue';
 import CardJob from '../CardJob.vue';
 import Pagination from '../Pagination.vue';
+import SearchJobs from './SearchJobs.vue';
 
 export default {
   components: {
     LoadingSpinner,
     CardJob,
-    Pagination
+    Pagination,
+    SearchJobs
   },
 
   data () {
