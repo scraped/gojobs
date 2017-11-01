@@ -1,8 +1,7 @@
 <template>
   <span
     class="icon icon-gta is-unselectable"
-    v-html="`&#x${icon};`"
-    ></span>
+    v-html="`&#x${icon};`"></span>
 </template>
 
 <script>
@@ -14,11 +13,11 @@ export default {
 </script>
 
 <style lang="scss">
-  .icon-gta {
-    font-family: 'gtav-icon-font';
+  .icon {
+    padding: 0 1rem;
   }
 
-  a:hover .icon-gta {
-    text-decoration: none !important;
+  .icon-gta {
+    font-family: 'gtav-icon-font';
   }
 </style>

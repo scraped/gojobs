@@ -8,8 +8,7 @@
             class="tooltip has-text-weight-normal"
             :data-tooltip="job.job.mode.name">
               <icon-gta :icon="job.job.mode.icon"></icon-gta>
-          </span>
-          <span v-html="job.name"></span>
+          </span><span v-html="job.name"></span>
         </div>
       </div>
       <div class="image is-2by1">
@@ -70,13 +69,17 @@
       <div
         class="card-footer-item tooltip"
         :data-tooltip="'People played this: ' + job.stats.pldUnq">
-        <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
+        <span class="icon">
+          <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
+        </span>
         {{ job.stats.pldTot | formatNumber }}</div>
 
       <div
         class="card-footer-item tooltip"
         :data-tooltip="'Dislikes: ' + job.stats.dlikes + ', optimal rating: ' + job.stats.ratingQuit + '%'">
-        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+        <span class="icon">
+          <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+        </span>
         {{ job.stats.likes | formatNumber }}</div>
     </div>
   </div>
