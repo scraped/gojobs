@@ -1,20 +1,22 @@
 <template>
   <div class="card">
-    <div class="card-image" style="position: relative;">
-      <div :class="'card-strip is-' + ratingCssClass" :style="'width: ' + job.stats.rating + '%;'"></div>
-      <div class="card-title">
-        <div class="title is-5">
-          <span
-            class="tooltip has-text-weight-normal"
-            :data-tooltip="job.job.mode.name">
-              <icon-gta :icon="job.job.mode.icon"></icon-gta>
-          </span><span v-html="job.name"></span>
+    <router-link :to="{ path: '/job', params: { id: job.jobId } }">
+      <div class="card-image" style="position: relative;">
+        <div :class="'card-strip is-' + ratingCssClass" :style="'width: ' + job.stats.rating + '%;'"></div>
+        <div class="card-title">
+          <div class="title is-5">
+            <span
+              class="tooltip has-text-weight-normal"
+              :data-tooltip="job.job.mode.name">
+                <icon-gta :icon="job.job.mode.icon"></icon-gta>
+            </span><span v-html="job.name"></span>
+          </div>
+        </div>
+        <div class="image is-2by1">
+          <img :src="job.image" :title="job.name">
         </div>
       </div>
-      <div class="image is-2by1">
-        <img :src="job.image" :title="job.name">
-      </div>
-    </div>
+    </router-link>
 
     <div class="card-content">
       <div class="media">

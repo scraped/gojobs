@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import LoadingSpinner from '../Loading.vue';
 import CardJob from '../CardJob.vue';
 import Pagination from '../Pagination.vue';
@@ -48,12 +49,13 @@ export default {
   data () {
     return {
       count: 0,
-      jobs: [],
+      // jobs: [],
       loading: false
     }
   },
 
   props: [
+    'jobs',
     'page',
     'author',
     'crew',
@@ -63,30 +65,46 @@ export default {
     'maxpl'
   ],
 
-  created () {
-    this.fetchJobs(this.page);
-  },
+  // beforeRouteEnter (to, from, next) {
+  //   // this.fetchJobs(this.page);
+  //   console.log('beforerouteenter');
+  //   Vue.http.get(`/api/jobs?page=${to.query.page}`)
+  //     .then(data => {
+  //       next(vm => vm.setData(data));
+  //     });
+  // },
 
-  watch: {
-    '$route': 'fetchJobs'
-  },
+  // beforeRouteUpdate (to, from, next) {
+  //   this.fetchJobs();
+  // },
 
-  methods: {
-    fetchJobs() {
-      this.loading = true;
+  // watch: {
+  //   '$route': 'fetchJobs'
+  // },
 
-      this.$http.get(`/api/jobs?page=${this.page}&author=${this.author}&crew=${this.crew}&platform=${this.platform}&type=${this.type}&mode=${this.mode}&maxpl=${this.maxpl}`)
-        .then(response => {
-          this.jobs = response.data.jobs;
-          this.count = response.data.count;
-          this.loading = false;
-        })
-        .catch(error => {
-          console.warn('Cannot get jobs', error);
-          this.loading = false;
-        });
-    }
-  }
+  // methods: {
+  //   setData (response) {
+  //     cosnole.log('setData');
+  //     this.jobs = response.data.jobs;
+  //     this.count = response.data.count;
+  //   },
+
+  //   fetchJobs() {
+  //     // this.loading = true;
+
+  //     return this.$http.get(`/api/jobs?page=${this.page}&author=${this.author}&crew=${this.crew}&platform=${this.platform}&type=${this.type}&mode=${this.mode}&maxpl=${this.maxpl}`)
+  //     .then(response => {
+  //         this.jobs = response.data.jobs;
+  //         this.count = response.data.count;
+  //         // this.loading = false;
+  //       })
+  //       .catch(error => {
+  //         console.warn('Cannot get jobs', error);
+  //         // this.loading = false;
+  //       });
+
+  //   }
+  // }
 }
 </script>
 

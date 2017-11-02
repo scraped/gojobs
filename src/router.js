@@ -13,10 +13,10 @@ function propsMain(r) {
     page: Number(page) || 1,
     author: author || '',
     crew: crew || '',
-    type: Number(type),
-    mode: Number(mode),
+    type: Number(type) || '',
+    mode: Number(mode) || '',
     platform: Number(platform) || 1,
-    maxpl: Number(maxpl)
+    maxpl: Number(maxpl) || ''
   };
 }
 
