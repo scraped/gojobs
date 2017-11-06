@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-fixed-top is-dark">
+  <nav class="navbar is-fixed-top is-dark headroom">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item">
@@ -22,13 +22,29 @@
 </template>
 
 <script>
+import Headroom from 'headroom.js';
+
+document.addEventListener("DOMContentLoaded", () => {
+let navbar = document.querySelector(".navbar");
+console.log(navbar);
+new Headroom(navbar).init();
+});
+
 export default {};
 </script>
 
-<style scoped>
-  .navbar {
-    margin-bottom: 20px;
-    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.1);
-  }
+<style lang="scss">
+@import '../scss/bulma/utilities/initial-variables';
+
+.headroom {
+    will-change: transform;
+    transition: transform $speed linear;
+}
+.headroom--pinned {
+    transform: translateY(0%);
+}
+.headroom--unpinned {
+    transform: translateY(-100%);
+}
 </style>
 
