@@ -50,9 +50,9 @@
               :data-tooltip="job.crew.name ? job.crew.name : '<Name not loaded>'">
               {{ job.crew.tag }}</span>
             </router-link><br>
-            <span class="subtitle-date">
+            <!-- <span class="is-size-7">
               {{ dateReadable }}
-            </span>
+            </span> -->
           </p>
         </div>
 
@@ -61,13 +61,36 @@
         </div> -->
       </div>
 
-      <div class="tags">
+      <!-- <div class="tags">
         <span class="tag">{{ job.platform.name }}</span>
         <span class="tag">{{ job.job.maxpl }} players</span>
+      </div> -->
+      <div class="is-size-7">
+        <a>Rally</a>, <a>Stunt</a>, <a>Pitlane</a>
+      </div>
+      <div class="is-size-7 has-text-grey-light">
+        {{ job.platform.name }} · {{ job.job.maxpl }} players · {{ dateReadable }}
+      </div>
+      <br>
+      <div class="tags">
+        <span
+          :class="`tag is-${ratingCssClass} is-rounded is-medium tooltip`"
+          :data-tooltip="`People played this: ${job.stats.pldUnq}`">
+          <span class="icon">
+            <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+          </span>
+          {{ job.stats.likes | formatNumber }}</span>
+        <span
+          class="tag is-light is-rounded is-medium tooltip"
+          :data-tooltip="`Dislikes: ${job.stats.dlikes}, optimal rating: ${job.stats.ratingQuit}%`">
+          <span class="icon">
+            <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
+          </span>
+          {{ job.stats.pldTot | formatNumber }}</span>
       </div>
     </div>
 
-    <div class="card-footer">
+    <!-- <div class="card-footer">
       <div
         class="card-footer-item tooltip"
         :data-tooltip="'People played this: ' + job.stats.pldUnq">
@@ -83,7 +106,7 @@
           <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
         </span>
         {{ job.stats.likes | formatNumber }}</div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -141,9 +164,6 @@ export default {
 
 <style lang="scss">
 @import "../scss/bulma/utilities/variables";
-.card {
-  box-shadow: none;
-}
 
 .card-title {
   position: absolute;
@@ -165,6 +185,7 @@ export default {
   left: 0;
   z-index: 1;
   height: 5px;
+  color:  hsl(48, 100%, 50%);
   opacity: 0.6;
   &.is-success {
     background: $success;
@@ -175,12 +196,6 @@ export default {
   &.is-danger {
     background: $danger;
   }
-}
-
-.subtitle-date {
-  margin-top: 2px;
-  font-size: 0.9em;
-  font-style: italic;
 }
 
 .image-avatar {
