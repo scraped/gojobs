@@ -40,7 +40,7 @@
     "file-loader": "^1.1.5",
     "lodash": "^4.17.4",
     "moment": "^2.19.1",
-    "mongoose": "^4.12.5",
+    "mongoose": "^4.13.0",
     "morgan": "^1.9.0",
     "node-sass": "^4.6.0",
     "nodemon": "^1.12.1",
@@ -64,6 +64,6 @@
     "resolve-url-loader": "^2.2.0",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.3"
+    "webpack-dev-server": "^2.9.4"
   }
 }
