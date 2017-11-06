@@ -49,7 +49,7 @@ export default {
     'mode',
     'platform',
     'maxpl'
-  ],
+  ], 
 
   data () {
     return {

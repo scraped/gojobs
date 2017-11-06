@@ -7,20 +7,27 @@
     <div class="is-size-7">You can switch to <a>PS4</a> or <a>Xbox One</a>.</div>
     </div>
 
-      <search-jobs
-      :author="author"
-      :crew="crew"
-      :platform="platform"
-      :type="type"
-      :mode="mode"
-      :maxpl="maxpl"></search-jobs>
-    <loading-spinner v-if="loading"></loading-spinner>
-    <div class="columns is-multiline" v-else>
-      <template v-for="job in jobs">
-        <div class="column is-one-third" :key="job.jobId">
-          <card-job :job-obj="job"></card-job>
+    <!-- <loading-spinner v-if="loading"></loading-spinner> -->
+    <div class="columns">
+      <div class="column is-3">
+        <search-jobs
+        :author="author"
+        :crew="crew"
+        :platform="platform"
+        :type="type"
+        :mode="mode"
+        :maxpl="maxpl"></search-jobs>
+      </div>
+      <div class="column">
+        <div class="columns is-multiline">
+          <template v-for="job in jobs">
+            <div class="column is-one-third" :key="job.jobId">
+              <card-job :job-obj="job"></card-job>
+            </div>
+          </template>
         </div>
-      </template>
+
+      </div>
     </div>
 
     <section class="section">

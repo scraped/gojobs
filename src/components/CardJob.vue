@@ -7,7 +7,7 @@
           <div class="title is-5">
             <span
               class="tooltip has-text-weight-normal"
-              :data-tooltip="job.job.mode.name">
+              :data-tooltip="`Game mode: ${job.job.mode.name}`">
                 <icon-gta :icon="job.job.mode.icon"></icon-gta>
             </span><span v-html="job.name"></span>
           </div>
@@ -22,11 +22,6 @@
       <div class="media">
         <div class="media-left">
           <figure class="image image-avatar is-48x48">
-            <div
-              class="image-avatar-medal tooltip is-tooltip-right"
-              :style="`background: url('/images/medal-${job.author.medal}.png')`"
-              data-tooltip="Creator Rockstar Medal">
-            </div>
             <router-link
               :to="{ path: '/', query: genQuery({ author: job.author.username }) }">
                 <img class="is-rounded" :src="job.author.avatar.small">
@@ -50,9 +45,6 @@
               :data-tooltip="job.crew.name ? job.crew.name : '<Name not loaded>'">
               {{ job.crew.tag }}</span>
             </router-link><br>
-            <!-- <span class="is-size-7">
-              {{ dateReadable }}
-            </span> -->
           </p>
         </div>
 
@@ -61,12 +53,8 @@
         </div> -->
       </div>
 
-      <!-- <div class="tags">
-        <span class="tag">{{ job.platform.name }}</span>
-        <span class="tag">{{ job.job.maxpl }} players</span>
-      </div> -->
       <div class="is-size-7">
-        <a>Rally</a>, <a>Stunt</a>, <a>Pitlane</a>
+        Not yet categorized
       </div>
       <div class="is-size-7 has-text-grey-light">
         {{ job.platform.name }} · {{ job.job.maxpl }} players · {{ dateReadable }}
@@ -195,21 +183,6 @@ export default {
   }
   &.is-danger {
     background: $danger;
-  }
-}
-
-.image-avatar {
-  position: relative;
-  .image-avatar-medal {
-    position: absolute;
-    z-index: 100;
-    background: red;
-    right: 1%;
-    bottom: 1%;
-    width: 13px;
-    height: 13px;
-    border: 3px solid #ffffff;
-    border-radius: 100%;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="columns">
+  <!-- <div class="columns">
       <div v-if="author" class="column is-3">
         <div class="box">
           <div class="subtitle">Author</div>
@@ -66,6 +66,39 @@
           </div>
         </div>
       </div>
+  </div> -->
+  <div>
+    <div class="box">
+      <div class="subtitle" id="mode">
+        Mode
+      </div>
+      <div class="buttons">
+      <span
+        class="button is-size-4 has-text-danger"
+        v-for="(typeInfo, i) in modes"
+        :key="i">
+            <icon-gta :icon="typeInfo.icon"></icon-gta>
+          <!-- <div class="tags">
+            <span class="tag"
+              v-for="(tagInfo, j) in modes[i].flags"
+              :key="j"
+              :style="`background: #${tagInfo.color};`">
+                {{ tagInfo.name }}
+            </span>
+          </div> -->
+      </span>
+      <div
+        class="tags"
+        v-if="type">
+          <span class="tag"
+            v-for="(tagInfo, j) in modes[type - 1].flags"
+            :key="j"
+            :style="`background: #${tagInfo.color};`">
+              {{ tagInfo.name }}
+          </span>
+      </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -78,7 +111,6 @@ export default {
    props: [
     'author',
     'crew',
-    'type',
     'mode',
     'platform',
     'maxpl'
@@ -91,8 +123,13 @@ export default {
 
   data () {
     return {
-      modes
+      modes,
+      type: Number(this.$route.query.type)
     }
+  },
+
+  created () {
+    console.log(Number(this.type))
   },
 
   methods: {
