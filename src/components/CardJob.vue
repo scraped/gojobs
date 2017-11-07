@@ -2,7 +2,10 @@
   <div class="card">
     <router-link :to="{ path: '/job', params: { id: job.jobId } }">
       <div class="card-image" style="position: relative;">
-        <div :class="'card-strip is-' + ratingCssClass" :style="'width: ' + job.stats.rating + '%;'"></div>
+        <div
+          :class="`card-strip is-${ratingCssClass}`"
+          :style="`width: ${job.stats.rating}%;`">
+        </div>
         <div class="card-title">
           <div class="title is-5">
             <span
@@ -12,9 +15,9 @@
             </span><span v-html="job.name"></span>
           </div>
         </div>
-        <div class="image is-2by1">
-          <img :src="job.image" :title="job.name">
-        </div>
+        <figure class="image is-2by1">
+          <img :src="job.image" :alt="job.name">
+        </figure>
       </div>
     </router-link>
 
@@ -63,15 +66,15 @@
       <div class="tags">
         <span
           :class="`tag is-${ratingCssClass} is-rounded is-medium tooltip`"
-          :data-tooltip="`People played this: ${job.stats.pldUnq}`">
-          <span class="icon">
+          :data-tooltip="`Dislikes: ${job.stats.dlikes}, optimal rating: ${job.stats.ratingQuit}%`">
+          <span class="icon" style="margin-right: 1px;">
             <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
           </span>
           {{ job.stats.likes | formatNumber }}</span>
         <span
           class="tag is-light is-rounded is-medium tooltip"
-          :data-tooltip="`Dislikes: ${job.stats.dlikes}, optimal rating: ${job.stats.ratingQuit}%`">
-          <span class="icon">
+          :data-tooltip="`People played this: ${job.stats.pldUnq}`">
+          <span class="icon" style="margin-right: 1px;">
             <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
           </span>
           {{ job.stats.pldTot | formatNumber }}</span>
@@ -141,9 +144,9 @@ export default {
       let job = this.jobObj;
       let dateString = moment(job.updated.job).fromNow();
       if (job.category || job.updated.ver === 1) {
-        return `Added ${dateString}`;
+        return `added ${dateString}`;
       } else {
-        return `Updated ${dateString} (version ${job.updated.ver})`;
+        return `${dateString} (version ${job.updated.ver})`;
       }
     }
   }

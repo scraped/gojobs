@@ -12,6 +12,14 @@
       </div>
 
       <div class="navbar-menu" id="mainMenu">
+        <div class="navbar-start">
+          <div class="tags">
+            <div class="tag is-black has-text-grey">PC Jobs</div>
+            <div class="tag is-black has-text-grey">
+              <icon-gta :icon="'f168'"></icon-gta> Rally
+            </div>
+          </div>
+        </div>
         <div class="navbar-end">
           <router-link to="/admin" class="navbar-item">Admin</router-link>
           <router-link to="/login" class="navbar-item">Log in or sign up</router-link>
@@ -23,6 +31,7 @@
 
 <script>
 import Headroom from 'headroom.js';
+import IconGta from './IconGta.vue';
 
 document.addEventListener("DOMContentLoaded", () => {
 let navbar = document.querySelector(".navbar");
@@ -30,7 +39,11 @@ console.log(navbar);
 new Headroom(navbar).init();
 });
 
-export default {};
+export default {
+  components: {
+    IconGta
+  }
+};
 </script>
 
 <style lang="scss">

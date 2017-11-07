@@ -72,22 +72,22 @@
       <div class="subtitle" id="mode">
         Mode
       </div>
-      <div class="buttons">
       <span
-        class="button is-size-4 has-text-danger"
         v-for="(typeInfo, i) in modes"
         :key="i">
-            <icon-gta :icon="typeInfo.icon"></icon-gta>
-          <!-- <div class="tags">
+          <div class="label">
+            <icon-gta :icon="typeInfo.icon"></icon-gta> {{ typeInfo.name }}
+          </div>
+          <div class="tags">
             <span class="tag"
               v-for="(tagInfo, j) in modes[i].flags"
               :key="j"
               :style="`background: #${tagInfo.color};`">
                 {{ tagInfo.name }}
             </span>
-          </div> -->
+          </div>
       </span>
-      <div
+      <!-- <div
         class="tags"
         v-if="type">
           <span class="tag"
@@ -96,8 +96,7 @@
             :style="`background: #${tagInfo.color};`">
               {{ tagInfo.name }}
           </span>
-      </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

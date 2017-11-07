@@ -4,10 +4,12 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 
+import Vuex from 'vuex';
 import VueResource from 'vue-resource';
 import VueProgressBar from 'vue-progressbar';
 import VueResourceProgressBarInterceptor from 'vue-resource-progressbar-interceptor';
 
+Vue.use(Vuex);
 Vue.use(VueResource);
 Vue.use(VueProgressBar, {
   color: '#EB0000',
