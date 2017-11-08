@@ -17,7 +17,6 @@ let jobSchema = new Schema({
   desc: { type: String, required: true, trim: true },
   platform: { type: Number, get: getPlatform },
   image: { type: String, required: true, set: setImage },
-  // verif: { type: Number, required: true, default: '' },
 
   job: {
     type: { type: Number, required: true, get: getType },
@@ -27,11 +26,11 @@ let jobSchema = new Schema({
     minpl: { type: Number, required: true, set: n => _.clamp(n, 1, 30) },
     maxpl: { type: Number, required: true, set: n => _.clamp(n, 1, 30) },
 
-    race: {
-      dist: { type: Number },
-      laps: { type: Number, set: laps => _.clamp(laps, 1, 99) },
-      checkp: { type: Number, set: num => _.clamp(num, 1, 68) },
-    },
+    // race: {
+    //   dist: { type: Number },
+    //   laps: { type: Number, set: laps => _.clamp(laps, 1, 99) },
+    //   checkp: { type: Number, set: num => _.clamp(num, 1, 68) },
+    // },
   },
 
   stats: {
