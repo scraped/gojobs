@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div class="hero is-dark">
+      <div class="container">
+        <div class="hero-body">
+          <h1 class="title">GTA Online Jobs</h1>
+        </div>
+      </div>
+    </div>
   <div class="container">
     <!-- <search-jobs
       :author="author"
@@ -49,7 +56,7 @@ export default {
     'mode',
     'platform',
     'maxpl'
-  ], 
+  ],
 
   data () {
     return {

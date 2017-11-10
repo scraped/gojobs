@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="navbar-end">
-          <router-link to="/admin" class="navbar-item">Admin</router-link>
+          <router-link to="/admin" class="navbar-item"><span>Admin</span></router-link>
           <router-link to="/login" class="navbar-item">Log in or sign up</router-link>
         </div>
       </div>
@@ -34,9 +34,9 @@ import Headroom from 'headroom.js';
 import IconGta from './IconGta.vue';
 
 document.addEventListener("DOMContentLoaded", () => {
-let navbar = document.querySelector(".navbar");
-console.log(navbar);
-new Headroom(navbar).init();
+  let navbar = document.querySelector(".navbar");
+  console.log(navbar);
+  new Headroom(navbar).init();
 });
 
 export default {
@@ -48,16 +48,25 @@ export default {
 
 <style lang="scss">
 @import '../scss/bulma/utilities/initial-variables';
+@import '../scss/bulma/utilities/derived-variables';
+
+.navbar-item {
+  transition: $speed;
+  &:hover span {
+    border-bottom: 4px solid $danger;
+    margin-bottom: -4px;
+  }
+}
 
 .headroom {
-    will-change: transform;
-    transition: transform $speed linear;
+  will-change: transform;
+  transition: transform $speed linear;
 }
 .headroom--pinned {
-    transform: translateY(0%);
+  transform: translateY(0%);
 }
 .headroom--unpinned {
-    transform: translateY(-100%);
+  transform: translateY(-100%);
 }
 </style>
 
