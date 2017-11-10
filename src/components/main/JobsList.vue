@@ -1,36 +1,17 @@
 <template>
-  <div>
-
-    <div class="box">
-    <h1 class="title is-4">{{ count }} jobs found on PC
-    </h1>
-    <div class="is-size-7">You can switch to <a>PS4</a> or <a>Xbox One</a>.</div>
-    </div>
+  <div class="box">
+    <h1 class="title is-4">{{ count }} jobs found</h1>
 
     <!-- <loading-spinner v-if="loading"></loading-spinner> -->
-    <div class="columns">
-      <div class="column is-3">
-        <search-jobs
-        :author="author"
-        :crew="crew"
-        :platform="platform"
-        :type="type"
-        :mode="mode"
-        :maxpl="maxpl"></search-jobs>
-      </div>
-      <div class="column">
-        <div class="columns is-multiline">
-          <template v-for="job in jobs">
-            <div class="column is-one-third" :key="job.jobId">
-              <card-job :job-obj="job"></card-job>
-            </div>
-          </template>
+    <div class="columns is-multiline">
+      <template v-for="job in jobs">
+        <div class="column is-one-third" :key="job.jobId">
+          <card-job :job-obj="job"></card-job>
         </div>
-
-      </div>
+      </template>
     </div>
 
-    <section class="section">
+    <section class="section" v-if="count">
       <pagination
         :curr-page="page"
         :total-items="count"></pagination>
@@ -56,7 +37,7 @@ export default {
   data () {
     return {
       count: 0,
-      // jobs: [],
+      jobs: [],
       loading: false
     }
   },
@@ -72,46 +53,46 @@ export default {
     'maxpl'
   ],
 
-  // beforeRouteEnter (to, from, next) {
-  //   // this.fetchJobs(this.page);
-  //   console.log('beforerouteenter');
-  //   Vue.http.get(`/api/jobs?page=${to.query.page}`)
-  //     .then(data => {
-  //       next(vm => vm.setData(data));
-  //     });
-  // },
+  beforeRouteEnter (to, from, next) {
+    this.fetchJobs(this.page);
+    console.log('beforerouteenter');
+    Vue.http.get(`/api/jobs?page=${to.query.page}`)
+      .then(data => {
+        next(vm => vm.setData(data));
+      });
+  },
 
-  // beforeRouteUpdate (to, from, next) {
-  //   this.fetchJobs();
-  // },
+  beforeRouteUpdate (to, from, next) {
+    this.fetchJobs();
+  },
 
-  // watch: {
-  //   '$route': 'fetchJobs'
-  // },
+  watch: {
+    '$route': 'fetchJobs'
+  },
 
-  // methods: {
-  //   setData (response) {
-  //     cosnole.log('setData');
-  //     this.jobs = response.data.jobs;
-  //     this.count = response.data.count;
-  //   },
+  methods: {
+    setData (response) {
+      cosnole.log('setData');
+      this.jobs = response.data.jobs;
+      this.count = response.data.count;
+    },
 
-  //   fetchJobs() {
-  //     // this.loading = true;
+    fetchJobs() {
+      // this.loading = true;
 
-  //     return this.$http.get(`/api/jobs?page=${this.page}&author=${this.author}&crew=${this.crew}&platform=${this.platform}&type=${this.type}&mode=${this.mode}&maxpl=${this.maxpl}`)
-  //     .then(response => {
-  //         this.jobs = response.data.jobs;
-  //         this.count = response.data.count;
-  //         // this.loading = false;
-  //       })
-  //       .catch(error => {
-  //         console.warn('Cannot get jobs', error);
-  //         // this.loading = false;
-  //       });
+      return this.$http.get(`/api/jobs?page=${this.page}&author=${this.author}&crew=${this.crew}&platform=${this.platform}&type=${this.type}&mode=${this.mode}&maxpl=${this.maxpl}`)
+      .then(response => {
+          this.jobs = response.data.jobs;
+          this.count = response.data.count;
+          // this.loading = false;
+        })
+        .catch(error => {
+          console.warn('Cannot get jobs', error);
+          // this.loading = false;
+        });
 
-  //   }
-  // }
+    }
+  }
 }
 </script>
 

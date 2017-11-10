@@ -1,5 +1,5 @@
-const config = require('../config');
-const modes = require('../config/modes');
+// const config = require('../config');
+// const modes = require('../config/modes');
 const _ = require('lodash');
 
 const mongoose = require('../lib/db');
@@ -13,24 +13,18 @@ let jobSchema = new Schema({
 
   author: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
   crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
+
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
-  platform: { type: Number, get: getPlatform },
   image: { type: String, required: true, set: setImage },
+  platform: { type: Number },
 
   job: {
-    type: { type: Number, required: true, get: getType },
-    mode: { type: Number, required: true },
-    flags: { type: [String] },
-
+    gameType: { type: Number, required: true },
+    gameMode: { type: Number, required: true },
+    flags: { type: [Number] },
     minpl: { type: Number, required: true, set: n => _.clamp(n, 1, 30) },
-    maxpl: { type: Number, required: true, set: n => _.clamp(n, 1, 30) },
-
-    // race: {
-    //   dist: { type: Number },
-    //   laps: { type: Number, set: laps => _.clamp(laps, 1, 99) },
-    //   checkp: { type: Number, set: num => _.clamp(num, 1, 68) },
-    // },
+    maxpl: { type: Number, required: true, set: n => _.clamp(n, 1, 30) }
   },
 
   stats: {
@@ -53,13 +47,6 @@ let jobSchema = new Schema({
   }
 });
 
-function getPlatform(platformId) {
-  return {
-    id: platformId,
-    name: config.platforms[platformId - 1].name
-  };
-}
-
 function setImage(url) {
   const str = url.split('/');
   return `${str[5]}.${str[7]}`;
@@ -71,13 +58,6 @@ function getImage(job) {
   return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${id}/${img[1]}.jpg`;
 }
 
-function getType(typeId) {
-  return {
-    id: typeId,
-    name: modes[typeId - 1].name
-  };
-}
-
 jobSchema.set('toObject', {
   getters: true,
   versionKey: false,
@@ -86,10 +66,10 @@ jobSchema.set('toObject', {
     Reflect.deleteProperty(ret, "id");
 
     ret.image = getImage(ret);
-    ret.job.mode = _.assign(
-      modes[ret.job.type.id - 1].modes[ret.job.mode - 1],
-      { id: ret.job.mode }
-    );
+    // ret.job.mode = _.assign(
+    //   modes[ret.job.type.id - 1].modes[ret.job.mode - 1],
+    //   { id: ret.job.mode }
+    // );
 
     return ret;
   }

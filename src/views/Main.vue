@@ -17,6 +17,19 @@
       :maxpl="maxpl"></search-jobs> -->
     <!-- <br> -->
 
+    <br>
+    <div class="box">
+    <div class="buttons">
+      <router-link
+        :to="{ path: '/', query: { type: i } }"
+        class="button is-light"
+        v-for="(typeInfo, i) in modes"
+        :key="i">
+          <icon-gta :icon="typeInfo.icon"></icon-gta> {{ typeInfo.name }}
+      </router-link>
+    </div>
+    </div>
+
     <jobs-list
       :jobs="jobs"
       :page="page"
