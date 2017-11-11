@@ -1,24 +1,15 @@
 <template>
   <div id="app">
     <vue-progress-bar></vue-progress-bar>
-    <nav-menu></nav-menu>
-    <main>
-      <router-view></router-view>
-    </main>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import bus from './bus';
-import NavMenu from './components/NavMenu.vue';
+// import NavMenu from './components/NavMenu.vue';
 
 export default {
-  name: 'app',
-
-  components: {
-    NavMenu
-  },
-
   data () {
     return {};
   },

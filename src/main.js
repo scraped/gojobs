@@ -10,7 +10,7 @@ import router from './router';
 import store from './store';
 
 Vue.use(VueResource);
-Vue.use(VueResourceProgressBarInterceptor);
+// Vue.use(VueResourceProgressBarInterceptor);
 Vue.use(VueProgressBar, {
   color: '#EB0000',
   failedColor: 'red',

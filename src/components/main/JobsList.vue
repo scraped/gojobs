@@ -43,7 +43,6 @@ export default {
   },
 
   props: [
-    'jobs',
     'page',
     'author',
     'crew',
