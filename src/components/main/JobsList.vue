@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div>
     <h1 class="title is-4">{{ count }} jobs found</h1>
 
     <!-- <loading-spinner v-if="loading"></loading-spinner> -->

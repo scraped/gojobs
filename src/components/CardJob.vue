@@ -10,8 +10,8 @@
           <div class="title is-5">
             <span
               class="tooltip has-text-weight-normal"
-              :data-tooltip="`Game mode: ${}`">
-                <icon-gta :icon=""></icon-gta>
+              :data-tooltip="`Game mode:`">
+                <!-- <icon-gta :icon=""></icon-gta> -->
             </span><span v-html="job.name"></span>
           </div>
         </div>
