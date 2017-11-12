@@ -1,12 +1,12 @@
 const config = require('./config');
 const path = require('path');
 const webpack = require('webpack');
+const notifier = require('node-notifier');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const notifier = require('node-notifier');
 
 const jsName = 'assets/js/build.[hash].js';
 const cssName = 'assets/css/[name].[contenthash].css';

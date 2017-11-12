@@ -10,6 +10,7 @@ import router from './router';
 import store from './store';
 import { sync } from 'vuex-router-sync';
 
+// store.state.route
 sync(store, router);
 
 const progressBarOptions = {
