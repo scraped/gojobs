@@ -8,13 +8,18 @@ import VueResourceProgressBarInterceptor from 'vue-resource-progressbar-intercep
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import { sync } from 'vuex-router-sync';
 
-Vue.use(VueResource);
-// Vue.use(VueResourceProgressBarInterceptor);
-Vue.use(VueProgressBar, {
+sync(store, router);
+
+const progressBarOptions = {
   color: '#EB0000',
   failedColor: 'red',
-});
+};
+
+Vue.use(VueResource);
+Vue.use(VueProgressBar, progressBarOptions);
+Vue.use(VueResourceProgressBarInterceptor);
 
 new Vue({
   el: '#app',

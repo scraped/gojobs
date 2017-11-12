@@ -23,7 +23,7 @@ function propsMain(r) {
 export default new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', component: Main, props: propsMain },
+    { path: '/', component: Main },
     { path: '/admin', component: Admin },
     { path: '*', component: NotFoundComponent }
   ]

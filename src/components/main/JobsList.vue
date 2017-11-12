@@ -2,7 +2,7 @@
   <div>
     <h1 class="title is-4">{{ count }} jobs found</h1>
 
-    <!-- <loading-spinner v-if="loading"></loading-spinner> -->
+    <loading-spinner v-if="loading"></loading-spinner>
     <div class="columns is-multiline">
       <template v-for="job in jobs">
         <div class="column is-one-third" :key="job.jobId">
@@ -52,18 +52,14 @@ export default {
     'maxpl'
   ],
 
-  beforeRouteEnter (to, from, next) {
-    this.fetchJobs(this.page);
-    console.log('beforerouteenter');
-    Vue.http.get(`/api/jobs?page=${to.query.page}`)
-      .then(data => {
-        next(vm => vm.setData(data));
-      });
+  async beforeRouteEnter (to, from, next) {
+    let jobs = await fetchJobs(to.query);
+    next(vm => vm.setData(jobs));
   },
 
-  beforeRouteUpdate (to, from, next) {
-    this.fetchJobs();
-  },
+  // beforeRouteUpdate (to, from, next) {
+  //   this.fetchJobs();
+  // },
 
   watch: {
     '$route': 'fetchJobs'
@@ -71,13 +67,12 @@ export default {
 
   methods: {
     setData (response) {
-      cosnole.log('setData');
       this.jobs = response.data.jobs;
       this.count = response.data.count;
     },
 
     fetchJobs() {
-      // this.loading = true;
+      this.loading = true;
 
       return this.$http.get(`/api/jobs?page=${this.page}&author=${this.author}&crew=${this.crew}&platform=${this.platform}&type=${this.type}&mode=${this.mode}&maxpl=${this.maxpl}`)
       .then(response => {

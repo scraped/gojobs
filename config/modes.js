@@ -2,7 +2,7 @@ module.exports = [
   {
     id: 1,
     name: 'Race',
-    icon: 'f168',
+    icon: 'f17d',
     image: 'https://prod.cloud.rockstargames.com/ugc/gta5mission/4601/RSNoDpayBkSnAzD1xmA96A/2_0.jpg',
     modes: [
       {
