@@ -1,7 +1,13 @@
 <template>
   <div class="card">
+    <div style="position: absolute; bottom: 0%; right: 15%; opacity: 0.08; font-size: 100px;">
+      <icon-gta :icon="modes[job.job.gameType - 1].modes[job.job.gameMode - 1].icon"></icon-gta>
+    </div>
     <router-link :to="{ path: '/job', params: { id: job.jobId } }">
-      <div class="card-image" style="position: relative;">
+      <div class="card-image">
+        <figure class="image is-2by1">
+          <img :src="job.image" :alt="job.name">
+        </figure>
         <div
           :class="`card-strip is-${ratingCssClass}`"
           :style="`width: ${job.stats.rating}%;`">
@@ -15,9 +21,6 @@
             </span><span v-html="job.name"></span>
           </div>
         </div>
-        <figure class="image is-2by1">
-          <img :src="job.image" :alt="job.name">
-        </figure>
       </div>
     </router-link>
 
@@ -60,7 +63,7 @@
         Not yet categorized
       </div>
       <div class="is-size-7 has-text-grey-light">
-        {{ job.platform.name }} · {{ job.job.maxpl }} players · {{ dateReadable }}
+        {{ platforms[job.platform - 1].name }} · {{ job.job.maxpl }} players · {{ dateReadable }}
       </div>
       <br>
       <div class="tags">
@@ -104,10 +107,13 @@
 <script>
 import moment from 'moment';
 import modes from '../../config/modes';
+import platforms from '../../config/platforms';
 import IconGta from './IconGta.vue';
 
 export default {
-  props: ['jobObj'],
+  props: [
+    'job'
+  ],
 
   components: {
     IconGta
@@ -115,20 +121,30 @@ export default {
 
   data () {
     return {
-      job: this.jobObj,
-      dateReadable: this.getDateReadable()
+      modes,
+      platforms
     };
   },
 
   computed: {
-    ratingCssClass () {
+    ratingCssClass() {
       let rating = this.job.stats.ratingQuit;
       return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
-    }
+    },
+
+    dateReadable() {
+      let job = this.job;
+      let dateString = moment(job.updated.job).fromNow();
+      if (job.category || job.updated.ver === 1) {
+        return `added ${dateString}`;
+      } else {
+        return `${dateString} (version ${job.updated.ver})`;
+      }
+    },
   },
 
   filters: {
-    formatNumber (num) {
+    formatNumber(num) {
       if (num >= 1000000) return (num / 1000000).toFixed(2) + 'm';
       if (num >= 1000) return (num / 1000).toFixed(2) + 'k';
       return num;
@@ -136,25 +152,24 @@ export default {
   },
 
   methods: {
-    genQuery (obj) {
+    genQuery(obj) {
       return Object.assign({}, this.$route.query, { page: 1 }, obj);
-    },
-
-    getDateReadable () {
-      let job = this.jobObj;
-      let dateString = moment(job.updated.job).fromNow();
-      if (job.category || job.updated.ver === 1) {
-        return `added ${dateString}`;
-      } else {
-        return `${dateString} (version ${job.updated.ver})`;
-      }
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../scss/bulma/utilities/variables";
+.card-image {
+  overflow: hidden;
+  .image {
+    transition-duration: 0.5s;
+  }
+  &:hover .image {
+    transform: scale(1.04);
+  }
+}
 
 .card-title {
   position: absolute;
@@ -163,10 +178,10 @@ export default {
   bottom: 0;
   left: 0;
   padding: 1rem 1.5rem;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+  background: linear-gradient(to top, rgba($black, 0.4), transparent);
   .title {
-    color: rgba(255, 255, 255, 0.85);
-    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
+    color: rgba($white, 0.85);
+    text-shadow: 1px 1px 10px rgba($black, 0.4);
   }
 }
 

@@ -11,18 +11,19 @@ const state = {
 };
 
 const mutations = {
-  setJobs(state, { jobs, count }) {
+  setJobs(state, { jobs, count, page }) {
     state.jobs = jobs;
     state.jobsAmount = count;
+    state.page = page;
   }
 };
 
 const actions = {
   async fetchJobs({ state, commit }) {
-    let { page } = state.route.query;
-    let response = await Vue.http.get(`/api/job s?page=${this.page}`);
+    let { page } = state.route.query || '';
+    let response = await Vue.http.get(`/api/jobs?page=${page}`);
     let { jobs, count } = response.data;
-    commit('setJobs', { jobs, count });
+    commit('setJobs', { jobs, count, page });
   }
 };
 

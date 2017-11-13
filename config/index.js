@@ -20,20 +20,6 @@ module.exports = {
     },
   },
 
-  platforms: [
-    {
-      name: 'PC',
-    },
-
-    {
-      name: 'PS4',
-    },
-
-    {
-      name: 'Xbox One',
-    },
-  ],
-
   medals: [
     {
       name: 'white'
