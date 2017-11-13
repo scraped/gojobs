@@ -13,14 +13,14 @@ const state = {
 const mutations = {
   setJobs(state, { jobs, count, page }) {
     state.jobs = jobs;
-    state.jobsAmount = count;
-    state.page = page;
+    state.jobsAmount = Number(count || '');
+    state.page = Number(page || '') || 1;
   }
 };
 
 const actions = {
   async fetchJobs({ state, commit }) {
-    let { page } = state.route.query || '';
+    let { page } = state.route.query;
     let response = await Vue.http.get(`/api/jobs?page=${page}`);
     let { jobs, count } = response.data;
     commit('setJobs', { jobs, count, page });

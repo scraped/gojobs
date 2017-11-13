@@ -2,12 +2,12 @@
   <div>
     <h1 class="title is-4">{{ jobsAmount }} jobs found</h1>
 
-    <section class="section" v-if="jobsAmount">
+    <!-- <section class="section" v-if="jobsAmount">
       <pagination
         :short="true"
         :curr-page="page"
         :total-items="jobsAmount"></pagination>
-    </section>
+    </section> -->
 
     <div class="columns is-multiline">
       <template v-for="job in jobs">
@@ -17,11 +17,12 @@
       </template>
     </div>
 
-    <section class="section" v-if="jobsAmount">
+    <div class="box">
       <pagination
         :curr-page="page"
         :total-items="jobsAmount"></pagination>
-    </section>
+    </div>
+    <br>
   </div>
 </template>
 

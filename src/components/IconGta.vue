@@ -13,10 +13,6 @@ export default {
 </script>
 
 <style lang="scss">
-  .icon {
-    padding: 0 1rem;
-  }
-
   .icon-gta {
     font-family: 'gtav-icon-font';
   }

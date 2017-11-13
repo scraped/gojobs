@@ -70,37 +70,19 @@
         <span
           :class="`tag is-${ratingCssClass} is-rounded is-medium tooltip`"
           :data-tooltip="`Dislikes: ${job.stats.dlikes}, optimal rating: ${job.stats.ratingQuit}%`">
-          <span class="icon" style="margin-right: 1px;">
+          <span class="icon">
             <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
           </span>
-          {{ job.stats.likes | formatNumber }}</span>
+          <span>{{ job.stats.likes | formatNumber }}</span></span>
         <span
           class="tag is-light is-rounded is-medium tooltip"
           :data-tooltip="`People played this: ${job.stats.pldUnq}`">
-          <span class="icon" style="margin-right: 1px;">
+          <span class="icon">
             <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
           </span>
-          {{ job.stats.pldTot | formatNumber }}</span>
+          <span>{{ job.stats.pldTot | formatNumber }}</span></span>
       </div>
     </div>
-
-    <!-- <div class="card-footer">
-      <div
-        class="card-footer-item tooltip"
-        :data-tooltip="'People played this: ' + job.stats.pldUnq">
-        <span class="icon">
-          <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
-        </span>
-        {{ job.stats.pldTot | formatNumber }}</div>
-
-      <div
-        class="card-footer-item tooltip"
-        :data-tooltip="'Dislikes: ' + job.stats.dlikes + ', optimal rating: ' + job.stats.ratingQuit + '%'">
-        <span class="icon">
-          <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-        </span>
-        {{ job.stats.likes | formatNumber }}</div>
-    </div> -->
   </div>
 </template>
 
@@ -159,8 +141,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../scss/bulma/utilities/variables";
+
 .card-image {
   overflow: hidden;
   .image {
@@ -191,7 +174,6 @@ export default {
   left: 0;
   z-index: 1;
   height: 5px;
-  color:  hsl(48, 100%, 50%);
   opacity: 0.6;
   &.is-success {
     background: $success;
