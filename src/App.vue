@@ -1,24 +1,25 @@
 <template>
   <div id="app">
     <vue-progress-bar></vue-progress-bar>
+    <nav-menu></nav-menu>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 import bus from './bus';
-// import NavMenu from './components/NavMenu.vue';
+import NavMenu from './components/NavMenu.vue';
 
 export default {
-  data () {
-    return {};
+  components: {
+    NavMenu
   },
 
-  mounted () {
+  mounted() {
     if (!bus.loading) bus.$emit('finish-loading');
   },
 
-  created () {
+  created() {
     bus.$on('start-loading', function() {
       console.log('чекаем старт');
       this.$Progress.start();

@@ -2,13 +2,6 @@
   <div>
     <h1 class="title is-4">{{ jobsAmount }} jobs found</h1>
 
-    <!-- <section class="section" v-if="jobsAmount">
-      <pagination
-        :short="true"
-        :curr-page="page"
-        :total-items="jobsAmount"></pagination>
-    </section> -->
-
     <div class="columns is-multiline">
       <template v-for="job in jobs">
         <div class="column is-one-third" :key="job.jobId">
@@ -20,7 +13,8 @@
     <div class="box">
       <pagination
         :curr-page="page"
-        :total-items="jobsAmount"></pagination>
+        :total-items="jobsAmount"
+        @load-more="fetchJobs({ page: page + 1 })"></pagination>
     </div>
     <br>
   </div>
@@ -51,22 +45,22 @@ export default {
   },
 
   methods: {
-    fetchJobs() {
-      this.$store.dispatch('fetchJobs');
+    fetchJobs(payload) {
+      this.$store.dispatch('jobs/fetch', payload);
     }
   },
 
   computed: {
     jobs() {
-      return this.$store.state.jobs;
+      return this.$store.state.jobs.jobs;
     },
 
     jobsAmount() {
-      return this.$store.state.jobsAmount;
+      return this.$store.state.jobs.jobsAmount;
     },
 
     page() {
-      return this.$store.state.page;
+      return this.$store.state.jobs.page;
     }
   },
 }

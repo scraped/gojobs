@@ -4,6 +4,7 @@ import Vue from 'vue';
 import VueResource from 'vue-resource';
 import VueProgressBar from 'vue-progressbar';
 import VueResourceProgressBarInterceptor from 'vue-resource-progressbar-interceptor';
+import VueAgile from 'vue-agile';
 
 import App from './App.vue';
 import router from './router';
@@ -21,6 +22,7 @@ const progressBarOptions = {
 Vue.use(VueResource);
 Vue.use(VueProgressBar, progressBarOptions);
 Vue.use(VueResourceProgressBarInterceptor);
+Vue.use(VueAgile);
 
 new Vue({
   el: '#app',

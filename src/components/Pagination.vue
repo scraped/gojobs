@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="button is-large is-fullwidth">
+    <!-- <div class="button is-large is-fullwidth" @click="loadMore()">
       <span class="icon">
         <i class="fa fa-rotate-right"></i>
       </span>
       <span>Load more</span>
     </div>
-    <br>
+    <br> -->
 
     <nav
       class="pagination is-centered"
@@ -123,6 +123,10 @@ export default {
       return Object.assign({}, this.$route.query, { page: page });
     },
 
+    loadMore() {
+      this.$emit('load-more');
+    },
+
     hasFirst() {
       return this.leftBound !== 1;
     },
@@ -137,10 +141,6 @@ export default {
 
     hasNext() {
       return this.currPage < this.totalPages;
-    },
-
-    changePage(page) {
-      this.$emit('page-changed', page);
     }
   }
 }

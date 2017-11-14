@@ -75,21 +75,22 @@ router.get('/', (req, res, next) => {
     });
 });
 
-router.get('/id/:id', (req, res, next) => {
+router.get('/id/:id', async (req, res) => {
   let id = req.params.id;
 
-  Job.findOne({ jobId: id })
-    .then(job => {
-      job = job.map(j => j.toObject());
-      res.json(job);
-    })
-    .catch(err => {
-      console.log(`Cant' show job: ${err.message}`);
-      next();
-    });
+  try {
+    let job = await Job.findOne({ jobId: id })
+      .populate('author')
+      .populate('crew');
+
+    res.json(job.toObject());
+  } catch (e) {
+    console.log(`Can't retrieve job information: ${e.stack}`);
+    res.json({});
+  }
 });
 
-router.get('/upload', (req, res, next) => {
+router.get('/upload', (req, res) => {
   res.send('Jobs is being uploaded');
   uploadJobs();
 });

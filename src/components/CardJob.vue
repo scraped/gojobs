@@ -3,7 +3,7 @@
     <div style="position: absolute; bottom: 0%; right: 15%; opacity: 0.08; font-size: 100px;">
       <icon-gta :icon="modes[job.job.gameType - 1].modes[job.job.gameMode - 1].icon"></icon-gta>
     </div>
-    <router-link :to="{ path: '/job', params: { id: job.jobId } }">
+    <router-link :to="{ name: 'job', params: { id: job.jobId } }">
       <div class="card-image">
         <figure class="image is-2by1">
           <img :src="job.image" :alt="job.name">

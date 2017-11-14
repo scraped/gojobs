@@ -1,30 +1,27 @@
 <template>
   <div>
-    <nav-menu>
-      <h1 class="title">GTA Online Jobs</h1>
-      <div class="buttons">
-        <router-link
-          :to="{ path: '/', query: { type: i } }"
-          class="button is-black"
-          v-for="(typeInfo, i) in modes"
-          :key="i">
-            <icon-gta :icon="typeInfo.icon" style="margin-right: 1px;"></icon-gta>
-            {{ typeInfo.name }}
-        </router-link>
+    <div class="hero is-black is-medium" style="background: url(https://pp.userapi.com/c637620/v637620124/4d7d6/HnkIJiM8s7M.jpg); background-position: 10% 50%;">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">GTA Online Jobs</h1>
+          <div class="buttons">
+            <router-link
+              :to="{ path: '/', query: { type: i + 1 } }"
+              class="button is-light"
+              :class="{ 'is-primary': $route.query.type === i + 1 }"
+              v-for="(typeInfo, i) in modes"
+              :key="i">
+                <icon-gta :icon="typeInfo.icon"></icon-gta>
+                <span>{{ typeInfo.name }}</span>
+            </router-link>
+          </div>
+        </div>
       </div>
-    </nav-menu>
-  <div class="container">
-    <!-- <search-jobs
-      :author="author"
-      :crew="crew"
-      :platform="platform"
-      :type="type"
-      :mode="mode"
-      :maxpl="maxpl"></search-jobs> -->
-    <!-- <br> -->
-
-    <jobs-list></jobs-list>
-  </div>
+    </div>
+    <br>
+    <div class="container">
+      <jobs-list></jobs-list>
+    </div>
   </div>
 </template>
 
