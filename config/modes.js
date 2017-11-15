@@ -3,12 +3,10 @@ module.exports = [
     id: 1,
     name: 'Race',
     icon: 'f17d',
-    image: 'https://prod.cloud.rockstargames.com/ugc/gta5mission/4601/RSNoDpayBkSnAzD1xmA96A/2_0.jpg',
     modes: [
       {
         icon: 'e600',
         name: 'Stunt Race',
-        image: 'https://prod.cloud.rockstargames.com/ugc/gta5mission/4601/RSNoDpayBkSnAzD1xmA96A/2_0.jpg'
       },
       { icon: 'e600', name: 'Transform Race' },
       { icon: 'f123', name: 'Special Vehicle Race' },
@@ -26,7 +24,6 @@ module.exports = [
     id: 2,
     name: 'Deathmatch',
     icon: 'f167',
-    image: 'https://prod.cloud.rockstargames.com/ugc/gta5mission/2905/g4Zywb7pykypAjPZeKMkkA/2_0.jpg',
     modes: [
       { icon: 'f167', name: 'Deathmatch' },
       { icon: 'f197', name: 'Team Deathmatch' },
@@ -39,7 +36,6 @@ module.exports = [
     id: 3,
     name: 'Last Team Standing',
     icon: 'f16a',
-    image: 'https://prod.cloud.rockstargames.com/ugc/gta5mission/5193/y-u9MENL9kyPrlwiXoPNSA/2_0.jpg',
     modes: [
       { icon: 'f16a', name: 'Last Team Standing' }
     ],
@@ -50,7 +46,6 @@ module.exports = [
     id: 4,
     name: 'Capture',
     icon: 'f113',
-    image: 'https://prod.cloud.rockstargames.com/ugc/gta5mission/0960/S4EQNc23HEuqmgthKMO4Cg/2_0.jpg',
     modes: [
       { icon: 'f113', name: 'Capture' },
     ],
