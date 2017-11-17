@@ -50,39 +50,5 @@ module.exports = [
       { icon: 'f113', name: 'Capture' },
     ],
     flags: []
-  },
-
-  // {
-  //   id: 5,
-  //   name: 'Mission',
-  //   icon: 'f11b',
-  //   image: 'https://prod.cloud.rockstargames.com/ugc/gta5mission/7263/EdQ1hm09JUaDo3oPDBP9Fw/2_0.jpg',
-  //   modes: [
-  //     { icon: 'f11b', name: 'Adversary Mode' },
-  //     { icon: 'f11b', name: 'Versus Mission' }
-  //   ],
-  //   flags: []
-  // },
-
-  // {
-  //   id: 6,
-  //   name: 'Parachuting',
-  //   icon: 'f107',
-  //   image: 'https://prod.cloud.rockstargames.com/ugc/gta5mission/7520/Q0eoXhHaLE2iM-PRfQHJEg/2_0.jpg',
-  //   modes: [
-  //     { icon: 'f107', name: 'Parachuting' }
-  //   ],
-  //   flags: []
-  // },
-
-  // {
-  //   id: 7,
-  //   name: 'Survival',
-  //   icon: 'f196',
-  //   image: 'https://prod.cloud.rockstargames.com/ugc/gta5mission/4641/9DC7X_lEi0-BClWfz8XV2g/1_0.jpg',
-  //   modes: [
-  //     { icon: 'f196', name: 'Survival' }
-  //   ],
-  //   flags: []
-  // }
+  }
 ];
