@@ -62,6 +62,16 @@ export default {
     }
   },
 
+  beforeRouteEnter(to, from, next) {
+    console.log('here')
+    // let done = await store.dispatch('jobs/fetch');
+    // next();
+  },
+
+  beforeRouteUpdate() {
+    console.log('beforerouteenter');
+  },
+
   // beforeRouteEnter (to, from, next) {
   //   fetchJobs(to.query)
   //     .then(jobs => {
