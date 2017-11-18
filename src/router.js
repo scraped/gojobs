@@ -8,21 +8,13 @@ import Job from './views/Job.vue';
 
 Vue.use(VueRouter);
 
-function propsMain(r) {
-  let { page, author, crew, type, mode, platform, maxpl } = r.query;
-  return {
-    page: Number(page) || 1,
-    author: author || '',
-    crew: crew || '',
-    type: Number(type) || '',
-    mode: Number(mode) || '',
-    platform: Number(platform) || 1,
-    maxpl: Number(maxpl) || ''
-  };
-}
-
 export default new VueRouter({
   mode: 'history',
+
+  scrollBehavior(to, from, savedPosition) {
+    return savedPosition ? savedPosition : { x: 0, y: 0 };
+  },
+
   routes: [
     { path: '/', component: Main },
     { path: '/admin', component: Admin },

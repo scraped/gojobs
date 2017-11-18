@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1 class="title is-4">{{ jobsAmount }} jobs found</h1>
+    <p class="subtitle is-size-6 has-text-grey">Page {{ page }}</p>
 
     <div class="columns is-multiline">
       <template v-for="job in jobs">
@@ -37,18 +38,6 @@ export default {
     SearchJobs
   },
 
-  beforeRouteEnter(to, from, next) {
-    console.log('here')
-    // let done = await store.dispatch('jobs/fetch');
-    // next();
-  },
-
-  async beforeRouteUpdate() {
-    console.log('beforerouteenter');
-    let done = await store.dispatch('jobs/fetch');
-    next();
-  },
-
   computed: {
     jobs() {
       return this.$store.state.jobs.jobs;
@@ -59,7 +48,7 @@ export default {
     },
 
     page() {
-      return this.$store.state.jobs.page;
+      return Number(this.$store.state.route.query.page) || 1;
     }
   },
 }
