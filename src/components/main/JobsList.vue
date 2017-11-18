@@ -22,6 +22,7 @@
 
 <script>
 import Vue from 'vue';
+import store from '../../store';
 
 import LoadingSpinner from '../Loading.vue';
 import CardJob from '../CardJob.vue';
@@ -36,18 +37,16 @@ export default {
     SearchJobs
   },
 
-  created() {
-    this.fetchJobs();
+  beforeRouteEnter(to, from, next) {
+    console.log('here')
+    // let done = await store.dispatch('jobs/fetch');
+    // next();
   },
 
-  watch: {
-    '$route': 'fetchJobs'
-  },
-
-  methods: {
-    fetchJobs(payload) {
-      this.$store.dispatch('jobs/fetch', payload);
-    }
+  async beforeRouteUpdate() {
+    console.log('beforerouteenter');
+    let done = await store.dispatch('jobs/fetch');
+    next();
   },
 
   computed: {
@@ -56,7 +55,7 @@ export default {
     },
 
     jobsAmount() {
-      return this.$store.state.jobs.jobsAmount;
+      return this.$store.state.jobs.amount;
     },
 
     page() {
