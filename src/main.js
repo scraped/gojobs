@@ -5,13 +5,13 @@ import VueResource from 'vue-resource';
 import VueProgressBar from 'vue-progressbar';
 import VueResourceProgressBarInterceptor from 'vue-resource-progressbar-interceptor';
 import VueAgile from 'vue-agile';
+import InfiniteScroll from 'vue-infinite-scroll';
 
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import { sync } from 'vuex-router-sync';
 
-// store.state.route
 sync(store, router);
 
 const progressBarOptions = {
@@ -27,6 +27,7 @@ Vue.use(VueAgile);
 new Vue({
   el: '#app',
   render: h => h(App),
+  directives: { 'infinite-scroll': InfiniteScroll },
   router,
   store
 });

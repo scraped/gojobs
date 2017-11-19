@@ -1,13 +1,5 @@
 <template>
   <div>
-    <!-- <div class="button is-large is-fullwidth" @click="loadMore()">
-      <span class="icon">
-        <i class="fa fa-rotate-right"></i>
-      </span>
-      <span>Load more</span>
-    </div>
-    <br> -->
-
     <nav
       class="pagination is-centered"
       role="navigation"
