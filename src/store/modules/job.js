@@ -11,9 +11,12 @@ const mutations = {
 };
 
 const actions = {
-  async fetch({ commit, rootState }) {
-    let jobId = rootState.route.params.id;
-    let response = await Vue.http.get(`/api/jobs/id/${jobId}`);
+  async fetch({ commit }, payload) {
+    if (!payload) payload = {};
+
+    let id = payload.id || '';
+
+    let response = await Vue.http.get(`/api/jobs/id/${id}`);
     commit('set', { job: response.data });
   }
 };

@@ -14,8 +14,7 @@
     <div class="box">
       <pagination
         :curr-page="page"
-        :total-items="jobsAmount"
-        @load-more="fetchJobs({ page: page + 1 })"></pagination>
+        :total-items="jobsAmount"></pagination>
     </div>
     <br>
   </div>

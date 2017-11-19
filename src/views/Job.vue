@@ -2,35 +2,46 @@
   <div>
     <div class="hero is-dark">
       <div class="hero-body">
-        <agile :infinite="false" :arrows="false" :nextArrow="'test'" :prevArrow="'test'">
-          <div class="slide">
-            <img :src="job.image">
-          </div>
-          <div class="slide">
-            <img :src="job.image">
-          </div>
-          <div class="slide">
-            <img :src="job.image">
-          </div>
-        </agile>
-
+        <h1 class="subtitle has-text-centered">No images</h1>
       </div>
     </div>
-    <h1 class="title is-4">{{ job.name }}</h1>
+    <br>
+
+    <div class="container">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-2by1">
+            <img :src="job.image" :alt="job.name">
+          </figure>
+        </div>
+        <div class="media-content">
+          <h1 class="title">
+            <icon-gta :icon="modes[job.job.gameType - 1].modes[job.job.gameMode - 1].icon" class="is-size-4"></icon-gta>
+            {{ job.name }}
+          </h1>
+          <p v-html="job.desc"></p>
+        </div>
+      </div>
+
+
+    </div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
+import store from '../store';
+import modes from '../../config/modes';
+import IconGta from '../components/IconGta.vue';
 
 export default {
-  created() {
-    this.fetchJob();
+  components: {
+    IconGta
   },
 
-  methods: {
-    fetchJob() {
-      this.$store.dispatch('job/fetch');
+  data() {
+    return {
+      modes
     }
   },
 
@@ -38,6 +49,16 @@ export default {
     job() {
       return this.$store.state.job.job;
     }
+  },
+
+  async beforeRouteEnter(to, from, next) {
+    await store.dispatch('job/fetch', { id: to.params.id });
+    next();
+  },
+
+  async beforeRouteUpdate(to, from, next) {
+    await store.dispatch('job/fetch', { id: to.params.id });
+    next();
   }
 }
 </script>
