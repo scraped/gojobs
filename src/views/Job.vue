@@ -8,13 +8,13 @@
     <br>
 
     <div class="container">
-      <div class="media">
-        <div class="media-left">
-          <figure class="image is-2by1">
+      <div class="columns">
+        <div class="column is-one-third">
+          <figure class="media-left is-2by1">
             <img :src="job.image" :alt="job.name">
           </figure>
         </div>
-        <div class="media-content">
+        <div class="column">
           <h1 class="title">
             <icon-gta :icon="modes[job.job.gameType - 1].modes[job.job.gameMode - 1].icon" class="is-size-4"></icon-gta>
             {{ job.name }}
