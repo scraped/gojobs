@@ -18,27 +18,5 @@ module.exports = {
       setDefaultsOnInsert: true,
       runSettersOnQuery: true
     },
-  },
-
-  medals: [
-    {
-      name: 'white'
-    },
-
-    {
-      name: 'bronze'
-    },
-
-    {
-      name: 'silver'
-    },
-
-    {
-      name: 'gold'
-    },
-
-    {
-      name: 'platinum'
-    }
-  ]
+  }
 };

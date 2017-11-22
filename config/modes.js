@@ -4,10 +4,7 @@ module.exports = [
     name: 'Race',
     icon: 'f17d',
     modes: [
-      {
-        icon: 'e600',
-        name: 'Stunt Race',
-      },
+      { icon: 'e600', name: 'Stunt Race', },
       { icon: 'e600', name: 'Transform Race' },
       { icon: 'f123', name: 'Special Vehicle Race' },
       { icon: 'f168', name: 'Land Race' },
