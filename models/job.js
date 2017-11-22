@@ -1,5 +1,3 @@
-// const config = require('../config');
-// const modes = require('../config/modes');
 const _ = require('lodash');
 
 const mongoose = require('../lib/db');
@@ -17,14 +15,17 @@ let jobSchema = new Schema({
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
   image: { type: String, required: true, set: setImage },
-  platform: { type: Number },
+  platform: { type: Number, required: true },
+
+  starred: { type: Boolean },
 
   job: {
+    specific: { type: Schema.Types.Mixed },
+    maxpl: { type: Number, required: true, set: setMaxPlayers },
     gameType: { type: Number, required: true },
     gameMode: { type: Number, required: true },
-    flags: { type: [Number] },
-    minpl: { type: Number, required: true, set: n => _.clamp(n, 1, 30) },
-    maxpl: { type: Number, required: true, set: n => _.clamp(n, 1, 30) }
+    categories: { type: [Number] },
+    feautures: { type: [Number] }
   },
 
   stats: {
@@ -34,16 +35,17 @@ let jobSchema = new Schema({
     quitTot: { type: Number, required: true },
     quitUnq: { type: Number, required: true },
     likes: { type: Number, required: true },
-    dlikes: { type: Number, required: true },
-    dlikesQuit: { type: Number, required: true },
+    dislikes: { type: Number, required: true },
+    dislikesQuit: { type: Number, required: true },
     rating: { type: Number, required: true },
     ratingQuit: { type: Number, required: true },
   },
 
-  updated: {
-    ver: { type: Number, required: true },
-    job: { type: Date, required: true },
-    info: { type: Date, required: true }
+  dates: {
+    version: { type: Number, required: true },
+    fetch: { type: Date, required: true },
+    addedSC: { type: Date },
+    updatedSC: { type: Date, required: true }
   }
 });
 
@@ -58,18 +60,18 @@ function getImage(job) {
   return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${id}/${img[1]}.jpg`;
 }
 
+function setMaxPlayers(n) {
+  return _.clamp(n, 1, 30);
+}
+
 jobSchema.set('toObject', {
   getters: true,
   versionKey: false,
   transform: (doc, ret) => {
-    Reflect.deleteProperty(ret, "_id");
-    Reflect.deleteProperty(ret, "id");
+    Reflect.deleteProperty(ret, '_id');
+    Reflect.deleteProperty(ret, 'id');
 
     ret.image = getImage(ret);
-    // ret.job.mode = _.assign(
-    //   modes[ret.job.type.id - 1].modes[ret.job.mode - 1],
-    //   { id: ret.job.mode }
-    // );
 
     return ret;
   }

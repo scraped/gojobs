@@ -8,6 +8,7 @@ module.exports = [
       { icon: 'e600', name: 'Transform Race' },
       { icon: 'f123', name: 'Special Vehicle Race' },
       { icon: 'f168', name: 'Land Race' },
+      { icon: 'f168', name: 'Bike Race' }, // icon needs fix
       { icon: 'f102', name: 'Air Race' },
       { icon: 'f1a5', name: 'Water Race' }
     ],
