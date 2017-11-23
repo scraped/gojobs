@@ -30,8 +30,8 @@ let jobSchema = new Schema({
 
   stats: {
     points: { type: Number, required: true },
-    pldTot: { type: Number, required: true },
-    pldUnq: { type: Number, required: true },
+    playTot: { type: Number, required: true },
+    playUnq: { type: Number, required: true },
     quitTot: { type: Number, required: true },
     quitUnq: { type: Number, required: true },
     likes: { type: Number, required: true },
@@ -42,10 +42,10 @@ let jobSchema = new Schema({
   },
 
   dates: {
-    version: { type: Number, required: true },
+    ver: { type: Number, required: true },
     fetch: { type: Date, required: true },
-    addedSC: { type: Date },
-    updatedSC: { type: Date, required: true }
+    added: { type: Date },
+    updated: { type: Date, required: true }
   }
 });
 
