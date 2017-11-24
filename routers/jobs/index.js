@@ -62,12 +62,7 @@ router.get('/', (req, res, next) => {
     .then(jobs => {
       jobs = jobs.map(job => job.toObject());
 
-      setTimeout(() => {
-        res.json({
-          count: count,
-          jobs: jobs,
-        });
-      }, 1500);
+      res.json({ count, jobs });
     })
     .catch(err => {
       console.log(`Can't retrieve jobs from the database: ${err.stack}`);

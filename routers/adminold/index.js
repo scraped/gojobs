@@ -64,10 +64,6 @@ router.get('/uploadraw', (req, res) => {
   uploadJobs();
 });
 
-// router.get('/test', (req, res) => {
-//   res.send('test');
-// });
-
 router.get('/fetch', (req, res) => {
   let params = {};
   params.by = req.query.type;

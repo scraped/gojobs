@@ -18,9 +18,7 @@ app.set('port', config.port);
 
 app.use(logger('dev'));
 app.use(cors());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, config.distDir)));
 
@@ -28,12 +26,13 @@ app.use('/api/jobs', jobsRouter);
 
 app.use(history());
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   console.log(chalk.bgRed(' ERROR '), chalk.reset(err.stack));
+
   if (res.xhr) {
     res.send(Boom.badImplementation().output.payload);
   } else {
-    res.send('Error occured');
+    res.send('500 Internal Server Error');
   }
 });
 
