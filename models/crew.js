@@ -1,5 +1,3 @@
-const moment = require('moment');
-
 const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
@@ -10,23 +8,29 @@ let crewSchema = new Schema({
 
   name: { type: String, trim: true },
   tag: { type: String, required: true, uppercase: true },
-  color: { type: String, required: true, set: color => color.substr(0, 6) },
+  color: { type: String, required: true, set: setColor },
   avatar: { type: String },
 
-  jobsAmount: {
+  jobs: {
     total: { type: Number, required: true, default: 0 },
     fetched: { type: Number, required: true, default: 0 },
   },
 
-  updated: { type: Date, required: true },
-  uploadedLast: { type: Date },
+  dates: {
+    updated: { type: Date, required: true },
+    jobsUpload: { type: Date },
+  }
 });
+
+function setColor(color) {
+  return color.substr(0, 6);
+}
 
 crewSchema.set('toObject', {
   virtual: true,
   versionKey: false,
   transform: (doc, ret) => {
-    Reflect.deleteProperty(ret, "_id");
+    Reflect.deleteProperty(ret, '_id');
     return ret;
   }
 });
@@ -34,12 +38,6 @@ crewSchema.set('toObject', {
 crewSchema.virtual('avatarUrl')
   .get(function() {
     return `https://prod.cloud.rockstargames.com/crews/sc/${this.avatar}/${this.crewId}/publish/emblem/emblem_128.png`;
-  });
-
-crewSchema.virtual('uploadedDateString')
-  .get(function() {
-    if (!this.uploadedLast) return;
-    return moment(this.uploadedLast).fromNow();
   });
 
 module.exports = mongoose.model('Crew', crewSchema, 'crews');

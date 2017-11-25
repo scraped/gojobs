@@ -26,7 +26,7 @@ app.use('/api/jobs', jobsRouter);
 
 app.use(history());
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   console.log(chalk.bgRed(' ERROR '), chalk.reset(err.stack));
 
   if (res.xhr) {

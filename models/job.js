@@ -41,8 +41,9 @@ let jobSchema = new Schema({
     ratingQuit: { type: Number, required: true },
   },
 
+  ver: { type: Number, required: true },
+
   dates: {
-    ver: { type: Number, required: true },
     fetch: { type: Date, required: true },
     added: { type: Date },
     updated: { type: Date, required: true }

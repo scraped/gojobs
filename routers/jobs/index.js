@@ -85,7 +85,12 @@ router.get('/id/:id', async (req, res) => {
   }
 });
 
-router.get('/upload', (req, res) => {
+router.get('/upload', async (req, res) => {
   res.send('Jobs is being uploaded');
-  uploadJobs();
+  try {
+    await uploadJobs();
+  } catch (e) {
+    console.log('Error while uploading jobs:', e.stack);
+  }
+  console.log('Job uploading: operation completed')
 });

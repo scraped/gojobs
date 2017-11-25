@@ -7,8 +7,11 @@ let jobRawSchema = new Schema({
 
   job: { type: Schema.Types.Mixed, required: true },
 
-  updated: { type: Date, default: Date.now(), required: true },
-  uploaded: { type: Boolean, required: true, default: false }
+  uploaded: { type: Boolean, required: true, default: false },
+
+  dates: {
+    fetch: { type: Date, required: true }
+  }
 });
 
 module.exports = mongoose.model('JobRaw', jobRawSchema, 'jobs-raw');

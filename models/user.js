@@ -1,6 +1,3 @@
-const config = require('../config');
-const _ = require('lodash');
-
 const mongoose = require('mongoose');
 require('./crew');
 const Schema = mongoose.Schema;
@@ -9,24 +6,20 @@ let userSchema = new Schema({
   username: { type: String, required: true, unique: true },
 
   crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
-  medal: { type: Number, set: setMedal },
 
-  updated: { type: Date, required: true },
+  dates: {
+    updated: { type: Date, required: true }
+  }
 });
 
 userSchema.set('toObject', {
   getters: true,
   versionKey: false,
   transform: (doc, ret) => {
-    Reflect.deleteProperty(ret, "_id");
+    Reflect.deleteProperty(ret, '_id');
     return ret;
   }
 });
-
-function setMedal(medal) {
-  medal = medal || 'white';
-  return 1 + _.findIndex(config.medals, med => med.name === medal);
-}
 
 userSchema.virtual('avatar')
   .get(function() {
