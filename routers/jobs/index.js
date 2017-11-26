@@ -2,7 +2,6 @@ const config = require('../../config');
 const router = require('express').Router();
 const mongoose = require('../../lib/db');
 const uploadJobs = require('../../lib/upload-jobs');
-const utils = require('../../lib/utils');
 
 const User = require('../../models/user');
 const Crew = require('../../models/crew');
@@ -10,68 +9,66 @@ const Job = require('../../models/job');
 
 module.exports = router;
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res) => {
   let searchOptions = {};
-  let count = 0;
 
-  const perPage = utils.formatInt(req.query.perPage) || config.perPage;
-  const page = utils.formatInt(req.query.page) || 1;
+  let {
+    page = 1,
+    perPage = config.perPage,
+    author,
+    crewUrl,
+    platform = 1,
+    gameType,
+    gameMode,
+    maxpl
+  } = req.query;
 
-  const author = req.query.author;
-  const crew = req.query.crew;
-  const platform = utils.formatInt(req.query.platform) || 1;
-  const type = utils.formatInt(req.query.type);
-  const mode = utils.formatInt(req.query.mode);
-  const maxpl = utils.formatInt(req.query.maxpl);
+  page = Number(page);
+  perPage = Number(perPage);
+  platform = Number(platform);
+  gameType = Number(gameType);
+  gameMode = Number(gameMode);
+  maxpl = Number(maxpl);
 
   searchOptions.platform = platform;
-  if (type) searchOptions['job.type'] = type;
-  if (mode) searchOptions['job.mode'] = mode;
+  if (gameType) searchOptions['job.gameType'] = gameType;
+  if (gameMode) searchOptions['job.gameMode'] = gameMode;
   if (maxpl) searchOptions['job.maxpl'] = { $lte: maxpl };
 
-  let initialPromise = Promise.resolve();
+  let authorOrCrewPromise = Promise.resolve();
 
   if (author) {
-    initialPromise = User.findOne({ username: author });
-  } else if (crew) {
-    initialPromise = Crew.findOne({ crewUrl: crew });
+    authorOrCrewPromise = User.findOne({ username: author });
+  } else if (crewUrl) {
+    authorOrCrewPromise = Crew.findOne({ crewUrl });
   }
 
-  initialPromise
-    .then(result => {
-      if (result) {
-        if (author) {
-          searchOptions.author = mongoose.Types.ObjectId(result._id)
-        } else {
-          searchOptions.crew = mongoose.Types.ObjectId(result._id);
-        }
-      }
+  let authorOrCrew = await authorOrCrewPromise;
 
-      return Job.count(searchOptions);
-    })
-    .then(number => {
-      count = number;
+  if (authorOrCrew) {
+    if (author) {
+      searchOptions.author = mongoose.Types.ObjectId(authorOrCrew._id)
+    } else {
+      searchOptions.crew = mongoose.Types.ObjectId(authorOrCrew._id);
+    }
+  }
 
-      return Job.find(searchOptions)
-        .skip((page - 1) * perPage)
-        .limit(perPage)
-        .sort({ 'stats.points': -1 })
-        .populate('author')
-        .populate('crew');
-    })
-    .then(jobs => {
-      jobs = jobs.map(job => job.toObject());
+  let amount = await Job.count(searchOptions);
 
-      res.json({ count, jobs });
-    })
-    .catch(err => {
-      console.log(`Can't retrieve jobs from the database: ${err.stack}`);
-      next();
-    });
+  let jobs = await Job.find(searchOptions)
+    .skip((page - 1) * perPage)
+    .limit(perPage)
+    .sort({ 'stats.points': -1 })
+    .populate('author')
+    .populate('crew');
+
+  jobs = jobs.map(job => job.toObject());
+
+  res.json({ amount, jobs });
 });
 
 router.get('/id/:id', async (req, res) => {
-  let id = req.params.id;
+  let { id } = req.params;
 
   try {
     let job = await Job.findOne({ jobId: id })
@@ -92,4 +89,5 @@ router.get('/upload', async (req, res) => {
   } catch (e) {
     console.log('Error while uploading jobs:', e.stack);
   }
+  console.log('Job uploading: operation completed')
 });
