@@ -69,7 +69,7 @@ jobSchema.set('toObject', {
   getters: true,
   versionKey: false,
   transform: (doc, ret) => {
-    Reflect.deleteProperty(ret, '_id');
+    // Reflect.deleteProperty(ret, '_id');
     // Reflect.deleteProperty(ret, 'id');
 
     ret.image = getImage(ret);

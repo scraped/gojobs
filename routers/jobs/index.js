@@ -13,19 +13,19 @@ router.get('/', async (req, res) => {
   let searchOptions = {};
 
   let {
-    page = 1,
-    perPage = config.perPage,
+    page,
+    perPage,
     author,
     crewUrl,
-    platform = 1,
+    platform,
     gameType,
     gameMode,
     maxpl
   } = req.query;
 
-  page = Number(page);
-  perPage = Number(perPage);
-  platform = Number(platform);
+  page = Number(page) || 1;
+  perPage = Number(perPage) || config.perPage;
+  platform = Number(platform) || 1;
   gameType = Number(gameType);
   gameMode = Number(gameMode);
   maxpl = Number(maxpl);

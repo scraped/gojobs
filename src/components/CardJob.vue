@@ -69,18 +69,18 @@
       <div class="tags">
         <span
           :class="`tag is-${ratingCssClass} is-rounded is-medium tooltip`"
-          :data-tooltip="`Dislikes: ${job.stats.dlikes}, optimal rating: ${job.stats.ratingQuit}%`">
+          :data-tooltip="`Dislikes: ${job.stats.dislikes}, optimal rating: ${job.stats.ratingQuit}%`">
           <span class="icon">
             <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
           </span>
           <span>{{ job.stats.likes | formatNumber }}</span></span>
         <span
           class="tag is-light is-rounded is-medium tooltip"
-          :data-tooltip="`People played this: ${job.stats.pldUnq}`">
+          :data-tooltip="`People played this: ${job.stats.playUnq}`">
           <span class="icon">
             <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
           </span>
-          <span>{{ job.stats.pldTot | formatNumber }}</span></span>
+          <span>{{ job.stats.playTot | formatNumber }}</span></span>
       </div>
     </div>
   </div>
@@ -116,11 +116,11 @@ export default {
 
     dateReadable() {
       let job = this.job;
-      let dateString = moment(job.updated.job).fromNow();
-      if (job.category || job.updated.ver === 1) {
+      let dateString = moment(job.dates.updated).fromNow();
+      if (job.ver === 1) {
         return `added ${dateString}`;
       } else {
-        return `${dateString} (version ${job.updated.ver})`;
+        return `${dateString} (version ${job.ver})`;
       }
     },
   },

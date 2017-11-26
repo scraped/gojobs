@@ -21,7 +21,6 @@
 
     <div class="box">
       <div
-        v-infinite-scroll="test"
         class="button is-large is-fullwidth"
         :class="{ 'is-loading': loading }"
         @click="fetch()">
@@ -31,7 +30,6 @@
       <template v-if="!pageInfLoading">
         <br>
         <pagination
-          v-if="!pageInfLoading"
           :curr-page="pageInfLoading || page"
           :total-items="jobsAmount"
           @load-more="fetch()">

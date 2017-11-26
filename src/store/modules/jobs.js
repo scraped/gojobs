@@ -6,13 +6,13 @@ const state = {
 };
 
 const mutations = {
-  set(state, { jobs, count, append = false }) {
+  set(state, { jobs, amount, append = false }) {
     if (append) {
       Reflect.apply(Array.prototype.push, state.jobs, jobs);
     } else {
       state.jobs = jobs;
     }
-    state.amount = Number(count || '');
+    state.amount = Number(amount) || 0;
   }
 };
 
@@ -24,9 +24,9 @@ const actions = {
     let append = payload.append;
 
     let response = await Vue.http.get(`/api/jobs?page=${page}`);
-    let { jobs, count } = response.data;
+    let { jobs, amount } = response.data;
 
-    commit('set', { jobs, count, append });
+    commit('set', { jobs, amount, append });
   }
 };
 
