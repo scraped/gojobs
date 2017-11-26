@@ -92,5 +92,4 @@ router.get('/upload', async (req, res) => {
   } catch (e) {
     console.log('Error while uploading jobs:', e.stack);
   }
-  console.log('Job uploading: operation completed')
 });

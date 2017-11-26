@@ -4,16 +4,15 @@ const Schema = mongoose.Schema;
 let crewSchema = new Schema({
   crewUrl: { type: String, required: true, unique: true },
   crewId: { type: Number },
-  url: { type: String },
 
   name: { type: String, trim: true },
   tag: { type: String, required: true, uppercase: true },
-  color: { type: String, required: true, set: setColor },
+  color: { type: String, required: true, set: setColor, lowercase: true },
   avatar: { type: String },
 
   jobs: {
-    total: { type: Number, required: true, default: 0 },
     fetched: { type: Number, required: true, default: 0 },
+    total: { type: Number, required: true, default: 0 },
   },
 
   dates: {
