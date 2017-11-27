@@ -20,8 +20,8 @@ const actions = {
   async fetch({ commit }, payload) {
     if (!payload) payload = {};
 
-    let page = payload.page || '';
-    let append = payload.append;
+    let { page, append } = payload;
+    page = page || '';
 
     let response = await Vue.http.get(`/api/jobs?page=${page}`);
     let { jobs, amount } = response.data;
