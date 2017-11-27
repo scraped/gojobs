@@ -60,12 +60,20 @@
       </div>
 
       <div class="is-size-7">
-        Not yet categorized
-      </div>
-      <div class="is-size-7 has-text-grey-light">
-        {{ platforms[job.platform - 1].name }} · {{ job.job.maxpl }} players · {{ dateReadable }}
+        <div>
+          Not yet categorized
+        </div>
+        <div class="has-text-grey-light">
+          In-game category:
+          <router-link :to="''">{{ modes[job.job.gameType - 1].name }}</router-link>
+          —
+          <router-link :to="''">{{ modes[job.job.gameType - 1].modes[job.job.gameMode - 1].name }}</router-link>
+          <br>
+          {{ platforms[job.platform - 1].name }} · {{ job.job.maxpl }} players · {{ updatedDate }}
+        </div>
       </div>
       <br>
+
       <div class="tags">
         <span
           :class="`tag is-${ratingCssClass} is-rounded is-medium tooltip`"
@@ -93,9 +101,9 @@ import platforms from '../../config/platforms';
 import IconGta from './IconGta.vue';
 
 export default {
-  props: [
-    'job'
-  ],
+  props: {
+    job: { type: Object }
+  },
 
   components: {
     IconGta
@@ -114,23 +122,15 @@ export default {
       return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
     },
 
-    dateReadable() {
-      let job = this.job;
-      let dateString = moment(job.dates.updated).fromNow();
+    updatedDate() {
+      let { job } = this;
+      let date = moment(job.dates.updated).fromNow();
       if (job.ver === 1) {
-        return `added ${dateString}`;
+        return `added ${date}`;
       } else {
-        return `${dateString} (version ${job.ver})`;
+        return `${date} (version ${job.ver})`;
       }
     },
-  },
-
-  filters: {
-    formatNumber(num) {
-      if (num >= 1000000) return (num / 1000000).toFixed(2) + 'm';
-      if (num >= 1000) return (num / 1000).toFixed(2) + 'k';
-      return num;
-    }
   },
 
   methods: {

@@ -16,9 +16,9 @@ export default new VueRouter({
   },
 
   routes: [
-    { path: '/', component: Main },
-    { path: '/admin', component: Admin },
+    { path: '/', name: 'main', component: Main },
+    { path: '/admin', name: 'admin', component: Admin },
     { path: '/job/:id', name: 'job', component: Job },
-    { path: '*', component: NotFoundComponent }
+    { path: '*', name: 'notfound', component: NotFoundComponent }
   ]
 });

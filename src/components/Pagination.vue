@@ -7,8 +7,8 @@
       <router-link
         class="pagination-previous button is-medium"
         v-if="hasPrev()"
-        :to="{ path: '/', query: genQuery(prevPage) }"
-        :aria-label="'Go to page ' + prevPage">
+        :to="{ path: '/', query: genQuery({ page: prevPage }) }"
+        :aria-label="`Go to page ${prevPage}`">
           <i class="icon fa fa-angle-left"></i>
           <span>Previous</span>
       </router-link>
@@ -16,8 +16,8 @@
       <router-link
         class="pagination-next button is-medium"
         v-if="hasNext()"
-        :to="{ path: '/', query: genQuery(nextPage) }"
-        :aria-label="'Go to page ' + nextPage">
+        :to="{ path: '/', query: genQuery({ page: nextPage }) }"
+        :aria-label="`Go to page ${nextPage}`">
           <span>Next</span>
           <i class="icon fa fa-angle-right"></i>
       </router-link>
@@ -26,8 +26,9 @@
         <li v-if="hasFirst()">
           <router-link
             class="pagination-link button is-medium"
-            :to="{ path: '/', query: genQuery(1) }"
-            :aria-label="'Go to page 1'">
+            :to="{ path: '/', query: genQuery({ page: 1 }) }"
+            :aria-label="'Go to page 1'"
+            append>
               1
           </router-link>
         </li>
@@ -39,9 +40,9 @@
         <li v-for="page in pages" :key="page">
           <router-link
             class="pagination-link button is-medium"
-            :to="{ path: '/', query: genQuery(page) }"
+            :to="{ path: '/', query: genQuery({ page }) }"
             :class="{ 'is-primary': currPage === page }"
-            :aria-label="'Go to page ' + page"
+            :aria-label="`Go to page ${page}`"
             append>
               {{ page }}
           </router-link>
@@ -54,8 +55,8 @@
         <li v-if="hasLast()">
           <router-link
             class="pagination-link button is-medium"
-            :to="{ path: '/', query: genQuery(totalPages) }"
-            :aria-label="'Go to page ' + totalPages">
+            :to="{ path: '/', query: genQuery({ page: totalPages }) }"
+            :aria-label="`Go to page ${totalPages}`">
               {{ totalPages }}
           </router-link>
         </li>
@@ -67,8 +68,13 @@
 
 <script>
 import _ from 'lodash';
+import genQuery from './mixins/gen-query.js';
 
 export default {
+  mixins: [
+    genQuery
+  ],
+
   props: {
     currPage: { type: Number, default: 1 },
     totalItems: { type: Number, default: 0 },
@@ -111,10 +117,6 @@ export default {
   },
 
   methods: {
-    genQuery(page) {
-      return Object.assign({}, this.$route.query, { page: page });
-    },
-
     loadMore() {
       this.$emit('load-more');
     },

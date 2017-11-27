@@ -8,6 +8,9 @@
           "browsers": ["last 2 Chrome versions"]
         }
       }
+    ],
+    [
+      "stage-0"
     ]
   ]
 }

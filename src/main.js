@@ -15,14 +15,21 @@ import { sync } from 'vuex-router-sync';
 sync(store, router);
 
 const progressBarOptions = {
-  color: '#EB0000',
+  color: '#75c1ff',
   failedColor: 'red',
+  thickness: '6px'
 };
 
 Vue.use(VueResource);
 Vue.use(VueProgressBar, progressBarOptions);
 Vue.use(VueResourceProgressBarInterceptor);
 Vue.use(VueAgile);
+
+Vue.filter('formatNumber', num => {
+  if (num >= 1000000) return (num / 1000000).toFixed(2) + 'm';
+  if (num >= 1000) return (num / 1000).toFixed(2) + 'k';
+  return num;
+});
 
 new Vue({
   el: '#app',

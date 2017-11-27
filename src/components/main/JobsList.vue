@@ -1,6 +1,6 @@
 <template>
   <div @scroll="onScroll()">
-    <h1 class="title is-4">{{ jobsAmount }} jobs found</h1>
+    <h1 class="title is-4">{{ amount }} jobs found</h1>
     <p class="subtitle is-size-6 has-text-grey">
       <template v-if="!pageInfLoading">
         Page {{ page }}
@@ -31,7 +31,7 @@
         <br>
         <pagination
           :curr-page="pageInfLoading || page"
-          :total-items="jobsAmount"
+          :total-items="amount"
           @load-more="fetch()">
         </pagination>
       </template>
@@ -42,6 +42,7 @@
 
 <script>
 import Vue from 'vue';
+import { mapState } from 'vuex';
 
 import CardJob from '../CardJob.vue';
 import Pagination from '../Pagination.vue';
@@ -62,24 +63,14 @@ export default {
   },
 
   computed: {
-    jobs() {
-      return this.$store.state.jobs.jobs;
-    },
-
-    jobsAmount() {
-      return this.$store.state.jobs.amount;
-    },
-
-    page() {
-      return Number(this.$store.state.route.query.page) || 1;
-    }
+    ...mapState({
+      jobs: state => state.jobs.jobs,
+      amount: state => state.jobs.amount,
+      page: state => Number(state.route.query.page) || 1
+    })
   },
 
   methods: {
-    test() {
-      console.log('Hello from test!');
-    },
-
     async fetch() {
       let nextPage = this.pageInfLoading || this.page;
       ++nextPage;
