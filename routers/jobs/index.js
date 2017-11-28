@@ -1,8 +1,9 @@
 const config = require('../../config');
 const router = require('express').Router();
-const mongoose = require('../../lib/db');
 const uploadJobs = require('../../lib/upload-jobs');
+const Boom = require('boom');
 
+const mongoose = require('../../lib/db');
 const User = require('../../models/user');
 const Crew = require('../../models/crew');
 const Job = require('../../models/job');
@@ -10,7 +11,7 @@ const Job = require('../../models/job');
 module.exports = router;
 
 router.get('/', async (req, res) => {
-  let searchOptions = {};
+  let options = {};
 
   let {
     page,
@@ -26,37 +27,39 @@ router.get('/', async (req, res) => {
   page = Number(page) || 1;
   perPage = Number(perPage) || config.perPage;
   platform = Number(platform) || 1;
-  gameType = Number(gameType);
-  gameMode = Number(gameMode);
-  maxpl = Number(maxpl);
+  gameType = Number(gameType) || 0;
+  gameMode = Number(gameMode) || 0;
+  maxpl = Number(maxpl) || 0;
 
-  searchOptions.platform = platform;
-  if (gameType) searchOptions['job.gameType'] = gameType;
-  if (gameMode) searchOptions['job.gameMode'] = gameMode;
-  if (maxpl) searchOptions['job.maxpl'] = { $lte: maxpl };
+  options.platform = platform;
+  if (gameType) options['job.gameType'] = gameType;
+  if (gameMode) options['job.gameMode'] = gameMode;
+  if (maxpl) options['job.maxpl'] = { $lte: maxpl };
 
-  let authorOrCrewPromise = Promise.resolve();
+  let amount = 0;
+  let empty = false;
 
   if (author) {
-    authorOrCrewPromise = User.findOne({ username: author });
+    let info = await User.findOne({ username: author });
+    if (!info) empty = true;
+    options.author = mongoose.Types.ObjectId(info._id);
   } else if (crewUrl) {
-    authorOrCrewPromise = Crew.findOne({ crewUrl });
+    let info = await Crew.findOne({ crewUrl });
+    if (!info) empty = true;
+    options.crew = mongoose.Types.ObjectId(info._id);
   }
 
-  let authorOrCrew = await authorOrCrewPromise;
-
-  if (authorOrCrew) {
-    if (author) {
-      searchOptions.author = mongoose.Types.ObjectId(authorOrCrew._id)
-    } else {
-      searchOptions.crew = mongoose.Types.ObjectId(authorOrCrew._id);
-    }
+  if (!empty) {
+    amount = await Job.count(options);
+    if (!amount) empty = true;
   }
 
-  let amount = await Job.count(searchOptions);
+  if (empty) {
+    return res.json({ amount: 0 });
+  }
 
-  let jobs = await Job.find(searchOptions)
-    .skip((page - 1) * perPage)
+  let jobs = await Job.find(options)
+    .skip(Math.abs((page - 1) * perPage))
     .limit(perPage)
     .sort({ 'stats.points': -1 })
     .populate('author')
@@ -67,7 +70,7 @@ router.get('/', async (req, res) => {
   res.json({ amount, jobs });
 });
 
-router.get('/id/:id', async (req, res) => {
+router.get('/id/:id', async (req, res, next) => {
   let { id } = req.params;
 
   try {
@@ -77,17 +80,16 @@ router.get('/id/:id', async (req, res) => {
 
     res.json(job.toObject());
   } catch (e) {
-    console.log(`Can't retrieve job information: ${e.stack}`);
-    res.json({});
+    return next(Boom.notFound('Job not found'));
   }
 });
 
 router.get('/upload', async (req, res) => {
-  res.send('Jobs is being uploaded');
   try {
     await uploadJobs();
   } catch (e) {
     console.log('Error while uploading jobs:', e.stack);
   }
-  console.log('Job uploading: operation completed')
+
+  res.send('Jobs uploaded');
 });

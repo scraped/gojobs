@@ -7,9 +7,9 @@ const logger = require('morgan');
 const cors = require('cors');
 const history = require('connect-history-api-fallback');
 const chalk = require('chalk');
-const Boom = require('boom');
 
 const jobsRouter = require('./routers/jobs');
+const errorHandler = require('./routers/error');
 
 const app = express();
 
@@ -26,15 +26,7 @@ app.use('/api/jobs', jobsRouter);
 
 app.use(history());
 
-app.use((err, req, res, next) => {
-  console.log(chalk.bgRed(' ERROR '), chalk.reset(err.stack));
-
-  if (res.xhr) {
-    res.send(Boom.badImplementation().output.payload);
-  } else {
-    res.send('500 Internal Server Error');
-  }
-});
+errorHandler(app);
 
 // Run server
 app.listen(app.get('port'), () => {
