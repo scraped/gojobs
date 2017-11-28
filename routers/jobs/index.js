@@ -1,7 +1,6 @@
 const config = require('../../config');
 const router = require('express').Router();
 const uploadJobs = require('../../lib/upload-jobs');
-const Boom = require('boom');
 
 const mongoose = require('../../lib/db');
 const User = require('../../models/user');
@@ -70,7 +69,7 @@ router.get('/', async (req, res) => {
   res.json({ amount, jobs });
 });
 
-router.get('/id/:id', async (req, res, next) => {
+router.get('/id/:id', async (req, res) => {
   let { id } = req.params;
 
   try {
@@ -80,7 +79,7 @@ router.get('/id/:id', async (req, res, next) => {
 
     res.json(job.toObject());
   } catch (e) {
-    return next(Boom.notFound('Job not found'));
+    res.json({});
   }
 });
 

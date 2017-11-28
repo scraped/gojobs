@@ -55,7 +55,7 @@
 
           <div class="column is-one-third-widescreen is-two-fifths-desktop is-12-tablet">
             <div class="box">
-              <h2 class="label">Author</h2>
+              <div class="label">Author</div>
               <div class="media">
                 <div class="media-left">
                   <figure class="image image-avatar is-48x48">
@@ -77,21 +77,35 @@
                   </p>
                 </div>
               </div>
-              <br>
 
-              <h2 class="label">Actual rating</h2>
-              <div class="has-text-grey-light is-size-7">
+              <br>
+              <div class="label">Actual rating</div>
+              <!-- <div class="has-text-grey-light is-size-7">
                 This rating doesn't consider quits and based only on the actual likes and dislikes.
-              </div>
+              </div> -->
               <div>{{ job.stats.rating }}%</div>
-              <br>
 
-              <h2 class="label">RGSC rating</h2>
+              <br>
+              <div class="label">RGSC rating</div>
               <div>{{ job.stats.ratingQuit }}%</div>
-              <br>
 
-              <h2 class="label">Platform</h2>
-              <p>{{ platforms[job.platform - 1].name }}</p>
+              <br>
+              <div class="label">Platform</div>
+              <div>{{ platforms[job.platform - 1].name }}</div>
+
+              <br>
+              <div class="label">Updated</div>
+              <div>{{ job.dates.updated | formatDate }} (version {{ job.ver }})</div>
+
+              <template v-if="job.dates.added">
+                <br>
+                <div class="label">Added</div>
+                <div>{{ job.dates.added | formatDate }}</div>
+              </template>
+
+              <br>
+              <div class="label">Information updated</div>
+              <div>{{ job.dates.fetch | formatDate }}</div>
             </div>
           </div>
         </div>

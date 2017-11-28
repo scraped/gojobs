@@ -8,13 +8,29 @@ module.exports = [
       { icon: 'e600', name: 'Transform Race' },
       { icon: 'f123', name: 'Special Vehicle Race' },
       { icon: 'f168', name: 'Land Race' },
-      { icon: 'f168', name: 'Bike Race' }, // icon needs fix
+      { icon: 'f168', name: 'Bike Race' },
       { icon: 'f102', name: 'Air Race' },
       { icon: 'f1a5', name: 'Water Race' }
     ],
-    flags: [
-      { color: 'edeff2', name: 'Regular Race' },
-      { color: 'fff6e0', name: 'Rally' }
+    categories: [
+      'Stunt Race',
+      'Special Vehicle Race',
+      'Transform Race',
+      'Air Race',
+      'Water Race',
+      'Regular Race',
+      'Rally',
+      'Off-road',
+      'Themed',
+      'Not a Race',
+      'Parkour',
+      'Challenge Race'
+    ],
+    feautures: [
+      'Old props',
+      'Crossroads',
+      'Pitlane',
+      'No catchup'
     ]
   },
 
@@ -27,7 +43,7 @@ module.exports = [
       { icon: 'f197', name: 'Team Deathmatch' },
       { icon: 'f1a1', name: 'Vehicle Deathmatch' }
     ],
-    flags: []
+    categories: []
   },
 
   {
@@ -37,7 +53,7 @@ module.exports = [
     modes: [
       { icon: 'f16a', name: 'Last Team Standing' }
     ],
-    flags: []
+    categories: []
   },
 
   {
@@ -47,6 +63,6 @@ module.exports = [
     modes: [
       { icon: 'f113', name: 'Capture' },
     ],
-    flags: []
+    categories: []
   }
 ];

@@ -6,6 +6,7 @@ import VueProgressBar from 'vue-progressbar';
 import VueResourceProgressBarInterceptor from 'vue-resource-progressbar-interceptor';
 import VueAgile from 'vue-agile';
 import InfiniteScroll from 'vue-infinite-scroll';
+import moment from 'moment';
 
 import App from './App.vue';
 import router from './router';
@@ -26,10 +27,18 @@ Vue.use(VueResourceProgressBarInterceptor);
 Vue.use(VueAgile);
 
 Vue.filter('formatNumber', num => {
-  if (num >= 1000000) return (num / 1000000).toFixed(2) + 'm';
-  if (num >= 1000) return (num / 1000).toFixed(2) + 'k';
+  const MILLION = 1000000;
+  const THOUSAND = 1000;
+
+  if (num >= MILLION) return (num / MILLION).toFixed(2) + 'm';
+  if (num >= THOUSAND) return (num / THOUSAND).toFixed(2) + 'k';
+
   return num;
 });
+
+Vue.filter('formatDate', date => {
+  return moment(date).fromNow();
+})
 
 new Vue({
   el: '#app',

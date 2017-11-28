@@ -150,7 +150,7 @@ export default {
     transition-duration: 0.5s;
   }
   &:hover .image {
-    transform: scale(1.04);
+    transform: scale(1.05);
   }
 }
 
