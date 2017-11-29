@@ -1,10 +1,11 @@
 <template>
-  <div class="container">
-    You can sign up or log in here:
-    <router-link :to="{ path: '/login/signin' }">Sign In</router-link>,
-    <router-link :to="{ path: '/login/signup' }">Sign Up</router-link>
-    <br>
-    <router-view></router-view>
+  <div>
+    <section class="section">
+      <div class="container">
+        <h1 class="title">Log In or Sign Up</h1>
+        <div>You can only sign up via Rockstar Games Social Club.</div>
+      </div>
+    </section>
   </div>
 </template>
 

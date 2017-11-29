@@ -16,10 +16,10 @@
         </div>
         <div class="navbar-end">
           <router-link to="/admin" class="navbar-item">
-          <span>Admin</span>
+            <span>Crews</span>
           </router-link>
           <router-link to="/login" class="navbar-item">
-          <span>Log in or sign up</span>
+            <span>Log In or Sign Up</span>
           </router-link>
         </div>
       </div>
@@ -31,15 +31,15 @@
 </script>
 
 <style lang="scss">
-@import '../scss/bulma/utilities/initial-variables';
-@import '../scss/bulma/utilities/derived-variables';
+// @import '../scss/bulma/utilities/initial-variables';
+// @import '../scss/bulma/utilities/derived-variables';
 
-.navbar-item {
-  transition: $speed;
-  &:hover span {
-    border-bottom: 3px solid $danger;
-    margin-bottom: -3px;
-  }
-}
+// .navbar-item {
+//   transition: $speed;
+//   &:hover span {
+//     border-bottom: 3px solid $danger;
+//     margin-bottom: -3px;
+//   }
+// }
 </style>
 

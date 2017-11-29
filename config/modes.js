@@ -1,6 +1,5 @@
 module.exports = [
   {
-    id: 1,
     name: 'Race',
     icon: 'f17d',
     modes: [
@@ -35,7 +34,6 @@ module.exports = [
   },
 
   {
-    id: 2,
     name: 'Deathmatch',
     icon: 'f167',
     modes: [
@@ -47,22 +45,14 @@ module.exports = [
   },
 
   {
-    id: 3,
     name: 'Last Team Standing',
     icon: 'f16a',
-    modes: [
-      { icon: 'f16a', name: 'Last Team Standing' }
-    ],
     categories: []
   },
 
   {
-    id: 4,
     name: 'Capture',
     icon: 'f113',
-    modes: [
-      { icon: 'f113', name: 'Capture' },
-    ],
     categories: []
   }
 ];

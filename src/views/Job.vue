@@ -1,21 +1,23 @@
 <template>
   <div>
+    <div :style="`position: absolute; top: 0; left: 0; right: 0; height: 85%; background: url(${job.image}); z-index: -1; background-size: cover; filter: blur(1px);`"></div>
     <section class="section">
       <div class="container">
         <div class="columns is-multiline">
           <div class="column">
             <div class="box">
-              <div>
-                <span class="title" v-html="job.name"></span>
-                <span class="icon is-medium has-text-warning tooltip" data-tooltip="Editor's choice">
+              <div class="title">
+                <span v-html="job.name"></span>
+                <span class="icon is-medium has-text-warning tooltip is-size-6" data-tooltip="Editor's choice">
                   <i class="fa fa-star fa-lg" aria-hidden="true"></i>
                 </span>
               </div>
-              <br>
               <figure>
                 <img :src="job.image" :alt="job.name">
               </figure>
-              <br>
+            </div>
+
+            <div class="box">
               <p v-html="job.desc"></p>
               <br>
 
@@ -48,7 +50,7 @@
               </div>
 
               <div class="has-text-grey">
-                {{ platforms[job.platform - 1].name }} · {{ job.job.maxpl }} players · {{ dateReadable }}
+                {{ platforms[job.platform - 1].name }} · {{ job.job.maxpl }} players
               </div>
             </div>
           </div>
@@ -87,11 +89,12 @@
 
               <br>
               <div class="label">RGSC rating</div>
-              <div>{{ job.stats.ratingQuit }}%</div>
-
-              <br>
-              <div class="label">Platform</div>
-              <div>{{ platforms[job.platform - 1].name }}</div>
+              <div>
+                {{ job.stats.ratingQuit }}%
+                <span class="has-text-grey">
+                  (diff: {{ job.stats.rating - job.stats.ratingQuit }}%)
+                </span>
+              </div>
 
               <br>
               <div class="label">Updated</div>
@@ -141,16 +144,6 @@ export default {
     ratingCssClass() {
       let rating = this.job.stats.ratingQuit;
       return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
-    },
-
-    dateReadable() {
-      let job = this.job;
-      let dateString = moment(job.dates.updated).fromNow();
-      if (job.ver === 1) {
-        return `added ${dateString}`;
-      } else {
-        return `${dateString} (version ${job.ver})`;
-      }
     }
   },
 

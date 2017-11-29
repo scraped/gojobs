@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import Main from './views/Main.vue';
 import NotFoundComponent from './views/404.vue';
 import Admin from './views/Admin.vue';
+import Login from './views/Login.vue';
 import Job from './views/Job.vue';
 
 Vue.use(VueRouter);
@@ -18,6 +19,7 @@ export default new VueRouter({
   routes: [
     { path: '/', name: 'main', component: Main },
     { path: '/admin', name: 'admin', component: Admin },
+    { path: '/login', name: 'login', component: Login },
     { path: '/job/:id', name: 'job', component: Job },
     { path: '*', name: 'notfound', component: NotFoundComponent }
   ]
