@@ -1,5 +1,20 @@
 <template>
-  <div @scroll="onScroll()">
+  <div>
+    <div class="tabs">
+      <ul>
+        <li class="is-active"><a>Trending</a></li>
+        <li><a>By rating</a></li>
+        <li><a>Editor's choice</a></li>
+        <li><a>Recently updated</a></li>
+      </ul>
+    </div>
+    <div class="tags">
+      <span class="tag is-medium is-rounded has-text-dark" style="background: hsl(0, 0%, 86%) ;">Race</span>
+      <span class="tag is-medium is-rounded is-primary">Deathmatch</span>
+      <span class="tag is-medium is-rounded is-primary">Capture</span>
+      <span class="tag is-medium is-rounded is-primary">Last Team Standing</span>
+    </div>
+
     <h1 class="title is-4">{{ amount }} jobs found</h1>
     <p class="subtitle is-size-6 has-text-grey">
       <template v-if="!pageInfLoading">
