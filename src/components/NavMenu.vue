@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-transparent is-fixed-top">
+  <nav class="navbar is-transparent is-fixed-top" id="navbar">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item">
@@ -28,23 +28,49 @@
 </template>
 
 <script>
+window.addEventListener('DOMContentLoaded', event => {
+  let navbar = document.getElementById('navbar');
+  let navbarHeightExtended = navbar.offsetHeight * 3;
+  let prevScrollPos = window.pageYOffset;
+
+  window.addEventListener('scroll', e => {
+    let currScrollPos = e.pageY;
+    let hideNavbarPoint = Math.max(navbarHeightExtended, prevScrollPos);
+
+    if (currScrollPos > hideNavbarPoint) {
+      navbar.classList.add('navbar-hidden');
+    } else if (currScrollPos < prevScrollPos) {
+      navbar.classList.remove('navbar-hidden');
+      if (currScrollPos === 0) {
+        navbar.classList.remove('is-dark');
+      } else {
+        navbar.classList.add('is-dark');
+      }
+    }
+    prevScrollPos = currScrollPos;
+  });
+});
+
+
 </script>
 
 <style lang="scss">
-@import '../scss/bulma/utilities/initial-variables';
-// @import '../scss/bulma/utilities/derived-variables';
+@import "../scss/bulma/utilities/initial-variables";
 
-// .navbar-item {
-//   transition: $speed;
-//   &:hover span {
-//     border-bottom: 3px solid $danger;
-//     margin-bottom: -3px;
-//   }
-// }
+$navbar-height: 4rem;
+$navbar-item-color: $white;
+$navbar-item-hover-color: $white-ter;
+
+@import "../scss/bulma/components/navbar";
 
 .navbar {
   background-color: transparent;
   background-image: linear-gradient(to bottom, rgba($black, 0.2), transparent);
+  transition-duration: $speed * 2;
+}
+
+.navbar-hidden {
+  transform: translateY(-100px);
 }
 </style>
 

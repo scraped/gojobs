@@ -46,10 +46,6 @@ $dropdown-item-active-color: $grey-dark;
 // 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1)
 $box-shadow: 1px 1px 2px rgba($black, 0.1);
 
-$navbar-height: 4rem;
-$navbar-item-color: $white;
-$navbar-item-hover-color: $white-ter;
-
 // notification
 // $notification-padding: 0.5rem; // 1.25rem 2.5rem 1.25rem 1.5rem
 
@@ -79,7 +75,6 @@ $tabs-link-padding: 0.5em 0.5em; // 0.5em 1em
 @import "bulma/components/media";
 @import "bulma/components/menu";
 @import "bulma/components/message";
-@import "bulma/components/navbar";
 @import "bulma/components/pagination";
 @import "bulma/components/tabs";
 
