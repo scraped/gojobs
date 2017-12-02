@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="hero is-black" style="background: url(https://pp.userapi.com/c637620/v637620124/4d7c2/bm9ZtGXtBMA.jpg); background-position: 50% 35%;">
+    <div class="hero is-black is-medium" style="background: url(https://pp.userapi.com/c637620/v637620124/4d7c2/bm9ZtGXtBMA.jpg); background-position: 50% 35%;">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">GTA Online Jobs</h1>

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-dark headroom">
+  <nav class="navbar is-transparent is-fixed-top">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item">
@@ -31,7 +31,7 @@
 </script>
 
 <style lang="scss">
-// @import '../scss/bulma/utilities/initial-variables';
+@import '../scss/bulma/utilities/initial-variables';
 // @import '../scss/bulma/utilities/derived-variables';
 
 // .navbar-item {
@@ -41,5 +41,10 @@
 //     margin-bottom: -3px;
 //   }
 // }
+
+.navbar {
+  background-color: transparent;
+  background-image: linear-gradient(to bottom, rgba($black, 0.2), transparent);
+}
 </style>
 
