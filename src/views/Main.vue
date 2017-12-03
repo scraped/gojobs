@@ -4,16 +4,6 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">GTA Online Jobs</h1>
-          <!-- <div class="buttons">
-            <router-link
-              :to="{ path: '/', query: { type: i + 1 } }"
-              class="button is-dark is-inverted is-outlined is-rounded"
-              :class="{ 'is-primary': $route.query.type === i + 1 }"
-              v-for="(typeInfo, i) in modes"
-              :key="i">
-                <span>{{ typeInfo.name }}</span>
-            </router-link>
-          </div> -->
         </div>
       </div>
     </div>
@@ -30,14 +20,18 @@
 import Vue from 'vue';
 import store from '../store';
 import modes from '../../config/modes';
-import NavMenu from '../components/NavMenu.vue';
 import SearchJobs from '../components/main/SearchJobs.vue';
 import JobsList from '../components/main/JobsList.vue';
 import IconGta from '../components/IconGta.vue';
 
+async function fetchJobs(to, from, next) {
+  let { page } = to.query;
+  await store.dispatch('jobs/fetch', { page });
+  next();
+}
+
 export default {
   components: {
-    NavMenu,
     SearchJobs,
     JobsList,
     IconGta
@@ -55,20 +49,8 @@ export default {
     }
   },
 
-  async beforeRouteEnter(to, from, next) {
-    await store.dispatch('jobs/fetch', { page: to.query.page });
-    next();
-  },
+  beforeRouteEnter: fetchJobs,
 
-  async beforeRouteUpdate(to, from, next) {
-    await store.dispatch('jobs/fetch', { page: to.query.page });
-    next();
-  },
-
-  methods: {
-    genQuery (obj) {
-      return Object.assign({}, this.$route.query, obj);
-    },
-  }
+  beforeRouteUpdate: fetchJobs
 };
 </script>

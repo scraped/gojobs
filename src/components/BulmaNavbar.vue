@@ -50,16 +50,14 @@ window.addEventListener('DOMContentLoaded', event => {
     prevScrollPos = currScrollPos;
   });
 });
-
-
 </script>
 
 <style lang="scss">
-@import "../scss/bulma/utilities/initial-variables";
+@import "../scss/bulma/utilities/_all";
 
 $navbar-height: 4rem;
 $navbar-item-color: $white;
-$navbar-item-hover-color: $white-ter;
+$navbar-item-hover-color: $danger;
 
 @import "../scss/bulma/components/navbar";
 

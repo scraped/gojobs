@@ -78,7 +78,7 @@ module.exports = {
 
   plugins: [
     new FriendlyErrorsWebpackPlugin({
-      onErrors: (severity, errors) => {
+      onErrors (severity, errors) {
         if (severity !== 'error') return;
         errors.forEach(error => {
           notifier.notify({
