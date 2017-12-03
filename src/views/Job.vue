@@ -1,6 +1,13 @@
 <template>
   <div>
-    <div :style="`position: absolute; top: 0; left: 0; right: 0; height: 85%; background: url(${job.image}); z-index: -1; background-size: cover; filter: blur(1px);`"></div>
+    <bulma-hero class="is-black is-medium" :style="`background: url(${job.image}); background-repeat: no-repeat; background-size: cover; background-position: 50% 35%;`">
+      <div class="hero-body">
+        <div class="container">
+          <br><h1 class="title" v-html="job.name"></h1>
+        </div>
+      </div>
+    </bulma-hero>
+
     <section class="section">
       <div class="container">
         <div class="columns is-multiline">
@@ -122,10 +129,13 @@ import moment from 'moment';
 import store from '../store';
 import modes from '../../config/modes';
 import platforms from '../../config/platforms';
+
+import BulmaHero from '../components/BulmaHero.vue';
 import IconGta from '../components/IconGta.vue';
 
 export default {
   components: {
+    BulmaHero,
     IconGta
   },
 

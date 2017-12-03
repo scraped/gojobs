@@ -38,15 +38,17 @@ window.addEventListener('DOMContentLoaded', event => {
     let hideNavbarPoint = Math.max(navbarHeightExtended, prevScrollPos);
 
     if (currScrollPos > hideNavbarPoint) {
-      navbar.classList.add('navbar-hidden');
-    } else if (currScrollPos < prevScrollPos) {
-      navbar.classList.remove('navbar-hidden');
-      if (currScrollPos === 0) {
-        navbar.classList.remove('is-dark');
-      } else {
-        navbar.classList.add('is-dark');
-      }
+      navbar.classList.add('navbar-hidden')
+    } else {
+      navbar.classList.remove('navbar-hidden')
     }
+
+    if (currScrollPos > navbarHeightExtended) {
+      navbar.classList.add('navbar-dark')
+    } else {
+      navbar.classList.remove('navbar-dark')
+    }
+
     prevScrollPos = currScrollPos;
   });
 });
@@ -58,6 +60,10 @@ window.addEventListener('DOMContentLoaded', event => {
 $navbar-height: 4rem;
 $navbar-item-color: $white;
 $navbar-item-hover-color: $danger;
+ $navbar-item-hover-background-color: transparent;
+
+ $navbar-tab-hover-background-color: pink;
+  $navbar-tab-hover-border-bottom-color: pink;
 
 @import "../scss/bulma/components/navbar";
 
@@ -69,6 +75,10 @@ $navbar-item-hover-color: $danger;
 
 .navbar-hidden {
   transform: translateY(-100px);
+}
+
+.navbar-dark {
+  background: $dark;
 }
 </style>
 
