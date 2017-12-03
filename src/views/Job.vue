@@ -1,6 +1,6 @@
 <template>
   <div>
-    <bulma-hero class="is-black is-medium" :style="`background: url(${job.image}); background-repeat: no-repeat; background-size: cover; background-position: 50% 35%;`">
+    <bulma-hero class="is-black is-fullheight" :style="`background: url(${job.image}); background-repeat: no-repeat; background-size: cover; background-position: 50% 35%;`">
       <div class="hero-body">
         <div class="container">
           <br><h1 class="title" v-html="job.name"></h1>
