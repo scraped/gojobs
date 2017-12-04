@@ -1,13 +1,12 @@
 <template>
   <div>
-    <div class="tabs">
-      <ul>
-        <li class="is-active"><a>Trending</a></li>
-        <li><a>By rating</a></li>
-        <li><a>Editor's choice</a></li>
-        <li><a>Recently updated</a></li>
-      </ul>
-    </div>
+    <bulma-tabs>
+      <li class="is-active"><a>Trending</a></li>
+      <li><a>By rating</a></li>
+      <li><a>Editor's choice</a></li>
+      <li><a>Recently updated</a></li>
+    </bulma-tabs>
+
     <div class="tags">
       <span class="tag is-medium is-rounded has-text-dark" style="background: hsl(0, 0%, 86%) ;">Race</span>
       <span class="tag is-medium is-rounded is-primary">Deathmatch</span>
@@ -59,12 +58,14 @@
 import Vue from 'vue';
 import { mapState } from 'vuex';
 
+import BulmaTabs from '../BulmaTabs.vue';
 import CardJob from '../CardJob.vue';
 import Pagination from '../Pagination.vue';
 import SearchJobs from './SearchJobs.vue';
 
 export default {
   components: {
+    BulmaTabs,
     CardJob,
     Pagination,
     SearchJobs

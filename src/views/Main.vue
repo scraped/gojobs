@@ -1,6 +1,6 @@
 <template>
   <div>
-    <bulma-hero class="is-black is-medium" style="background: url(https://pp.userapi.com/c637620/v637620124/4d7c2/bm9ZtGXtBMA.jpg); background-position: 50% 35%;">
+    <bulma-hero class="is-dark is-medium" style="background: linear-gradient(to right, hsla(209, 100%, 28%, 0.4), hsla(0, 100%, 20%, 0.4)), url(https://pp.userapi.com/c637620/v637620124/4d7c2/bm9ZtGXtBMA.jpg);background-position: 50% 0%;">
       <div class="hero-body">
         <div class="container">
           <br><h1 class="title">GTA Online Jobs</h1>

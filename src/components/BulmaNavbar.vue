@@ -1,10 +1,11 @@
 <template>
-  <nav class="navbar is-transparent is-fixed-top" id="navbar">
+  <nav class="navbar is-fixed-top" id="navbar">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item">
-          <img src="../images/gtaonline-logo-mini.png" alt="" title="">
+          <img src="../images/logo2.png" alt="" title="">
         </router-link>
+        <span class="navbar-item is-size-3" style="font-family: 'SignPainter-HouseScript';">jobs</span>
 
         <div class="navbar-burger" data-target="mainMenu">
           <span></span><span></span><span></span>
@@ -13,7 +14,22 @@
 
       <div class="navbar-menu" id="mainMenu">
         <div class="navbar-start">
+           <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              PC
+            </a>
+
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                PS4
+              </a>
+              <a class="navbar-item">
+                Xbox One
+              </a>
+            </div>
+          </div>
         </div>
+
         <div class="navbar-end">
           <router-link to="/admin" class="navbar-item">
             <span>Crews</span>
@@ -28,30 +44,30 @@
 </template>
 
 <script>
-window.addEventListener('DOMContentLoaded', event => {
-  let navbar = document.getElementById('navbar');
-  let navbarHeightExtended = navbar.offsetHeight * 3;
-  let prevScrollPos = window.pageYOffset;
+// window.addEventListener('DOMContentLoaded', event => {
+//   let navbar = document.getElementById('navbar');
+//   let navbarHeightExtended = navbar.offsetHeight * 3;
+//   let prevScrollPos = window.pageYOffset;
 
-  window.addEventListener('scroll', e => {
-    let currScrollPos = e.pageY;
-    let hideNavbarPoint = Math.max(navbarHeightExtended, prevScrollPos);
+//   window.addEventListener('scroll', e => {
+//     let currScrollPos = e.pageY;
+//     let hideNavbarPoint = Math.max(navbarHeightExtended, prevScrollPos);
 
-    if (currScrollPos > hideNavbarPoint) {
-      navbar.classList.add('navbar-hidden')
-    } else {
-      navbar.classList.remove('navbar-hidden')
-    }
+//     if (currScrollPos > hideNavbarPoint) {
+//       navbar.classList.add('navbar-hidden')
+//     } else {
+//       navbar.classList.remove('navbar-hidden')
+//     }
 
-    if (currScrollPos > navbarHeightExtended) {
-      navbar.classList.add('navbar-dark')
-    } else {
-      navbar.classList.remove('navbar-dark')
-    }
+//     if (currScrollPos > navbarHeightExtended) {
+//       navbar.classList.add('navbar-dark')
+//     } else {
+//       navbar.classList.remove('navbar-dark')
+//     }
 
-    prevScrollPos = currScrollPos;
-  });
-});
+//     prevScrollPos = currScrollPos;
+//   });
+// });
 </script>
 
 <style lang="scss">
@@ -60,16 +76,14 @@ window.addEventListener('DOMContentLoaded', event => {
 $navbar-height: 4rem;
 $navbar-item-color: $white;
 $navbar-item-hover-color: $danger;
- $navbar-item-hover-background-color: transparent;
-
- $navbar-tab-hover-background-color: pink;
-  $navbar-tab-hover-border-bottom-color: pink;
+$navbar-item-hover-background-color: transparent;
 
 @import "../scss/bulma/components/navbar";
+@import "../scss/vars";
 
 .navbar {
   background-color: transparent;
-  background-image: linear-gradient(to bottom, rgba($black, 0.2), transparent);
+  background-image: linear-gradient(to right, $rockstar, $gtaonline);
   transition-duration: $speed * 2;
 }
 
