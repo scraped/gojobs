@@ -66,7 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (target === navbarDropdown) {
       navbarDropdown.parentElement.classList.toggle('is-active');
     }
-  })
+
+    // if (target.contains(navbarDropdown))
+  });
 
 });
 </script>
