@@ -144,7 +144,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/bulma/utilities/variables";
+@import "../scss/bulma/utilities/_all";
 
 .card-image {
   overflow: hidden;

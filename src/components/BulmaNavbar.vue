@@ -15,16 +15,18 @@
       <div class="navbar-menu" id="navbar-menu">
         <div class="navbar-start">
            <div class="navbar-item has-dropdown">
-            <a class="navbar-link">
-              PC
+            <a class="navbar-link is-unselectable">
+              <span class="is-hidden-tablet">Current platform: </span>
+              {{ currPlatform.name }}
             </a>
 
             <div class="navbar-dropdown">
-              <a class="navbar-item">
-                PS4
-              </a>
-              <a class="navbar-item">
-                Xbox One
+              <a
+                class="navbar-item"
+                v-for="platform in platforms"
+                :key="platform.id"
+                v-if="platform.id != currPlatform.id">
+                {{ platform.name }}
               </a>
             </div>
           </div>
@@ -44,6 +46,19 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex';
+
+export default {
+  computed: {
+    ...mapGetters('common', [
+      'currPlatform'
+    ]),
+    ...mapState('common', {
+      platforms: state => state.platforms,
+    })
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   const navbarBurger = document.querySelector('.navbar-burger');
 
@@ -53,21 +68,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     navbarBurger.classList.toggle('is-active');
     navbarMenu.classList.toggle('is-active');
-
   });
 
   //
 
-  const navbarDropdown = document.querySelector('.navbar-link');
+  const navbarDropdownLink = document.querySelector('.navbar-link');
+  const navbarDropdown = navbarDropdownLink.parentElement;
 
   document.addEventListener('click', e => {
     const target = e.target;
 
-    if (target === navbarDropdown) {
-      navbarDropdown.parentElement.classList.toggle('is-active');
+    if (target === navbarDropdownLink) {
+      navbarDropdown.classList.toggle('is-active');
     }
 
-    // if (target.contains(navbarDropdown))
+    if (!navbarDropdown.contains(target)) {
+      navbarDropdown.classList.remove('is-active');
+    }
   });
 
 });
@@ -93,7 +110,7 @@ $navbar-dropdown-background-color: $dark;
 
 .navbar {
   background-color: transparent;
-  background-image: linear-gradient(to right, $rockstar, $gtaonline-dark);
+  background-image: $main-gradient;
 }
 
 .navbar-item {

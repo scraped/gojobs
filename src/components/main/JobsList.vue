@@ -8,10 +8,11 @@
     </bulma-tabs>
 
     <div class="tags">
-      <span class="tag is-medium is-rounded has-text-dark" style="background: hsl(0, 0%, 86%) ;">Race</span>
-      <span class="tag is-medium is-rounded is-primary">Deathmatch</span>
-      <span class="tag is-medium is-rounded is-primary">Capture</span>
-      <span class="tag is-medium is-rounded is-primary">Last Team Standing</span>
+      <bulma-tag
+        v-for="mode in modes"
+        :key="mode.id">
+        {{ mode.name }}
+      </bulma-tag>
     </div>
 
     <h1 class="title is-4">{{ amount }} jobs found</h1>
@@ -58,6 +59,7 @@
 import Vue from 'vue';
 import { mapState } from 'vuex';
 
+import BulmaTag from '../BulmaTag.vue';
 import BulmaTabs from '../BulmaTabs.vue';
 import CardJob from '../CardJob.vue';
 import Pagination from '../Pagination.vue';
@@ -65,6 +67,7 @@ import SearchJobs from './SearchJobs.vue';
 
 export default {
   components: {
+    BulmaTag,
     BulmaTabs,
     CardJob,
     Pagination,
@@ -83,7 +86,11 @@ export default {
       jobs: state => state.jobs.jobs,
       amount: state => state.jobs.amount,
       page: state => Number(state.route.query.page) || 1
-    })
+    }),
+    ...mapState({
+      modes: state => state.common.modes,
+      currMode: state => state.common.currMode
+    }),
   },
 
   methods: {

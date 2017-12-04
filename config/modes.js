@@ -1,4 +1,4 @@
-module.exports = [
+exports.modes = [
   {
     name: 'Race',
     icon: 'f17d',

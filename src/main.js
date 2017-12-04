@@ -1,4 +1,5 @@
 import './scss/main.scss'
+import moment from 'moment';
 
 import Vue from 'vue';
 import VueResource from 'vue-resource';
@@ -6,7 +7,6 @@ import VueProgressBar from 'vue-progressbar';
 import VueResourceProgressBarInterceptor from 'vue-resource-progressbar-interceptor';
 import VueAgile from 'vue-agile';
 import InfiniteScroll from 'vue-infinite-scroll';
-import moment from 'moment';
 
 import App from './App.vue';
 import router from './router';

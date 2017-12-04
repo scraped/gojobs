@@ -1,33 +1,23 @@
 <template>
   <div>
-    <bulma-hero class="is-black is-fullheight" :style="`background: url(${job.image}); background-repeat: no-repeat; background-size: cover; background-position: 50% 35%;`">
-      <div class="hero-body">
-        <div class="container">
-          <br><h1 class="title" v-html="job.name"></h1>
-        </div>
-      </div>
-    </bulma-hero>
+    <bulma-hero
+      class="is-medium"
+      :background="job.image"
+      :text="job.name"></bulma-hero>
 
     <section class="section">
       <div class="container">
         <div class="columns is-multiline">
           <div class="column">
             <div class="box">
-              <div class="title">
-                <span v-html="job.name"></span>
-                <span class="icon is-medium has-text-warning tooltip is-size-6" data-tooltip="Editor's choice">
-                  <i class="fa fa-star fa-lg" aria-hidden="true"></i>
-                </span>
-              </div>
+              <p v-html="job.desc"></p>
+
+              <br>
               <figure>
                 <img :src="job.image" :alt="job.name">
               </figure>
-            </div>
 
-            <div class="box">
-              <p v-html="job.desc"></p>
               <br>
-
               <div class="tags">
                 <span
                   :class="`tag is-${ratingCssClass} is-rounded is-medium`">
