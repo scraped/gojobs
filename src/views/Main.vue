@@ -15,8 +15,7 @@ import Vue from 'vue';
 import store from '../store';
 
 import BulmaHero from '../components/BulmaHero.vue';
-import SearchJobs from '../components/main/SearchJobs.vue';
-import JobsList from '../components/main/JobsList.vue';
+import JobsList from '../components/JobsList.vue';
 import IconGta from '../components/IconGta.vue';
 
 async function fetchJobs(to, from, next) {
@@ -28,7 +27,6 @@ async function fetchJobs(to, from, next) {
 export default {
   components: {
     BulmaHero,
-    SearchJobs,
     JobsList,
     IconGta
   },

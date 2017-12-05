@@ -1,14 +1,14 @@
-//
-// 1. Import&change Bulma&our variables&fonts
-//
-
-// 1. 1. Import Bulma initial vars, functions & our general styles
-@import "bulma/utilities/initial-variables";
-@import "bulma/utilities/functions";
+// *** Main files ***
 
 @import "./fonts";
+@import "./vars";
 
-// 1. 2. Set Bulma's initial vars
+// *** Setup Bulma ***
+
+// Import Bulma initial vars, functions
+@import "utilities/initial-variables";
+@import "utilities/functions";
+
 $primary: #1974d2; // eb0000
 $primary-invert: findColorInvert($primary);
 
@@ -18,7 +18,6 @@ $danger: hsl(348, 90%, 47%); // 100%, 61%
 
 $body-background-color: $white-ter;
 
-// 1. 3. Set Bulma's derived vars
 $family-sans-serif: "Lato", $family-sans-serif;
 
 // input
@@ -28,14 +27,15 @@ $input-shadow: none;
 // button
 $button-focus-box-shadow-size: 0;
 
-// pagination
-$pagination-margin: 0;
+// button
+// .button {
+//   background-image:$main-gradient-light;
+// }
+$button-background-color: $grey-lighter;
+$button-color: $grey-dark;
 
 // section
 $section-padding: 1rem 1rem; // 3rem 1.5rem
-
-// tags
-$tag-delete-margin: 0; // 1px
 
 // dropdown
 $dropdown-content-shadow: none;
@@ -44,57 +44,37 @@ $dropdown-item-active-color: $grey-dark;
 
 // box
 // 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1)
-$box-shadow: 1px 1px 2px rgba($black, 0.1);
 
 // notification
 // $notification-padding: 0.5rem; // 1.25rem 2.5rem 1.25rem 1.5rem
 
-.is-rounded {
-  border-radius: 100%;
-}
-
 // menu
 // $menu-item-radius: 0; // $radius-small
 
-//
-// 2. Import Bulma framework
-//
+// *** Bulma framework ***
 
-// 2. 1. Utilities & base
-@import "bulma/utilities/_all";
-@import "bulma/base/_all";
+@import "utilities/_all";
+@import "base/_all";
 
-// 2. 2. Components
-@import "bulma/components/card";
-@import "bulma/components/dropdown";
-@import "bulma/components/media";
-@import "bulma/components/menu";
-@import "bulma/components/message";
-@import "bulma/components/pagination";
+@import "components/card";
+@import "components/media";
+@import "components/menu";
+@import "components/message";
 
-// 2. 3. Elements
-@import "bulma/elements/box";
-@import "bulma/elements/button";
+@import "elements/box";
+@import "elements/button";
 
-.button {
-  transition-duration: $speed;
-}
+@import "elements/container";
+@import "elements/form";
+@import "elements/icon";
+@import "elements/image";
+@import "elements/notification";
+@import "elements/other";
+@import "elements/title";
 
-@import "bulma/elements/container";
-@import "bulma/elements/form";
-@import "bulma/elements/icon";
-@import "bulma/elements/image";
-@import "bulma/elements/notification";
-@import "bulma/elements/other";
-@import "bulma/elements/tag";
-@import "bulma/elements/title";
+// @import "grid/_all";
 
-// 2. 4. Grid
-@import "bulma/grid/_all";
+@import "layout/footer";
+@import "layout/section";
 
-// 2. 5. Layout
-@import "bulma/layout/footer";
-@import "bulma/layout/section";
-
-// 2. 6. Bulma extensions
-@import "bulma/extensions/tooltip";
+@import "extensions/tooltip";

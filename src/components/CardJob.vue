@@ -104,7 +104,9 @@ import IconGta from './IconGta.vue';
 
 export default {
   props: {
-    job: { type: Object }
+    job: {
+      type: Object
+    }
   },
 
   components: {
@@ -144,7 +146,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/bulma/utilities/_all";
+@import "../scss/utilities/_all";
 
 .card-image {
   overflow: hidden;

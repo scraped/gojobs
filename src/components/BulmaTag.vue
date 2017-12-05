@@ -1,14 +1,14 @@
 <template>
-  <span class="tag is-rounded is-medium">
+  <span class="button is-rounded is-small">
     <slot></slot>
   </span>
 </template>
 
 <style lang="scss">
-@import "../scss/bulma/utilities/_all";
+@import "../scss/utilities/_all";
 
 $tag-background-color: $grey-lighter;
 $tag-color: $grey-dark;
 
-@import "../scss/bulma/elements/tag";
+@import "../scss/elements/tag";
 </style>

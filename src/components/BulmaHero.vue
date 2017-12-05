@@ -29,8 +29,8 @@ export default {
 
 
 <style lang="scss">
-@import "../scss/bulma/utilities/_all";
-@import "../scss/bulma/layout/hero";
+@import "../scss/utilities/_all";
+@import "../scss/layout/hero";
 @import "../scss/vars";
 
 .hero {
