@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div style="position: absolute; bottom: 0%; right: 15%; opacity: 0.08; font-size: 100px;">
-      <icon-gta :icon="modes[job.job.gameType - 1].modes[job.job.gameMode - 1].icon"></icon-gta>
+      <!-- <icon-gta :icon="modes[job.job.gameType - 1].modes[job.job.gameMode - 1].icon"></icon-gta> -->
     </div>
     <router-link :to="{ name: 'job', params: { id: job.jobId } }">
       <div class="card-image">
@@ -54,9 +54,7 @@
           </p>
         </div>
 
-        <!-- <div class="media-right">
-          Test
-        </div> -->
+        <!-- <div class="media-right"></div> -->
       </div>
 
       <div class="is-size-7">
@@ -67,7 +65,7 @@
           In-game category:
           <router-link :to="''">{{ modes[job.job.gameType - 1].name }}</router-link>
           —
-          <router-link :to="''">{{ modes[job.job.gameType - 1].modes[job.job.gameMode - 1].name }}</router-link>
+          <!-- <router-link :to="''">{{ modes[job.job.gameType - 1].modes[job.job.gameMode - 1].name }}</router-link> -->
           <br>
           {{ platforms[job.platform - 1].name }} · {{ job.job.maxpl }} players · {{ updatedDate }}
           <br>
@@ -98,8 +96,8 @@
 
 <script>
 import moment from 'moment';
-import modes from '../../config/modes';
-import platforms from '../../config/platforms';
+import { mapState } from 'vuex';
+
 import IconGta from './IconGta.vue';
 
 export default {
@@ -113,14 +111,12 @@ export default {
     IconGta
   },
 
-  data () {
-    return {
-      modes,
-      platforms
-    };
-  },
-
   computed: {
+    ...mapState({
+      modes: state => state.common.modes,
+      platforms: state => state.common.platforms
+    }),
+
     ratingCssClass() {
       let rating = this.job.stats.ratingQuit;
       return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
@@ -147,6 +143,7 @@ export default {
 
 <style lang="scss">
 @import "../scss/utilities/_all";
+@import "../scss/components/card";
 
 .card-image {
   overflow: hidden;

@@ -116,9 +116,8 @@
 
 <script>
 import moment from 'moment';
+import { mapState } from 'vuex';
 import store from '../store';
-import modes from '../../config/modes';
-import platforms from '../../config/platforms';
 
 import BulmaHero from '../components/BulmaHero.vue';
 import IconGta from '../components/IconGta.vue';
@@ -129,17 +128,12 @@ export default {
     IconGta
   },
 
-  data() {
-    return {
-      modes,
-      platforms
-    }
-  },
-
   computed: {
-    job() {
-      return this.$store.state.job.job;
-    },
+    ...mapState({
+      job: state => state.job.job,
+      modes: state => state.common.modes,
+      platforms: state => state.common.platforms
+    }),
 
     ratingCssClass() {
       let rating = this.job.stats.ratingQuit;
@@ -155,25 +149,6 @@ export default {
   async beforeRouteUpdate(to, from, next) {
     await store.dispatch('job/fetch', { id: to.params.id });
     next();
-  },
-
-  filters: {
-    formatNumber(num) {
-      if (num >= 1000000) return (num / 1000000).toFixed(2) + 'm';
-      if (num >= 1000) return (num / 1000).toFixed(2) + 'k';
-      return num;
-    }
-  },
+  }
 }
 </script>
-
-<style>
-.agile__dot button {
-  width: 10px;
-  height: 10px;
-  background: red;
-  border-radius: 100%;
-  border: 0;
-  font-size: 0;
-}
-</style>

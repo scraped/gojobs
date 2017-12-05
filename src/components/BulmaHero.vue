@@ -16,7 +16,7 @@ export default {
   props: {
     background: {
       type: String,
-      default: 'https://pp.userapi.com/c637620/v637620124/4d7c2/bm9ZtGXtBMA.jpg'
+      default: 'https://pp.userapi.com/c637620/v637620124/4ea6b/epGeW29ZU98.jpg'
     },
 
     text: {

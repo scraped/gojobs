@@ -42,14 +42,12 @@
         <span>Load more</span>
       </div>
 
-      <template v-if="!pageInfLoading">
-        <br>
-        <BulmaPagination
-          :curr-page="pageInfLoading || page"
-          :total-items="amount"
-          @load-more="fetch()">
-        </BulmaPagination>
-      </template>
+      <br>
+      <BulmaPagination
+        :curr-page="pageInfLoading || page"
+        :total-items="amount"
+        @load-more="fetch()">
+      </BulmaPagination>
   </div>
 </template>
 

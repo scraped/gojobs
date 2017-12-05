@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav
-      class="pagination is-centered"
+      class="pagination is-centered is-rounded"
       role="navigation"
       aria-label="pagination">
       <router-link
@@ -38,14 +38,16 @@
         </li>
 
         <li v-for="page in pages" :key="page">
+          <span class="pagination-link">
           <router-link
-            class="pagination-link button is-medium"
+            class="button is-medium is-rounded"
             :to="{ path: '/', query: genQuery({ page }) }"
             :class="{ 'is-primary': currPage === page }"
             :aria-label="`Go to page ${page}`"
             append>
               {{ page }}
           </router-link>
+          </span>
         </li>
 
         <li v-if="hasLast() && totalPages - rightBound > 1">
