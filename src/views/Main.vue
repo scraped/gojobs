@@ -19,8 +19,7 @@ import JobsList from '../components/JobsList.vue';
 import IconGta from '../components/IconGta.vue';
 
 async function fetchJobs(to, from, next) {
-  let { page } = to.query;
-  await store.dispatch('jobs/fetch', { page });
+  await store.dispatch('jobs/fetch', { query: to.query });
   next();
 }
 

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import queryString from 'query-string';
 
 const state = {
   jobs: [],
@@ -17,13 +18,14 @@ const mutations = {
 };
 
 const actions = {
-  async fetch({ commit }, payload) {
-    if (!payload) payload = {};
+  async fetch({ commit }, payload = {}) {
+    let { query = {}, append } = payload;
+    let queryStr = queryString.stringify(query);
 
-    let { page, append } = payload;
-    page = page || '';
+    console.log(query, queryStr);
 
-    let response = await Vue.http.get(`/api/jobs?page=${page}`);
+    let response = await Vue.http.get(`/api/jobs?${queryStr}`);
+
     let { jobs, amount } = response.data;
 
     commit('set', { jobs, amount, append });

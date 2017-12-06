@@ -122,6 +122,11 @@ import store from '../store';
 import BulmaHero from '../components/BulmaHero.vue';
 import IconGta from '../components/IconGta.vue';
 
+async function fetchJob(to, from, next) {
+  await store.dispatch('job/fetch', to.params);
+  next();
+}
+
 export default {
   components: {
     BulmaHero,
@@ -141,14 +146,8 @@ export default {
     }
   },
 
-  async beforeRouteEnter(to, from, next) {
-    await store.dispatch('job/fetch', { id: to.params.id });
-    next();
-  },
+  beforeRouteEnter: fetchJob,
 
-  async beforeRouteUpdate(to, from, next) {
-    await store.dispatch('job/fetch', { id: to.params.id });
-    next();
-  }
+  beforeRouteUpdate: fetchJob
 }
 </script>

@@ -1,7 +1,16 @@
 <template>
   <div>
+    <div
+      class="button is-large is-fullwidth"
+      v-if="loadMoreButton"
+      :class="{ 'is-loading': loading }"
+      @click="loadMore()">
+      <span>Load more</span>
+    </div>
+    <br>
+
     <nav
-      class="pagination is-centered is-rounded"
+      class="pagination is-rounded is-centered"
       role="navigation"
       aria-label="pagination">
       <router-link
@@ -38,16 +47,14 @@
         </li>
 
         <li v-for="page in pages" :key="page">
-          <span class="pagination-link">
           <router-link
-            class="button is-medium is-rounded"
+            class="pagination-link button is-medium is-rounded"
             :to="{ path: '/', query: genQuery({ page }) }"
             :class="{ 'is-primary': currPage === page }"
             :aria-label="`Go to page ${page}`"
             append>
               {{ page }}
           </router-link>
-          </span>
         </li>
 
         <li v-if="hasLast() && totalPages - rightBound > 1">
@@ -56,20 +63,18 @@
 
         <li v-if="hasLast()">
           <router-link
-            class="pagination-link button is-medium"
+            class="pagination-link button is-medium is-rounded"
             :to="{ path: '/', query: genQuery({ page: totalPages }) }"
             :aria-label="`Go to page ${totalPages}`">
               {{ totalPages }}
           </router-link>
         </li>
       </ul>
-      </slot>
     </nav>
   </div>
 </template>
 
 <script>
-import _ from 'lodash';
 import genQuery from './mixins/gen-query.js';
 
 export default {
@@ -81,7 +86,10 @@ export default {
     currPage: { type: Number, default: 1 },
     totalItems: { type: Number, default: 0 },
     perPage: { type: Number, default: 30 },
-    offset: { type: Number, default: 3 }
+    offset: { type: Number, default: 3 },
+
+    loadMoreButton: { type: Boolean, default: true },
+    loading: { type: Boolean, default: false }
   },
 
   computed: {
@@ -146,6 +154,10 @@ export default {
 @import "../scss/utilities/_all";
 
 $pagination-margin: 0;
+$pagination-border-color: transparent;
+$pagination-hover-border-color: $pagination-border-color;
+$pagination-focus-border-color: $pagination-border-color;
+$pagination-active-border-color: $pagination-border-color;
 
 @import "../scss/components/pagination";
 </style>

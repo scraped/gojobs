@@ -9,17 +9,17 @@ const Job = require('../../models/job');
 
 module.exports = router;
 
+// by: trending, rating, feautured,
 router.get('/', async (req, res) => {
   let options = {};
 
   let {
     page,
     perPage,
-    author,
-    crewUrl,
+    by,
+    byId,
     platform,
     gameType,
-    gameMode,
     maxpl
   } = req.query;
 
@@ -27,23 +27,21 @@ router.get('/', async (req, res) => {
   perPage = Number(perPage) || config.perPage;
   platform = Number(platform) || 1;
   gameType = Number(gameType) || 0;
-  gameMode = Number(gameMode) || 0;
   maxpl = Number(maxpl) || 0;
 
   options.platform = platform;
   if (gameType) options['job.gameType'] = gameType;
-  if (gameMode) options['job.gameMode'] = gameMode;
   if (maxpl) options['job.maxpl'] = { $lte: maxpl };
 
   let amount = 0;
   let empty = false;
 
-  if (author) {
-    let info = await User.findOne({ username: author });
+  if (by === 'user') {
+    let info = await User.findOne({ username: byId });
     if (!info) empty = true;
     options.author = mongoose.Types.ObjectId(info._id);
-  } else if (crewUrl) {
-    let info = await Crew.findOne({ crewUrl });
+  } else if (by === 'crew') {
+    let info = await Crew.findOne({ crewUrl: byId });
     if (!info) empty = true;
     options.crew = mongoose.Types.ObjectId(info._id);
   }
@@ -57,10 +55,32 @@ router.get('/', async (req, res) => {
     return res.json({ amount: 0 });
   }
 
+  let sortField = 'stats.points';
+
+  switch (by) {
+    case 'feautured':
+      options.starred = true;
+      sortField = 'stats.points';
+      break;
+
+    case 'updated':
+      sortField = 'dates.updated';
+      break;
+
+    case 'added':
+      sortField = 'dates.added';
+      break;
+
+    case 'trending':
+    case 'rating':
+    default:
+      sortField = 'stats.points';
+  }
+
   let jobs = await Job.find(options)
     .skip(Math.abs((page - 1) * perPage))
     .limit(perPage)
-    .sort({ 'stats.points': -1 })
+    .sort({ sortField: -1 })
     .populate('author')
     .populate('crew');
 

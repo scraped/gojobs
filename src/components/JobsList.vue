@@ -3,8 +3,9 @@
     <bulma-tabs>
       <li class="is-active"><a>Trending</a></li>
       <li><a>By rating</a></li>
-      <li><a>Editor's choice</a></li>
-      <li><a>Recently updated</a></li>
+      <li><a>Feautured</a></li>
+      <li><a>Updated</a></li>
+      <li><a>🔥 Newest</a></li>
     </bulma-tabs>
 
     <div class="buttons">
@@ -35,19 +36,14 @@
       </div>
     </div>
 
-      <div
-        class="button is-large is-fullwidth"
-        :class="{ 'is-loading': loading }"
-        @click="fetch()">
-        <span>Load more</span>
-      </div>
-
-      <br>
-      <BulmaPagination
-        :curr-page="pageInfLoading || page"
-        :total-items="amount"
-        @load-more="fetch()">
-      </BulmaPagination>
+    <br>
+    <pagination
+      :curr-page="pageInfLoading || page"
+      :total-items="amount"
+      :load-more-button="true"
+      :loading="loading"
+      @load-more="infiniteLoading()">
+    </pagination>
   </div>
 </template>
 
@@ -58,13 +54,13 @@ import { mapState } from 'vuex';
 import BulmaTag from './BulmaTag.vue';
 import BulmaTabs from './BulmaTabs.vue';
 import CardJob from './CardJob.vue';
-import BulmaPagination from './BulmaPagination.vue';
+import Pagination from './Pagination.vue';
 
 export default {
   components: {
     BulmaTag,
     BulmaTabs,
-    BulmaPagination,
+    Pagination,
     CardJob,
   },
 
@@ -79,23 +75,24 @@ export default {
     ...mapState({
       jobs: state => state.jobs.jobs,
       amount: state => state.jobs.amount,
-      page: state => Number(state.route.query.page) || 1
+      page: state => Number(state.route.query.page) || 1,
+      author: state => state.route.query.author
     }),
-    ...mapState({
-      modes: state => state.common.modes,
-      currMode: state => state.common.currMode
+    ...mapState('common', {
+      modes: state => state.modes,
+      currMode: state => state.currMode
     }),
   },
 
   methods: {
-    async fetch() {
+    async infiniteLoading() {
       let nextPage = this.pageInfLoading || this.page;
       ++nextPage;
       this.loading = true;
 
       await this.$store.dispatch(
         'jobs/fetch',
-        { page: nextPage, append: true }
+        { query: { page: nextPage }, append: true }
       );
 
       this.pageInfLoading = nextPage;
