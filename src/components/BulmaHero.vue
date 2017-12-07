@@ -35,7 +35,7 @@ export default {
 
 .hero {
   position: relative;
-  background: $main-gradient-light;
+  // background: $main-gradient-light;
 }
 
 .hero-background {

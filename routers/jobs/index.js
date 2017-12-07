@@ -35,15 +35,22 @@ router.get('/', async (req, res) => {
 
   let amount = 0;
   let empty = false;
+  let sort = { 'stats.points': -1 };
 
-  if (by === 'user') {
+  if (by === 'featured') {
+    options.starred = true;
+  } else if (by === 'updated') {
+    sort = { 'dates.updated': -1 };
+  } else if (by === 'added') {
+    sort = { 'dates.added': -1 };
+  } else if (by === 'user') {
     let info = await User.findOne({ username: byId });
     if (!info) empty = true;
-    options.author = mongoose.Types.ObjectId(info._id);
+    if (info) options.author = mongoose.Types.ObjectId(info._id);
   } else if (by === 'crew') {
     let info = await Crew.findOne({ crewUrl: byId });
     if (!info) empty = true;
-    options.crew = mongoose.Types.ObjectId(info._id);
+    if (info) options.crew = mongoose.Types.ObjectId(info._id);
   }
 
   if (!empty) {
@@ -55,32 +62,10 @@ router.get('/', async (req, res) => {
     return res.json({ amount: 0 });
   }
 
-  let sortField = 'stats.points';
-
-  switch (by) {
-    case 'feautured':
-      options.starred = true;
-      sortField = 'stats.points';
-      break;
-
-    case 'updated':
-      sortField = 'dates.updated';
-      break;
-
-    case 'added':
-      sortField = 'dates.added';
-      break;
-
-    case 'trending':
-    case 'rating':
-    default:
-      sortField = 'stats.points';
-  }
-
   let jobs = await Job.find(options)
     .skip(Math.abs((page - 1) * perPage))
     .limit(perPage)
-    .sort({ sortField: -1 })
+    .sort(sort)
     .populate('author')
     .populate('crew');
 

@@ -1,13 +1,14 @@
 <template>
   <div>
-    <div
-      class="button is-large is-fullwidth"
-      v-if="loadMoreButton"
-      :class="{ 'is-loading': loading }"
-      @click="loadMore()">
-      <span>Load more</span>
-    </div>
-    <br>
+    <template v-if="showLoadMoreButton()">
+      <div
+        class="button is-large is-fullwidth"
+        :class="{ 'is-loading': loading }"
+        @click="loadMore()">
+        <span>Load more</span>
+      </div>
+      <br>
+    </template>
 
     <nav
       class="pagination is-rounded is-centered"
@@ -18,8 +19,8 @@
         v-if="hasPrev()"
         :to="{ path: '/', query: genQuery({ page: prevPage }) }"
         :aria-label="`Go to page ${prevPage}`">
-          <i class="icon fa fa-angle-left"></i>
-          <span>Previous</span>
+        <i class="icon fa fa-angle-left"></i>
+        <span>Previous</span>
       </router-link>
 
       <router-link
@@ -27,8 +28,8 @@
         v-if="hasNext()"
         :to="{ path: '/', query: genQuery({ page: nextPage }) }"
         :aria-label="`Go to page ${nextPage}`">
-          <span>Next</span>
-          <i class="icon fa fa-angle-right"></i>
+        <span>Next</span>
+        <i class="icon fa fa-angle-right"></i>
       </router-link>
 
       <ul class="pagination-list">
@@ -38,7 +39,7 @@
             :to="{ path: '/', query: genQuery({ page: 1 }) }"
             :aria-label="'Go to page 1'"
             append>
-              1
+            1
           </router-link>
         </li>
 
@@ -53,7 +54,7 @@
             :class="{ 'is-primary': currPage === page }"
             :aria-label="`Go to page ${page}`"
             append>
-              {{ page }}
+            {{ page }}
           </router-link>
         </li>
 
@@ -66,7 +67,7 @@
             class="pagination-link button is-medium is-rounded"
             :to="{ path: '/', query: genQuery({ page: totalPages }) }"
             :aria-label="`Go to page ${totalPages}`">
-              {{ totalPages }}
+            {{ totalPages }}
           </router-link>
         </li>
       </ul>
@@ -127,6 +128,12 @@ export default {
   },
 
   methods: {
+    showLoadMoreButton() {
+      return this.loadMoreButton
+        && this.totalItems > 0
+        && this.currPage != this.totalPages;
+    },
+
     loadMore() {
       this.$emit('load-more');
     },

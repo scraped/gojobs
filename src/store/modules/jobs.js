@@ -18,11 +18,10 @@ const mutations = {
 };
 
 const actions = {
-  async fetch({ commit }, payload = {}) {
-    let { query = {}, append } = payload;
+  async fetch({ commit }, payload) {
+    let { query, append } = payload;
+    if (append) query.page++;
     let queryStr = queryString.stringify(query);
-
-    console.log(query, queryStr);
 
     let response = await Vue.http.get(`/api/jobs?${queryStr}`);
 

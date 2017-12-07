@@ -1,5 +1,6 @@
 exports.modes = [
   {
+    id: 1,
     name: 'Race',
     icon: 'f17d',
     modes: [
@@ -34,6 +35,7 @@ exports.modes = [
   },
 
   {
+    id: 2,
     name: 'Deathmatch',
     icon: 'f167',
     modes: [
@@ -45,12 +47,14 @@ exports.modes = [
   },
 
   {
+    id: 3,
     name: 'Last Team Standing',
     icon: 'f16a',
     categories: []
   },
 
   {
+    id: 4,
     name: 'Capture',
     icon: 'f113',
     categories: []
