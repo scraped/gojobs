@@ -52,15 +52,6 @@
         <job-card :job="job"></job-card>
       </div>
     </div>
-
-    <br>
-    <pagination
-      :curr-page="page"
-      :total-items="amount"
-      :load-more-button="true"
-      :loading="loading"
-      @load-more="infiniteLoading()">
-    </pagination>
   </div>
 </template>
 
@@ -72,21 +63,12 @@ import genQuery from './mixins/gen-query.js';
 import BulmaTag from './BulmaTag.vue';
 import BulmaTabs from './BulmaTabs.vue';
 import JobCard from './JobCard.vue';
-import Pagination from './Pagination.vue';
 
 export default {
   components: {
     BulmaTag,
     BulmaTabs,
-    Pagination,
-    JobCard,
-  },
-
-  data() {
-    return {
-      pageInfLoading: 0,
-      loading: false
-    };
+    JobCard
   },
 
   computed: {
@@ -104,21 +86,6 @@ export default {
       modes: state => state.modes,
       currMode: state => state.currMode
     }),
-  },
-
-  methods: {
-    async infiniteLoading() {
-      let nextPage = this.page;
-      ++nextPage;
-      this.loading = true;
-
-      await this.$store.dispatch(
-        'jobs/fetch',
-        { query: { page: ++this.page }, append: true }
-      );
-
-      this.loading = false;
-    }
   }
 }
 </script>
