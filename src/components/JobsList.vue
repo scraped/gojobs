@@ -58,7 +58,7 @@
 <script>
 import Vue from 'vue';
 import { mapState } from 'vuex';
-import genQuery from './mixins/gen-query.js';
+import genQuery from '../mixins/gen-query.js';
 
 import BulmaTag from './BulmaTag.vue';
 import BulmaTabs from './BulmaTabs.vue';
@@ -72,9 +72,9 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      jobs: state => state.jobs.jobs,
-      amount: state => state.jobs.amount,
+    ...mapState('jobs', {
+      jobs: state => state.jobs,
+      amount: state => state.amount,
     }),
     ...mapState('route', {
       page: state => Number(state.query.page) || 1,
