@@ -134,10 +134,12 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      job: state => state.job.job,
-      modes: state => state.common.modes,
-      platforms: state => state.common.platforms
+    ...mapState('job', {
+      job: state => state.job
+    }),
+    ...mapState('common', {
+      modes: state => state.modes,
+      platforms: state => state.platforms
     }),
 
     ratingCssClass() {

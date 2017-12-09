@@ -1,8 +1,9 @@
 <template>
-  <div class="hero">
+  <div class="hero is-medium">
     <div
       class="hero-background"
-      :style="`background-image: url(${background});`"></div>
+      :style="`background-image: url(${background});`">
+    </div>
     <div class="hero-body">
       <div class="container">
         <h1 class="title has-text-white" v-html="text"></h1>
