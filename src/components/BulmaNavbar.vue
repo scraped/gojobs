@@ -14,7 +14,7 @@
 
       <div class="navbar-menu" id="navbar-menu">
         <div class="navbar-start">
-           <div class="navbar-item has-dropdown">
+           <div class="navbar-item has-dropdown" @click.capture="toggleDropdown()">
             <a class="navbar-link is-unselectable">
               <span class="is-hidden-desktop">Current platform:</span>
               {{ currPlatform.name }}
@@ -53,9 +53,15 @@ export default {
     ...mapGetters('common', [
       'currPlatform'
     ]),
-    ...mapState('common', {
-      platforms: state => state.platforms,
-    })
+    ...mapState('common', [
+      'platforms'
+    ])
+  },
+
+  methods: {
+    toggleDropdown(e) {
+      console.log('hi')
+    }
   }
 };
 

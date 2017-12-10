@@ -18,21 +18,15 @@ $input-shadow: none;
 
 $button-focus-box-shadow-size: 0;
 
-$button-background-color: $grey-lighter;
-$button-hover-background-color: $main-gradient-light;
-$button-color: $grey-dark;
-$button-hover-color: $grey-darker;
-$button-border-color: transparent;
-$button-hover-border-color: $button-border-color;
-$button-active-border-color: $button-border-color;
+// $button-color: $grey-dark;
+// $button-hover-color: $black-ter;
 
-.button {
-  transition-duration: 1s;
-}
+// $button-background-color: $grey-lighter;
+// $button-hover-background-color: $gtaonline;
 
-.button:hover {
-  text-decoration: underline;
-}
+// $button-border-color: transparent;
+// $button-hover-border-color: $button-border-color;
+// $button-active-border-color: $button-border-color;
 
 $section-padding: 1rem 1rem; // 3rem 1.5rem
 

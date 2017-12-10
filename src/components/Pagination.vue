@@ -2,6 +2,7 @@
   <div>
     <template v-if="showLoadMoreButton()">
       <div
+        v-infinite-scroll="test"
         class="button is-large is-fullwidth"
         :class="{ 'is-loading': loading }"
         @click="loadMore()">
@@ -139,6 +140,10 @@ export default {
 
     loadMore() {
       this.$emit('load-more');
+    },
+
+    test() {
+      console.log('here');
     },
 
     hasFirst() {

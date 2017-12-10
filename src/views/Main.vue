@@ -47,10 +47,10 @@ export default {
   },
 
   computed: {
-    ...mapState('jobs', {
-      jobs: state => state.jobs,
-      amount: state => state.amount,
-    }),
+    ...mapState('jobs', [
+      'jobs',
+      'amount'
+    ]),
     ...mapState('route', {
       page: state => Number(state.query.page) || 1
     })
@@ -63,7 +63,7 @@ export default {
   methods: {
     async fetchAndAppend() {
       const { query } = this.$store.route;
-      await store.dispatch('jobs/fetch', { query: query, append: true });
+      await store.dispatch('jobs/fetch', { query, append: true });
       this.$route.replace({ name: 'main', query: { page } })
     }
   }
