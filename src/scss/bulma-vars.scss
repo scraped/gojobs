@@ -19,11 +19,20 @@ $input-shadow: none;
 $button-focus-box-shadow-size: 0;
 
 $button-background-color: $grey-lighter;
+$button-hover-background-color: $main-gradient-light;
 $button-color: $grey-dark;
 $button-hover-color: $grey-darker;
 $button-border-color: transparent;
 $button-hover-border-color: $button-border-color;
 $button-active-border-color: $button-border-color;
+
+.button {
+  transition-duration: 1s;
+}
+
+.button:hover {
+  text-decoration: underline;
+}
 
 $section-padding: 1rem 1rem; // 3rem 1.5rem
 
