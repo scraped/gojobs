@@ -8,24 +8,3 @@
     </div>
   </footer>
 </template>
-
-<script>
-export default {
-
-}
-</script>
-
-<style lang="scss">
-@import "../scss/utilities/_all";
-
-$footer-background-color: $dark;
-
-@import "../scss/layout/footer";
-
-.footer a {
-  color: $white;
-  &:hover {
-    color: $white-ter;
-  }
-}
-</style>

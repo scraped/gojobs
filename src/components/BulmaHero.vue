@@ -1,9 +1,5 @@
 <template>
-  <div class="hero is-medium">
-    <div
-      class="hero-background"
-      :style="`background-image: url(${background});`">
-    </div>
+  <div class="hero is-medium" :style="`background-image: url(${background});`">
     <div class="hero-body">
       <div class="container">
         <h1 class="title has-text-white" v-html="text"></h1>
@@ -28,26 +24,25 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
-@import "../scss/utilities/_all";
-@import "../scss/layout/hero";
-@import "../scss/vars";
+// @import "../scss/utilities/_all";
+// @import "../scss/layout/hero";
+// @import "../scss/vars";
 
-.hero {
-  position: relative;
-  // background: $main-gradient-light;
-}
+// .hero {
+//   position: relative;
+//   // background: $main-gradient-light;
+// }
 
-.hero-background {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: -1;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: 35%;
-}
+// .hero-background {
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   left: 0;
+//   bottom: 0;
+//   z-index: -1;
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   background-position-y: 35%;
+// }
 </style>

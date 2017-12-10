@@ -30,3 +30,13 @@ $section-padding: 1rem 1rem; // 3rem 1.5rem
 $dropdown-content-shadow: none;
 $dropdown-item-active-background-color: $white-ter;
 $dropdown-item-active-color: $grey-dark;
+
+$pagination-margin: 0;
+$pagination-border-color: $rockstar;
+$pagination-current-color: $gtaonline;
+$pagination-current-background-color: $rockstar;
+$pagination-hover-border-color: $pagination-border-color;
+$pagination-focus-border-color: $pagination-border-color;
+$pagination-active-border-color: $pagination-border-color;
+
+$footer-background-color: $dark;

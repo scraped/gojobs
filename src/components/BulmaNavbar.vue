@@ -16,7 +16,7 @@
         <div class="navbar-start">
            <div class="navbar-item has-dropdown">
             <a class="navbar-link is-unselectable">
-              <span class="is-hidden-tablet">Current platform: </span>
+              <span class="is-hidden-desktop">Current platform:</span>
               {{ currPlatform.name }}
             </a>
 
@@ -103,7 +103,7 @@ $navbar-dropdown-arrow: $white;
 $navbar-dropdown-border-top: none;
 $navbar-dropdown-background-color: $dark;
 
- $navbar-tab-hover-background-color: $dark;
+$navbar-tab-hover-background-color: $dark;
 
 @import "../scss/components/navbar";
 @import "../scss/vars";

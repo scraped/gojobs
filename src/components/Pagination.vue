@@ -10,73 +10,75 @@
       <br>
     </template>
 
-    <nav
-      class="pagination is-rounded is-centered"
-      role="navigation"
-      aria-label="pagination">
-      <router-link
-        class="pagination-previous button is-medium"
+    <div class="buttons has-addons is-pulled-right">
+    <router-link
+        class="button"
         v-if="hasPrev()"
-        :to="{ path: '/', query: genQuery({ page: prevPage }) }"
+        :to="{ name: routeName, query: genQuery({ page: prevPage }) }"
         :aria-label="`Go to page ${prevPage}`">
         <i class="icon fa fa-angle-left"></i>
-        <span>Previous</span>
+        <span class="is-hidden-mobile">Previous page</span>
       </router-link>
 
       <router-link
-        class="pagination-next button is-medium"
+        class="button"
         v-if="hasNext()"
-        :to="{ path: '/', query: genQuery({ page: nextPage }) }"
+        :to="{ name: routeName, query: genQuery({ page: nextPage }) }"
         :aria-label="`Go to page ${nextPage}`">
-        <span>Next</span>
+        <span class="is-hidden-mobile">Next page</span>
         <i class="icon fa fa-angle-right"></i>
       </router-link>
+      </div>
 
-      <ul class="pagination-list">
-        <li v-if="hasFirst()">
-          <router-link
-            class="pagination-link button is-medium"
-            :to="{ path: '/', query: genQuery({ page: 1 }) }"
-            :aria-label="'Go to page 1'"
-            append>
-            1
-          </router-link>
-        </li>
+    <div
+      class="buttons has-addons"
+      role="navigation"
+      aria-label="pagination">
 
-        <li v-if="hasFirst() && leftBound > 2">
-          <span class="pagination-ellipsis">&hellip;</span>
-        </li>
+      <router-link
+        class="button"
+        v-if="hasFirst()"
+        :to="{ name: routeName, query: genQuery({ page: 1 }) }"
+        :aria-label="'Go to page 1'">
+        1
+      </router-link>
 
-        <li v-for="page in pages" :key="page">
-          <router-link
-            class="pagination-link button is-medium is-rounded"
-            :to="{ path: '/', query: genQuery({ page }) }"
-            :class="{ 'is-primary': currPage === page }"
-            :aria-label="`Go to page ${page}`"
-            append>
-            {{ page }}
-          </router-link>
-        </li>
+      <span
+        class="button"
+        v-if="hasFirst() & leftBound > 2">
+        <!-- this is the ellipsis -->
+        &hellip;
+      </span>
 
-        <li v-if="hasLast() && totalPages - rightBound > 1">
-          <span class="pagination-ellipsis">&hellip;</span>
-        </li>
+      <router-link
+        class="button"
+        v-for="page in pages" :key="page"
+        :to="{ name: routeName, query: genQuery({ page }) }"
+        :class="{ 'is-primary': currPage === page }"
+        :aria-label="`Go to page ${page}`">
+        {{ page }}
+      </router-link>
 
-        <li v-if="hasLast()">
-          <router-link
-            class="pagination-link button is-medium is-rounded"
-            :to="{ path: '/', query: genQuery({ page: totalPages }) }"
-            :aria-label="`Go to page ${totalPages}`">
-            {{ totalPages }}
-          </router-link>
-        </li>
-      </ul>
-    </nav>
+      <span
+        class="button"
+        v-if="hasLast() & totalPages - rightBound > 1">
+        <!-- this is the ellipsis -->
+        &hellip;
+      </span>
+
+      <router-link
+        class="button"
+        v-if="hasLast()"
+        :to="{ name: routeName, query: genQuery({ page: totalPages }) }"
+        :aria-label="`Go to page ${totalPages}`">
+        {{ totalPages }}
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
-import genQuery from './mixins/gen-query.js';
+import genQuery from '../mixins/gen-query.js';
 
 export default {
   mixins: [
@@ -88,6 +90,7 @@ export default {
     totalItems: { type: Number, default: 0 },
     perPage: { type: Number, default: 30 },
     offset: { type: Number, default: 3 },
+    routeName: { type: String, default: 'main' },
 
     loadMoreButton: { type: Boolean, default: true },
     loading: { type: Boolean, default: false }
@@ -156,15 +159,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import "../scss/utilities/_all";
-
-$pagination-margin: 0;
-$pagination-border-color: transparent;
-$pagination-hover-border-color: $pagination-border-color;
-$pagination-focus-border-color: $pagination-border-color;
-$pagination-active-border-color: $pagination-border-color;
-
-@import "../scss/components/pagination";
-</style>
