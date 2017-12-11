@@ -1,6 +1,6 @@
 <template>
   <div>
-    <bulma-tabs>
+    <tabs>
       <li :class="{ 'is-active': !by }">
         <router-link :to="{ name: 'main' }">
           Trending
@@ -26,7 +26,7 @@
           🔥 Newest
         </router-link>
       </li>
-    </bulma-tabs>
+    </tabs>
 
     <div class="buttons">
       <router-link
@@ -60,14 +60,12 @@ import Vue from 'vue';
 import { mapState } from 'vuex';
 import genQuery from '../mixins/gen-query.js';
 
-import BulmaTag from './BulmaTag.vue';
-import BulmaTabs from './BulmaTabs.vue';
-import JobCard from './JobCard.vue';
+import Tabs from '@components/Tabs.vue';
+import JobCard from '@components/JobCard.vue';
 
 export default {
   components: {
-    BulmaTag,
-    BulmaTabs,
+    Tabs,
     JobCard
   },
 

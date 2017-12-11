@@ -12,8 +12,7 @@ const jsName = 'assets/js/build.[hash].js';
 const cssName = 'assets/css/[name].[contenthash].css';
 const imagesName = 'assets/images/[name].[hash].[ext]';
 
-const isDevelopment = !process.env.NODE_ENV
-  || process.env.NODE_ENV === 'development';
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
   entry: `${config.srcDir}/main.js`,
@@ -22,6 +21,12 @@ module.exports = {
     path: path.resolve(__dirname, config.distDir),
     publicPath: '/',
     filename: jsName
+  },
+
+  resolve: {
+    alias: {
+      '@components': path.resolve(config.srcDir, 'components')
+    }
   },
 
   module: {
@@ -68,7 +73,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)$/,
         loader: 'url-loader',
         options: {
-          limit: isDevelopment ? 1 : 4096,
+          limit: isProduction ? 4096 : 1,
           name: imagesName,
           fallback: 'file-loader'
         }
@@ -107,6 +112,7 @@ module.exports = {
     quiet: true,
     compress: true,
     // enables HMR without page refresh as fallback in case of build failures
+    hot: true,
     hotOnly: true,
     // opens the browser
     open: true,
@@ -120,14 +126,12 @@ module.exports = {
     hints: false
   },
 
-  devtool: isDevelopment ? '#cheap-inline-module-source-map' : 'none'
+  devtool: isProduction ? 'none' : '#cheap-inline-module-source-map'
 };
 
-//
 // Production section
-//
 
-if (!isDevelopment) {
+if (isProduction) {
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({

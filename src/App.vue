@@ -1,20 +1,20 @@
 <template>
   <div id="app">
     <vue-progress-bar></vue-progress-bar>
-    <bulma-navbar></bulma-navbar>
+    <navbar></navbar>
     <router-view></router-view>
-    <bulma-footer></bulma-footer>
+    <footer></footer>
   </div>
 </template>
 
 <script>
-import BulmaNavbar from './components/BulmaNavbar.vue';
-import BulmaFooter from './components/BulmaFooter.vue';
+import Navbar from '@components/Navbar.vue';
+import Footer from '@components/Footer.vue';
 
 export default {
   components: {
-    BulmaNavbar,
-    BulmaFooter
+    Navbar,
+    Footer
   }
 };
 </script>

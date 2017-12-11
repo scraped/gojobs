@@ -2,7 +2,7 @@
   <div>
     <template v-if="showLoadMoreButton()">
       <div
-        v-infinite-scroll="test"
+        infinite-scroll="gegs"
         class="button is-large is-fullwidth"
         :class="{ 'is-loading': loading }"
         @click="loadMore()">

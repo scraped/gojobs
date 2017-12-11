@@ -43,7 +43,7 @@ Vue.filter('formatDate', date => {
 new Vue({
   el: '#app',
   render: h => h(App),
-  directives: { 'infinite-scroll': InfiniteScroll },
+  directives: { InfiniteScroll },
   router,
   store
 });

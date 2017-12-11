@@ -98,7 +98,7 @@
 import moment from 'moment';
 import { mapState } from 'vuex';
 
-import IconGta from './IconGta.vue';
+import IconGta from '@components/IconGta.vue';
 
 export default {
   props: {
@@ -112,9 +112,9 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      modes: state => state.common.modes,
-      platforms: state => state.common.platforms
+    ...mapState('common', {
+      modes: state => state.modes,
+      platforms: state => state.platforms
     }),
 
     ratingCssClass() {
@@ -142,48 +142,48 @@ export default {
 </script>
 
 <style lang="scss">
-// @import "../scss/utilities/_all";
-// @import "../scss/components/card";
+@import "../scss/utilities/_all";
+@import "../scss/components/card";
 
-// .card-image {
-//   overflow: hidden;
-//   .image {
-//     transition-duration: 0.5s;
-//   }
-//   &:hover .image {
-//     transform: scale(1.05);
-//   }
-// }
+.card-image {
+  overflow: hidden;
+  .image {
+    transition-duration: 0.5s;
+  }
+  &:hover .image {
+    transform: scale(1.05);
+  }
+}
 
-// .card-title {
-//   position: absolute;
-//   z-index: 1;
-//   right: 0;
-//   bottom: 0;
-//   left: 0;
-//   padding: 1rem 1.5rem;
-//   background: linear-gradient(to top, rgba($black, 0.4), transparent);
-//   .title {
-//     color: rgba($white, 0.85);
-//     text-shadow: 1px 1px 10px rgba($black, 0.4);
-//   }
-// }
+.card-title {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(to top, rgba($black, 0.4), transparent);
+  .title {
+    color: rgba($white, 0.85);
+    text-shadow: 1px 1px 10px rgba($black, 0.4);
+  }
+}
 
-// .card-strip {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   z-index: 1;
-//   height: 5px;
-//   opacity: 0.6;
-//   &.is-success {
-//     background: $success;
-//   }
-//   &.is-warning {
-//     background: $warning;
-//   }
-//   &.is-danger {
-//     background: $danger;
-//   }
-// }
+.card-strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 5px;
+  opacity: 0.6;
+  &.is-success {
+    background: $success;
+  }
+  &.is-warning {
+    background: $warning;
+  }
+  &.is-danger {
+    background: $danger;
+  }
+}
 </style>
