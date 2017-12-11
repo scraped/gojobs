@@ -2,14 +2,14 @@
 @import "utilities/functions";
 @import "./vars";
 
-$primary: #1974d2;
+$primary: yellow;
 $primary-invert: findColorInvert($primary);
 
 $success: hsl(161, 60%, 43%); // 151, 71%, 48%
 $warning: hsl(48, 95%, 60%); // 100%, 67%
 $danger: hsl(348, 90%, 47%); // 100%, 61%
 
-$body-background-color: $white-ter;
+$body-background-color: yellow;
 
 $family-primary: "Lato", sans-serif;
 
@@ -42,4 +42,4 @@ $pagination-hover-border-color: $pagination-border-color;
 $pagination-focus-border-color: $pagination-border-color;
 $pagination-active-border-color: $pagination-border-color;
 
-$footer-background-color: $dark;
+$footer-background-color: rgb(0, 0, 0);

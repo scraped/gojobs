@@ -98,37 +98,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <style lang="scss">
-@import "../scss/utilities/_all";
+// @import "../scss/utilities/_all";
 
-$navbar-height: 4rem;
-$navbar-item-color: $white;
-$navbar-item-hover-color: $white;
-$navbar-item-hover-background-color: rgba($black, 0.15);
+// $navbar-height: 4rem;
+// $navbar-item-color: $white;
+// $navbar-item-hover-color: $white;
+// $navbar-item-hover-background-color: rgba($black, 0.15);
 
-$navbar-dropdown-arrow: $white;
-$navbar-dropdown-border-top: none;
-$navbar-dropdown-background-color: $dark;
+// $navbar-dropdown-arrow: $white;
+// $navbar-dropdown-border-top: none;
+// $navbar-dropdown-background-color: $dark;
 
-$navbar-tab-hover-background-color: $dark;
+// $navbar-tab-hover-background-color: $dark;
 
-@import "../scss/components/navbar";
-@import "../scss/vars";
+// @import "../scss/components/navbar";
+// @import "../scss/vars";
 
-.navbar {
-  background-color: transparent;
-  background-image: $main-gradient;
-}
+// .navbar {
+//   background-color: transparent;
+//   background-image: $main-gradient;
+// }
 
-.navbar-item {
-  transition-duration: $speed;
-}
+// .navbar-item {
+//   transition-duration: $speed;
+// }
 
-.navbar-menu.is-active {
-  background: $dark;
-}
+// .navbar-menu.is-active {
+//   background: $dark;
+// }
 
-.navbar-burger {
-  color: $white;
-}
+// .navbar-burger {
+//   color: $white;
+// }
 </style>
 

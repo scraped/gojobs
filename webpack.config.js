@@ -27,6 +27,23 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.scss/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [{
+            loader: 'css-loader',
+            options: { sourceMap: true }
+          }, {
+            loader: 'resolve-url-loader',
+            options: { root: config.srcDir, sourceMap: true }
+          }, {
+            loader: 'sass-loader',
+            options: { sourceMap: true }
+          }]
+        })
+      },
+
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -55,23 +72,6 @@ module.exports = {
           name: imagesName,
           fallback: 'file-loader'
         }
-      },
-
-      {
-        test: /\.scss/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [{
-            loader: 'css-loader',
-            options: { sourceMap: true }
-          }, {
-            loader: 'resolve-url-loader',
-            options: { root: config.srcDir, sourceMap: true }
-          }, {
-            loader: 'sass-loader',
-            options: { sourceMap: true }
-          }]
-        })
       }
     ]
   },
@@ -96,7 +96,9 @@ module.exports = {
       template: `${config.srcDir}/index.html`,
       filename: 'index.html',
       minify: { collapseWhitespace: true }
-    })
+    }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
 
   devServer: {
@@ -104,6 +106,11 @@ module.exports = {
     noInfo: true,
     quiet: true,
     compress: true,
+    // enables HMR without page refresh as fallback in case of build failures
+    hotOnly: true,
+    // opens the browser
+    open: true,
+    overlay: true,
     proxy: {
       '/api': `http://localhost:${config.port}`
     }
