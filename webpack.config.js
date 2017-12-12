@@ -37,7 +37,12 @@ module.exports = {
           fallback: 'style-loader',
           use: [{
             loader: 'css-loader',
-            options: { sourceMap: true }
+            options: {
+              sourceMap: true,
+              alias: {
+                '@bulma': path.resolve(config.srcDir, 'scss', 'bulma'),
+              }
+            }
           }, {
             loader: 'resolve-url-loader',
             options: { root: config.srcDir, sourceMap: true }

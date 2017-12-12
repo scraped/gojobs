@@ -1,19 +1,19 @@
 <template>
   <div>
-    <hero class="is-medium" text="GTA Online Jobs"></hero>
+    <bulma-hero class="is-medium" text="GTA Online Jobs"></bulma-hero>
 
     <section class="section">
       <div class="container">
         <jobs-list></jobs-list>
 
         <br>
-        <pagination
+        <bulma-pagination
           :curr-page="page"
           :total-items="amount"
           :load-more-button="true"
           :loading="loading"
           @load-more="fetchAndAppend()">
-        </pagination>
+        </bulma-pagination>
       </div>
     </section>
   </div>
@@ -24,9 +24,9 @@ import Vue from 'vue';
 import store from '../store';
 import { mapState } from 'vuex';
 
-import Hero from '@components/Hero.vue';
+import BulmaHero from '@components/BulmaHero.vue';
 import JobsList from '@components/JobsList.vue';
-import Pagination from '@components/Pagination.vue';
+import BulmaPagination from '@components/BulmaPagination.vue';
 
 async function fetchJobs(to, from, next) {
   await store.dispatch('jobs/fetch', { query: to.query });
@@ -35,9 +35,9 @@ async function fetchJobs(to, from, next) {
 
 export default {
   components: {
-    Hero,
+    BulmaHero,
     JobsList,
-    Pagination
+    BulmaPagination
   },
 
   data() {

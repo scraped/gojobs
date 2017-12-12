@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .icon-gta {
-    font-family: 'gtav-icon-font';
-  }
+.icon-gta {
+  font-family: 'gtav-icon-font';
+}
 </style>

@@ -4,15 +4,15 @@
       <!-- <icon-gta :icon="modes[job.job.gameType - 1].modes[job.job.gameMode - 1].icon"></icon-gta> -->
     </div>
     <router-link :to="{ name: 'job', params: { id: job.jobId } }">
-      <div class="card-image">
+      <div class="card__image">
         <figure class="image is-2by1">
           <img :src="job.image" :alt="job.name">
         </figure>
         <div
-          :class="`card-strip is-${ratingCssClass}`"
+          :class="`card__strip is-${ratingCssClass}`"
           :style="`width: ${job.stats.rating}%;`">
         </div>
-        <div class="card-title">
+        <div class="card__title">
           <div class="title is-5">
             <span
               class="tooltip has-text-weight-normal"
@@ -112,10 +112,10 @@ export default {
   },
 
   computed: {
-    ...mapState('common', {
-      modes: state => state.modes,
-      platforms: state => state.platforms
-    }),
+    ...mapState('common', [
+      'modes',
+      'platforms'
+    ]),
 
     ratingCssClass() {
       let rating = this.job.stats.ratingQuit;
@@ -142,10 +142,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/utilities/_all";
-@import "../scss/components/card";
+@import "@bulma/utilities/_all";
 
-.card-image {
+.card__image {
   overflow: hidden;
   .image {
     transition-duration: 0.5s;
@@ -155,7 +154,7 @@ export default {
   }
 }
 
-.card-title {
+.card__title {
   position: absolute;
   z-index: 1;
   right: 0;
@@ -169,7 +168,7 @@ export default {
   }
 }
 
-.card-strip {
+.card__strip {
   position: absolute;
   top: 0;
   left: 0;

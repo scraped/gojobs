@@ -1,10 +1,10 @@
 <template>
   <div>
-    <hero
+    <bulma-hero
       class="is-medium"
       :background="job.image"
       :text="job.name">
-    </hero>
+    </bulma-hero>
 
     <section class="section">
       <div class="container">
@@ -120,7 +120,7 @@ import moment from 'moment';
 import { mapState } from 'vuex';
 import store from '../store';
 
-import Hero from '@components/Hero.vue';
+import BulmaHero from '@components/BulmaHero.vue';
 import IconGta from '@components/IconGta.vue';
 
 async function fetchJob(to, from, next) {
@@ -130,7 +130,7 @@ async function fetchJob(to, from, next) {
 
 export default {
   components: {
-    Hero,
+    BulmaHero,
     IconGta
   },
 

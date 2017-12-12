@@ -9,17 +9,16 @@
 
 @import "elements/box";
 @import "elements/button";
-
 @import "elements/container";
 @import "elements/form";
 @import "elements/icon";
 @import "elements/image";
 @import "elements/notification";
 @import "elements/other";
-@import "elements/title";
 @import "elements/tag";
+@import "elements/title";
 
-@import "grid/_all";
+@import "grid/columns";
 
 @import "layout/footer";
 @import "layout/hero";

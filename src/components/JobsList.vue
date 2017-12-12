@@ -60,7 +60,7 @@ import Vue from 'vue';
 import { mapState } from 'vuex';
 import genQuery from '../mixins/gen-query.js';
 
-import Tabs from '@components/Tabs.vue';
+import Tabs from '@components/BulmaTabs.vue';
 import JobCard from '@components/JobCard.vue';
 
 export default {
