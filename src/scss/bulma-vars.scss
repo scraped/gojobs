@@ -1,5 +1,5 @@
-@import "@bulma/utilities/initial-variables";
-@import "@bulma/utilities/functions";
+@import "utilities/initial-variables";
+@import "utilities/functions";
 @import "./vars";
 
 $primary: $rockstar-light;
@@ -12,6 +12,8 @@ $danger: hsl(348, 90%, 47%); // 100%, 61%
 $body-background-color: $white-ter;
 
 $family-primary: "Lato", sans-serif;
+
+@import "utilities/derived-variables";
 
 // input
 $input-hover-border-color: $grey-lighter;
@@ -32,3 +34,29 @@ $button-hover-background-color: $gtaonline;
 $button-border-color: transparent;
 $button-hover-border-color: $button-border-color;
 $button-active-border-color: $button-border-color;
+
+// navbar
+$navbar-height: 4rem;
+$navbar-item-color: $white;
+$navbar-item-hover-color: $white;
+$navbar-item-hover-background-color: rgba($black, 0.15);
+
+$navbar-dropdown-arrow: $white;
+$navbar-dropdown-border-top: none;
+$navbar-dropdown-background-color: $dark;
+
+$navbar-tab-hover-background-color: $dark;
+
+// tabs
+$tabs-border-bottom-width: 2px; // 1px
+$tabs-border-bottom-color: transparent; // $border
+$tabs-link-padding: 0.5em 0; // 0.5em 1em
+
+// pagination
+$pagination-margin: 0;
+$pagination-border-color: $rockstar;
+$pagination-current-color: $gtaonline;
+$pagination-current-background-color: $rockstar;
+$pagination-hover-border-color: $pagination-border-color;
+$pagination-focus-border-color: $pagination-border-color;
+$pagination-active-border-color: $pagination-border-color;

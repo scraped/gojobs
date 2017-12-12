@@ -11,7 +11,5 @@
 
 <style lang="scss">
 $footer-background-color: rgb(0, 0, 0);
-
-@import "@bulma/layout/footer";
 </style>
 

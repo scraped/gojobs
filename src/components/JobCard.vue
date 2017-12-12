@@ -142,7 +142,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@bulma/utilities/_all";
+@import "../scss/utilities/_all";
 
 .card__image {
   overflow: hidden;

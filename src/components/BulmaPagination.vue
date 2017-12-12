@@ -163,18 +163,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import "../scss/vars";
-
-$pagination-margin: 0;
-$pagination-border-color: $rockstar;
-$pagination-current-color: $gtaonline;
-$pagination-current-background-color: $rockstar;
-$pagination-hover-border-color: $pagination-border-color;
-$pagination-focus-border-color: $pagination-border-color;
-$pagination-active-border-color: $pagination-border-color;
-
-@import "@bulma/components/pagination";
-</style>
-

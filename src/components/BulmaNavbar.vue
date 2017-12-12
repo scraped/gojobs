@@ -98,20 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <style lang="scss">
-@import "@bulma/utilities/_all";
-
-$navbar-height: 4rem;
-$navbar-item-color: $white;
-$navbar-item-hover-color: $white;
-$navbar-item-hover-background-color: rgba($black, 0.15);
-
-$navbar-dropdown-arrow: $white;
-$navbar-dropdown-border-top: none;
-$navbar-dropdown-background-color: $dark;
-
-$navbar-tab-hover-background-color: $dark;
-
-@import "@bulma/components/navbar";
+@import "../scss/utilities/_all";
 @import "../scss/vars";
 
 .navbar {
