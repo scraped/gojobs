@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import axios from 'axios';
 import queryString from 'query-string';
 
 const state = {
@@ -23,7 +24,7 @@ const actions = {
     if (append) query.page++;
     let queryStr = queryString.stringify(query);
 
-    let response = await Vue.http.get(`/api/jobs?${queryStr}`);
+    let response = await axios.get(`/jobs?${queryStr}`);
 
     let { jobs, amount } = response.data;
 

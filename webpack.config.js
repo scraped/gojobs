@@ -25,7 +25,8 @@ module.exports = {
 
   resolve: {
     alias: {
-      '@components': path.resolve(config.srcDir, 'components')
+      '@components': path.resolve(config.srcDir, 'components'),
+      '@views': path.resolve(config.srcDir, 'views')
     }
   },
 
