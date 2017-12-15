@@ -2,6 +2,10 @@ import { createApp } from './app';
 
 const { app, router, store } = createApp();
 
-router.onError(() => {
+if (window.__INITIAL_STATE__) {
+  store.replaceState(window.__INITIAL_STATE__)
+}
+
+router.onReady(() => {
   app.$mount('#app');
 });
