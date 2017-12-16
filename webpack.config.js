@@ -8,9 +8,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
-const jsName = 'assets/js/build.[hash].js';
-const cssName = 'assets/css/[name].[contenthash].css';
-const imagesName = 'assets/images/[name].[hash].[ext]';
+const jsName = 'dist/js/build.[hash].js';
+const cssName = 'dist/css/[name].[contenthash].css';
+const imagesName = 'dist/images/[name].[hash].[ext]';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
