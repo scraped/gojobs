@@ -1,5 +1,7 @@
 import './scss/main.scss'
 
+////////////////////////////////////////
+
 import Vue from 'vue';
 import App from './App.vue';
 import { createStore } from './store'
@@ -36,8 +38,8 @@ export function createApp() {
   const app = new Vue({
     el: '#app',
     render: h => h(App),
-    router,
-    store
+    store,
+    router
   });
 
   return { app, store, router };
