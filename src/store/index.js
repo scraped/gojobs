@@ -7,11 +7,11 @@ import common from './modules/common';
 import jobs from './modules/jobs';
 import job from './modules/job';
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 
 export function createStore() {
   return new Vuex.Store({
-    strict: isDevelopment,
+    strict: !isProduction,
     modules: {
       common,
       jobs,

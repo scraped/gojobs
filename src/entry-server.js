@@ -27,6 +27,5 @@ export default context => {
 
       resolve(app);
     }, reject); // router.onReady
-
   });
 }

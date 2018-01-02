@@ -15,8 +15,6 @@ const imagesName = 'dist/images/[name].[hash].[ext]';
 const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  entry: `${config.srcDir}/main.js`,
-
   output: {
     path: path.resolve(__dirname, config.distDir),
     publicPath: '/',
@@ -94,11 +92,11 @@ module.exports = {
     new CleanWebpackPlugin(config.distDir),
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin(cssName),
-    new HtmlWebpackPlugin({
-      template: `${config.srcDir}/index.html`,
-      filename: 'index.html',
-      minify: { collapseWhitespace: true }
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: `${config.srcDir}/index.html`,
+    //   filename: 'index.html',
+    //   minify: { collapseWhitespace: true }
+    // }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ],
@@ -120,7 +118,7 @@ module.exports = {
   },
 
   performance: {
-    hints: false
+    hints: isProduction ? 'warning' : false
   },
 
   devtool: isProduction ? 'none' : '#cheap-inline-module-source-map'
@@ -146,6 +144,8 @@ if (isProduction) {
 
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    })
+    }),
+
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ]);
 }

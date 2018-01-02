@@ -7,7 +7,7 @@ import App from './App.vue';
 import { createStore } from './store'
 import { createRouter } from './router'
 import { sync } from 'vuex-router-sync';
-import * as filters from './util/filters';
+import * as filters from './utils/filters';
 
 import VueResource from 'vue-resource';
 import VueProgressBar from 'vue-progressbar';

@@ -118,17 +118,15 @@
 <script>
 import moment from 'moment';
 import { mapState } from 'vuex';
-import store from '../store';
 
 import BulmaHero from '@components/BulmaHero.vue';
 import IconGta from '@components/IconGta.vue';
 
-async function fetchJob(to, from, next) {
-  await store.dispatch('job/fetch', to.params);
-  next();
-}
-
 export default {
+  fetchData({ store, route }) {
+    return store.dispatch('job/fetch', route.params);
+  },
+
   components: {
     BulmaHero,
     IconGta

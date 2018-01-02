@@ -11,8 +11,8 @@
           :curr-page="page"
           :total-items="amount"
           :load-more-button="true"
-          :loading="loading"
-          @load-more="fetchAndAppend()">
+          :loading="loading">
+          <!-- @load-more="fetchAndAppend()"> -->
         </bulma-pagination>
       </div>
     </section>
@@ -21,19 +21,17 @@
 
 <script>
 import Vue from 'vue';
-import store from '../store';
 import { mapState } from 'vuex';
 
 import BulmaHero from '@components/BulmaHero.vue';
-import JobsList from '@components/JobsList.vue';
+import JobsList from '@components/JobList.vue';
 import BulmaPagination from '@components/BulmaPagination.vue';
 
-async function fetchJobs(to, from, next) {
-  await store.dispatch('jobs/fetch', { query: to.query });
-  next();
-}
-
 export default {
+  fetchData({ store, route }) {
+    return store.dispatch('jobs/fetch', { query: route.query });
+  },
+
   components: {
     BulmaHero,
     JobsList,
@@ -60,12 +58,12 @@ export default {
 
   beforeRouteUpdate: fetchJobs,
 
-  methods: {
-    async fetchAndAppend() {
-      const { query } = this.$store.state.route;
-      await store.dispatch('jobs/fetch', { query, append: true });
-      this.$router.replace({ name: 'main', query: { page: this.page + 1 } })
-    }
-  }
+  // methods: {
+  //   async fetchAndAppend() {
+  //     const { query } = this.$store.state.route;
+  //     await store.dispatch('jobs/fetch', { query, append: true });
+  //     this.$router.replace({ name: 'main', query: { page: this.page + 1 } })
+  //   }
+  // }
 };
 </script>

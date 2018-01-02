@@ -58,7 +58,7 @@
 <script>
 import Vue from 'vue';
 import { mapState } from 'vuex';
-import genQuery from '../mixins/gen-query.js';
+import genQuery from '../utils/gen-query.js';
 
 import BulmaTabs from '@components/BulmaTabs.vue';
 import JobCard from '@components/JobCard.vue';

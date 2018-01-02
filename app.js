@@ -1,11 +1,11 @@
 const config = require('./config');
 const fs = require('fs');
-const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const helmet = require('helmet');
 const history = require('connect-history-api-fallback');
 const chalk = require('chalk');
 const { resolveSrc } = require('./utils');
@@ -27,6 +27,7 @@ app.disable('x-powered-by');
 
 app.use(logger('dev'));
 app.use(cors());
+app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(resolveSrc()));
@@ -40,11 +41,13 @@ errorHandler(app);
 app.get('*', (req, res) => {
   const context = { url: req.url };
   renderer.renderToString(context, (err, html) => {
-    res.end(html);
+    if (err) {
+      return res.send('Ошибка 404!');
+    }
+    res.send(html);
   });
 });
 
-// Run server
 app.listen(app.get('port'), () => {
   console.log(
     chalk.bgBlue(' INFO '),
