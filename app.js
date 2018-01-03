@@ -1,5 +1,6 @@
 const config = require('./config');
 const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -8,15 +9,14 @@ const cors = require('cors');
 const helmet = require('helmet');
 const history = require('connect-history-api-fallback');
 const chalk = require('chalk');
-const { resolveSrc } = require('./utils');
-const vue = require('vue');
 const { createBundleRenderer } = require('vue-server-renderer');
+const serverBundle = require(`${config.distDir}/vue-ssr-server-bundle`);
 
 const jobsRouter = require('./routers/jobs');
 const errorHandler = require('./routers/error');
 
 const renderer = createBundleRenderer(serverBundle, {
-  template: fs.readFileSync(resolveSrc('index.html')),
+  template: fs.readFileSync(`${config.srcDir}/index.html`),
   runInNewContext: false
 });
 
@@ -30,7 +30,7 @@ app.use(cors());
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(resolveSrc()));
+app.use(express.static(path.resolve(__dirname, config.srcDir)));
 
 app.use('/api/jobs', jobsRouter);
 

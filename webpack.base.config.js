@@ -7,15 +7,14 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
 
-const jsName = 'js/build.[name].[hash].js';
+const jsName = 'js/[name].[hash].js';
 const cssName = 'css/[name].[contenthash].css';
 const imagesName = 'images/[name].[hash].[ext]';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-module.exports = {
+let webpackConfig = {
   output: {
     path: path.resolve(__dirname, config.distDir),
     publicPath: '/',
@@ -90,7 +89,7 @@ module.exports = {
         });
       }
     }),
-    new CleanWebpackPlugin(config.distDir),
+    // new CleanWebpackPlugin(config.distDir),
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin(cssName),
     // new HtmlWebpackPlugin({
@@ -98,8 +97,6 @@ module.exports = {
     //   filename: 'index.html',
     //   minify: { collapseWhitespace: true }
     // }),
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
   ],
 
   devServer: {
@@ -114,7 +111,7 @@ module.exports = {
     open: true,
     overlay: true,
     proxy: {
-      '/api': `http://localhost:${config.port}`
+      '/': `http://localhost:${config.port}`
     }
   },
 
@@ -125,30 +122,23 @@ module.exports = {
   devtool: isProduction ? 'none' : '#cheap-inline-module-source-map'
 };
 
-// Production section
+if (!isProduction) {
+  webpackConfig.plugins.push(
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()
+  )
+}
 
 if (isProduction) {
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
+  webpackConfig.plugins.push(
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
       }
     }),
-
-    new UglifyJSWebpackPlugin({
-      sourceMap: true,
-      uglifyOptions: {
-        compress: {
-          warnings: false
-        }
-      }
-    }),
-
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    }),
-
+    new webpack.LoaderOptionsPlugin({ minimize: true }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-  ]);
+  );
 }
+
+module.exports = webpackConfig;

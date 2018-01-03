@@ -17,7 +17,7 @@ module.exports = merge(baseWebpackConfig, {
   target: 'node',
 
   externals: webpackNodeExternals({
-    whitelist: /\.scss$/
+    // whitelist: /\.scss$/
   }),
 
   plugins: [
