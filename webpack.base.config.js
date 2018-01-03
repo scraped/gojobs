@@ -7,10 +7,11 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
 
-const jsName = 'dist/js/build.[hash].js';
-const cssName = 'dist/css/[name].[contenthash].css';
-const imagesName = 'dist/images/[name].[hash].[ext]';
+const jsName = 'js/build.[name].[hash].js';
+const cssName = 'css/[name].[contenthash].css';
+const imagesName = 'images/[name].[hash].[ext]';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -29,8 +30,6 @@ module.exports = {
   },
 
   module: {
-    noParse: /es6-promise\.js$/,
-
     rules: [
       {
         test: /\.scss/,
@@ -137,10 +136,12 @@ if (isProduction) {
       }
     }),
 
-    new webpack.optimize.UglifyJsPlugin({
+    new UglifyJSWebpackPlugin({
       sourceMap: true,
-      compress: {
-        warnings: false
+      uglifyOptions: {
+        compress: {
+          warnings: false
+        }
       }
     }),
 
