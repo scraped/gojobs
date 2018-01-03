@@ -6,7 +6,6 @@ const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
 
-
 const isProduction = process.env.NODE_ENV === 'production';
 
 const webpackConfig = {
@@ -18,13 +17,13 @@ const webpackConfig = {
     // extract vendor chunks for better caching
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: function (module) {
+      minChunks(module) {
         // a module is extracted into the vendor chunk if...
         return (
           // it's inside node_modules
-          /node_modules/.test(module.context) &&
+          /node_modules/.test(module.context)
           // and not a CSS file (due to extract-text-webpack-plugin limitation)
-          !(/\.css$/).test(module.request)
+          && !(/\.css$/).test(module.request)
         )
       }
     }),

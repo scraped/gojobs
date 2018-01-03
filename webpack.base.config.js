@@ -5,7 +5,7 @@ const notifier = require('node-notifier');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const jsName = 'js/[name].[hash].js';

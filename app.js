@@ -23,30 +23,30 @@ const renderer = createBundleRenderer(serverBundle, {
 const app = express();
 
 app.set('port', config.port);
-app.disable('x-powered-by');
 
 app.use(logger('dev'));
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.resolve(__dirname, config.srcDir)));
+app.use(express.static(path.resolve(__dirname, config.distDir)));
 
 app.use('/api/jobs', jobsRouter);
 
 app.use(history());
 
-errorHandler(app);
-
 app.get('*', (req, res) => {
   const context = { url: req.url };
   renderer.renderToString(context, (err, html) => {
     if (err) {
+      console.log(err);
       return res.send('Ошибка 404!');
     }
     res.send(html);
   });
 });
+
+errorHandler(app);
 
 app.listen(app.get('port'), () => {
   console.log(
