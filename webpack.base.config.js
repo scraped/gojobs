@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const notifier = require('node-notifier');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
@@ -29,6 +29,8 @@ module.exports = {
   },
 
   module: {
+    noParse: /es6-promise\.js$/,
+
     rules: [
       {
         test: /\.scss/,

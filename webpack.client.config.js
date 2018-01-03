@@ -11,6 +11,18 @@ module.exports = merge(baseWebpackConfig, {
 
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module) {
+        // a module is extracted into the vendor chunk if...
+        return (
+          // it's inside node_modules
+          /node_modules/.test(module.context) &&
+          // and not a CSS file (due to extract-text-webpack-plugin limitation)
+          !(/\.css$/).test(module.request)
+        )
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       minChunks: Infinity
     }),
