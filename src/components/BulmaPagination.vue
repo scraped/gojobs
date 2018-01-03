@@ -141,10 +141,6 @@ export default {
       this.$emit('load-more');
     },
 
-    test() {
-      console.log('here');
-    },
-
     hasFirst() {
       return this.leftBound !== 1;
     },

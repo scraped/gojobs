@@ -11,8 +11,8 @@ import * as filters from './utils/filters';
 
 import VueResource from 'vue-resource';
 import VueProgressBar from 'vue-progressbar';
-import VueResourceProgressBarInterceptor from 'vue-resource-progressbar-interceptor';
-import VueAgile from 'vue-agile';
+// import VueResourceProgressBarInterceptor from 'vue-resource-progressbar-interceptor';
+// import VueAgile from 'vue-agile';
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);
@@ -25,9 +25,9 @@ const progressBarOptions = {
 };
 
 Vue.use(VueResource);
-Vue.use(VueProgressBar, progressBarOptions);
-Vue.use(VueResourceProgressBarInterceptor);
-Vue.use(VueAgile);
+// Vue.use(VueProgressBar, progressBarOptions);
+// Vue.use(VueResourceProgressBarInterceptor);
+// Vue.use(VueAgile);
 
 export function createApp() {
   const store = createStore();

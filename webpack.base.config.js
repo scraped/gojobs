@@ -28,6 +28,10 @@ let webpackConfig = {
     }
   },
 
+  externals: {
+    moment: 'moment'
+  },
+
   module: {
     rules: [
       {

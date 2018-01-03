@@ -5,6 +5,7 @@ export default context => {
     const { app, router, store } = createApp();
 
     router.push(context.url);
+    console.log(context.url);
 
     router.onReady(async () => {
       const matchedComponents = router.getMatchedComponents();
@@ -14,8 +15,10 @@ export default context => {
       }
 
       await Promise.all(matchedComponents.map(Component => {
+        console.log('yes!!', Component);
         // If Component has fetchData static method
         if (Component.fetchData) {
+          console.log('yes2!!', Component);
           return Component.fetchData({
             store,
             route: router.currentRoute

@@ -25,7 +25,7 @@
                 class="navbar-item"
                 v-for="platform in platforms"
                 :key="platform.id"
-                v-if="platform.id != currPlatform.id">
+                v-if="platform.id !== currPlatform.id">
                 {{ platform.name }}
               </a>
             </div>
@@ -56,44 +56,38 @@ export default {
     ...mapState('common', [
       'platforms'
     ])
-  },
-
-  methods: {
-    toggleDropdown(e) {
-      console.log('hi')
-    }
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  const navbarBurger = document.querySelector('.navbar-burger');
+// document.addEventListener('DOMContentLoaded', () => {
+//   const navbarBurger = document.querySelector('.navbar-burger');
 
-  navbarBurger.addEventListener('click', () => {
-    const navbarMenuId = navbarBurger.dataset.target;
-    const navbarMenu = document.getElementById(navbarMenuId);
+//   navbarBurger.addEventListener('click', () => {
+//     const navbarMenuId = navbarBurger.dataset.target;
+//     const navbarMenu = document.getElementById(navbarMenuId);
 
-    navbarBurger.classList.toggle('is-active');
-    navbarMenu.classList.toggle('is-active');
-  });
+//     navbarBurger.classList.toggle('is-active');
+//     navbarMenu.classList.toggle('is-active');
+//   });
 
-  //
+//   //
 
-  const navbarDropdownLink = document.querySelector('.navbar-link');
-  const navbarDropdown = navbarDropdownLink.parentElement;
+//   const navbarDropdownLink = document.querySelector('.navbar-link');
+//   const navbarDropdown = navbarDropdownLink.parentElement;
 
-  document.addEventListener('click', e => {
-    const target = e.target;
+//   document.addEventListener('click', e => {
+//     const target = e.target;
 
-    if (target === navbarDropdownLink) {
-      navbarDropdown.classList.toggle('is-active');
-    }
+//     if (target === navbarDropdownLink) {
+//       navbarDropdown.classList.toggle('is-active');
+//     }
 
-    if (!navbarDropdown.contains(target)) {
-      navbarDropdown.classList.remove('is-active');
-    }
-  });
+//     if (!navbarDropdown.contains(target)) {
+//       navbarDropdown.classList.remove('is-active');
+//     }
+//   });
 
-});
+// });
 </script>
 
 

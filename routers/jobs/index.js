@@ -1,4 +1,4 @@
-const config = require('../../config');
+// const config = require('../../config');
 const router = require('express').Router();
 const uploadJobs = require('../../lib/upload-jobs');
 
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
   } = req.query;
 
   page = Number(page) || 1;
-  perPage = Number(perPage) || config.perPage;
+  perPage = Number(perPage) || 30;
   platform = Number(platform) || 1;
   gameType = Number(gameType) || 0;
   maxpl = Number(maxpl) || 0;

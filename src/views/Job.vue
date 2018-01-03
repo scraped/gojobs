@@ -145,10 +145,6 @@ export default {
       let rating = this.job.stats.ratingQuit;
       return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
     }
-  },
-
-  beforeRouteEnter: fetchJob,
-
-  beforeRouteUpdate: fetchJob
+  }
 }
 </script>
