@@ -7,7 +7,7 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const { isProduction } = config;
+const { production } = config;
 
 const webpackConfig = {
   entry: path.resolve(config.srcDir, 'entry-client.js'),
@@ -38,7 +38,7 @@ const webpackConfig = {
   ]
 };
 
-if (isProduction) {
+if (production) {
   webpackConfig.plugins.push(
     new UglifyJSWebpackPlugin({
       sourceMap: true,

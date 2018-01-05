@@ -7,14 +7,17 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+const compression = require('compression');
 const chalk = require('chalk');
 
+// SSR-related stuff
 const { createBundleRenderer } = require('vue-server-renderer');
 const serverBundle = require(`${config.distDir}/vue-ssr-server-bundle`);
 const clientManifest = require(`${config.distDir}/vue-ssr-client-manifest`);
+const template = fs.readFileSync(`${config.srcDir}/index.html`, 'utf8');
 
 const renderer = createBundleRenderer(serverBundle, {
-  template: fs.readFileSync(`${config.srcDir}/index.html`, 'utf8'),
+  template,
   clientManifest,
   runInNewContext: false
 });
@@ -40,6 +43,7 @@ app.get('*', (req, res) => {
     title: 'GTA Online Jobs',
     url: req.url
   };
+
   renderer.renderToString(context, (err, html) => {
     if (err) {
       console.log('Ошибка:', err);
@@ -49,8 +53,10 @@ app.get('*', (req, res) => {
   });
 });
 
+// 404 & 500 mware
 errorHandler(app);
 
+// Run server
 app.listen(app.get('port'), () => {
   console.log(
     chalk.bgBlue(' INFO '),

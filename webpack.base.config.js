@@ -11,7 +11,7 @@ const jsName = 'assets/js/[name].[hash:6].js';
 const cssName = 'assets/css/[name].[contenthash:6].css';
 const imagesName = 'assets/images/[name].[hash:6].[ext]';
 
-const { isProduction } = config;
+const { production } = config;
 
 let webpackConfig = {
   output: {
@@ -71,7 +71,7 @@ let webpackConfig = {
         test: /\.(png|jpe?g|gif|svg)$/,
         loader: 'url-loader',
         options: {
-          limit: isProduction ? 4096 : 1,
+          limit: production ? 4096 : 1,
           name: imagesName,
           fallback: 'file-loader'
         }
@@ -96,37 +96,32 @@ let webpackConfig = {
     new webpack.NoEmitOnErrorsPlugin(),
 
     new ExtractTextPlugin(cssName),
-    // new HtmlWebpackPlugin({
-    //   template: `${config.srcDir}/index.html`,
-    //   filename: 'index.html',
-    //   minify: { collapseWhitespace: true }
-    // }),
   ],
 
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-    quiet: true,
-    compress: true,
-    // enables HMR without page refresh as fallback in case of build failures
-    hot: true,
-    hotOnly: true,
-    // opens the browser
-    open: true,
-    overlay: true,
-    proxy: {
-      '/': `http://localhost:${config.port}`
-    }
-  },
+  // devServer: {
+  //   historyApiFallback: true,
+  //   noInfo: true,
+  //   quiet: true,
+  //   compress: true,
+  //   // enables HMR without page refresh as fallback in case of build failures
+  //   hot: true,
+  //   hotOnly: true,
+  //   // opens the browser
+  //   open: true,
+  //   overlay: true,
+  //   proxy: {
+  //     '/': `http://localhost:${config.port}`
+  //   }
+  // },
 
   performance: {
-    hints: isProduction ? 'warning' : false
+    hints: production ? 'warning' : false
   },
 
-  devtool: isProduction ? 'none' : '#cheap-inline-module-source-map'
+  devtool: production ? 'none' : '#cheap-inline-module-source-map'
 };
 
-if (isProduction) {
+if (production) {
   // production only
   webpackConfig.plugins.push(
     new webpack.DefinePlugin({
@@ -137,12 +132,6 @@ if (isProduction) {
     new webpack.LoaderOptionsPlugin({ minimize: true }),
     new webpack.optimize.ModuleConcatenationPlugin(),
   );
-} else {
-  // development only
-  webpackConfig.plugins.push(
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
-  )
 }
 
 module.exports = webpackConfig;
