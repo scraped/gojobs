@@ -31,7 +31,7 @@ app.use(cors());
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.resolve(__dirname, config.distDir)));
+app.use(express.static(path.resolve(__dirname, config.distDir, 'assets')));
 
 app.use('/api/jobs', jobsRouter);
 

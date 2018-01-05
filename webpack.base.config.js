@@ -5,19 +5,18 @@ const notifier = require('node-notifier');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
-const jsName = 'js/[name].[hash].js';
-const cssName = 'css/[name].[contenthash].css';
-const imagesName = 'images/[name].[hash].[ext]';
+const jsName = 'assets/js/[name].[hash:6].js';
+const cssName = 'assets/css/[name].[contenthash:6].css';
+const imagesName = 'assets/images/[name].[hash:6].[ext]';
 
-const isProduction = process.env.NODE_ENV === 'production';
+const { isProduction } = config;
 
 let webpackConfig = {
   output: {
     path: path.resolve(__dirname, config.distDir),
-    publicPath: '/',
+    publicPath: '/assets',
     filename: jsName
   },
 
@@ -93,8 +92,9 @@ let webpackConfig = {
         });
       }
     }),
-    // new CleanWebpackPlugin(config.distDir),
+
     new webpack.NoEmitOnErrorsPlugin(),
+
     new ExtractTextPlugin(cssName),
     // new HtmlWebpackPlugin({
     //   template: `${config.srcDir}/index.html`,
@@ -126,14 +126,8 @@ let webpackConfig = {
   devtool: isProduction ? 'none' : '#cheap-inline-module-source-map'
 };
 
-if (!isProduction) {
-  webpackConfig.plugins.push(
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
-  )
-}
-
 if (isProduction) {
+  // production only
   webpackConfig.plugins.push(
     new webpack.DefinePlugin({
       'process.env': {
@@ -143,6 +137,12 @@ if (isProduction) {
     new webpack.LoaderOptionsPlugin({ minimize: true }),
     new webpack.optimize.ModuleConcatenationPlugin(),
   );
+} else {
+  // development only
+  webpackConfig.plugins.push(
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()
+  )
 }
 
 module.exports = webpackConfig;

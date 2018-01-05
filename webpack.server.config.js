@@ -8,7 +8,7 @@ const webpackNodeExternals = require('webpack-node-externals');
 module.exports = merge(baseWebpackConfig, {
   entry: path.resolve(config.srcDir, 'entry-server.js'),
 
-  // Это сообщает, что в серверной сборке следует использовать экспорты в стиле Node
+  // В серверной сборке следует использовать экспорты в стиле Node
   output: {
     filename: 'server-bundle.js',
     libraryTarget: 'commonjs2'
@@ -16,9 +16,7 @@ module.exports = merge(baseWebpackConfig, {
 
   target: 'node',
 
-  externals: webpackNodeExternals({
-    // whitelist: /\.scss$/
-  }),
+  externals: webpackNodeExternals(),
 
   plugins: [
     new VueSSRServerPlugin()

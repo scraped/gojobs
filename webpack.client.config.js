@@ -5,13 +5,12 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const isProduction = process.env.NODE_ENV === 'production';
+const { isProduction } = config;
 
 const webpackConfig = {
-  entry: {
-    app: path.resolve(config.srcDir, 'entry-client.js')
-  },
+  entry: path.resolve(config.srcDir, 'entry-client.js'),
 
   plugins: [
     // extract vendor chunks for better caching
@@ -32,6 +31,8 @@ const webpackConfig = {
       name: 'manifest',
       minChunks: Infinity
     }),
+
+    new CleanWebpackPlugin(`${config.distDir}/assets`),
 
     new VueSSRClientPlugin()
   ]
