@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const notifier = require('node-notifier');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const jsName = 'assets/js/[name].[hash:6].js';
@@ -12,6 +11,10 @@ const cssName = 'assets/css/[name].[contenthash:6].css';
 const imagesName = 'assets/images/[name].[hash:6].[ext]';
 
 const { production } = config;
+
+// Why no clean-webpack-plugin? Two bundles need dist dir so no one
+// can delete it. You must delete it manually before bunding
+// (using rimraf, for example).
 
 let webpackConfig = {
   output: {
@@ -122,7 +125,6 @@ let webpackConfig = {
 };
 
 if (production) {
-  // production only
   webpackConfig.plugins.push(
     new webpack.DefinePlugin({
       'process.env': {

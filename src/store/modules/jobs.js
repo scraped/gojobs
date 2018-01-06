@@ -24,7 +24,6 @@ const actions = {
     if (append) query.page++;
     let queryStr = queryString.stringify(query);
 
-    console.log('fetch');
     let response = await axios.get(`http://localhost:3000/api/jobs?${queryStr}`);
 
     let { jobs, amount } = response.data;

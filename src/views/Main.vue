@@ -29,7 +29,6 @@ import BulmaPagination from '@components/BulmaPagination.vue';
 
 export default {
   fetchData({ store, route }) {
-    console.log('here');
     return store.dispatch('jobs/fetch', { query: route.query });
   },
 

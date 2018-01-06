@@ -5,7 +5,6 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const { production } = config;
 
@@ -31,8 +30,6 @@ const webpackConfig = {
       name: 'manifest',
       minChunks: Infinity
     }),
-
-    new CleanWebpackPlugin(`${config.distDir}/assets`),
 
     new VueSSRClientPlugin()
   ]

@@ -10,7 +10,7 @@ import { sync } from 'vuex-router-sync';
 import * as filters from './utils/filters';
 
 import VueResource from 'vue-resource';
-import VueProgressBar from 'vue-progressbar';
+// import VueProgressBar from 'vue-progressbar';
 // import VueResourceProgressBarInterceptor from 'vue-resource-progressbar-interceptor';
 // import VueAgile from 'vue-agile';
 
@@ -18,11 +18,11 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);
 });
 
-const progressBarOptions = {
-  color: '#75c1ff',
-  failedColor: 'red',
-  thickness: '6px'
-};
+// const progressBarOptions = {
+//   color: '#75c1ff',
+//   failedColor: 'red',
+//   thickness: '6px'
+// };
 
 Vue.use(VueResource);
 // Vue.use(VueProgressBar, progressBarOptions);

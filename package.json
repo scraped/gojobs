@@ -4,11 +4,13 @@
   "description": "No description yet",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.client.config.js --progress --hide-modules && cross-env NODE_ENV=production webpack --config webpack.server.config.js --progress --hide-modules",
+    "dev:nodemon": "nodemon app",
+    "dev:node": "node app",
     "build:client": "cross-env NODE_ENV=production webpack --config webpack.client.config.js --progress --hide-modules",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack.server.config.js --progress --hide-modules",
-    "build-serve": "npm run build && nodemon app"
+    "build": "rimraf dist && npm run build:client && npm run build:server",
+    "build-serve:nodemon": "npm run build && nodemon app",
+    "build-serve:node": "npm run build && node app"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,15 @@
     "url": "https://github.com/andreww2012/gojobs/issues"
   },
   "homepage": "https://github.com/andreww2012/gojobs#readme",
+  "nodemonConfig": {
+    "ignore": [
+      "src/images",
+      "src/scss",
+      "src/index.html",
+      "src/entry-client",
+      "package.json"
+    ]
+  },
   "dependencies": {
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
@@ -39,7 +50,6 @@
     "mongoose": "^4.13.8",
     "morgan": "^1.9.0",
     "node-sass": "^4.7.2",
-    "nodemon": "^1.14.7",
     "pretty-error": "^2.1.1",
     "query-string": "^5.0.1",
     "vue": "^2.5.13",
@@ -57,7 +67,6 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
     "chokidar": "^2.0.0",
-    "clean-webpack-plugin": "^0.1.17",
     "cross-env": "^5.1.3",
     "css-loader": "^0.28.7",
     "eslint": "^4.14.0",
@@ -66,6 +75,7 @@
     "html-webpack-plugin": "^2.30.1",
     "memory-fs": "^0.4.1",
     "node-notifier": "^5.1.2",
+    "nodemon": "^1.14.8",
     "resolve-url-loader": "^2.2.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",

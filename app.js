@@ -35,7 +35,6 @@ SSR(app);
 // Run server
 app.listen(app.get('port'), () => {
   console.log(
-    chalk.bgBlue(' INFO '),
     chalk.blue(`Server is running at http://localhost:${app.get('port')}`)
   );
 });

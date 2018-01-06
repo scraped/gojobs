@@ -33,7 +33,7 @@ module.exports = app => {
     try {
       bundle = readFileSync(`${config.distDir}/vue-ssr-server-bundle.json`);
       clientManifest = readFileSync(`${config.distDir}/vue-ssr-client-manifest.json`);
-      template = readFileSync(`${config.srcDir}/index.html`, 'utf-8');
+      template = readFileSync(`${config.srcDir}/index.html`);
     } catch (e) {
       throw e;
     }

@@ -27,8 +27,10 @@ function setupDevServer(app, updateCallback) {
 
   // Utilities
   function update() {
-    readyPromiseResolve();
-    updateCallback({ bundle, clientManifest, template });
+    if (bundle && clientManifest) {
+      readyPromiseResolve();
+      updateCallback({ bundle, clientManifest, template });
+    }
   }
 
   function readFileSync(fs, filename) {
@@ -61,7 +63,12 @@ function setupDevServer(app, updateCallback) {
   );
 
   const webpackDevMiddlewareInstance = webpackDevMiddleware(clientCompiler, {
-    publicPath: clientConfig.output.publicPath
+    publicPath: clientConfig.output.publicPath,
+    stats: {
+      chunks: false,
+      colors: true,
+      modules: false
+    }
   });
 
   const webpackHotMiddlewareInstance = webpackHotMiddleware(clientCompiler);
