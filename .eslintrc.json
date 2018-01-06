@@ -67,10 +67,6 @@
         "for-direction": "error",
         "func-call-spacing": "error",
         "func-name-matching": "error",
-        "func-names": [
-            "error",
-            "never"
-        ],
         "func-style": [
             "off",
             "declaration"
@@ -86,7 +82,7 @@
         "id-match": "error",
         "indent": "off",
         "indent-legacy": "off",
-        "init-declarations": "error",
+        "init-declarations": "off",
         "jsx-quotes": "error",
         "key-spacing": "error",
         "keyword-spacing": [

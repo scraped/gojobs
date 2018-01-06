@@ -9,18 +9,23 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const chalk = require('chalk');
-
-// SSR-related stuff
 const { createBundleRenderer } = require('vue-server-renderer');
-const serverBundle = require(`${config.distDir}/vue-ssr-server-bundle`);
-const clientManifest = require(`${config.distDir}/vue-ssr-client-manifest`);
-const template = fs.readFileSync(`${config.srcDir}/index.html`, 'utf8');
 
-const renderer = createBundleRenderer(serverBundle, {
-  template,
-  clientManifest,
-  runInNewContext: false
-});
+let renderer = null;
+
+if (config.production) {
+  const serverBundle = require(`${config.distDir}/vue-ssr-server-bundle`);
+  const clientManifest = require(`${config.distDir}/vue-ssr-client-manifest`);
+  const template = fs.readFileSync(`${config.srcDir}/index.html`, 'utf8');
+
+  renderer = createBundleRenderer(serverBundle, {
+    clientManifest,
+    template,
+    runInNewContext: false
+  });
+} else {
+
+}
 
 const jobsRouter = require('./routers/jobs');
 const errorHandler = require('./routers/error');
@@ -32,6 +37,7 @@ app.set('port', config.port);
 app.use(logger('dev'));
 app.use(cors());
 app.use(helmet());
+app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, config.distDir, 'assets')));
@@ -53,7 +59,7 @@ app.get('*', (req, res) => {
   });
 });
 
-// 404 & 500 mware
+// 404 & 500 middleware
 errorHandler(app);
 
 // Run server
