@@ -1,4 +1,7 @@
+const config = require('./config');
 const path = require('path');
+const fs = require('fs');
+const chokidar = require('chokidar');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -6,32 +9,47 @@ const clientConfig = require('./webpack.client.config');
 const serverConfig = require('./webpack.server.config');
 const MemoryFileSystem = require('memory-fs');
 
+// Calls updateCallback({ bundle, clientManifest, template })
+// when something changes.
 function setupDevServer(app, updateCallback) {
-  let serverBundle, clientManifest;
+  let readyPromiseResolve;
+  let readyPromise = new Promise(resolve => {
+    readyPromiseResolve = resolve;
+  });
+
+  let bundle,
+    clientManifest,
+    template;
+
   const clientCompiler = webpack(clientConfig);
   const serverCompiler = webpack(serverConfig);
+  const templatePath = path.join(config.srcDir, 'index.html');
 
   // Utilities
   function update() {
-    updateCallback({
-      serverBundle,
-      clientManifest
-    });
+    readyPromiseResolve();
+    updateCallback({ bundle, clientManifest, template });
   }
 
   function readFileSync(fs, filename) {
-    try {
-      const pathToFile = path.join(clientConfig.output.path, filename);
-      return JSON.parse(fs.readFileSync(pathToFile, 'utf-8'));
-    } catch (e) {
-      console.error('An error occured white trying to read the file.');
-    }
+    const pathToFile = path.join(clientConfig.output.path, filename);
+    return JSON.parse(fs.readFileSync(pathToFile, 'utf-8'));
+  }
+
+  function updateTemplate() {
+    template = fs.readFileSync(templatePath, 'utf-8');
+    console.log('Template has been updated');
   }
 
   // 0. Watch template file
+  updateTemplate();
 
+  chokidar.watch(templatePath).on('change', () => {
+    updateTemplate();
+    update();
+  });
 
-  // 1. Watch client bundle
+  // 1. Watch client files
   clientConfig.entry = [
     clientConfig.entry,
     'webpack-hot-middleware/client'
@@ -74,10 +92,12 @@ function setupDevServer(app, updateCallback) {
     stats.errors.forEach(console.error);
     stats.warnings.forEach(console.warn);
 
-    serverBundle = readFileSync(MFS, 'vue-ssr-server-bundle.json');
+    bundle = readFileSync(MFS, 'vue-ssr-server-bundle.json');
 
     update();
   });
+
+  return readyPromise;
 }
 
 module.exports = setupDevServer;

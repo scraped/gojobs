@@ -1,5 +1,4 @@
 const config = require('./config');
-const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -9,26 +8,11 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const chalk = require('chalk');
-const { createBundleRenderer } = require('vue-server-renderer');
-
-let renderer = null;
-
-if (config.production) {
-  const serverBundle = require(`${config.distDir}/vue-ssr-server-bundle`);
-  const clientManifest = require(`${config.distDir}/vue-ssr-client-manifest`);
-  const template = fs.readFileSync(`${config.srcDir}/index.html`, 'utf8');
-
-  renderer = createBundleRenderer(serverBundle, {
-    clientManifest,
-    template,
-    runInNewContext: false
-  });
-} else {
-
-}
+require('pretty-error').start();
 
 const jobsRouter = require('./routers/jobs');
-const errorHandler = require('./routers/error');
+const SSR = require('./routers/ssr');
+// const errorHandler = require('./routers/error');
 
 const app = express();
 
@@ -44,23 +28,9 @@ app.use(express.static(path.resolve(__dirname, config.distDir, 'assets')));
 
 app.use('/api/jobs', jobsRouter);
 
-app.get('*', (req, res) => {
-  const context = {
-    title: 'GTA Online Jobs',
-    url: req.url
-  };
+SSR(app);
 
-  renderer.renderToString(context, (err, html) => {
-    if (err) {
-      console.log('Ошибка:', err);
-      return res.send('Ошибка!');
-    }
-    res.send(html);
-  });
-});
-
-// 404 & 500 middleware
-errorHandler(app);
+// errorHandler(app);
 
 // Run server
 app.listen(app.get('port'), () => {
