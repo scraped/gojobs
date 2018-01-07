@@ -9,9 +9,10 @@ const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
 const { production } = config;
 
 const webpackConfig = {
-  entry: path.resolve(config.srcDir, 'entry-client.js'),
+  entry: {
+    app: path.resolve(config.srcDir, 'entry-client.js')
+  },
 
-  devtool: production ? 'none' : '#cheap-inline-module-source-map',
 
   plugins: [
     // extract vendor chunks for better caching

@@ -31,6 +31,8 @@ let webpackConfig = {
       '@views': path.resolve(config.srcDir, 'views')
     }
   },
+  devtool: production ? 'none' : '#cheap-inline-module-source-map',
+
 
   externals: {
     moment: 'moment'

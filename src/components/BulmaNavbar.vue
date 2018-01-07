@@ -90,7 +90,6 @@ export default {
 // });
 </script>
 
-
 <style lang="scss">
 @import "../scss/utilities/_all";
 @import "../scss/vars";
