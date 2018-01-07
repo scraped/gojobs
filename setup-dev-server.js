@@ -65,7 +65,6 @@ function setupDevServer(app, updateCallback) {
   const webpackDevMiddlewareInstance = webpackDevMiddleware(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
     stats: {
-      chunks: false,
       colors: true,
       modules: false
     }

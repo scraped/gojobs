@@ -19,7 +19,7 @@ const { production } = config;
 let webpackConfig = {
   output: {
     path: path.resolve(__dirname, config.distDir),
-    publicPath: '/assets',
+    publicPath: '/',
     filename: jsName
   },
 

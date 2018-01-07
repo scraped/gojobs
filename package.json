@@ -4,13 +4,13 @@
   "description": "No description yet",
   "main": "index.js",
   "scripts": {
+    "dev": "node app",
     "dev:nodemon": "nodemon app",
-    "dev:node": "node app",
     "build:client": "cross-env NODE_ENV=production webpack --config webpack.client.config.js --progress --hide-modules",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack.server.config.js --progress --hide-modules",
     "build": "rimraf dist && npm run build:client && npm run build:server",
-    "build-serve:nodemon": "npm run build && nodemon app",
-    "build-serve:node": "npm run build && node app"
+    "build-serve": "npm run build && node app",
+    "build-serve:nodemon": "npm run build && nodemon app"
   },
   "repository": {
     "type": "git",
