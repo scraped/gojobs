@@ -7,6 +7,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 const jsName = 'assets/js/[name].[chunkhash:6].js';
+const jsChunkName = 'assets/js/dynamic/[id].[chunkhash:6].js';
 const cssName = 'assets/css/[name].[contenthash:6].css';
 const imagesName = 'assets/images/[name].[hash:6].[ext]';
 
@@ -21,7 +22,7 @@ let webpackConfig = {
     path: path.resolve(__dirname, config.distDir),
     publicPath: '/',
     filename: jsName,
-    chunkFilename: jsName
+    chunkFilename: jsChunkName
   },
 
   resolve: {
