@@ -10,11 +10,12 @@ module.exports = merge(baseWebpackConfig, {
 
   // В серверной сборке следует использовать экспорты в стиле Node
   output: {
-    filename: 'server-bundle.js',
+    // filename: 'server-bundle.js',
     libraryTarget: 'commonjs2'
   },
 
   target: 'node',
+  devtool: 'none',
 
   externals: webpackNodeExternals(),
 

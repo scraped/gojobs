@@ -4,9 +4,9 @@ const webpack = require('webpack');
 const notifier = require('node-notifier');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
-const jsName = 'assets/js/[name].[hash:6].js';
+const jsName = 'assets/js/[name].[chunkhash:6].js';
 const cssName = 'assets/css/[name].[contenthash:6].css';
 const imagesName = 'assets/images/[name].[hash:6].[ext]';
 
@@ -20,7 +20,8 @@ let webpackConfig = {
   output: {
     path: path.resolve(__dirname, config.distDir),
     publicPath: '/',
-    filename: jsName
+    filename: jsName,
+    chunkFilename: jsName
   },
 
   resolve: {
@@ -83,7 +84,7 @@ let webpackConfig = {
   },
 
   plugins: [
-    new FriendlyErrorsWebpackPlugin({
+    new FriendlyErrorsPlugin({
       onErrors (severity, errors) {
         if (severity !== 'error') return;
         errors.forEach(error => {
@@ -101,27 +102,9 @@ let webpackConfig = {
     new ExtractTextPlugin(cssName),
   ],
 
-  // devServer: {
-  //   historyApiFallback: true,
-  //   noInfo: true,
-  //   quiet: true,
-  //   compress: true,
-  //   // enables HMR without page refresh as fallback in case of build failures
-  //   hot: true,
-  //   hotOnly: true,
-  //   // opens the browser
-  //   open: true,
-  //   overlay: true,
-  //   proxy: {
-  //     '/': `http://localhost:${config.port}`
-  //   }
-  // },
-
   performance: {
     hints: production ? 'warning' : false
-  },
-
-  devtool: production ? 'none' : '#cheap-inline-module-source-map'
+  }
 };
 
 if (production) {
@@ -131,7 +114,9 @@ if (production) {
         NODE_ENV: '"production"'
       }
     }),
+
     new webpack.LoaderOptionsPlugin({ minimize: true }),
+
     new webpack.optimize.ModuleConcatenationPlugin(),
   );
 }

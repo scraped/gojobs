@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Main from '@views/Main.vue';
+const Main = () => import('@views/Main.vue');
 import NotFound from '@views/404.vue';
 import Admin from '@views/Admin.vue';
 import Login from '@views/Login.vue';
@@ -18,7 +18,7 @@ export function createRouter() {
     },
 
     routes: [
-      { path: '/', name: 'main', component: () => import('@views/Main.vue') },
+      { path: '/', name: 'main', component: Main },
       { path: '/admin', name: 'admin', component: Admin },
       { path: '/login', name: 'login', component: Login },
       { path: '/job/:id', name: 'job', component: Job },

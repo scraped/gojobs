@@ -20,7 +20,7 @@ router.onReady(() => {
       return next();
     }
 
-    // ИНДИКАТОР ЗАГРУЗКИ
+    // <индикатор загрузки вкл>
 
     await Promise.all(activated.map(Component => {
       if (Component.fetchData) {
@@ -31,12 +31,10 @@ router.onReady(() => {
       }
     }));
 
-    // ИНДИКАТОР ЗАГРУЗКИ ВЫКЛ
+    // <индикатор загрузки выкл>
 
     next();
   });
-
-
 
   app.$mount('#app');
 });

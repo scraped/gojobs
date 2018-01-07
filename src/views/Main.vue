@@ -1,4 +1,7 @@
 <template>
+  <blockquote>
+    azaza
+  </blockquote>
 </template>
 
 <script>
