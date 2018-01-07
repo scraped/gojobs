@@ -64,10 +64,9 @@ import BulmaTabs from '@components/BulmaTabs.vue';
 import JobCard from '@components/JobCard.vue';
 
 export default {
-  async fetchData({ store, route }) {
+  fetchData({ store, route }) {
     const { query } = route;
-    const jobs = await store.dispatch('jobs/fetch', { query });
-    return jobs;
+    return store.dispatch('jobs/fetch', { query });
   },
 
   components: {
