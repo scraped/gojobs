@@ -1,4 +1,5 @@
 import { createApp } from './app';
+import findAsyncComponents from './find-async-components';
 
 const { app, store, router } = createApp();
 
@@ -22,14 +23,13 @@ router.onReady(() => {
 
     // <индикатор загрузки вкл>
 
-    await Promise.all(activated.map(Component => {
-      if (Component.fetchData) {
-        return Component.fetchData({
-          store,
-          route: to
-        });
-      }
-    }));
+    const asyncDataPromises = findAsyncComponents({
+      components: activated,
+      store,
+      route: to
+    });
+
+    await Promise.all(asyncDataPromises);
 
     // <индикатор загрузки выкл>
 

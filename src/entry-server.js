@@ -1,4 +1,5 @@
 import { createApp } from './app'
+import findAsyncComponents from './find-async-components';
 
 export default context => {
   return new Promise((resolve, reject) => {
@@ -13,15 +14,13 @@ export default context => {
         throw new Error({ code: 404 });
       }
 
-      await Promise.all(matchedComponents.map(Component => {
-        // If Component has fetchData static method
-        if (Component.fetchData) {
-          return Component.fetchData({
-            store,
-            route: router.currentRoute
-          });
-        }
-      }));
+      const asyncDataPromises = findAsyncComponents({
+        components: matchedComponents,
+        store,
+        route: router.currentRoute
+      })
+
+      await Promise.all(asyncDataPromises);
 
       context.state = store.state;
 

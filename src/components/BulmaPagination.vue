@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="showLoadMoreButton()">
+    <template v-if="showLoadMoreButton">
       <div
         class="button is-large is-fullwidth"
         :class="{ 'is-loading': loading }"
@@ -11,7 +11,7 @@
     </template>
 
     <div class="buttons has-addons is-pulled-right">
-    <router-link
+      <router-link
         class="button"
         v-if="hasPrev()"
         :to="{ name: routeName, query: genQuery({ page: prevPage }) }"
@@ -28,9 +28,9 @@
         <span class="is-hidden-mobile">Next page</span>
         <i class="icon fa fa-angle-right"></i>
       </router-link>
-      </div>
+    </div>
 
-    <div
+    <!-- <div
       class="buttons has-addons"
       role="navigation"
       aria-label="pagination">
@@ -46,7 +46,6 @@
       <span
         class="button"
         v-if="hasFirst() & leftBound > 2">
-        <!-- this is the ellipsis -->
         &hellip;
       </span>
 
@@ -62,7 +61,6 @@
       <span
         class="button"
         v-if="hasLast() & totalPages - rightBound > 1">
-        <!-- this is the ellipsis -->
         &hellip;
       </span>
 
@@ -73,7 +71,7 @@
         :aria-label="`Go to page ${totalPages}`">
         {{ totalPages }}
       </router-link>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -154,6 +152,7 @@ export default {
     },
 
     hasNext() {
+      console.log('hasnext', this.totalItems);
       return this.currPage < this.totalPages;
     }
   }

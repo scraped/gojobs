@@ -44,14 +44,23 @@
       Page {{ page }}
     </p>
 
-    <div class="columns is-multiline">
-      <div
+    <!-- <div class="columns is-multiline"> -->
+      <span :key="job.jobId" v-for="job in jobs">{{ job.jobId }}<br></span>
+      <!-- <div
         class="column is-one-third"
         v-for="job in jobs"
         :key="job.jobId">
         <job-card :job="job"></job-card>
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
+
+    <!-- <br>
+    <bulma-pagination
+      :curr-page="page"
+      :total-items="amount"
+      :load-more-button="true"
+      :loading="loading">
+    </bulma-pagination> -->
   </div>
 </template>
 
@@ -62,16 +71,23 @@ import genQuery from '../utils/gen-query.js';
 
 import BulmaTabs from '@components/BulmaTabs.vue';
 import JobCard from '@components/JobCard.vue';
+import BulmaPagination from '@components/BulmaPagination.vue';
 
 export default {
   fetchData({ store, route }) {
-    const { query } = route;
-    return store.dispatch('jobs/fetch', { query });
+    return store.dispatch('jobs/fetch', { query: route.query });
   },
 
   components: {
     BulmaTabs,
-    JobCard
+    JobCard,
+    BulmaPagination
+  },
+
+  data() {
+    return {
+      loading: false
+    };
   },
 
   computed: {
