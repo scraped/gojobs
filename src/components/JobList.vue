@@ -91,8 +91,13 @@ export default {
   },
 
   computed: {
+    jobs() {
+      // console.trace();
+      // console.log(this.$store.state.jobs.jobs[0]);
+      return this.$store.state.jobs.jobs;
+    },
     ...mapState('jobs', {
-      jobs: state => state.jobs,
+      // jobs: state => state.jobs,
       amount: state => state.amount,
     }),
     ...mapState('route', {

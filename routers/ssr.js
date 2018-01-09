@@ -4,9 +4,6 @@ const LRU = require('lru-cache');
 const { createBundleRenderer } = require('vue-server-renderer');
 const setupDevServer = require('../setup-dev-server');
 
-let readyPromise = Promise.resolve();
-let renderer;
-
 // Utilities
 const readFileSync = file => fs.readFileSync(file, 'utf-8');
 
@@ -24,6 +21,9 @@ function createBRendererFactory({ bundle, clientManifest, template }) {
 }
 
 module.exports = app => {
+  let readyPromise = Promise.resolve();
+  let renderer;
+
   if (config.production) {
     // production: we should already have all bundled
     let bundle,
@@ -41,12 +41,14 @@ module.exports = app => {
     renderer = createBRendererFactory({ bundle, clientManifest, template });
   } else {
     // development: wait before bundling
+    console.log('here!');
     readyPromise = setupDevServer(
       app,
       function updateCallback({ bundle, clientManifest, template }) {
         renderer = createBRendererFactory({ bundle, clientManifest, template });
       }
     );
+    console.log(readyPromise);
   }
 
   app.get('*', async (req, res) => {
