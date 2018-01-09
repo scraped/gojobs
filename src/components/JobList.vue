@@ -93,7 +93,8 @@ export default {
   computed: {
     jobs() {
       // console.trace();
-      // console.log(this.$store.state.jobs.jobs[0]);
+      console.log(this.$store.state.jobs.jobs[0]);
+      console.trace();
       return this.$store.state.jobs.jobs;
     },
     ...mapState('jobs', {

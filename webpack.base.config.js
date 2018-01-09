@@ -22,7 +22,7 @@ let webpackConfig = {
     path: path.resolve(__dirname, config.distDir),
     publicPath: '/',
     filename: jsName,
-    chunkFilename: jsChunkName
+    // chunkFilename: jsChunkName
   },
 
   resolve: {

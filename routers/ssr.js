@@ -30,25 +30,19 @@ module.exports = app => {
       clientManifest,
       template;
 
-    try {
-      bundle = readFileSync(`${config.distDir}/vue-ssr-server-bundle.json`);
-      clientManifest = readFileSync(`${config.distDir}/vue-ssr-client-manifest.json`);
-      template = readFileSync(`${config.srcDir}/index.html`);
-    } catch (e) {
-      throw e;
-    }
+    bundle = readFileSync(`${config.distDir}/vue-ssr-server-bundle.json`);
+    clientManifest = readFileSync(`${config.distDir}/vue-ssr-client-manifest.json`);
+    template = readFileSync(`${config.srcDir}/index.html`);
 
     renderer = createBRendererFactory({ bundle, clientManifest, template });
   } else {
     // development: wait before bundling
-    console.log('here!');
     readyPromise = setupDevServer(
       app,
       function updateCallback({ bundle, clientManifest, template }) {
         renderer = createBRendererFactory({ bundle, clientManifest, template });
       }
     );
-    console.log(readyPromise);
   }
 
   app.get('*', async (req, res) => {

@@ -12,9 +12,10 @@ const MemoryFileSystem = require('memory-fs');
 // Calls updateCallback({ bundle, clientManifest, template })
 // when something changes.
 function setupDevServer(app, updateCallback) {
-  let readyPromiseResolve;
-  let readyPromise = new Promise(resolve => {
-    readyPromiseResolve = resolve;
+  let resolveReadyPromise;
+  const readyPromise = new Promise(resolve => {
+    // link for resolving the promise
+    resolveReadyPromise = resolve;
   });
 
   let bundle,
@@ -28,7 +29,7 @@ function setupDevServer(app, updateCallback) {
   // Utilities
   function update() {
     if (bundle && clientManifest) {
-      readyPromiseResolve();
+      resolveReadyPromise();
       updateCallback({ bundle, clientManifest, template });
     }
   }
@@ -43,7 +44,9 @@ function setupDevServer(app, updateCallback) {
     console.log('Template has been updated');
   }
 
+  //
   // 0. Watch template file
+  //
   updateTemplate();
 
   chokidar.watch(templatePath).on('change', () => {
@@ -51,7 +54,9 @@ function setupDevServer(app, updateCallback) {
     update();
   });
 
+  //
   // 1. Watch client files
+  //
   clientConfig.entry = [
     clientConfig.entry,
     'webpack-hot-middleware/client'
@@ -88,7 +93,9 @@ function setupDevServer(app, updateCallback) {
     update();
   });
 
+  //
   // 2. Watch server bundle
+  //
   const MFS = new MemoryFileSystem();
   serverCompiler.outputFileSystem = MFS;
 

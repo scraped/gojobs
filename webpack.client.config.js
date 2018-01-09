@@ -13,7 +13,6 @@ const webpackConfig = {
     app: path.resolve(config.srcDir, 'entry-client.js')
   },
 
-
   plugins: [
     // extract vendor chunks for better caching
     new webpack.optimize.CommonsChunkPlugin({
