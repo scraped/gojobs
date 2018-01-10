@@ -4,6 +4,8 @@ const LRU = require('lru-cache');
 const { createBundleRenderer } = require('vue-server-renderer');
 const setupDevServer = require('../setup-dev-server');
 
+const { production } = config;
+
 // Utilities
 const readFileSync = file => fs.readFileSync(file, 'utf-8');
 
@@ -24,7 +26,7 @@ module.exports = app => {
   let readyPromise = Promise.resolve();
   let renderer;
 
-  if (config.production) {
+  if (production) {
     // production: we should already have all bundled
     let bundle,
       clientManifest,
@@ -46,6 +48,7 @@ module.exports = app => {
   }
 
   app.get('*', async (req, res) => {
+    console.log(readyPromise);
     await readyPromise;
 
     const context = {

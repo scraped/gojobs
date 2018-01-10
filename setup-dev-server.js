@@ -13,9 +13,9 @@ const MemoryFileSystem = require('memory-fs');
 // when something changes.
 function setupDevServer(app, updateCallback) {
   let resolveReadyPromise;
-  const readyPromise = new Promise(resolve => {
+  let readyPromise = new Promise(r => {
     // link for resolving the promise
-    resolveReadyPromise = resolve;
+    resolveReadyPromise = r;
   });
 
   let bundle,
@@ -57,28 +57,33 @@ function setupDevServer(app, updateCallback) {
   //
   // 1. Watch client files
   //
-  clientConfig.entry = [
-    clientConfig.entry,
-    'webpack-hot-middleware/client'
+  clientConfig.entry.app = [
+    'webpack-hot-middleware/client',
+    clientConfig.entry.app,
   ];
-
+  clientConfig.output.filename = 'assets/js/[name].js';
   clientConfig.plugins.push(
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   );
+
+  // clientConfig.plugins.push(
+  //   new webpack.NamedModulesPlugin(),
+  // );
+
+  // console.log(clientConfig);
 
   const webpackDevMiddlewareInstance = webpackDevMiddleware(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
+    hot: true,
+    noInfo: false,
     stats: {
       colors: true,
       modules: false
     }
   });
 
-  const webpackHotMiddlewareInstance = webpackHotMiddleware(clientCompiler);
-
   app.use(webpackDevMiddlewareInstance);
-  app.use(webpackHotMiddlewareInstance);
 
   clientCompiler.plugin('done', stats => {
     stats = stats.toJson();
@@ -92,6 +97,11 @@ function setupDevServer(app, updateCallback) {
 
     update();
   });
+
+  app.use(webpackHotMiddleware(clientCompiler, {
+    heartbeat: 5000,
+    path: '/__webpack_hmr',
+  }));
 
   //
   // 2. Watch server bundle

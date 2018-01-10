@@ -10,7 +10,7 @@ const { production } = config;
 
 const webpackConfig = {
   entry: {
-    app: path.resolve(config.srcDir, 'entry-client.js')
+    app: path.resolve(config.srcDir, 'entry-client.js'),
   },
 
   plugins: [
@@ -48,6 +48,11 @@ if (production) {
       }
     }),
   );
+} else {
+  webpackConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  )
 }
 
 module.exports = merge(baseWebpackConfig, webpackConfig)

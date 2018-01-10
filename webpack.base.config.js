@@ -22,7 +22,7 @@ let webpackConfig = {
     path: path.resolve(__dirname, config.distDir),
     publicPath: '/',
     filename: jsName,
-    // chunkFilename: jsChunkName
+    chunkFilename: jsChunkName
   },
 
   resolve: {
@@ -31,8 +31,8 @@ let webpackConfig = {
       '@views': path.resolve(config.srcDir, 'views')
     }
   },
-  devtool: production ? 'none' : '#cheap-inline-module-source-map',
 
+  devtool: production ? 'none' : '#cheap-inline-module-source-map',
 
   externals: {
     moment: 'moment'
