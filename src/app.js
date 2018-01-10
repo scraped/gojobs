@@ -36,7 +36,6 @@ export function createApp() {
   sync(store, router);
 
   const app = new Vue({
-    el: '#app',
     render: h => h(App),
     store,
     router

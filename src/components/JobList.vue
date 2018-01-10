@@ -44,23 +44,22 @@
       Page {{ page }}
     </p>
 
-    <!-- <div class="columns is-multiline"> -->
-      <span :key="job.jobId" v-for="job in jobs">{{ job.jobId }}<br></span>
-      <!-- <div
+    <div class="columns is-multiline">
+      <div
         class="column is-one-third"
         v-for="job in jobs"
         :key="job.jobId">
         <job-card :job="job"></job-card>
-      </div> -->
-    <!-- </div> -->
+      </div>
+    </div>
 
-    <!-- <br>
+    <br>
     <bulma-pagination
       :curr-page="page"
       :total-items="amount"
       :load-more-button="true"
       :loading="loading">
-    </bulma-pagination> -->
+    </bulma-pagination>
   </div>
 </template>
 
@@ -91,14 +90,8 @@ export default {
   },
 
   computed: {
-    jobs() {
-      // console.trace();
-      console.log(this.$store.state.jobs.jobs[0]);
-      console.trace();
-      return this.$store.state.jobs.jobs;
-    },
     ...mapState('jobs', {
-      // jobs: state => state.jobs,
+      jobs: state => state.jobs,
       amount: state => state.amount,
     }),
     ...mapState('route', {

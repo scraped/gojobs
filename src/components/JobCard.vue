@@ -65,7 +65,6 @@
           In-game category:
           <router-link :to="''">{{ modes[job.job.gameType - 1].name }}</router-link>
           —
-          <!-- <router-link :to="''">{{ modes[job.job.gameType - 1].modes[job.job.gameMode - 1].name }}</router-link> -->
           <br>
           {{ platforms[job.platform - 1].name }} · {{ job.job.maxpl }} players · {{ updatedDate }}
           <br>

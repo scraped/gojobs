@@ -4,14 +4,11 @@ import findAsyncComponents from './find-async-components';
 const { app, store, router } = createApp();
 
 if (window.__INITIAL_STATE__) {
-  console.log('initial state!')
   store.replaceState(window.__INITIAL_STATE__);
 }
 
 router.onReady(() => {
-  console.log('onready')
   router.beforeResolve(async (to, from, next) => {
-    console.log('beforeresolve')
     const matchedPrev = router.getMatchedComponents(from);
     const matched = router.getMatchedComponents(to);
 
