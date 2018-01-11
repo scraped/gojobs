@@ -3,6 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const chokidar = require('chokidar');
 const webpack = require('webpack');
+const chalk = require('chalk');
+const { logMessage } = require('./lib/utils');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const clientConfig = require('./webpack.client.config');
@@ -10,10 +12,10 @@ const serverConfig = require('./webpack.server.config');
 const MemoryFileSystem = require('memory-fs');
 
 // Calls updateCallback({ bundle, clientManifest, template })
-// when something changes. Returns readyPromise
-module.exports = function setupDevServer(app, updateCallback) {
+// when something changes.
+function setupDevServer(app, updateCallback) {
   let resolveReadyPromise;
-  let readyPromise = new Promise(r => {
+  const readyPromise = new Promise(r => {
     // link for resolving the promise
     resolveReadyPromise = r;
   });
@@ -22,8 +24,6 @@ module.exports = function setupDevServer(app, updateCallback) {
     clientManifest,
     template;
 
-  const clientCompiler = webpack(clientConfig);
-  const serverCompiler = webpack(serverConfig);
   const templatePath = path.join(config.srcDir, 'index.html');
 
   // Utilities
@@ -50,35 +50,23 @@ module.exports = function setupDevServer(app, updateCallback) {
 
   chokidar.watch(templatePath).on('change', () => {
     updateTemplate();
-    console.log('Template has been updated');
+    console.log(logMessage('Template has been updated'));
     update();
   });
 
   //
   // 1. Watch client files
   //
-  clientConfig.entry.app = [
-    'webpack-hot-middleware/client',
-    clientConfig.entry.app,
-  ];
-  clientConfig.output.filename = 'assets/js/[name].js';
-  clientConfig.plugins.push(
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  );
 
-  // clientConfig.plugins.push(
-  //   new webpack.NamedModulesPlugin(),
-  // );
+  const clientCompiler = webpack(clientConfig);
+  const serverCompiler = webpack(serverConfig);
 
-  // console.log(clientConfig);
-
-  const webpackDevMiddlewareInstance = require('webpack-dev-middleware')(clientCompiler, {
+  const webpackDevMiddlewareInstance = webpackDevMiddleware(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
     noInfo: false,
     stats: {
       colors: true,
-      // modules: false
+      modules: false
     }
   });
 
@@ -97,8 +85,8 @@ module.exports = function setupDevServer(app, updateCallback) {
     update();
   });
 
-  app.use(require('webpack-hot-middleware')(clientCompiler, {
-    heartbeat: 5000,
+  app.use(webpackHotMiddleware(clientCompiler, {
+    heartbeat: 5000
   }));
 
   //
@@ -120,3 +108,5 @@ module.exports = function setupDevServer(app, updateCallback) {
 
   return readyPromise;
 }
+
+module.exports = setupDevServer;

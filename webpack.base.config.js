@@ -3,12 +3,11 @@ const path = require('path');
 const webpack = require('webpack');
 const notifier = require('node-notifier');
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
-const jsName = 'assets/js/[name].[chunkhash:6].js';
+// hash instead of chunkhash due to HMR
+const jsName = 'assets/js/[name].[hash:6].js';
 const jsChunkName = 'assets/js/dynamic/[id].[chunkhash:6].js';
-const cssName = 'assets/css/[name].[contenthash:6].css';
 const imagesName = 'assets/images/[name].[hash:6].[ext]';
 
 const { production } = config;
@@ -32,31 +31,12 @@ let webpackConfig = {
     }
   },
 
-  devtool: production ? 'none' : '#cheap-inline-module-source-map',
-
   externals: {
     moment: 'moment'
   },
 
   module: {
     rules: [
-      {
-        test: /\.scss/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [{
-            loader: 'css-loader',
-            options: { sourceMap: true }
-          }, {
-            loader: 'resolve-url-loader',
-            options: { root: config.srcDir, sourceMap: true }
-          }, {
-            loader: 'sass-loader',
-            options: { sourceMap: true }
-          }]
-        })
-      },
-
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -100,9 +80,7 @@ let webpackConfig = {
       }
     }),
 
-    // new webpack.NoEmitOnErrorsPlugin(),
 
-    new ExtractTextPlugin(cssName),
   ],
 
   performance: {
@@ -120,7 +98,7 @@ if (production) {
 
     new webpack.LoaderOptionsPlugin({ minimize: true }),
 
-    // new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   );
 }
 

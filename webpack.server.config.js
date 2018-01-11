@@ -8,14 +8,22 @@ const webpackNodeExternals = require('webpack-node-externals');
 module.exports = merge(baseWebpackConfig, {
   entry: path.resolve(config.srcDir, 'entry-server.js'),
 
-  // В серверной сборке следует использовать экспорты в стиле Node
   output: {
-    filename: 'server-bundle.js',
     libraryTarget: 'commonjs2'
   },
 
+  module: {
+    rules: [
+      {
+        test: /\.scss/,
+        use: 'null-loader'
+      },
+    ]
+  },
+
   target: 'node',
-  // devtool: 'none',
+
+  devtool: 'none',
 
   externals: webpackNodeExternals(),
 

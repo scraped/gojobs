@@ -4,13 +4,15 @@
   "description": "No description yet",
   "main": "index.js",
   "scripts": {
-    "dev": "node app",
-    "dev:nodemon": "nodemon app",
+    "dev": "rimraf dist && node app",
+    "dev:nodemon": "rimraf dist && nodemon app",
+
     "build:client": "cross-env NODE_ENV=production webpack --config webpack.client.config.js --progress --hide-modules",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack.server.config.js --progress --hide-modules",
+
     "build": "rimraf dist && npm run build:client && npm run build:server",
-    "build-serve": "npm run build && node app",
-    "build-serve:nodemon": "npm run build && nodemon app"
+    "build-serve": "npm run build && cross-env NODE_ENV=production node app",
+    "build-serve:nodemon": "npm run build && cross-env NODE_ENV=production nodemon app"
   },
   "repository": {
     "type": "git",
@@ -52,6 +54,7 @@
     "node-sass": "^4.7.2",
     "pretty-error": "^2.1.1",
     "query-string": "^5.0.1",
+    "time-stamp": "^2.0.0",
     "vue": "^2.5.13",
     "vue-progressbar": "^0.7.3",
     "vue-resource": "^1.3.5",
@@ -76,6 +79,7 @@
     "memory-fs": "^0.4.1",
     "node-notifier": "^5.1.2",
     "nodemon": "^1.14.10",
+    "null-loader": "^0.1.1",
     "resolve-url-loader": "^2.2.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",

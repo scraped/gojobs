@@ -21,5 +21,6 @@ let config = {
 };
 
 config.url = `http://localhost:${config.port}`;
+config.development = !config.production;
 
 module.exports = config;

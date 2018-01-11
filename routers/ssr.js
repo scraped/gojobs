@@ -6,9 +6,6 @@ const setupDevServer = require('../setup-dev-server');
 
 const { production } = config;
 
-// Utilities
-const readFileSync = file => fs.readFileSync(file, 'utf-8');
-
 function createBRendererFactory({ bundle, clientManifest, template }) {
   return createBundleRenderer(bundle, {
     clientManifest,
@@ -27,14 +24,12 @@ module.exports = app => {
   let renderer;
 
   if (production) {
-    // production: we should already have all bundled
-    let bundle,
-      clientManifest,
-      template;
-
-    bundle = readFileSync(`${config.distDir}/vue-ssr-server-bundle.json`);
-    clientManifest = readFileSync(`${config.distDir}/vue-ssr-client-manifest.json`);
-    template = readFileSync(`${config.srcDir}/index.html`);
+    // when using readFileSync, you must also use JSON.parse, so... require!
+    // WARN: require works works from the directory in which this file is
+    // located, but readFileSync in which this file is executed.
+    const bundle = require(`../${config.distDir}/vue-ssr-server-bundle`);
+    const clientManifest = require(`../${config.distDir}/vue-ssr-client-manifest`);
+    const template = fs.readFileSync(`${config.srcDir}/index.html`, 'utf-8');
 
     renderer = createBRendererFactory({ bundle, clientManifest, template });
   } else {
@@ -48,7 +43,6 @@ module.exports = app => {
   }
 
   app.get('*', async (req, res) => {
-    console.log(readyPromise);
     await readyPromise;
 
     const context = {

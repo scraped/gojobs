@@ -74,7 +74,7 @@
         "function-paren-newline": "off",
         "generator-star-spacing": "error",
         "getter-return": "error",
-        "global-require": "error",
+        "global-require": "off",
         "handle-callback-err": "off",
         "id-blacklist": "error",
         "id-length": "off",
