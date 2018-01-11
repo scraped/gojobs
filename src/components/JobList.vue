@@ -52,14 +52,6 @@
         <job-card :job="job"></job-card>
       </div>
     </div>
-
-    <br>
-    <bulma-pagination
-      :curr-page="page"
-      :total-items="amount"
-      :load-more-button="true"
-      :loading="loading">
-    </bulma-pagination>
   </div>
 </template>
 
@@ -70,23 +62,11 @@ import genQuery from '../utils/gen-query.js';
 
 import BulmaTabs from '@components/BulmaTabs.vue';
 import JobCard from '@components/JobCard.vue';
-import BulmaPagination from '@components/BulmaPagination.vue';
 
 export default {
-  fetchData({ store, route }) {
-    return store.dispatch('jobs/fetch', { query: route.query });
-  },
-
   components: {
     BulmaTabs,
-    JobCard,
-    BulmaPagination
-  },
-
-  data() {
-    return {
-      loading: false
-    };
+    JobCard
   },
 
   computed: {

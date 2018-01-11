@@ -8,8 +8,3 @@
     </div>
   </footer>
 </template>
-
-<style lang="scss">
-$footer-background-color: rgb(0, 0, 0);
-</style>
-

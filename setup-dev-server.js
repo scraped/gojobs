@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require('fs');
 const chokidar = require('chokidar');
 const webpack = require('webpack');
-const chalk = require('chalk');
 const { logMessage } = require('./lib/utils');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -63,7 +62,6 @@ function setupDevServer(app, updateCallback) {
 
   const webpackDevMiddlewareInstance = webpackDevMiddleware(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
-    noInfo: false,
     stats: {
       colors: true,
       modules: false

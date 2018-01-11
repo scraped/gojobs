@@ -145,6 +145,7 @@ export default {
 
 .card__image {
   overflow: hidden;
+  position: relative;
   .image {
     transition-duration: 0.5s;
   }

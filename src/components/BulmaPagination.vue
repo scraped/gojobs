@@ -30,7 +30,7 @@
       </router-link>
     </div>
 
-    <!-- <div
+    <div
       class="buttons has-addons"
       role="navigation"
       aria-label="pagination">
@@ -71,7 +71,7 @@
         :aria-label="`Go to page ${totalPages}`">
         {{ totalPages }}
       </router-link>
-    </div> -->
+    </div>
   </div>
 </template>
 

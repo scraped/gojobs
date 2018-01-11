@@ -71,10 +71,7 @@ router.get('/', async (req, res) => {
 
   jobs = jobs.map(job => job.toObject());
 
-  setTimeout(() => {
-    res.json({ amount, jobs });
-  }, 1500);
-  // res.json({ amount, jobs });
+  res.json({ amount, jobs });
 });
 
 router.get('/id/:id', async (req, res) => {

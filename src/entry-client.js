@@ -1,7 +1,25 @@
+import Vue from 'vue';
 import { createApp } from './app';
 import findAsyncComponents from './find-async-components';
 
 const { app, store, router } = createApp();
+
+Vue.mixin({
+  async beforeRouteUpdate(to, from, next) {
+    const { fetchData } = this.$options;
+
+    if (fetchData) {
+      this.$Progress.start();
+      await fetchData({
+        store: this.$store,
+        route: to
+      });
+      this.$Progress.finish();
+    }
+
+    next();
+  }
+});
 
 if (window.__INITIAL_STATE__) {
   store.replaceState(window.__INITIAL_STATE__);
@@ -21,17 +39,19 @@ router.onReady(() => {
       return next();
     }
 
-    // <индикатор загрузки вкл>
-
     const asyncDataPromises = findAsyncComponents({
       components: activated,
       store,
       route: to
     });
 
+    const showProgressBar = asyncDataPromises.length > 0;
+
+    if (showProgressBar) Vue.prototype.$Progress.start();
+
     await Promise.all(asyncDataPromises);
 
-    // <индикатор загрузки выкл>
+    if (showProgressBar) Vue.prototype.$Progress.finish();
 
     next();
   });

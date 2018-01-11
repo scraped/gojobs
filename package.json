@@ -6,10 +6,8 @@
   "scripts": {
     "dev": "rimraf dist && node app",
     "dev:nodemon": "rimraf dist && nodemon app",
-
     "build:client": "cross-env NODE_ENV=production webpack --config webpack.client.config.js --progress --hide-modules",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack.server.config.js --progress --hide-modules",
-
     "build": "rimraf dist && npm run build:client && npm run build:server",
     "build-serve": "npm run build && cross-env NODE_ENV=production node app",
     "build-serve:nodemon": "npm run build && cross-env NODE_ENV=production nodemon app"
@@ -37,6 +35,7 @@
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "boom": "^7.1.1",
+    "buefy": "^0.6.2",
     "bulma": "^0.6.2",
     "chalk": "^2.3.0",
     "compression": "^1.7.1",

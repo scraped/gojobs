@@ -5,6 +5,13 @@
     <section class="section">
       <div class="container">
         <jobs-list></jobs-list>
+        <br>
+        <bulma-pagination
+          :curr-page="page"
+          :total-items="amount"
+          :load-more-button="true"
+          :loading="loading">
+        </bulma-pagination>
       </div>
     </section>
   </div>
@@ -16,11 +23,32 @@ import { mapState } from 'vuex';
 
 import BulmaHero from '@components/BulmaHero.vue';
 import JobsList from '@components/JobList.vue';
+import BulmaPagination from '@components/BulmaPagination.vue';
 
 export default {
+  fetchData({ store, route }) {
+    return store.dispatch('jobs/fetch', { query: route.query });
+  },
+
+  data() {
+    return {
+      loading: false
+    };
+  },
+
   components: {
     BulmaHero,
-    JobsList
+    JobsList,
+    BulmaPagination
+  },
+
+  computed: {
+    ...mapState('jobs', {
+      amount: state => state.amount,
+    }),
+    ...mapState('route', {
+      page: state => Number(state.query.page) || 1,
+    })
   }
 };
 </script>
