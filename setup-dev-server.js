@@ -10,8 +10,8 @@ const serverConfig = require('./webpack.server.config');
 const MemoryFileSystem = require('memory-fs');
 
 // Calls updateCallback({ bundle, clientManifest, template })
-// when something changes.
-function setupDevServer(app, updateCallback) {
+// when something changes. Returns readyPromise
+module.exports = function setupDevServer(app, updateCallback) {
   let resolveReadyPromise;
   let readyPromise = new Promise(r => {
     // link for resolving the promise
@@ -41,7 +41,6 @@ function setupDevServer(app, updateCallback) {
 
   function updateTemplate() {
     template = fs.readFileSync(templatePath, 'utf-8');
-    console.log('Template has been updated');
   }
 
   //
@@ -51,6 +50,7 @@ function setupDevServer(app, updateCallback) {
 
   chokidar.watch(templatePath).on('change', () => {
     updateTemplate();
+    console.log('Template has been updated');
     update();
   });
 
@@ -73,13 +73,12 @@ function setupDevServer(app, updateCallback) {
 
   // console.log(clientConfig);
 
-  const webpackDevMiddlewareInstance = webpackDevMiddleware(clientCompiler, {
+  const webpackDevMiddlewareInstance = require('webpack-dev-middleware')(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
-    hot: true,
     noInfo: false,
     stats: {
       colors: true,
-      modules: false
+      // modules: false
     }
   });
 
@@ -98,9 +97,8 @@ function setupDevServer(app, updateCallback) {
     update();
   });
 
-  app.use(webpackHotMiddleware(clientCompiler, {
+  app.use(require('webpack-hot-middleware')(clientCompiler, {
     heartbeat: 5000,
-    path: '/__webpack_hmr',
   }));
 
   //
@@ -122,5 +120,3 @@ function setupDevServer(app, updateCallback) {
 
   return readyPromise;
 }
-
-module.exports = setupDevServer;

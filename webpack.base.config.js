@@ -100,7 +100,7 @@ let webpackConfig = {
       }
     }),
 
-    new webpack.NoEmitOnErrorsPlugin(),
+    // new webpack.NoEmitOnErrorsPlugin(),
 
     new ExtractTextPlugin(cssName),
   ],
@@ -120,7 +120,7 @@ if (production) {
 
     new webpack.LoaderOptionsPlugin({ minimize: true }),
 
-    new webpack.optimize.ModuleConcatenationPlugin(),
+    // new webpack.optimize.ModuleConcatenationPlugin(),
   );
 }
 

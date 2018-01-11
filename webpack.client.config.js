@@ -48,11 +48,6 @@ if (production) {
       }
     }),
   );
-} else {
-  webpackConfig.plugins.push(
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  )
 }
 
-module.exports = merge(baseWebpackConfig, webpackConfig)
+module.exports = merge(baseWebpackConfig, webpackConfig);
