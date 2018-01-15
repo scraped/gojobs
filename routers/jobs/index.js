@@ -75,16 +75,16 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/id/:id', async (req, res) => {
-  let { id } = req.params;
+  const { id } = req.params;
 
   try {
-    let job = await Job.findOne({ jobId: id })
+    const job = await Job.findOne({ jobId: id })
       .populate('author')
       .populate('crew');
 
     res.json(job.toObject());
   } catch (e) {
-    res.json({});
+    res.json();
   }
 });
 
