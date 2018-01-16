@@ -15,7 +15,8 @@ let config = {
     standardUpdateOptions: {
       upsert: true,
       setDefaultsOnInsert: true,
-      runSettersOnQuery: true
+      runSettersOnQuery: true,
+      new: true
     },
   }
 };

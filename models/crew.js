@@ -2,7 +2,7 @@ const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
 let crewSchema = new Schema({
-  crewId: { type: Number, require: true, unique: true },
+  crewId: { type: Number, required: true, unique: true },
   crewUrl: { type: String, required: true, unique: true },
 
   name: { type: String, trim: true },

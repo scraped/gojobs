@@ -1,5 +1,5 @@
-import { platforms, defaultPlatformId } from '../../../config/platforms';
-import { modes } from '../../../config/modes';
+import platforms from '../../../config/platforms';
+import modes from '../../../config/modes';
 
 const namespaced = true;
 
@@ -7,7 +7,7 @@ const state = {
   platforms,
   modes,
 
-  currPlatform: defaultPlatformId,
+  currPlatform: 1,
   currMode: 0,
 };
 
