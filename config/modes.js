@@ -1,4 +1,4 @@
-exports.modes = [
+module.exports = [
   {
     id: 1,
     name: 'Race',

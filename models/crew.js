@@ -2,13 +2,14 @@ const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
 let crewSchema = new Schema({
+  crewId: { type: Number, require: true, unique: true },
   crewUrl: { type: String, required: true, unique: true },
-  crewId: { type: Number },
 
   name: { type: String, trim: true },
   tag: { type: String, required: true, uppercase: true },
   color: { type: String, required: true, set: setColor, lowercase: true },
   avatar: { type: String },
+  rockstar: { type: Boolean },
 
   jobs: {
     fetched: { type: Number, required: true, default: 0 },

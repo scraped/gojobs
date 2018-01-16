@@ -89,11 +89,7 @@ router.get('/id/:id', async (req, res) => {
 });
 
 router.get('/upload', async (req, res) => {
-  try {
-    await uploadJobs();
-  } catch (e) {
-    console.log('Error while uploading jobs:', e.stack);
-  }
+  const { amount, errors } = await uploadJobs();
 
-  res.send('Jobs uploaded');
+  res.send(`${amount - errors}/${amount} jobs has been successfully uploaded.`);
 });

@@ -1,21 +1,19 @@
-exports.platforms = [
+module.exports = [
   {
     id: 1,
     name: 'PC',
-    short: 'pc'
+    shortname: 'pc'
   },
 
   {
     id: 2,
     name: 'PS4',
-    short: 'ps4'
+    shortname: 'ps4'
   },
 
   {
     id: 3,
     name: 'Xbox One',
-    short: 'xboxone'
+    shortname: 'xboxone'
   },
 ];
-
-exports.defaultPlatformId = 1;
