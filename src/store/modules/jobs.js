@@ -1,11 +1,9 @@
 import axios from 'axios';
 import queryString from 'query-string';
 
-const state = () => {
-  return {
-    jobs: [],
-    amount: 0
-  };
+const state = {
+  jobs: [],
+  amount: 0
 };
 
 const mutations = {

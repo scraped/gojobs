@@ -6,8 +6,8 @@ import { sync } from 'vuex-router-sync';
 import * as filters from './utils/filters';
 
 import VueResource from 'vue-resource';
-import Buefy from 'buefy';
 import VueProgressBar from 'vue-progressbar';
+import Buefy from 'buefy';
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);
@@ -20,8 +20,9 @@ const progressBarOptions = {
 };
 
 Vue.use(VueResource);
-Vue.use(Buefy);
 Vue.use(VueProgressBar, progressBarOptions);
+
+Vue.component(Buefy.Tabs.name, Buefy.Tabs);
 
 export function createApp() {
   const store = createStore();

@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-// const Main = () => import('@views/Main.vue');
-// const NotFound = () => import('@views/404.vue');
-import Main from 'src/views/Main.vue';
+const Main = () => import('src/views/Main.vue');
+const Crews = () => import('src/views/Crews.vue');
 import NotFound from 'src/views/404.vue';
 import Admin from 'src/views/Admin.vue';
 import Login from 'src/views/Login.vue';
@@ -21,6 +20,7 @@ export function createRouter() {
 
     routes: [
       { path: '/', name: 'main', component: Main },
+      { path: '/crews', name: 'crews', component: Crews },
       { path: '/admin', name: 'admin', component: Admin },
       { path: '/login', name: 'login', component: Login },
       { path: '/job/:id', name: 'job', component: Job },

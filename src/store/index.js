@@ -6,6 +6,7 @@ Vue.use(Vuex);
 import common from './modules/common';
 import jobs from './modules/jobs';
 import job from './modules/job';
+import crews from './modules/crews';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -15,7 +16,8 @@ export function createStore() {
     modules: {
       common,
       jobs,
-      job
+      job,
+      crews
     }
   });
 }

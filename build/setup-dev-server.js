@@ -8,7 +8,6 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const clientConfig = require('./webpack.client.config');
 const serverConfig = require('./webpack.server.config');
 const MemoryFileSystem = require('memory-fs');
-const debug = require('debug');
 
 // Calls updateCallback({ bundle, clientManifest, template })
 // when something changes.
@@ -49,8 +48,8 @@ function setupDevServer(app, updateCallback) {
 
   chokidar.watch(templatePath).on('change', () => {
     updateTemplate();
-    debug('Template has been updated');
     update();
+    console.log(logMessage('Template updated'));
   });
 
   //

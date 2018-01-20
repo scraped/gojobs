@@ -33,7 +33,7 @@
         </div>
 
         <div class="navbar-end">
-          <router-link to="/admin" class="navbar-item">
+          <router-link to="/crews" class="navbar-item">
             <span>Crews</span>
           </router-link>
           <router-link to="/login" class="navbar-item">
