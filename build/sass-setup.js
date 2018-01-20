@@ -1,5 +1,3 @@
-const config = require('../config');
-
 exports.sassLoadersProduction = [
   {
     loader: 'css-loader',
@@ -8,7 +6,7 @@ exports.sassLoadersProduction = [
 
   {
     loader: 'resolve-url-loader',
-    options: { root: config.srcDir, sourceMap: true }
+    options: { sourceMap: true }
   },
 
   {

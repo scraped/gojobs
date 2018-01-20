@@ -119,8 +119,8 @@
 import moment from 'moment';
 import { mapState } from 'vuex';
 
-import BulmaHero from '@components/BulmaHero.vue';
-import IconGta from '@components/IconGta.vue';
+import BulmaHero from 'src/components/BulmaHero.vue';
+import IconGta from 'src/components/IconGta.vue';
 
 export default {
   fetchData({ store, route }) {

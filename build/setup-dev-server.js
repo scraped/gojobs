@@ -1,4 +1,3 @@
-const config = require('../config');
 const path = require('path');
 const fs = require('fs');
 const chokidar = require('chokidar');
@@ -9,6 +8,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const clientConfig = require('./webpack.client.config');
 const serverConfig = require('./webpack.server.config');
 const MemoryFileSystem = require('memory-fs');
+const debug = require('debug');
 
 // Calls updateCallback({ bundle, clientManifest, template })
 // when something changes.
@@ -23,7 +23,7 @@ function setupDevServer(app, updateCallback) {
     clientManifest,
     template;
 
-  const templatePath = path.join(config.srcDir, 'index.html');
+  const templatePath = './src/index.html';
 
   // Utilities
   function update() {
@@ -49,7 +49,7 @@ function setupDevServer(app, updateCallback) {
 
   chokidar.watch(templatePath).on('change', () => {
     updateTemplate();
-    console.log(logMessage('Template has been updated'));
+    debug('Template has been updated');
     update();
   });
 

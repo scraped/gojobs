@@ -26,9 +26,7 @@ let webpackConfig = {
 
   resolve: {
     alias: {
-      '@components': path.resolve(config.srcDir, 'components'),
-      '@views': path.resolve(config.srcDir, 'views'),
-      '@styles': path.resolve(config.srcDir, 'scss'),
+      'src': path.resolve(__dirname, '../src')
     }
   },
 

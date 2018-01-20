@@ -10,7 +10,7 @@ function createBRendererFactory({ bundle, clientManifest, template }) {
   return createBundleRenderer(bundle, {
     clientManifest,
     template,
-    // info about caching: https://ssr.vuejs.org/ru/api.html#webpack-plugins
+    // https://ssr.vuejs.org/ru/api.html#webpack-plugins
     cache: LRU({
       max: 1000,
       maxAge: 1000 * 60 * 15
@@ -27,9 +27,9 @@ module.exports = app => {
     // when using readFileSync, you must also use JSON.parse, so... require!
     // WARN: require works works from the directory in which this file is
     // located, but readFileSync in which this file is executed.
-    const bundle = require(`../${config.distDir}/vue-ssr-server-bundle`);
-    const clientManifest = require(`../${config.distDir}/vue-ssr-client-manifest`);
-    const template = fs.readFileSync(`${config.srcDir}/index.html`, 'utf-8');
+    const bundle = require(`../src/vue-ssr-server-bundle`);
+    const clientManifest = require(`../src/vue-ssr-client-manifest`);
+    const template = fs.readFileSync(`./src/index.html`, 'utf-8');
 
     renderer = createBRendererFactory({ bundle, clientManifest, template });
   } else {

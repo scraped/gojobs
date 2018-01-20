@@ -58,40 +58,10 @@ export default {
     ])
   }
 };
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   const navbarBurger = document.querySelector('.navbar-burger');
-
-//   navbarBurger.addEventListener('click', () => {
-//     const navbarMenuId = navbarBurger.dataset.target;
-//     const navbarMenu = document.getElementById(navbarMenuId);
-
-//     navbarBurger.classList.toggle('is-active');
-//     navbarMenu.classList.toggle('is-active');
-//   });
-
-//   //
-
-//   const navbarDropdownLink = document.querySelector('.navbar-link');
-//   const navbarDropdown = navbarDropdownLink.parentElement;
-
-//   document.addEventListener('click', e => {
-//     const target = e.target;
-
-//     if (target === navbarDropdownLink) {
-//       navbarDropdown.classList.toggle('is-active');
-//     }
-
-//     if (!navbarDropdown.contains(target)) {
-//       navbarDropdown.classList.remove('is-active');
-//     }
-//   });
-
-// });
 </script>
 
 <style lang="scss">
-@import "@styles/custom-vars";
+@import "src/scss/vars";
 
 .navbar {
   background-color: transparent;

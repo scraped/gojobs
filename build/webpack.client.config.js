@@ -1,14 +1,12 @@
-const config = require('../config');
 const baseWebpackConfig = require('./webpack.base.config');
-const path = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const { production, development } = require('../config');
 
 const cssName = 'assets/css/[name].[contenthash:6].css';
-const { production, development } = config;
 
 const {
   sassLoadersDevelopment,
@@ -17,8 +15,8 @@ const {
 
 let webpackConfig = {
   entry: {
-    app: path.resolve(config.srcDir, 'entry-client.js'),
-    styles: path.resolve(config.srcDir, 'scss/main.scss')
+    app: './src/entry-client.js',
+    styles: './src/scss/main.scss'
   },
 
   devtool: production ? 'none' : '#cheap-inline-module-source-map',

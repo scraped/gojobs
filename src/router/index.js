@@ -3,11 +3,11 @@ import VueRouter from 'vue-router';
 
 // const Main = () => import('@views/Main.vue');
 // const NotFound = () => import('@views/404.vue');
-import Main from '@views/Main.vue';
-import NotFound from '@views/404.vue';
-import Admin from '@views/Admin.vue';
-import Login from '@views/Login.vue';
-import Job from '@views/Job.vue';
+import Main from 'src/views/Main.vue';
+import NotFound from 'src/views/404.vue';
+import Admin from 'src/views/Admin.vue';
+import Login from 'src/views/Login.vue';
+import Job from 'src/views/Job.vue';
 
 Vue.use(VueRouter);
 

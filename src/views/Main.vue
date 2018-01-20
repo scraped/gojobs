@@ -21,9 +21,9 @@
 import Vue from 'vue';
 import { mapState } from 'vuex';
 
-import BulmaHero from '@components/BulmaHero.vue';
-import JobsList from '@components/JobList.vue';
-import BulmaPagination from '@components/BulmaPagination.vue';
+import BulmaHero from 'src/components/BulmaHero.vue';
+import JobsList from 'src/components/JobList.vue';
+import BulmaPagination from 'src/components/BulmaPagination.vue';
 
 export default {
   fetchData({ store, route }) {

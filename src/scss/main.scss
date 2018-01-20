@@ -3,9 +3,8 @@
 // derives default vars, etc
 @import "./bulma-setup";
 
-// framework itself
+// framework itself & its extensions
 @import "~bulma";
-
-// extensions
-@import "~buefy/src/scss/buefy";
 @import "~bulma-tooltip";
+
+@import "~buefy/src/scss/buefy";

@@ -97,7 +97,7 @@
 import moment from 'moment';
 import { mapState } from 'vuex';
 
-import IconGta from '@components/IconGta.vue';
+import IconGta from 'src/components/IconGta.vue';
 
 export default {
   props: {
@@ -141,7 +141,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@styles/bulma-vars";
+@import "src/scss/vars";
 
 .card__image {
   overflow: hidden;

@@ -1,12 +1,10 @@
-const config = require('../config');
-const path = require('path');
 const baseWebpackConfig = require('./webpack.base.config');
 const merge = require('webpack-merge');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 const webpackNodeExternals = require('webpack-node-externals');
 
 const webpackConfig = {
-  entry: path.resolve(config.srcDir, 'entry-server.js'),
+  entry: './src/entry-server.js',
 
   output: {
     libraryTarget: 'commonjs2'
