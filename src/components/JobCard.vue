@@ -141,8 +141,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/utilities/_all";
-
 .card__image {
   overflow: hidden;
   position: relative;

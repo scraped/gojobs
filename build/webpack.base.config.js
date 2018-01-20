@@ -1,4 +1,4 @@
-const config = require('./config');
+const config = require('../config');
 const path = require('path');
 const webpack = require('webpack');
 const notifier = require('node-notifier');
@@ -18,7 +18,7 @@ const { production } = config;
 
 let webpackConfig = {
   output: {
-    path: path.resolve(__dirname, config.distDir),
+    path: config.distDir,
     publicPath: '/',
     filename: jsName,
     chunkFilename: jsChunkName
@@ -27,7 +27,8 @@ let webpackConfig = {
   resolve: {
     alias: {
       '@components': path.resolve(config.srcDir, 'components'),
-      '@views': path.resolve(config.srcDir, 'views')
+      '@views': path.resolve(config.srcDir, 'views'),
+      '@styles': path.resolve(config.srcDir, 'scss'),
     }
   },
 
@@ -79,8 +80,6 @@ let webpackConfig = {
         });
       }
     }),
-
-
   ],
 
   performance: {
@@ -96,8 +95,11 @@ if (production) {
       }
     }),
 
-    new webpack.LoaderOptionsPlugin({ minimize: true }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
+    }),
 
+    // https://webpack.js.org/plugins/module-concatenation-plugin/
     new webpack.optimize.ModuleConcatenationPlugin(),
   );
 }

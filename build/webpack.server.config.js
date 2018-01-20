@@ -1,11 +1,11 @@
-const config = require('./config');
+const config = require('../config');
 const path = require('path');
 const baseWebpackConfig = require('./webpack.base.config');
 const merge = require('webpack-merge');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 const webpackNodeExternals = require('webpack-node-externals');
 
-module.exports = merge(baseWebpackConfig, {
+const webpackConfig = {
   entry: path.resolve(config.srcDir, 'entry-server.js'),
 
   output: {
@@ -30,4 +30,6 @@ module.exports = merge(baseWebpackConfig, {
   plugins: [
     new VueSSRServerPlugin()
   ]
-});
+};
+
+module.exports = merge(baseWebpackConfig, webpackConfig);

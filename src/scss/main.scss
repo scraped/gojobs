@@ -1,4 +1,11 @@
-// Please keep the order! "bulma -> bulma-vars" won't work!
 @import "./fonts";
-@import "./bulma-vars";
-@import "./bulma";
+
+// derives default vars, etc
+@import "./bulma-setup";
+
+// framework itself
+@import "~bulma";
+
+// extensions
+@import "~buefy/src/scss/buefy";
+@import "~bulma-tooltip";

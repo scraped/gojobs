@@ -1,9 +1,9 @@
-const config = require('./config');
+const config = require('../config');
 const path = require('path');
 const fs = require('fs');
 const chokidar = require('chokidar');
 const webpack = require('webpack');
-const { logMessage } = require('./lib/utils');
+const { logMessage } = require('../lib/utils');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const clientConfig = require('./webpack.client.config');
@@ -56,7 +56,6 @@ function setupDevServer(app, updateCallback) {
   //
   // 1. Watch client files
   //
-
   const clientCompiler = webpack(clientConfig);
   const serverCompiler = webpack(serverConfig);
 

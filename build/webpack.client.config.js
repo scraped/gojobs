@@ -1,4 +1,4 @@
-const config = require('./config');
+const config = require('../config');
 const baseWebpackConfig = require('./webpack.base.config');
 const path = require('path');
 const merge = require('webpack-merge');
@@ -10,21 +10,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const cssName = 'assets/css/[name].[contenthash:6].css';
 const { production, development } = config;
 
-const sassLoadersProduction = [{
-  loader: 'css-loader',
-  options: { sourceMap: true }
-}, {
-  loader: 'resolve-url-loader',
-  options: { root: config.srcDir, sourceMap: true }
-}, {
-  loader: 'sass-loader',
-  options: { sourceMap: true }
-}];
-
-const sassLoadersDevelopment = [{
-  loader: 'style-loader',
-  options: { sourceMap: true }
-}].concat(sassLoadersProduction);
+const {
+  sassLoadersDevelopment,
+  sassLoadersProduction
+} = require('./sass-setup');
 
 let webpackConfig = {
   entry: {

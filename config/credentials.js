@@ -4,7 +4,7 @@ module.exports = {
 
     options: {
       useMongoClient: true,
-      keepAlive: true,
+      keepAlive: true
     }
   }
 };

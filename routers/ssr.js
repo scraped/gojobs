@@ -2,7 +2,7 @@ const config = require('../config');
 const fs = require('fs');
 const LRU = require('lru-cache');
 const { createBundleRenderer } = require('vue-server-renderer');
-const setupDevServer = require('../setup-dev-server');
+const setupDevServer = require('../build/setup-dev-server');
 
 const { production } = config;
 

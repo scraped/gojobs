@@ -1,6 +1,7 @@
-@import "utilities/initial-variables";
-@import "utilities/functions";
-@import "./vars";
+@import "~bulma/sass/utilities/initial-variables";
+@import "~bulma/sass/utilities/functions";
+
+@import "./custom-vars";
 
 $primary: $rockstar-light;
 $primary-invert: findColorInvert($primary);
@@ -13,7 +14,7 @@ $body-background-color: $white-ter;
 
 $family-primary: "Lato", sans-serif;
 
-@import "utilities/derived-variables";
+@import "~bulma/sass/utilities/derived-variables";
 
 // input
 $input-hover-border-color: $grey-lighter;
