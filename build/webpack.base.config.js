@@ -18,7 +18,7 @@ const { production } = config;
 
 let webpackConfig = {
   output: {
-    path: config.distDir,
+    path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
     filename: jsName,
     chunkFilename: jsChunkName

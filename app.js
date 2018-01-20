@@ -24,7 +24,10 @@ app.use(helmet());
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use('/assets', express.static(path.resolve(__dirname, config.distDir, 'assets')));
+app.use(
+  '/assets',
+  express.static(path.resolve(__dirname, 'dist/assets'))
+);
 
 app.use('/api/jobs', jobsRouter);
 
