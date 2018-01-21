@@ -9,7 +9,6 @@ mongoose.Promise = global.Promise;
 const Crew = require('../../models/crew');
 const User = require('../../models/user');
 const JobRaw = require('../../models/job-raw');
-mongoose.connect(config.mongo.connectUri, config.mongo.options);
 
 module.exports = router;
 

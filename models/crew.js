@@ -1,15 +1,19 @@
-const mongoose = require('../lib/db');
+const mongoose = require('lib/db');
 const Schema = mongoose.Schema;
 
 let crewSchema = new Schema({
   crewId: { type: Number, required: true, unique: true },
   crewUrl: { type: String, required: true, unique: true },
 
-  name: { type: String, trim: true },
+  name: { type: String, require: true, trim: true },
+  desc: { type: String, require: true, trim: true },
+
   tag: { type: String, required: true, uppercase: true },
   color: { type: String, required: true, set: setColor, lowercase: true },
   avatar: { type: String },
+
   rockstar: { type: Boolean },
+  leader: { type: Schema.Types.ObjectId, ref: 'User' },
 
   jobs: {
     fetched: { type: Number, required: true, default: 0 },
@@ -17,8 +21,9 @@ let crewSchema = new Schema({
   },
 
   dates: {
-    updated: { type: Date, required: true },
-    jobsUpload: { type: Date },
+    infoUpdate: { type: Date, required: true },
+    fetch: { type: Date },
+    upload: { type: Date }
   }
 });
 

@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const mongoose = require('../lib/db');
+const mongoose = require('lib/db');
 require('./user');
 require('./crew');
 const Schema = mongoose.Schema;
@@ -15,7 +15,7 @@ let jobSchema = new Schema({
   name: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
   image: { type: String, required: true, set: setImage },
-  platform: { type: Number, required: true },
+  platform: { type: Number, required: true, enum: ['pc', 'xb1', 'ps4'] },
 
   starred: { type: Boolean },
 
@@ -45,8 +45,8 @@ let jobSchema = new Schema({
 
   dates: {
     fetch: { type: Date, required: true },
-    added: { type: Date },
-    updated: { type: Date, required: true }
+    add: { type: Date },
+    update: { type: Date, required: true }
   }
 });
 

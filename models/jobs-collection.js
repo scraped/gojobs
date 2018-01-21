@@ -1,4 +1,4 @@
-const mongoose = require('../lib/db');
+const mongoose = require('lib/db');
 require('./user');
 require('./job');
 const Schema = mongoose.Schema;
