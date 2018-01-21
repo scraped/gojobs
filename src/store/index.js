@@ -7,6 +7,7 @@ import common from './modules/common';
 import jobs from './modules/jobs';
 import job from './modules/job';
 import crews from './modules/crews';
+import admin from './modules/admin';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -17,7 +18,8 @@ export function createStore() {
       common,
       jobs,
       job,
-      crews
+      crews,
+      admin
     }
   });
 }

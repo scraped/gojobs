@@ -22,7 +22,9 @@ const progressBarOptions = {
 Vue.use(VueResource);
 Vue.use(VueProgressBar, progressBarOptions);
 
-Vue.component(Buefy.Tabs.name, Buefy.Tabs);
+Vue.use(Buefy);
+// Vue.component(Buefy.Tabs.name, Buefy.Tabs);
+// Vue.component(Buefy.TabItem.name, Buefy.TabItem);
 
 export function createApp() {
   const store = createStore();

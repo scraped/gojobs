@@ -26,9 +26,7 @@ let webpackConfig = {
 
   resolve: {
     alias: {
-      'lib': path.resolve(__dirname, '../lib'),
-      'src': path.resolve(__dirname, '../src'),
-      'models': path.resolve(__dirname, '../models')
+      'src': path.resolve(__dirname, '../src')
     }
   },
 

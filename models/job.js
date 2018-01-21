@@ -1,11 +1,11 @@
 const _ = require('lodash');
 
-const mongoose = require('lib/db');
+const mongoose = require('../lib/db');
 require('./user');
 require('./crew');
 const Schema = mongoose.Schema;
 
-let jobSchema = new Schema({
+let schema = new Schema({
   jobId: { type: String, required: true, unique: true },
   jobCurrId: { type: String, required: true },
 
@@ -65,17 +65,15 @@ function setMaxPlayers(n) {
   return _.clamp(n, 1, 30);
 }
 
-jobSchema.set('toObject', {
+schema.set('toObject', {
   getters: true,
   versionKey: false,
   transform: (doc, ret) => {
-    // Reflect.deleteProperty(ret, '_id');
-    // Reflect.deleteProperty(ret, 'id');
-
     ret.image = getImage(ret);
-
     return ret;
   }
 });
 
-module.exports = mongoose.model('Job', jobSchema, 'jobs');
+schema.set('id', false);
+
+module.exports = mongoose.model('Job', schema);

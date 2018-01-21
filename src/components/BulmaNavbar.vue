@@ -33,6 +33,9 @@
         </div>
 
         <div class="navbar-end">
+          <router-link to="/admin" class="navbar-item">
+            <span>Admin panel</span>
+          </router-link>
           <router-link to="/crews" class="navbar-item">
             <span>Crews</span>
           </router-link>

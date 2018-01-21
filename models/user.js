@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require('../lib/db');
 require('./crew');
 const Schema = mongoose.Schema;
 
-let userSchema = new Schema({
+let schema = new Schema({
   username: { type: String, required: true, unique: true },
 
   crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
@@ -12,7 +12,7 @@ let userSchema = new Schema({
   }
 });
 
-userSchema.set('toObject', {
+schema.set('toObject', {
   getters: true,
   versionKey: false,
   transform: (doc, ret) => {
@@ -21,7 +21,7 @@ userSchema.set('toObject', {
   }
 });
 
-userSchema.virtual('avatar')
+schema.virtual('avatar')
   .get(function() {
     const username = this.username.toLowerCase();
     return {
@@ -30,4 +30,4 @@ userSchema.virtual('avatar')
     }
   });
 
-module.exports = mongoose.model('User', userSchema, 'users');
+module.exports = mongoose.model('User', schema);

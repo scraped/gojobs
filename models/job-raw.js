@@ -1,7 +1,7 @@
 const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
-let jobRawSchema = new Schema({
+let schema = new Schema({
   jobId: { type: String, required: true, unique: true },
   jobCurrId: { type: String, required: true },
 
@@ -14,4 +14,4 @@ let jobRawSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('JobRaw', jobRawSchema, 'jobs-raw');
+module.exports = mongoose.model('JobRaw', schema, 'jobs-raw');

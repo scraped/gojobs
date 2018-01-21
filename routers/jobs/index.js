@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const uploadJobs = require('lib/upload-jobs');
+const uploadJobs = require('../../lib/upload-jobs');
 
-const mongoose = require('lib/db');
-const User = require('models/user');
-const Crew = require('models/crew');
-const Job = require('models/job');
+const mongoose = require('../../lib/db');
+const User = require('../../models/user');
+const Crew = require('../../models/crew');
+const Job = require('../../models/job');
 
 module.exports = router;
 
