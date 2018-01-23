@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-const Main = () => import('src/views/Main.vue');
+const Main = () => import('src/views/main/index.vue');
 const Crews = () => import('src/views/Crews.vue');
 const NotFound = () => import('src/views/404.vue');
 const Admin = () => import('src/views/Admin.vue');
