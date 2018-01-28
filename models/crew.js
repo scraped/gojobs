@@ -5,14 +5,15 @@ let schema = new Schema({
   crewId: { type: Number, required: true, unique: true },
   crewUrl: { type: String, required: true, unique: true },
 
-  name: { type: String, require: true, trim: true },
-  desc: { type: String, require: true, trim: true },
+  rockstar: { type: Boolean },
+
+  name: { type: String, required: true, trim: true },
+  desc: { type: String, required: true, trim: true },
 
   tag: { type: String, required: true, uppercase: true },
   color: { type: String, required: true, set: setColor, lowercase: true },
   avatar: { type: String },
 
-  rockstar: { type: Boolean },
   leader: { type: Schema.Types.ObjectId, ref: 'User' },
 
   jobs: {
@@ -34,11 +35,13 @@ function setColor(color) {
 schema.set('toObject', {
   virtual: true,
   versionKey: false,
-  transform: (doc, ret) => {
-    Reflect.deleteProperty(ret, '_id');
-    return ret;
-  }
+  // transform: (doc, ret) => {
+  //   Reflect.deleteProperty(ret, '_id');
+  //   return ret;
+  // }
 });
+
+schema.set('id', false);
 
 schema.virtual('avatarUrl')
   .get(function() {
