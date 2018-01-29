@@ -1,8 +1,8 @@
 const _ = require('lodash');
 
 const mongoose = require('../lib/db');
-require('./user');
-require('./crew');
+// require('./user');
+// require('./crew');
 const Schema = mongoose.Schema;
 
 let schema = new Schema({
@@ -13,7 +13,6 @@ let schema = new Schema({
   crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
 
   name: { type: String, required: true, trim: true },
-  desc: { type: String, required: true, trim: true },
   image: { type: String, required: true, set: setImage },
   platform: { type: Number, required: true, enum: ['pc', 'xb1', 'ps4'] },
 
