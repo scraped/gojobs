@@ -1,30 +1,32 @@
 const _ = require('lodash');
-
 const mongoose = require('../lib/db');
-// require('./user');
-// require('./crew');
 const Schema = mongoose.Schema;
 
-let schema = new Schema({
-  jobId: { type: String, required: true, unique: true },
-  jobCurrId: { type: String, required: true },
+function notRockstar() {
+  return !this.rockstar;
+}
 
-  author: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+function setMaxPlayers(n) {
+  return _.clamp(n, 1, 30);
+}
+
+let schema = new Schema({
+  _id: { type: String },
+  currId: { type: String, required: true },
+
+  rockstar: { type: Boolean },
+  author: { type: String, required: notRockstar },
   crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
 
-  name: { type: String, required: true, trim: true },
-  image: { type: String, required: true, set: setImage },
-  platform: { type: Number, required: true, enum: ['pc', 'xb1', 'ps4'] },
-
-  starred: { type: Boolean },
+  name: { type: String, trim: true, required: true },
+  slug: { type: String, required: true },
+  imageId: { type: String, required: true },
+  platform: { type: Number, enum: ['pc', 'xb1', 'ps4'], required: notRockstar },
 
   job: {
-    specific: { type: Schema.Types.Mixed },
     maxpl: { type: Number, required: true, set: setMaxPlayers },
     gameType: { type: Number, required: true },
-    gameMode: { type: Number, required: true },
-    categories: { type: [Number] },
-    feautures: { type: [Number] }
+    gameMode: { type: Number, required: true }
   },
 
   stats: {
@@ -44,35 +46,26 @@ let schema = new Schema({
 
   dates: {
     fetch: { type: Date, required: true },
-    add: { type: Date },
-    update: { type: Date, required: true }
+    addSc: { type: Date },
+    updateSc: { type: Date, required: true }
+  }
+}, {
+  id: false,
+  toObject: {
+    virtuals: true,
+    versionKey: false
   }
 });
 
-function setImage(url) {
-  const str = url.split('/');
-  return `${str[5]}.${str[7]}`;
-}
-
-function getImage(job) {
-  const img = job.image.split('.');
-  const id = job.jobCurrId;
-  return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${id}/${img[1]}.jpg`;
-}
-
-function setMaxPlayers(n) {
-  return _.clamp(n, 1, 30);
-}
-
-schema.set('toObject', {
-  getters: true,
-  versionKey: false,
-  transform: (doc, ret) => {
-    ret.image = getImage(ret);
-    return ret;
-  }
-});
-
-schema.set('id', false);
+schema.virtual('image')
+  .set(function(url) {
+    const str = url.split('/');
+    this.imageId = `${str[5]}.${str[7]}`;
+  })
+  .get(function() {
+    const img = this.imageId.split('.');
+    const id = this.currId;
+    return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${id}/${img[1]}.jpg`;
+  });
 
 module.exports = mongoose.model('Job', schema);

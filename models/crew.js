@@ -1,24 +1,32 @@
 const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
+function notRockstar() {
+  return !this.rockstar;
+}
+
+function setColor(color) {
+  return color.substr(0, 6).toLowerCase();
+}
+
 let schema = new Schema({
-  crewId: { type: Number, required: true, unique: true },
-  crewUrl: { type: String, required: true, unique: true },
+  _id: { type: Number },
 
   rockstar: { type: Boolean },
+  leader: { type: Schema.Types.ObjectId, ref: 'User', required: notRockstar },
 
-  name: { type: String, required: true, trim: true },
-  desc: { type: String, required: true, trim: true },
+  name: { type: String, trim: true, required: true },
+  slug: { type: String, unique: true, required: true },
+  desc: { type: String, trim: true, required: notRockstar },
+  motto: { type: String, trim: true, required: notRockstar },
 
-  tag: { type: String, required: true, uppercase: true },
-  color: { type: String, required: true, set: setColor, lowercase: true },
-  avatar: { type: String },
-
-  leader: { type: Schema.Types.ObjectId, ref: 'User' },
+  tag: { type: String, uppercase: true, required: true },
+  color: { type: String, set: setColor, required: notRockstar },
+  avatarId: { type: String, required: notRockstar },
 
   jobs: {
-    fetched: { type: Number, required: true, default: 0 },
-    total: { type: Number, required: true, default: 0 },
+    fetched: { type: Number, default: 0, required: true },
+    total: { type: Number, default: 0, required: true }
   },
 
   dates: {
@@ -26,22 +34,13 @@ let schema = new Schema({
     fetch: { type: Date },
     upload: { type: Date }
   }
+}, {
+  id: false,
+  toObject: {
+    virtual: true,
+    versionKey: false
+  }
 });
-
-function setColor(color) {
-  return color.substr(0, 6);
-}
-
-schema.set('toObject', {
-  virtual: true,
-  versionKey: false,
-  // transform: (doc, ret) => {
-  //   Reflect.deleteProperty(ret, '_id');
-  //   return ret;
-  // }
-});
-
-schema.set('id', false);
 
 schema.virtual('avatarUrl')
   .get(function() {
