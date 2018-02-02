@@ -7,6 +7,7 @@ let schema = new Schema({
 
   job: { type: Schema.Types.Mixed, required: true },
 
+  
   uploaded: { type: Boolean, required: true, default: false },
 
   dates: {
@@ -14,4 +15,4 @@ let schema = new Schema({
   }
 });
 
-module.exports = mongoose.model('JobRaw', schema, 'jobs-raw');
+module.exports = mongoose.model('JobRaw', schema);
