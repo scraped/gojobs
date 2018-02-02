@@ -14,19 +14,22 @@ let schema = new Schema({
   _id: { type: String },
   currId: { type: String, required: true },
 
-  rockstar: { type: Boolean },
+  category: { type: String },
+
   author: { type: String, required: notRockstar },
   crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
 
   name: { type: String, trim: true, required: true },
   slug: { type: String, required: true },
   imageId: { type: String, required: true },
-  platform: { type: Number, enum: ['pc', 'xb1', 'ps4'], required: notRockstar },
 
   job: {
-    maxpl: { type: Number, required: true, set: setMaxPlayers },
-    gameType: { type: Number, required: true },
-    gameMode: { type: Number, required: true }
+    maxpl: { type: Number, set: setMaxPlayers, required: true },
+    platform: { type: Number, required: notRockstar },
+    scType: { type: Number, required: true },
+    scMode: { type: Number, required: true },
+    type: { type: [String], required: true },
+    tags: { type: [String], required: true }
   },
 
   stats: {
@@ -44,16 +47,13 @@ let schema = new Schema({
 
   ver: { type: Number, required: true },
 
-  dates: {
-    fetch: { type: Date, required: true },
-    addSc: { type: Date },
-    updateSc: { type: Date, required: true }
-  }
+  scAdded: { type: Date },
+  scUpdated: { type: Date, required: true }
 }, {
   id: false,
   toObject: {
-    virtuals: true,
-    versionKey: false
+    versionKey: false,
+    virtuals: true
   }
 });
 

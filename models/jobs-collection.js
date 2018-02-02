@@ -1,6 +1,4 @@
 const mongoose = require('../lib/db');
-require('./user');
-require('./job');
 const Schema = mongoose.Schema;
 
 let schema = new Schema({
@@ -8,15 +6,11 @@ let schema = new Schema({
   desc: { type: String },
   author: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
   jobs: { type: [Schema.Types.ObjectId], required: true, ref: 'Job' }
+}, {
+  id: false,
+  toObject: {
+    versionKey: false
+  }
 });
 
-schema.set('toObject', {
-  getters: true,
-  versionKey: false
-});
-
-module.exports = mongoose.model(
-  'JobsCollection',
-  schema,
-  'jobs-collections'
-);
+module.exports = mongoose.model('JobsCollection', schema);
