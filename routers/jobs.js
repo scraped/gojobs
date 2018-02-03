@@ -1,8 +1,13 @@
 const router = require('express').Router;
-const jobController = require('../controllers/jobController');
 
-router.get('/', jobController.jobList);
-router.get('/id/:id', jobController.jobDetails);
-router.post('/upload', jobController.jobUpload);
+const {
+  jobList,
+  jobDetails,
+  jobUpload
+} = require('../controllers/jobController');
+
+router.get('/', jobList);
+router.get('/id/:id', jobDetails);
+router.post('/upload', jobUpload);
 
 module.exports = router;
