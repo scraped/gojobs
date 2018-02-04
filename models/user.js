@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 let schema = new Schema({
   username: { type: String, required: true, unique: true },
-  crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
-  infoUpdated: { type: Date, required: true }
+  crew: { type: Schema.Types.ObjectId, ref: 'Crew' }
 }, {
   id: false,
   toObject: {

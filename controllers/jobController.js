@@ -4,7 +4,7 @@ const Job = require('../models/job');
 const Crew = require('../models/crew');
 const User = require('../models/user');
 
-module.export = {
+module.exports = {
   async jobList(req, res) {
     let options = {};
 
