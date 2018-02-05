@@ -7,12 +7,13 @@ const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
-const { logMessage } = require('./lib/utils');
+
+// better error messages & console.log respectively
 require('pretty-error').start();
+require('./lib/log');
 
 const jobsRouter = require('./routers/jobs');
 const SSR = require('./routers/ssr');
-// const errorHandler = require('./routers/error');
 
 const app = express();
 
@@ -33,10 +34,8 @@ app.use('/api/jobs', jobsRouter);
 
 SSR(app);
 
-// errorHandler(app);
-
 app.listen(app.get('port'), () => {
-  console.log(
-    logMessage(`Server is running at http://localhost:${app.get('port')}`)
-  );
+  const port = app.get('port');
+  console.log('Server is running at:');
+  console.log(`http://localhost:${port}`);
 });

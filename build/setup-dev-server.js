@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const chokidar = require('chokidar');
 const webpack = require('webpack');
-const { logMessage } = require('../lib/utils');
+// const { logMessage } = require('../lib/utils');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const clientConfig = require('./webpack.client.config');
@@ -49,7 +49,7 @@ function setupDevServer(app, updateCallback) {
   chokidar.watch(templatePath).on('change', () => {
     updateTemplate();
     update();
-    console.log(logMessage('Template updated'));
+    console.log('Template updated');
   });
 
   //

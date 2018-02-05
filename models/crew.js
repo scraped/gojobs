@@ -29,11 +29,8 @@ let schema = new Schema({
     total: { type: Number, default: 0, required: true }
   },
 
-  dates: {
-    infoUpdate: { type: Date, required: true },
-    fetch: { type: Date },
-    upload: { type: Date }
-  }
+  lastFetch: { type: Date },
+  lastUpload: { type: Date }
 }, {
   id: false,
   toObject: {
@@ -44,7 +41,8 @@ let schema = new Schema({
 
 schema.virtual('avatarUrl')
   .get(function() {
-    return `https://prod.cloud.rockstargames.com/crews/sc/${this.avatar}/${this.crewId}/publish/emblem/emblem_128.png`;
+    const { avatar, crewId } = this;
+    return `https://prod.cloud.rockstargames.com/crews/sc/${avatar}/${crewId}/publish/emblem/emblem_128.png`;
   });
 
 module.exports = mongoose.model('Crew', schema);
