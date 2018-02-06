@@ -11,8 +11,8 @@ function setMaxPlayers(n) {
 }
 
 let schema = new Schema({
-  _id: { type: String },
-  currId: { type: String, required: true },
+  jobId: { type: String },
+  jobCurrId: { type: String, required: true },
 
   category: { type: String },
 
