@@ -22,4 +22,4 @@ schema.post('findOneAndUpdate', doc => {
   console.log(`JobRaw: ${doc.jobId} updated`);
 })
 
-module.exports = mongoose.model('JobRaw', schema);
+module.exports = mongoose.model('RawJob', schema);

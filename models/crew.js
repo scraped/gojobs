@@ -10,13 +10,13 @@ function setColor(color) {
 }
 
 let schema = new Schema({
-  _id: { type: Number },
+  crewId: { type: Number, unique: true, required: true },
+  slug: { type: String, unique: true, required: true },
 
   rockstar: { type: Boolean },
   leader: { type: Schema.Types.ObjectId, ref: 'User', required: notRockstar },
 
   name: { type: String, trim: true, required: true },
-  slug: { type: String, unique: true, required: true },
   desc: { type: String, trim: true, required: notRockstar },
   motto: { type: String, trim: true, required: notRockstar },
 

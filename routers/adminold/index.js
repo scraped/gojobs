@@ -7,56 +7,8 @@ const uploadJobs = require('../../lib/upload-jobs');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const Crew = require('../../models/crew');
-const User = require('../../models/user');
-const JobRaw = require('../../models/job-raw');
 
 module.exports = router;
-
-function recordJobs(jobs) {
-  jobs.Missions.forEach(job => {
-    let jobId = job.Content.Metadata.RootContentId;
-
-    let jobRawInfo = {
-      jobId: jobId,
-      jobCurrId: job.MissionId,
-      job: job.Content,
-      updated: new Date(),
-      uploaded: false
-    };
-
-    JobRaw.findOneAndUpdate(
-      { jobId: jobId },
-      jobRawInfo,
-      config.mongo.standardUpdateOptions
-    ).exec()
-      .then(res => {
-        let text = (res) ? 'updated' : 'added';
-        console.log(`${jobId} ${text}`);
-      })
-      .catch(err => {
-        console.log(`Error: ${err.stack}`);
-      });
-  });
-}
-
-router.all((req, res, next) => {
-  req.query = req.query || {};
-  next();
-});
-
-router.get('/', (req, res, next) => {
-  Crew
-    .find()
-    .sort({ 'jobsAmount.total': -1 })
-    .then(crews => {
-      res.locals.partials.crewsContext = crews;
-      res.render('admin');
-    })
-    .catch(err => {
-      console.log(`Cannot fetch data from database: ${err.stack}`);
-      return next('Cannot fetch data from database');
-    });
-});
 
 router.get('/uploadraw', (req, res) => {
   res.send('Jobs is being uploaded');
