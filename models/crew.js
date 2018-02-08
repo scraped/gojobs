@@ -9,19 +9,23 @@ function setColor(color) {
   return color.substr(0, 6).toLowerCase();
 }
 
+function getColor(color) {
+  return '#' + color;
+}
+
 let schema = new Schema({
   crewId: { type: Number, unique: true, required: true },
   slug: { type: String, unique: true, required: true },
 
   rockstar: { type: Boolean },
-  leader: { type: Schema.Types.ObjectId, ref: 'User', required: notRockstar },
+  leader: { type: String, required: notRockstar },
 
   name: { type: String, trim: true, required: true },
   desc: { type: String, trim: true, required: notRockstar },
   motto: { type: String, trim: true, required: notRockstar },
 
   tag: { type: String, uppercase: true, required: true },
-  color: { type: String, set: setColor, required: notRockstar },
+  color: { type: String, set: setColor, get: getColor, required: notRockstar },
   avatarId: { type: String, required: notRockstar },
 
   jobs: {
@@ -41,8 +45,8 @@ let schema = new Schema({
 
 schema.virtual('avatarUrl')
   .get(function() {
-    const { avatar, crewId } = this;
-    return `https://prod.cloud.rockstargames.com/crews/sc/${avatar}/${crewId}/publish/emblem/emblem_128.png`;
+    const { avatarId, crewId } = this;
+    return `https://prod.cloud.rockstargames.com/crews/sc/${avatarId}/${crewId}/publish/emblem/emblem_128.png`;
   });
 
 module.exports = mongoose.model('Crew', schema);

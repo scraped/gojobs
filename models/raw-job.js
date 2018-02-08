@@ -8,7 +8,6 @@ let schema = new Schema({
   job: { type: Schema.Types.Mixed, required: true },
 
   version: { type: Number, required: true },
-  validated: { type: Boolean },
   uploaded: { type: Boolean },
 
   fetched: { type: Date, required: true }
