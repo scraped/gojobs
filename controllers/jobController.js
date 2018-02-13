@@ -1,10 +1,11 @@
 const mongoose = require('../lib/db');
-const uploadJobs = require('../lib/upload-jobs');
+const { uploadRawJobs } = require('../lib/jobs/upload-rawjobs');
+const { fetchAndSave } = require('../lib/jobs/fetch');
 const Job = require('../models/job');
 const Crew = require('../models/crew');
 const User = require('../models/user');
 
-exports.jobList = async function (req, res) {
+exports.jobsList = async function (req, res) {
   let options = {};
 
   let {
@@ -69,16 +70,25 @@ exports.jobList = async function (req, res) {
 };
 
 exports.jobDetails = async function(req, res) {
-  const { id } = req.params;
+  const jobId = req.params.id;
 
-  const job = await Job.findOne({ jobId: id })
+  const job = await Job.findOne({ jobId })
     .populate('author')
     .populate('crew');
 
   res.send(job.toObject());
 };
 
-exports.jobUpload = function(req, res) {
-  uploadJobs();
+exports.jobsUpload = function(req, res) {
+  uploadRawJobs();
+
   res.send(`Jobs is being uploaded.`);
+};
+
+exports.jobsFetch = function(req, res) {
+  const { by, id, platform, period, limit, skip } = req.body;
+
+  fetchAndSave({ by, id, platform, period, limit, skip });
+
+  res.send(`Jobs id being fetched.`);
 };
