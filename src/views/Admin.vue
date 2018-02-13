@@ -4,62 +4,124 @@
       <div class="container">
         <h1 class="title is-spaced">Admin panel</h1>
 
-        <h2 class="subtitle is-4">Fetch jobs</h2>
+        <div class="columns">
+          <div class="column is-half">
+            <h2 class="subtitle is-4">Fetch jobs</h2>
 
-        <b-field label="What jobs to fetch"></b-field>
-        <b-field>
-          <b-radio-button v-model="by" native-value="members">
-            Members
-          </b-radio-button>
+            <b-field label="What jobs to fetch"></b-field>
+            <b-field>
+              <b-radio-button v-model="by" native-value="members">
+                All members
+              </b-radio-button>
 
-          <b-radio-button v-model="by" native-value="crew">
-            Crew
-          </b-radio-button>
+              <b-radio-button v-model="by" native-value="member">
+                Member
+              </b-radio-button>
 
-          <b-radio-button v-model="by" native-value="rockstar">
-            Rockstar
-          </b-radio-button>
+              <b-radio-button v-model="by" native-value="crew">
+                Crew
+              </b-radio-button>
 
-          <b-radio-button v-model="by" native-value="rstarverified">
-            Rockstar Verified
-          </b-radio-button>
-        </b-field>
+              <b-radio-button v-model="by" native-value="rockstar">
+                Rockstar
+              </b-radio-button>
 
-        <b-field
-          label="Crew digital ID or username"
-          v-if="by === 'crew' || by === 'members'">
-        </b-field>
+              <b-radio-button v-model="by" native-value="rstarverified">
+                Rockstar Verified
+              </b-radio-button>
+            </b-field>
 
-        <b-field label="Platform"></b-field>
-        <b-field>
-          <b-radio-button v-model="platform" native-value="pc">
-            PC
-          </b-radio-button>
+            <b-field
+              label="Crew digital ID"
+              v-if="by === 'crew'">
+              <b-input v-model="id"></b-input>
+            </b-field>
 
-          <b-radio-button v-model="platform" native-value="ps4">
-            PS4
-          </b-radio-button>
+            <b-field
+              label="Username"
+              v-if="by === 'member'">
+              <b-input v-model="id"></b-input>
+            </b-field>
 
-          <b-radio-button v-model="platform" native-value="xbox">
-            Xbox One
-          </b-radio-button>
-        </b-field>
+            <b-field label="Platform"></b-field>
+            <b-field>
+              <b-radio-button v-model="platform" native-value="pc">
+                PC
+              </b-radio-button>
 
-        <a
-          class="button is-primary is-outlined"
-          href="/api/jobs/upload"
-          target="_blank">Upload all raw jobs</a>
+              <b-radio-button v-model="platform" native-value="ps4">
+                PS4
+              </b-radio-button>
+
+              <b-radio-button v-model="platform" native-value="xbox">
+                Xbox One
+              </b-radio-button>
+            </b-field>
+
+            <b-field label="Period"></b-field>
+            <b-field>
+              <b-radio-button v-model="period" native-value="">
+                Any time
+              </b-radio-button>
+
+              <b-radio-button v-model="period" native-value="today">
+                Today
+              </b-radio-button>
+
+              <b-radio-button v-model="period" native-value="last7">
+                Last 7 days
+              </b-radio-button>
+
+              <b-radio-button v-model="period" native-value="lastMonth">
+                Last month
+              </b-radio-button>
+            </b-field>
+
+            <b-field label="Limit">
+              <b-input type="number" v-model="limit"></b-input>
+            </b-field>
+
+            <b-field label="To skip">
+              <b-input type="number" v-model="skip"></b-input>
+            </b-field>
+
+            <div class="buttons">
+              <button class="button is-primary is-outlined" @click="fetch">
+                Fetch
+              </button>
+              <button class="button is-primary is-outlined" @click="upload()">
+                Upload all raw jobs
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       by: 'members',
-      platform: 'pc'
+      id: '',
+      platform: 'pc',
+      period: '',
+      limit: 500,
+      skip: 0
+    }
+  },
+
+  methods: {
+    async fetch() {
+      const { by, id, platform, period, limit, skip } = this;
+
+      const response = (await axios.post('/api/jobs/fetch', { by, id, platform, period, limit, skip })).data;
+
+      this.$snackbar.open(response);
     }
   }
 };

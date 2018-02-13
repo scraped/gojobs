@@ -13,12 +13,12 @@ let schema = new Schema({
   fetched: { type: Date, required: true }
 });
 
-schema.post('save', doc => {
-  console.log(`JobRaw: ${doc.jobId} added`);
-});
+// schema.post('save', doc => {
+//   console.log(`JobRaw: ${doc.jobId} added`);
+// });
 
-schema.post('findOneAndUpdate', doc => {
-  console.log(`JobRaw: ${doc.jobId} updated`);
-})
+// schema.post('findOneAndUpdate', doc => {
+//   console.log(`JobRaw: ${doc.jobId} updated`);
+// })
 
 module.exports = mongoose.model('RawJob', schema);

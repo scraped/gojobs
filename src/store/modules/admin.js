@@ -1,4 +1,3 @@
-import config from '../../../config';
 import axios from 'axios';
 import queryString from 'query-string';
 
@@ -15,11 +14,9 @@ const mutations = {
 const actions = {
   async fetch({ commit }, payload) {
     const queryStr = queryString.stringify(payload.query),
-      url = `${config.url}/api/tags?${queryStr}`;
+      url = `/api/tags?${queryStr}`;
 
-    const response = await axios.get(url);
-
-    const { tags } = response.data;
+    const { tags } = (await axios.get(url)).data;
 
     commit('set', { tags });
   }
