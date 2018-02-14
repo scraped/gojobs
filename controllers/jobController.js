@@ -86,7 +86,6 @@ exports.jobsUpload = function(req, res) {
 };
 
 exports.jobsFetch = function(req, res) {
-  console.log('body:', req.body);
   fetchAndSave(req.body);
 
   res.send(`Jobs is being fetched.`);

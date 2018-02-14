@@ -6,6 +6,10 @@
 
         <div class="columns">
           <div class="column is-half">
+            <form
+              action="/api/jobs/fetch"
+              method="post"
+              @submit.prevent="fetch($event)">
             <h2 class="subtitle is-4">Fetch jobs</h2>
 
             <b-field label="What jobs to fetch"></b-field>
@@ -86,13 +90,14 @@
             </b-field>
 
             <div class="buttons">
-              <button class="button is-primary is-outlined" @click="fetch">
+              <button class="button is-primary is-outlined">
                 Fetch
               </button>
-              <button class="button is-primary is-outlined" @click="upload()">
+              <!-- <button class="button is-primary is-outlined" @click="upload()">
                 Upload all raw jobs
-              </button>
+              </button> -->
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -116,10 +121,10 @@ export default {
   },
 
   methods: {
-    async fetch() {
+    async fetch({ target }) {
       const { by, id, platform, period, limit, skip } = this;
 
-      const response = (await axios.post('/api/jobs/fetch', { by, id, platform, period, limit, skip })).data;
+      const response = (await axios.post(target.action, { by, id, platform, period, limit, skip })).data;
 
       this.$snackbar.open(response);
     }

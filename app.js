@@ -24,6 +24,7 @@ app.use(cors());
 app.use(helmet());
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(
   '/assets',
@@ -36,6 +37,5 @@ SSR(app);
 
 app.listen(app.get('port'), () => {
   const port = app.get('port');
-  console.log('Server is running at:');
-  console.log(`http://localhost:${port}`);
+  console.log(`http://localhost:${port} server's running`);
 });
