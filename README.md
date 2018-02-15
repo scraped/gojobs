@@ -91,8 +91,7 @@ Type | Actual type
 Property | Type | Description
 -------- | ---- | -----------
 `MissionId` | `MissionId` | Unique job ID (**NOT** a current ID!)
-|
-|
+unknown
 `Players`   | `array`     | Always empty array?
 
 ## `Content.stats`
@@ -103,8 +102,7 @@ Property | Type | Description | Flags
 `pu` | `integer` | Played unique  | `u`
 `qt` | `integer` | Quit total     | `u`
 `qu` | `integer` | Quit unique    | `u`
-|
-|
+unknown
 `dt` | `integer` | Always 0?      | `u`
 `du` | `integer` | Always 0?      | `u`
 
@@ -119,8 +117,7 @@ Property | Type | Description | Flags
 `rt_neg_pct`  | `float`   | % of 'dislikes'                             | `u`
 `avg`         | `string`  | `rt_pos_pct` + '%'                          | `u!`
 `bkmk_unq`    | `integer` | People bokmarked this                       | `u`
-|
-|
+unknown
 `rt_avg`      | `float`   | 99,99% alias of `rt_pos_pct`                | `u!`
 `rt_tot`      | `integer` | Always 0?                                   | `u`
 
@@ -149,8 +146,7 @@ Property | Type | Description | Flags
 `plat`                    | `string`    | `Ps3`, `Ps4`, `XBox`, `XBoxOne`, `PC` | -
 `tags`                    | `[string]`  | Array of tags | `e`
 `ver`                     | `integer`   | Version | -
-|
-|
+unknown
 `url`                     | `string`    | `/games/gtav/jobs/job/<ID>` | -
 `latestVersionContentId`  | `MissionId` | Alias of `MissionId`  | -
 `copiedFrom`              | `MissionId` | ?                     | `u`
@@ -176,8 +172,7 @@ Property | Type | Description | Flags
 `racetype`  | `string`  | `Laps`, `Point To Point` | `u`
 `ivm`       | `integer` | Vehicle ID set by default, or a number from `0` to `15` for races, `0` for DM & Parachuting, `-1` else | -
 `adverm`    | `integer` | ID of adversary mode, `0` else | `e`
-|
-|
+unknown
 `char`      | `integer` | Always 0? | -
 `endtype`   | `integer` | `0`, `2`-`5` for Versus Mission, LTS, AM, Capture IF rockstar, else for Captures ONLY (see stats below) (?) | -
 `mtnum`     | `integer` | `1` or `2` (?) | -
@@ -192,8 +187,7 @@ Property | Type | Description | Flags
 `chp`      | `integer`  | Checkpoints amount | -
 `lap`      | `integer`  | Default laps amount if not P2P | -
 `rdis`     | `float`    | Distance in metres | -
-|
-|
+unknown
 `type`     | `string`   | See below | -
 `aveh`     | `[string]` | Vehicle classes (no info in most cases) | `!`
 `gw`       | `integer`  | Sometimes values like `4.5`, `6.75`, otherwise `0` (?) | -
@@ -237,14 +231,13 @@ Property | Type | Description | Flags
 `veh`   | `[integer]` | Vehicles used in a job, `0` if race or parachuting | `u`
 `vehcl` | `[string]`  | DISABLED vehicle classes for races (use THIS) | -
 `wp`    | `[integer]` | Weapons used in a job if applicable| `u`
-|
-|
+unknown
 `ems`   | `boolean`   | `true` for some LTS, Capture, Versus, ADM (?) | -
 `mrule` | `[integer]` | Array like `0,2,11` only for Capture, LTS, Versus (?) | `u`
 
 ## Modes & icons
 Mode name | Icon name
-- | -
+--------- | ---------
 `Last Team Standing`    | LastTeamStanding
 `Land Race`             | LandRace, LandRaceP2P
 `Versus Mission`        | VersusMission
@@ -264,7 +257,7 @@ Mode name | Icon name
 # Locations
 
 Location | Short name
-- | -
+-------- | ----------
 Alamo Sea                         | `Alamo`
 Alta                              | `Alta`
 Banham Canyon                     | `BhamCa`
