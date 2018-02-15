@@ -1,35 +1,26 @@
 const _ = require('lodash');
+const { categories, platforms, modes } = require('../config/static');
+
 const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
-
-function notRockstar() {
-  return !this.rockstar;
-}
-
-function setMaxPlayers(n) {
-  return _.clamp(n, 1, 30);
-}
 
 let schema = new Schema({
   jobId: { type: String },
   jobCurrId: { type: String, required: true },
 
-  category: { type: String },
+  category: { type: Number, set: setCategory, get: getCategory },
 
   author: { type: String, required: notRockstar },
-  crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
-
   name: { type: String, trim: true, required: true },
   slug: { type: String, required: true },
   imageId: { type: String, required: true },
 
   job: {
-    maxpl: { type: Number, set: setMaxPlayers, required: true },
-    platform: { type: Number, required: notRockstar },
+    maxPl: { type: Number, set: setMaxPlayers, required: true },
+    platform: { type: Number, set: setPlatform, get: getPlatform, required: notRockstar },
     scType: { type: Number, required: true },
-    scMode: { type: Number, required: true },
-    type: { type: [String], required: true },
-    tags: { type: [String], required: true }
+    scMode: { type: Number },
+    tags: { type: [String] }
   },
 
   stats: {
@@ -67,5 +58,37 @@ schema.virtual('image')
     const id = this.currId;
     return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${id}/${img[1]}.jpg`;
   });
+
+function notRockstar() {
+  return !this.category;
+}
+
+function setMaxPlayers(n) {
+  return _.clamp(n, 1, 30);
+}
+
+function setCategory(scCategoryName) {
+  return 1 + _.findIndex(categories, cat => cat.sc === scCategoryName);
+}
+
+function getCategory(categoryId) {
+  return categories[categoryId - 1].name;
+}
+
+function setPlatform(scPlatformName) {
+  return 1 + _.findIndex(platforms, plat => plat.sc === scPlatformName);
+}
+
+function getPlatform(platformId) {
+  return platforms[platformId - 1].name;
+}
+
+function setScType(normalizedTypeName) {
+  return 1 + _.findIndex(modes, type => type.name === normalizedTypeName);
+}
+
+function getScType(typeId) {
+  return modes[typeId - 1].name;
+}
 
 module.exports = mongoose.model('Job', schema);

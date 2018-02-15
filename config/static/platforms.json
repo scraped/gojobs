@@ -1,5 +1,16 @@
 [
-  "PC",
-  "PS4",
-  "Xbox One"
+  {
+    "name": "PC",
+    "sc": "PC"
+  },
+
+  {
+    "name": "PS4",
+    "sc": "Ps4"
+  },
+
+  {
+    "name": "Xbox One",
+    "sc": "XBoxOne"
+  }
 ]

@@ -1,0 +1,45 @@
+[
+  {
+    "name": "Race",
+    "modes": [
+      "Stunt Race",
+      "Special Vehicle Race",
+      "Transform Race",
+      "Air Race",
+      "Water Race",
+      "Bike Race",
+      "Land Race"
+    ]
+  },
+
+  {
+    "name": "Deathmatch",
+    "modes": [
+      "Team Deathmatch",
+      "Vehicle Deathmatch"
+    ]
+  },
+
+  {
+    "name": "Capture",
+    "modes": [
+      "Raid",
+      "Contend",
+      "GTA",
+      "Hold"
+    ]
+  },
+
+  {
+    "name": "Mission",
+    "modes": [
+      "Adversary Mode",
+      "Versus Mission",
+      "Survival"
+    ]
+  },
+
+  {
+    "name": "Parachuting"
+  }
+]
