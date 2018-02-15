@@ -17,7 +17,7 @@ Property                      | Type      | Description
 `Vehicles`                    | `array`   | Vehicles
 `Weapons`                     | `array`   | Weapons
 
-## Job Types (`SearchOptType`)
+## Job Types IDs (`SearchOptType`)
 Value | Description
 ----- | -----------
 `<empty>` | Any type
@@ -30,8 +30,8 @@ Value | Description
 `8`    | Parachuting
 
 ## Job Subtypes (`SearchOptSubType`)
-Type | Job type | Description
----- | -------- | -----------
+Type | Job type ID | Description
+---- | ----------- | -----------
 `<empty>`           | Any | Any subtype
 `versus`            | `0` | Versus mission
 `adversary`         | `0` | Adversary mode
@@ -44,6 +44,7 @@ Type | Job type | Description
 `bikerace`          | `2` | Bike Race
 `landrace`          | `2` | Land Race
 `waterrace`         | `2` | Water race
+`transformrace`     | `2` | Transform race
 
 ## Publisher (`SearchOptPublisher`)
 Type | Description
@@ -146,9 +147,9 @@ Property | Type | Description | Flags
 `plat`                    | `string`    | `Ps3`, `Ps4`, `XBox`, `XBoxOne`, `PC` | -
 `tags`                    | `[string]`  | Array of tags | `e`
 `ver`                     | `integer`   | Version | -
-unknown
 `url`                     | `string`    | `/games/gtav/jobs/job/<ID>` | -
 `latestVersionContentId`  | `MissionId` | Alias of `MissionId`  | -
+unknown
 `copiedFrom`              | `MissionId` | ?                     | `u`
 `latest`                  | `boolean`   | Always `true`         | -
 `isOwner`                 | `boolean`   | Always `false`?  | -
@@ -160,15 +161,15 @@ unknown
 
 Property | Type | Description | Flags
 -------- | ---- | ----------- | -----
-`type`      | `string`  | `Race`, `FreeMission`, `Deathmatch`, `Parachuting`, `Survival` | -
+`type`      | `string`  | Type: `Race`, `FreeMission`, `Deathmatch`, `Parachuting`, `Survival` | -
 `min`       | `integer` | Min players | -
 `num`       | `integer` | Max players -
 `rank`      | `integer` | Min rank to play a job | `!`
 `start`     | `object`  | Trigger's pos (`x`, `y`, `z`) | -
-`subtype`   | `integer` | Subtype ID from `0` to `13` | -
+`subtype`   | `integer` | Subtype (mode) ID from `0` to `13` | -
 `tnum`      | `integer` | Max amount of teams (from `1` to `4`) | -
-`icon`      | `string`  | Icon name | -
-`mode`      | `string`  | Mode name | -
+`icon`      | `string`  | Icon name (see table below) | -
+`mode`      | `string`  | Mode name (see table below) | -
 `racetype`  | `string`  | `Laps`, `Point To Point` | `u`
 `ivm`       | `integer` | Vehicle ID set by default, or a number from `0` to `15` for races, `0` for DM & Parachuting, `-1` else | -
 `adverm`    | `integer` | ID of adversary mode, `0` else | `e`
@@ -214,6 +215,7 @@ This property can be set not only for races, but for DM & Parachuting.
 
 Property | Type | Description | Flags
 -------- | ---- | ----------- | -----
+unknown
 `liv`      | `integer` | Always 0? | -
 `pol`      | `integer` | `0`-`5` (police?) | -
 `score`    | `integer` | Up to `19` for DM, `0` otherwise (?) | -
