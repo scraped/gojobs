@@ -1,7 +1,7 @@
 # RGSC jobs search request structure
 
-Property | Type | Description
-- | - | -
+Property                      | Type      | Description
+----------------------------- | --------- | -----------
 `__RequestVerificationToken`  | `string`  | Token. Can be set via cookies
 `onlyCount`                   | `boolean` | ?
 `offset`                      | `integer` | Offset
@@ -19,7 +19,7 @@ Property | Type | Description
 
 ## Job Types (`SearchOptType`)
 Value | Description
-- | -
+----- | -----------
 `<empty>` | Any type
 `0`    | Mission
 `1`    | Deathmatch
@@ -31,7 +31,7 @@ Value | Description
 
 ## Job Subtypes (`SearchOptSubType`)
 Type | Job type | Description
-- | - | -
+---- | -------- | -----------
 `<empty>`           | Any | Any subtype
 `versus`            | `0` | Versus mission
 `adversary`         | `0` | Adversary mode
@@ -47,7 +47,7 @@ Type | Job type | Description
 
 ## Publisher (`SearchOptPublisher`)
 Type | Description
-- | -
+---- | -----------
 `<empty>`       | Any publisher
 `bookmarked`    | Bookmarked jobs
 `me`            | Jobs by authorized user
@@ -59,7 +59,7 @@ Type | Description
 
 ## Date (`SearchOptDate`)
 Type | Description
-- | -
+---- | -----------
 `<empty>`   | Any date
 `today`     | Today's jobs
 `last7`     | Last 7 days' jobs
@@ -67,7 +67,7 @@ Type | Description
 
 ## Sort (`SearchOptSort`)
 Type | Description
-- | -
+---- | -----------
 `CreatedDate` | Sort by a date of creation
 `Liked`       | Sort by likes amount
 `Name`        | Sort by name
@@ -83,7 +83,7 @@ Type | Description
 
 ## Special types
 Type | Actual type
-- | -
+---- | -----------
 `MissionId` | `string`
 
 ## Root properties
