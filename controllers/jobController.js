@@ -80,7 +80,9 @@ exports.jobDetails = async function(req, res) {
 };
 
 exports.jobsUpload = function(req, res) {
-  uploadRawJobs();
+  const { limit } = req.body;
+
+  uploadRawJobs({ limit });
 
   res.send(`Jobs is being uploaded.`);
 };

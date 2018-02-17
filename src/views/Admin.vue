@@ -93,10 +93,18 @@
               <button class="button is-primary is-outlined">
                 Fetch
               </button>
-              <!-- <button class="button is-primary is-outlined" @click="upload()">
-                Upload all raw jobs
-              </button> -->
             </div>
+            </form>
+          </div>
+          <div class="column">
+            <form
+              action="/api/jobs/upload"
+              method="post"
+              @submit.prevent="upload($event)">
+              <h2 class="subtitle is-4">Upload jobs</h2>
+              <button class="button is-primary is-outlined">
+                Upload raw jobs
+              </button>
             </form>
           </div>
         </div>
@@ -125,6 +133,12 @@ export default {
       const { by, id, platform, period, limit, skip } = this;
 
       const response = (await axios.post(target.action, { by, id, platform, period, limit, skip })).data;
+
+      this.$snackbar.open(response);
+    },
+
+    async upload({ target }) {
+      const response = (await axios.post(target.action)).data;
 
       this.$snackbar.open(response);
     }

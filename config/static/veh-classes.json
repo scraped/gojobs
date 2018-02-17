@@ -1,0 +1,28 @@
+{
+  "land": [
+    "Bikes",
+    "Classics",
+    "Compacts",
+    "Coupes",
+    "Cycles",
+    "Industrial",
+    "Mucle",
+    "OffRoad",
+    "Sedans",
+    "Special",
+    "Sports",
+    "Super",
+    "SUV",
+    "Utility",
+    "Vans"
+  ],
+
+  "air": [
+    "Heli",
+    "Plane"
+  ],
+
+  "water": [
+    "Boats"
+  ]
+}

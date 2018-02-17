@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-import common from './modules/common';
+// import common from './modules/common';
 import jobs from './modules/jobs';
 import job from './modules/job';
 import crews from './modules/crews';
@@ -15,7 +15,6 @@ export function createStore() {
   return new Vuex.Store({
     strict: !isProduction,
     modules: {
-      common,
       jobs,
       job,
       crews,

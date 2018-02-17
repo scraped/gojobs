@@ -14,7 +14,7 @@ let schema = new Schema({
 
 schema.virtual('avatar')
   .get(function() {
-    const username = this._id.toLowerCase();
+    const username = this.username.toLowerCase();
     return {
       small: `https://a.rsg.sc/n/${username}/s`,
       large: `https://a.rsg.sc/n/${username}/l`

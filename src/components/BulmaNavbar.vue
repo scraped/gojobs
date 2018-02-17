@@ -14,7 +14,7 @@
 
       <div class="navbar-menu" id="navbar-menu">
         <div class="navbar-start">
-           <div class="navbar-item has-dropdown">
+           <!-- <div class="navbar-item has-dropdown">
             <a class="navbar-link is-unselectable">
               <span class="is-hidden-desktop">Current platform:</span>
               {{ currPlatform.name }}
@@ -28,7 +28,7 @@
                 v-if="platform.id !== currPlatform.id">
                 {{ platform.name }}
               </a>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -49,18 +49,18 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+// import { mapState, mapGetters } from 'vuex';
 
-export default {
-  computed: {
-    ...mapGetters('common', [
-      'currPlatform'
-    ]),
-    ...mapState('common', [
-      'platforms'
-    ])
-  }
-};
+// export default {
+//   computed: {
+//     ...mapGetters('common', [
+//       'currPlatform'
+//     ]),
+//     ...mapState('common', [
+//       'platforms'
+//     ])
+//   }
+// };
 </script>
 
 <style lang="scss">

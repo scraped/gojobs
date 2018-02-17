@@ -5,7 +5,7 @@ const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
 let schema = new Schema({
-  jobId: { type: String },
+  jobId: { type: String, unique: true },
   jobCurrId: { type: String, required: true },
 
   rockstar: { type: Boolean },
@@ -46,11 +46,6 @@ let schema = new Schema({
   }
 });
 
-schema.virtual('rockstarVerified')
-  .get(function() {
-    return this.rockstar && !this.author;
-  });
-
 schema.virtual('imageUrl')
   .set(function(url) {
     const str = url.split('/');
@@ -80,10 +75,14 @@ schema.virtual('scModeName')
       modes[this.scType - 1].modes,
       mode => mode.name === modeName
     );
-    this.scMode = modeId;
+    if (modeId) {
+      this.scMode = modeId;
+    }
   })
   .get(function() {
-    return modes[this.scType - 1].modes[this.scMode - 1].name;
+    if (this.scMode) {
+      return modes[this.scType - 1].modes[this.scMode - 1].name;
+    }
   });
 
 schema.virtual('platformName')
