@@ -60,9 +60,7 @@ exports.jobsList = async function (req, res) {
   let jobs = await Job.find(options)
     .skip(Math.abs((page - 1) * perPage))
     .limit(perPage)
-    .sort(sort)
-    .populate('author')
-    .populate('crew');
+    .sort(sort);
 
   jobs = jobs.map(job => job.toObject());
 
@@ -84,11 +82,11 @@ exports.jobsUpload = function(req, res) {
 
   uploadRawJobs({ limit });
 
-  res.send(`Jobs is being uploaded.`);
+  res.send(`Jobs are being uploaded.`);
 };
 
 exports.jobsFetch = function(req, res) {
   fetchAndSave(req.body);
 
-  res.send(`Jobs is being fetched.`);
+  res.send(`Jobs are being fetched.`);
 };
