@@ -46,42 +46,57 @@ let schema = new Schema({
   }
 });
 
+schema.virtual('authorAvatar')
+  .get(function() {
+    const username = this.author.toLowerCase();
+    return {
+      small: `https://a.rsg.sc/n/${username}/s`,
+      large: `https://a.rsg.sc/n/${username}/l`
+    }
+  });
+
 schema.virtual('imageUrl')
   .set(function(url) {
     const str = url.split('/');
-    this.imageId = `${str[5]}.${str[7]}`;
+    this.image = `${str[5]}.${str[7]}`;
   })
   .get(function() {
-    const img = this.imageId.split('.');
-    const id = this.currId;
-    return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${id}/${img[1]}.jpg`;
+    const img = this.image.split('.');
+    const { jobCurrId } = this;
+    return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${jobCurrId}/${img[1]}.jpg`;
+  });
+
+schema.virtual('scTypeAndModeName')
+  .set(function({ scTypeName, scModeName }) {
+    const typeId = 1 + _.findIndex(
+      modes,
+      type => type.name === scTypeName
+    );
+
+    this.scType = typeId;
+
+    const currModes = modes[typeId - 1].modes;
+
+    if (currModes) {
+      const modeId = 1 + _.findIndex(
+        currModes,
+        mode => mode === scModeName
+      );
+      if (modeId) {
+        this.scMode = modeId;
+      }
+    }
   });
 
 schema.virtual('scTypeName')
-  .set(function(typeName) {
-    const typeId = 1 + _.findIndex(
-      modes,
-      type => type.name === typeName
-    );
-    this.scType = typeId;
-  })
   .get(function() {
     return modes[this.scType - 1].name;
   });
 
 schema.virtual('scModeName')
-  .set(function(modeName) {
-    const modeId = 1 + _.findIndex(
-      modes[this.scType - 1].modes,
-      mode => mode.name === modeName
-    );
-    if (modeId) {
-      this.scMode = modeId;
-    }
-  })
   .get(function() {
     if (this.scMode) {
-      return modes[this.scType - 1].modes[this.scMode - 1].name;
+      return modes[this.scType - 1].modes[this.scMode - 1];
     }
   });
 
@@ -91,7 +106,9 @@ schema.virtual('platformName')
       platforms,
       plat => plat.sc === scPlatformName
     );
-    this.platform = platformId;
+    if (platformId) {
+      this.platform = platformId;
+    }
   })
   .get(function() {
     return platforms[this.platform - 1].name;

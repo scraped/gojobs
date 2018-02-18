@@ -54,6 +54,7 @@
     "node-sass": "^4.7.2",
     "pretty-error": "^2.1.1",
     "query-string": "^5.1.0",
+    "slug": "^0.9.1",
     "time-stamp": "^2.0.0",
     "vue": "^2.5.13",
     "vue-progressbar": "^0.7.3",

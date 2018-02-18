@@ -11,10 +11,11 @@ let config = {
     },
 
     standardUpdateOptions: {
-      upsert: true,
-      setDefaultsOnInsert: true,
+      new: true,
       runSettersOnQuery: true,
-      new: true
+      runValidators: true,
+      setDefaultsOnInsert: true,
+      upsert: true
     },
   }
 };

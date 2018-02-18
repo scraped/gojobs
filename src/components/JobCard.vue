@@ -6,7 +6,7 @@
     <router-link :to="{ name: 'job', params: { id: job.jobId } }">
       <div class="card__image">
         <figure class="image is-2by1">
-          <img :src="job.image" :alt="job.name">
+          <img :src="job.imageUrl" :alt="job.name">
         </figure>
         <div
           :class="`card__strip is-${ratingCssClass}`"
@@ -29,8 +29,8 @@
         <div class="media-left">
           <figure class="image image-avatar is-48x48">
             <router-link
-              :to="{ path: '/', query: genQuery({ author: job.author.username }) }">
-                <img class="is-rounded" :src="job.author.avatar.small">
+              :to="{ path: '/', query: genQuery({ author: job.author }) }">
+                <img class="is-rounded" :src="job.authorAvatar.small">
             </router-link>
           </figure>
         </div>
@@ -38,18 +38,9 @@
         <div class="media-content">
           <p class="subtitle is-6">
             <router-link
-              :to="{ path: '/', query: genQuery({ author: job.author.username }) }">
-                @{{ job.author.username }}
+              :to="{ path: '/', query: genQuery({ author: job.author }) }">
+                @{{ job.author }}
             </router-link>
-            <router-link
-              :to="{ path: '/', query: genQuery({ crew: job.crew.crewUrl }) }"
-              v-if="job.crew">
-            <span
-              class="tag is-white tooltip is-tooltip-right"
-              :style="'border: 1px solid #' + job.crew.color"
-              v-if="job.crew"
-              :data-tooltip="job.crew.name ? job.crew.name : '<Name not loaded>'">
-              {{ job.crew.tag }}</span>
             </router-link><br>
           </p>
         </div>
@@ -62,13 +53,13 @@
           Not yet categorized
         </div>
         <div class="has-text-grey-light">
-          In-game category:
-          <router-link :to="''">{{ modes[job.job.gameType - 1].name }}</router-link>
-          —
+          In-game category: {{ job.scTypeName }}
+          <template v-if="job.scModeName">
+            — {{ job.scModeName }}
+          </template>
           <br>
-          {{ platforms[job.platform - 1].name }} · {{ job.job.maxpl }} players · {{ updatedDate }}
-          <br>
-          Points: {{ job.stats.points }}
+          {{ job.platformName }} · {{ job.maxPl }} players · {{ updatedDate }}
+          <!-- <br>Points: {{ job.stats.points }} -->
         </div>
       </div>
       <br>
@@ -95,7 +86,6 @@
 
 <script>
 import moment from 'moment';
-import { mapState } from 'vuex';
 
 import IconGta from 'src/components/IconGta.vue';
 
@@ -111,23 +101,19 @@ export default {
   },
 
   computed: {
-    ...mapState('common', [
-      'modes',
-      'platforms'
-    ]),
-
     ratingCssClass() {
       let rating = this.job.stats.ratingQuit;
       return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
     },
 
     updatedDate() {
-      let { job } = this;
-      let date = moment(job.dates.updated).fromNow();
-      if (job.ver === 1) {
+      const date = moment(this.job.scUpdated).fromNow(),
+        { ver } = this.job;
+
+      if (ver === 1) {
         return `added ${date}`;
       } else {
-        return `${date} (version ${job.ver})`;
+        return `${date} (version ${ver})`;
       }
     },
   },
