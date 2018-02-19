@@ -1,9 +1,9 @@
 <template>
   <div>
-    <bulma-hero class="is-medium" text="GTA Online Jobs"></bulma-hero>
-
+    <!-- <bulma-hero class="is-medium" text="GTA Online Jobs"></bulma-hero> -->
     <section class="section">
       <div class="container">
+        <h1 class="title">GTA Online Jobs</h1>
         <jobs-list></jobs-list>
         <br>
         <bulma-pagination

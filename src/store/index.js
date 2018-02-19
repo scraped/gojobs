@@ -3,17 +3,17 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-// import common from './modules/common';
 import jobs from './modules/jobs';
 import job from './modules/job';
 import crews from './modules/crews';
 import admin from './modules/admin';
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 export function createStore() {
   return new Vuex.Store({
-    strict: !isProduction,
+    strict: isDevelopment,
+
     modules: {
       jobs,
       job,

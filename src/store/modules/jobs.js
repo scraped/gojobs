@@ -7,19 +7,20 @@ const state = {
 };
 
 const mutations = {
-  set(state, { jobs, amount, append = false }) {
+  set(state, { jobs, amount, append }) {
     if (append) {
       Reflect.apply(Array.prototype.push, state.jobs, jobs);
     } else {
       state.jobs = jobs;
     }
     state.amount = Number(amount) || 0;
-  }
+  },
+
+  // append(state, )
 };
 
 const actions = {
-  async fetch({ commit }, payload) {
-    let { query, append } = payload;
+  async fetch({ commit }, { query, append }) {
     if (append) query.page++;
     let queryStr = queryString.stringify(query);
 
