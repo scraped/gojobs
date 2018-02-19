@@ -21,7 +21,7 @@ let schema = new Schema({
   leader: { type: String, required: notRockstar },
 
   name: { type: String, trim: true, required: true },
-  desc: { type: String, trim: true, required: notRockstar },
+  desc: { type: String, trim: true },
   motto: { type: String, trim: true, required: notRockstar },
 
   tag: { type: String, uppercase: true, required: true },
