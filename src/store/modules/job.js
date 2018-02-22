@@ -14,9 +14,10 @@ const actions = {
   async fetch({ commit }, payload) {
     if (!payload) payload = {};
 
-    let id = payload.id || '';
+    const id = payload.id || '';
 
-    let response = await Vue.http.get(`/api/jobs/id/${id}`);
+    const response = await Vue.http.post(`http://localhost:3000/api/jobs/id/${id}`);
+
     commit('set', { job: response.data });
   }
 };

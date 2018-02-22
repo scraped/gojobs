@@ -2,20 +2,26 @@
   <div>
     <bulma-hero
       class="is-medium"
-      :background="job.image"
+      :background="job.imageUrl"
       :text="job.name">
     </bulma-hero>
 
+        <div class="hero" style="background: #afdafc;">
+          <div class="hero-body">
+            <div class="container">
+        <p class="is-size-5" v-html="job.details.desc"></p>
+            </div>
+          </div>
+        </div>
     <section class="section">
       <div class="container">
         <div class="columns is-multiline">
           <div class="column">
             <div class="box">
-              <p v-html="job.desc"></p>
 
               <br>
               <figure>
-                <img :src="job.image" :alt="job.name">
+                <img :src="job.imageUrl" :alt="job.name">
               </figure>
 
               <br>
@@ -32,14 +38,14 @@
                   </span>
                   <span>{{ job.stats.dislikes | formatNumber }}</span></span>
                 <span
-                  class="tag is-light is-rounded is-medium tooltip"
+                  class="tag is-rounded is-medium tooltip"
                   data-tooltip="Launches">
                   <span class="icon">
                     <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
                   </span>
                   <span>{{ job.stats.playTot | formatNumber }}</span></span>
                 <span
-                  class="span tag is-rounded is-medium tooltip"
+                  class="tag is-rounded is-medium tooltip"
                   data-tooltip="People played this">
                   <span class="icon">
                     <i class="fa fa-users fa-lg" aria-hidden="true"></i>
@@ -48,7 +54,7 @@
               </div>
 
               <div class="has-text-grey">
-                {{ platforms[job.platform - 1].name }} · {{ job.job.maxpl }} players
+                {{ job.platformName }} · {{ job.maxPl }} players
               </div>
             </div>
           </div>
@@ -59,21 +65,13 @@
               <div class="media">
                 <div class="media-left">
                   <figure class="image image-avatar is-48x48">
-                    <img class="is-rounded" :src="job.author.avatar.small">
+                    <img class="is-rounded" :src="job.authorAvatar.small">
                   </figure>
                 </div>
 
                 <div class="media-content">
                   <p class="subtitle is-6">
-                    @{{ job.author.username }}
-                    <span
-                      class="tag is-white"
-                      :style="`border: 1px solid #${job.crew.color}`"
-                      v-if="job.crew">{{ job.crew.tag }}</span>
-                    <br>
-                    <span v-if="job.crew.name" class="has-text-grey">
-                      {{ job.crew.name }}
-                    </span>
+                    @{{ job.author }}
                   </p>
                 </div>
               </div>
@@ -96,17 +94,13 @@
 
               <br>
               <div class="label">Updated</div>
-              <div>{{ job.dates.updated | formatDate }} (version {{ job.ver }})</div>
+              <div>{{ job.scUpdated | formatDate }} (version {{ job.ver }})</div>
 
-              <template v-if="job.dates.added">
+              <template v-if="job.scAdded">
                 <br>
                 <div class="label">Added</div>
-                <div>{{ job.dates.added | formatDate }}</div>
+                <div>{{ job.scAdded | formatDate }}</div>
               </template>
-
-              <br>
-              <div class="label">Information updated</div>
-              <div>{{ job.dates.fetch | formatDate }}</div>
             </div>
           </div>
         </div>
@@ -135,10 +129,6 @@ export default {
   computed: {
     ...mapState('job', {
       job: state => state.job
-    }),
-    ...mapState('common', {
-      modes: state => state.modes,
-      platforms: state => state.platforms
     }),
 
     ratingCssClass() {

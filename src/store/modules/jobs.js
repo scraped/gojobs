@@ -22,11 +22,11 @@ const mutations = {
 const actions = {
   async fetch({ commit }, { query, append }) {
     if (append) query.page++;
-    let queryStr = queryString.stringify(query);
+    const queryStr = queryString.stringify(query);
 
-    let response = await axios.get(`http://localhost:3000/api/jobs?${queryStr}`);
+    const response = await axios.post(`http://localhost:3000/api/jobs?${queryStr}`);
 
-    let { jobs, amount } = response.data;
+    const { jobs, amount } = response.data;
 
     commit('set', { jobs, amount, append });
   }

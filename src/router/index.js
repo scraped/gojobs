@@ -6,7 +6,7 @@ const Crews = () => import('src/views/Crews.vue');
 const NotFound = () => import('src/views/404.vue');
 const Admin = () => import('src/views/Admin.vue');
 const Login = () => import('src/views/login/index.vue');
-const Job = () => import('src/views/Job.vue');
+const Job = () => import('src/views/job/index.vue');
 
 Vue.use(VueRouter);
 

@@ -71,10 +71,9 @@ exports.jobDetails = async function(req, res) {
   const jobId = req.params.id;
 
   const job = await Job.findOne({ jobId })
-    .populate('author')
-    .populate('crew');
+    .populate('details');
 
-  res.send(job.toObject());
+  res.json(job.toObject());
 };
 
 exports.jobsUpload = function(req, res) {

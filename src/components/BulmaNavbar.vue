@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-fixed-top">
+  <nav class="navbar is-dark is-fixed-top">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item">
@@ -68,7 +68,7 @@
 
 .navbar {
   background-color: transparent;
-  background-image: $main-gradient;
+  // background-image: $main-gradient;
 }
 
 .navbar-item {

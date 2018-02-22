@@ -20,6 +20,7 @@ let schema = new Schema({
   scType: { type: Number, required: true },
   scMode: { type: Number },
   tags: { type: [String] },
+  details: { type: Schema.Types.Mixed, ref: 'JobDetails', required: true },
 
   stats: {
     points: { type: Number, required: true },

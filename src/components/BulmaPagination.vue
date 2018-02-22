@@ -152,7 +152,6 @@ export default {
     },
 
     hasNext() {
-      console.log('hasnext', this.totalItems);
       return this.currPage < this.totalPages;
     }
   }
