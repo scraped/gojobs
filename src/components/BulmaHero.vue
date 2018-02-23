@@ -7,7 +7,7 @@
       </div>
     </div>
   </div>
-  <div class="hero is-white a">
+  <!-- <div class="hero is-white a">
     <div class="hero-body">
       <div class="container">
         <h1 class="title has-text-dark">
@@ -15,7 +15,7 @@
         </h1>
       </div>
     </div>
-  </div>
+  </div> -->
   </div>
 </template>
 

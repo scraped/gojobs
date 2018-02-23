@@ -6,13 +6,25 @@
       :text="job.name">
     </bulma-hero>
 
-        <div class="hero" style="background: #afdafc;">
-          <div class="hero-body">
-            <div class="container">
-        <p class="is-size-5" v-html="job.details.desc"></p>
-            </div>
+    <div class="hero" style="background: #afdafc;">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title has-text-dark">
+            <span v-html="job.name"></span>
+          </h1>
+          <p>@{{ job.author }}</p>
+          <p class="is-size-5" v-html="job.details.desc"></p>
+          <br>
+          <div class="tags">
+            <span class="tag">{{ job.scTypeName }}</span>
+            <span class="tag">{{ job.scModeName }}</span>
+            <span class="tag">PITLANE</span>
+            <span class="tag">GTA MODE RECOMMENDED</span>
+            <span class="tag">OLD-STYLE</span>
           </div>
         </div>
+      </div>
+    </div>
     <section class="section">
       <div class="container">
         <div class="columns is-multiline">
