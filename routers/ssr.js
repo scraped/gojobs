@@ -1,12 +1,10 @@
-const config = require('../config');
+const { production } = require('../config');
 const fs = require('fs');
 const LRU = require('lru-cache');
 const { createBundleRenderer } = require('vue-server-renderer');
 const setupDevServer = require('../build/setup-dev-server');
 
-const { production } = config;
-
-function createBRendererFactory({ bundle, clientManifest, template }) {
+function createBundleRendererFactory({ bundle, clientManifest, template }) {
   return createBundleRenderer(bundle, {
     clientManifest,
     template,
@@ -20,29 +18,33 @@ function createBRendererFactory({ bundle, clientManifest, template }) {
 }
 
 module.exports = app => {
-  let readyPromise = Promise.resolve();
-  let renderer;
+  let readyPromise = Promise.resolve(),
+    renderer;
+
+  function updateRenderer({ bundle, clientManifest, template }) {
+    renderer = createBundleRendererFactory({
+      bundle,
+      clientManifest,
+      template
+    });
+  }
 
   if (production) {
+    // PRODUCTION: generate renderer
     // when using readFileSync, you must also use JSON.parse, so... require!
     // WARN: require works works from the directory in which this file is
     // located, but readFileSync in which this file is executed.
-    const bundle = require(`../src/vue-ssr-server-bundle`);
-    const clientManifest = require(`../src/vue-ssr-client-manifest`);
+    const bundle = require(`../dist/vue-ssr-server-bundle`);
+    const clientManifest = require(`../dist/vue-ssr-client-manifest`);
     const template = fs.readFileSync(`./src/index.html`, 'utf-8');
 
-    renderer = createBRendererFactory({ bundle, clientManifest, template });
+    updateRenderer({ bundle, clientManifest, template });
   } else {
-    // development: wait before bundling
-    readyPromise = setupDevServer(
-      app,
-      function updateCallback({ bundle, clientManifest, template }) {
-        renderer = createBRendererFactory({ bundle, clientManifest, template });
-      }
-    );
+    // DEVELOPMENT: wait before bundling
+    readyPromise = setupDevServer(app, updateRenderer);
   }
 
-  app.get('*', async (req, res) => {
+  return async function(req, res) {
     await readyPromise;
 
     const context = {
@@ -53,9 +55,9 @@ module.exports = app => {
     renderer.renderToString(context, (err, html) => {
       if (err) {
         console.log('Ошибка:', err);
-        return res.send('Ошибка!');
+        return res.status(500).send('500 Internal Server Error.');
       }
       res.send(html);
     });
-  });
+  }
 };
