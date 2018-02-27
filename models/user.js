@@ -8,7 +8,11 @@ let schema = new Schema({
   crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
 
   verified: { type: Boolean },
-  password: { type: String, set: setPassword, required: isVerified }
+  veriryJobName: { type: String },
+  verifyDate: { type: Date, required: verificationPending },
+
+  password: { type: String, set: setPassword, required: isVerified },
+  email: { type: String }
 }, {
   id: false,
   toObject: {
@@ -19,6 +23,10 @@ let schema = new Schema({
 
 function isVerified() {
   return this.verified;
+}
+
+function verificationPending() {
+  return this.verifyJobName;
 }
 
 function setPassword(password) {
@@ -55,5 +63,7 @@ schema.methods.generateTestJobName = function() {
 
   return generatedString;
 };
+
+schema.methods.checkVerification = function
 
 module.exports = mongoose.model('User', schema);
