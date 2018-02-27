@@ -1,5 +1,5 @@
 import { createApp } from './app'
-import findAsyncComponents from './find-async-components';
+import findAsyncComponents from './helpers/find-async-components';
 
 export default context => {
   return new Promise((resolve, reject) => {

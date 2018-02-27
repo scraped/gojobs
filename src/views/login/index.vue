@@ -11,13 +11,26 @@
 
         <div class="columns is-centered">
           <div class="column is-half">
-            <b-field label="Rockstar Games Social Club Username">
-              <b-input size="is-large"></b-input>
-            </b-field>
-            <b-field label="Password">
-              <b-input type="password" size="is-large"></b-input>
-            </b-field>
-            <button class="button is-primary">Continue</button>
+            <form
+              action="/auth/checkuser"
+              method="post"
+              @submit.prevent="checkUser($event)">
+              <b-field label="Rockstar Games Social Club Username">
+                <b-input
+                  size="is-large"
+                  v-model="username">
+                </b-input>
+              </b-field>
+
+              <b-field label="Password">
+                <b-input
+                  type="password"
+                  size="is-large"
+                  v-model="password">
+                </b-input>
+              </b-field>
+              <button class="button is-primary">Continue</button>
+            </form>
           </div>
         </div>
       </div>
@@ -26,10 +39,21 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    test() {
+import axios from 'axios';
 
+export default {
+  data() {
+    return {
+      username: '',
+      password: ''
+    }
+  },
+
+  methods: {
+    async checkUser({ target }) {
+      const { username, password } = this;
+
+      const response = await axios.post(target.action, { username, password });
     }
   }
 };

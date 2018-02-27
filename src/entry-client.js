@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { createApp } from './app';
-import findAsyncComponents from './find-async-components';
+import findAsyncComponents from './helpers/find-async-components';
 
 const { app, store, router } = createApp();
 

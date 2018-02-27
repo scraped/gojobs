@@ -1,11 +1,11 @@
 export default function findAsyncComponents({ components, store, route }) {
-  let asyncDataPromises = [];
+  let fetchDataPromises = [];
 
   components.forEach(component => {
     if (component.fetchData) {
-      asyncDataPromises.push(component.fetchData({ store, route }));
+      fetchDataPromises.push(component.fetchData({ store, route }));
     }
   });
 
-  return asyncDataPromises;
-}
+  return fetchDataPromises;
+};
