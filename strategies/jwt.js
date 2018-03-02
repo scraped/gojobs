@@ -1,14 +1,14 @@
 const passport = require('passport');
-const { Strategy, ExtractJwt } = require('passport-jwt');
+const passportJwt = require('passport-jwt');
+const JwtStrategy = passportJwt.Strategy;
+const { ExtractJwt } = passportJwt;
 
 const strategyOptions = {
   secretOrKey: 'supersecretKeyy',
   jwtFromRequest: ExtractJwt.fromAuthHeader()
 };
 
-const strategy = new Strategy(strategyOptions, (payload, done) => {
+passport.use(new JwtStrategy(strategyOptions, (payload, done) => {
 
   }
-);
-
-passport.use(strategy);
+));
