@@ -64,6 +64,8 @@ schema.methods.generateTestJobName = function() {
   return generatedString;
 };
 
-schema.methods.checkVerification = function
+schema.methods.checkVerification = function() {
+
+};
 
 module.exports = mongoose.model('User', schema);
