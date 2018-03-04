@@ -8,13 +8,14 @@ const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
-
-// better error messages & console.log
-require('pretty-error').start();
-require('./lib/log');
+const prettyError = require('pretty-error');
 
 const jobsRouter = require('./routers/jobs');
 const serverSideRendering = require('./routers/ssr');
+
+// better error messages & console.log
+prettyError.start();
+require('./lib/log');
 
 const app = express();
 

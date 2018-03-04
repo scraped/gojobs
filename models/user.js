@@ -47,7 +47,8 @@ schema.methods.checkPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-schema.methods.generateTestJobName = function() {
+// static methods
+schema.statics.generateTestJobName = function() {
   const values = 'abcdefghijklmnopqrstuvwxyz',
     VALUES_NUMBER = values.length,
     NAME_MIN_LEN = 20,
@@ -62,10 +63,6 @@ schema.methods.generateTestJobName = function() {
   }
 
   return generatedString;
-};
-
-schema.methods.checkVerification = function() {
-
 };
 
 module.exports = mongoose.model('User', schema);
