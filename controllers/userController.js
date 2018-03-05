@@ -2,6 +2,10 @@ const _ = require('lodash');
 const User = require('../models/user');
 
 exports.signUp = async function(req, res, next) {
+  if (req.session.job) {
+    return next();
+  }
+
   const MIN_USERNAME_LEN = 6,
     MAX_USERNAME_LEN = 16,
     MIN_PASSWORD_LEN = 6,
@@ -33,4 +37,12 @@ exports.signUp = async function(req, res, next) {
       return res.json({ message: 'This email is used by another user' });
     }
   }
+
+  const testJobName = User.generateTestJobName();
+  req.session.job = testJobName;
+
+  return res.json({
+    success: true,
+    testJobName
+  });
 };

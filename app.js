@@ -2,15 +2,16 @@ const config = require('./config');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const prettyError = require('pretty-error');
+const session = require('./middleware/session');
 
 const jobsRouter = require('./routers/jobs');
+const authRouter = require('./routers/auth');
 const serverSideRendering = require('./routers/ssr');
 
 // better error messages & console.log
@@ -28,13 +29,14 @@ app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
-app.use(cookieParser());
+app.use(session());
 app.use(
   '/assets',
   express.static(path.resolve(__dirname, 'dist/assets'))
 );
 
 app.use('/api/jobs', jobsRouter);
+app.use('/auth', authRouter);
 
 app.use(serverSideRendering(app));
 

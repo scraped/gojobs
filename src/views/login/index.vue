@@ -2,11 +2,11 @@
   <div>
     <section class="section">
       <div class="container">
-        <h1 class="title">Log In or Sign Up</h1>
+        <h1 class="title">Sign Up</h1>
 
         <div class="columns is-centered">
           <div class="column is-half">
-            <form method="post" @submit.prevent="login">
+            <form method="post" @submit.prevent="signup">
               <b-field label="Rockstar Games Social Club Username">
                 <b-input
                   size="is-large"
@@ -79,7 +79,7 @@ export default {
   },
 
   methods: {
-    async login() {
+    async signup() {
       const { username, password, email, agree } = this,
         URL_LOGIN = '/auth/login';
 
