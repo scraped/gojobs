@@ -2,12 +2,15 @@
   <div>
     <section class="section">
       <div class="container">
-        <h1 class="title">Sign Up</h1>
-
         <div class="columns is-centered">
           <div class="column is-half">
+            <h1 class="title">Sign Up</h1>
+            <b-message>
+              <b>Welcome to GTA Online Jobs site.</b><br>
+            </b-message>
+            <h2 class="subtitle is-4">Step 1</h2>
             <form method="post" @submit.prevent="signup">
-              <b-field label="Rockstar Games Social Club Username">
+              <b-field label="Your Rockstar Games Social Club Username">
                 <b-input
                   size="is-large"
                   v-model="username"
@@ -15,26 +18,15 @@
                 </b-input>
               </b-field>
 
-              <b-field label="Password">
-                <b-input
-                  type="password"
-                  size="is-large"
-                  v-model="password"
-                  required>
-                </b-input>
-              </b-field>
-
-              <template v-if="signUp">
-                <b-message>
-                  Добро пожаловать на сайт GTA Online Jobs.
-                  Ещё раз обращаем ваше внимание на то, что вы должны
-                  были ввести никнейм, полностью совпадающий с вашим
-                  никнеймом на сайте RGSC: после регистрации вам придётся
-                  подтвердить свою личность, иначе доступ к сайту
-                  будет ограничен.<br>
-                  Также вы можете ввести свой e-mail (для восстановления
-                  пароля), хотя это необязательно.
-                </b-message>
+              <template v-if="step2">
+                <b-field label="Password" v-if="step2">
+                  <b-input
+                    type="password"
+                    size="is-large"
+                    v-model="password"
+                    required>
+                  </b-input>
+                </b-field>
 
                 <b-field label="E-mail (can be empty)">
                   <b-input
@@ -44,16 +36,15 @@
                 </b-field>
 
                 <b-field>
-                  <b-checkbox v-model="agree">
-                    I understand that <b>{{ username }}</b> also need
-                    to be my RGSC nickname.
+                  <b-checkbox v-model="confirm">
+                    I confirm that I have published a job named <b>{{ jobname }}</b>.
                   </b-checkbox>
                 </b-field>
               </template>
 
               <button
                 class="button is-primary"
-                :disabled="signUp && !agree">
+                :disabled="step2 && !confirm">
                 Continue
               </button>
             </form>
@@ -73,27 +64,37 @@ export default {
       username: '',
       password: '',
       email: '',
-      agree: false,
-      signUp: false
+      step2: false,
+      jobname: '',
+      confirm: false
     }
   },
 
   methods: {
     async signup() {
-      const { username, password, email, agree } = this,
-        URL_LOGIN = '/auth/login';
+      const { username, password, email, step2, confirm } = this;
 
-      const response = await axios.post(
-        URL_LOGIN,
-        { username, password }
-      );
+      if (!step2) {
+        const response = await axios.post(
+          '/auth/signup',
+          { username }
+        );
 
-      // User's signing up
-      if (response.data.signup) {
-        this.signUp = true;
+        if (response.data.success) {
+          this.jobname = response.data.jobname;
+          this.step2 = true;
+        } else {
+          this.$snackbar.open({
+            message: response.data.message,
+            duration: 10000,
+            position: 'is-top'
+          })
+        }
       } else {
-        // User's logging in
-
+        const response = await axios.post(
+          '/auth/completesignup',
+          { username, password, email }
+        );
       }
     }
   }

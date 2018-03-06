@@ -16,7 +16,7 @@ const serverSideRendering = require('./routers/ssr');
 
 // better error messages & console.log
 prettyError.start();
-require('./lib/log');
+// require('./lib/log');
 
 const app = express();
 
@@ -26,7 +26,7 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(helmet());
 app.use(compression());
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(session());

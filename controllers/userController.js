@@ -6,6 +6,38 @@ exports.signUp = async function(req, res, next) {
     return next();
   }
 
+  const { username } = req.body;
+
+  if (!username) {
+    return res.json({ message: 'Enter a username.' });
+  }
+
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    return res.json({ message: 'User not found. You can\'t sign up at this moment.' });
+  }
+
+  if (user.verified) {
+    return res.json({ message: 'This user has already registred.' });
+  }
+
+  const jobname = User.generateTestJobName();
+
+  req.session.username = username;
+  req.session.job = jobname;
+
+  return res.json({
+    success: true,
+    jobname
+  });
+};
+
+exports.completeSignUp = async function(req, res, next) {
+  if (req.session.job) {
+    return next();
+  }
+
   const MIN_USERNAME_LEN = 6,
     MAX_USERNAME_LEN = 16,
     MIN_PASSWORD_LEN = 6,
@@ -23,26 +55,4 @@ exports.signUp = async function(req, res, next) {
       { message: 'Too short or too long username or/and password' }
     );
   }
-
-  const user = await User.findOne({ username });
-
-  if (user) {
-    return res.json({ message: 'User already exists' });
-  }
-
-  if (email) {
-    const emailExists = await User.findOne({ email });
-
-    if (emailExists) {
-      return res.json({ message: 'This email is used by another user' });
-    }
-  }
-
-  const testJobName = User.generateTestJobName();
-  req.session.job = testJobName;
-
-  return res.json({
-    success: true,
-    testJobName
-  });
 };
