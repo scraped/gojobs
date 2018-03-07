@@ -88,7 +88,7 @@ export default {
             message: response.data.message,
             duration: 10000,
             position: 'is-top'
-          })
+          });
         }
       } else {
         const response = await axios.post(
