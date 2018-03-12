@@ -6,7 +6,7 @@
           <div class="column is-half">
             <h1 class="title">Sign Up</h1>
             <b-message>
-              <b>Welcome to GTA Online Jobs site.</b><br>
+              <b>Welcome to GTA Online Jobs site.</b>
             </b-message>
             <h2 class="subtitle is-4">Step 1</h2>
             <form method="post" @submit.prevent="signup">
