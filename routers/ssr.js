@@ -14,7 +14,7 @@ function createBundleRendererFactory({ bundle, clientManifest, template }) {
       maxAge: 1000 * 60 * 15
     }),
     runInNewContext: false
-  })
+  });
 }
 
 module.exports = app => {

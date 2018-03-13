@@ -3,7 +3,7 @@ import findAsyncComponents from './helpers/find-async-components';
 
 export default context => {
   return new Promise((resolve, reject) => {
-    const { app, router, store } = createApp(context);
+    const { app, router, store } = createApp();
 
     router.push(context.url);
 
