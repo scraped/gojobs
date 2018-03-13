@@ -49,7 +49,8 @@ module.exports = app => {
 
     const context = {
       title: 'GTA Online Jobs',
-      url: req.url
+      url: req.url,
+      session: req.session
     };
 
     renderer.renderToString(context, (err, html) => {
@@ -57,6 +58,7 @@ module.exports = app => {
         console.log('Ошибка:', err);
         return res.status(500).send('500 Internal Server Error.');
       }
+
       res.send(html);
     });
   }

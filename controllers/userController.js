@@ -1,7 +1,17 @@
 const _ = require('lodash');
 const User = require('../models/user');
 
+exports.jobName = function(req, res) {
+  return res.json({
+    jobname: req.session.job || ''
+  });
+};
+
 exports.signUp = async function(req, res, next) {
+  const NO_USERNAME_MESSAGE = 'Enter a username',
+    USER_NOT_FOUND_MESSAGE = 'User not found',
+    USER_EXISTS_MESSAGE = 'This user has already registred';
+
   if (req.session.job) {
     return next();
   }
@@ -9,17 +19,17 @@ exports.signUp = async function(req, res, next) {
   const { username } = req.body;
 
   if (!username) {
-    return res.json({ message: 'Enter a username.' });
+    return res.status(401).json({ message: NO_USERNAME_MESSAGE });
   }
 
   const user = await User.findOne({ username });
 
   if (!user) {
-    return res.json({ message: 'User not found. You can\'t sign up at this moment.' });
+    return res.status(401).json({ message: USER_NOT_FOUND_MESSAGE });
   }
 
   if (user.verified) {
-    return res.json({ message: 'This user has already registred.' });
+    return res.status(401).json({ message: USER_EXISTS_MESSAGE });
   }
 
   const jobname = User.generateTestJobName();
@@ -27,10 +37,7 @@ exports.signUp = async function(req, res, next) {
   req.session.username = username;
   req.session.job = jobname;
 
-  return res.json({
-    success: true,
-    jobname
-  });
+  return res.json({ jobname });
 };
 
 exports.completeSignUp = async function(req, res, next) {

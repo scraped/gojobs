@@ -51,18 +51,18 @@ schema.methods.checkPassword = function(password) {
 schema.statics.generateTestJobName = function() {
   const values = 'abcdefghijklmnopqrstuvwxyz',
     VALUES_NUMBER = values.length,
-    NAME_MIN_LEN = 20,
-    NAME_MAX_LEN = 30;
+    NAME_MIN_LEN = 15,
+    NAME_MAX_LEN = 20;
 
   const nameLength = _.random(NAME_MIN_LEN, NAME_MAX_LEN);
 
-  let generatedString = new Array(nameLength);
+  let jobNameArray = new Array(nameLength);
 
   for (let i = 0; i < nameLength; i++) {
-    generatedString[i] = values[_.random(0, VALUES_NUMBER - 1)];
+    jobNameArray[i] = values[_.random(0, VALUES_NUMBER - 1)];
   }
 
-  return generatedString;
+  return jobNameArray.join('');
 };
 
 module.exports = mongoose.model('User', schema);

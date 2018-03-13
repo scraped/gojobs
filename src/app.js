@@ -26,7 +26,12 @@ Vue.use(Buefy);
 // Vue.component(Buefy.Tabs.name, Buefy.Tabs);
 // Vue.component(Buefy.TabItem.name, Buefy.TabItem);
 
-export function createApp() {
+/**
+ * Creates app, store, router and synchronizes the last two
+ * @param {object} context arbitrary context object for the server
+ * @returns {object} { app, store, router }
+ */
+export function createApp(context) {
   const store = createStore();
   const router = createRouter();
 
@@ -35,7 +40,8 @@ export function createApp() {
   const app = new Vue({
     render: h => h(App),
     store,
-    router
+    router,
+    data: context
   });
 
   return { app, store, router };

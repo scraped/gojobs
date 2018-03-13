@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const chokidar = require('chokidar');
 const webpack = require('webpack');
-// const { logMessage } = require('../lib/utils');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const clientConfig = require('./webpack.client.config');
@@ -24,7 +23,9 @@ function setupDevServer(app, updateCallback) {
 
   const templatePath = './src/index.html';
 
+  // ***************************
   // Utilities
+  // ***************************
   function update() {
     if (bundle && clientManifest) {
       resolveReadyPromise();
@@ -41,9 +42,9 @@ function setupDevServer(app, updateCallback) {
     template = fs.readFileSync(templatePath, 'utf-8');
   }
 
-  //
+  // ***************************
   // 0. Watch template file
-  //
+  // ***************************
   updateTemplate();
 
   chokidar.watch(templatePath).on('change', () => {
@@ -52,9 +53,9 @@ function setupDevServer(app, updateCallback) {
     console.log('Template updated');
   });
 
-  //
+  // ***************************
   // 1. Watch client files
-  //
+  // ***************************
   const clientCompiler = webpack(clientConfig);
   const serverCompiler = webpack(serverConfig);
 
@@ -85,9 +86,9 @@ function setupDevServer(app, updateCallback) {
     heartbeat: 5000
   }));
 
-  //
+  // ***************************
   // 2. Watch server bundle
-  //
+  // ***************************
   const MFS = new MemoryFileSystem();
   serverCompiler.outputFileSystem = MFS;
 
