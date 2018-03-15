@@ -41,7 +41,11 @@ export function createApp(context) {
     render: h => h(App),
     store,
     router,
-    data: context
+    data() {
+      return {
+        jobname: context.user.jobname
+      };
+    }
   });
 
   return { app, store, router };
