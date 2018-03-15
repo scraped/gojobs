@@ -3,11 +3,13 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-import jobs from './modules/jobs';
-import job from './modules/job';
-import crews from './modules/crews';
-import admin from './modules/admin';
-import user from './modules/user';
+import {
+  jobs,
+  job,
+  crews,
+  admin,
+  user
+} from './modules';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 

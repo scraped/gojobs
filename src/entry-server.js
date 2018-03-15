@@ -5,9 +5,9 @@ export default context => {
   return new Promise((resolve, reject) => {
     const { app, router, store } = createApp();
 
-    // if (context.user.jobname) {
-    //   store.commit('user/setJobname', { jobname: context.user.jobname });
-    // }
+    if (context.user.jobname) {
+      store.commit('user/setJobname', { jobname: context.user.jobname });
+    }
 
     router.push(context.url);
 
