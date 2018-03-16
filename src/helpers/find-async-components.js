@@ -1,4 +1,4 @@
-export default function findAsyncComponents({ components, store, route }) {
+export function findAsyncComponents({ components, store, route }) {
   let fetchDataPromises = [];
 
   components.forEach(component => {

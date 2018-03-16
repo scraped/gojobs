@@ -1,12 +1,13 @@
 import { createApp } from './app'
-import findAsyncComponents from './helpers/find-async-components';
+import { findAsyncComponents } from './helpers';
 
 export default context => {
   return new Promise((resolve, reject) => {
     const { app, router, store } = createApp();
 
-    if (context.user.jobname) {
-      store.commit('user/setJobname', { jobname: context.user.jobname });
+    if (context.cookies) {
+      console.log(context.cookies);
+      store.commit('user/setCookies', { cookies: context.cookies });
     }
 
     router.push(context.url);

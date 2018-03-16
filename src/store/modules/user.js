@@ -1,21 +1,21 @@
 import axios from 'axios';
 
 const state = {
-  jobname: ''
+  cookies: {}
 };
 
 const mutations = {
-  setJobname(state, { jobname }) {
-    state.jobname = jobname;
+  setCookies(state, { cookies }) {
+    state.cookies = cookies;
   }
 };
 
 const actions = {
-  async getJobname({ commit }, payload) {
-    const { jobname } = (await axios.get('/auth/jobname')).data;
+  async getUserInfo({ commit }, payload) {
+    const { cookies } = (await axios.get('http://localhost:3000/auth/cookies')).data;
 
-    if (jobname) {
-      commit('setJobname', { jobname });
+    if (cookies) {
+      commit('setCookies', { cookies });
     }
   }
 };

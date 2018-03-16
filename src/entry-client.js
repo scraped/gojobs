@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import { createApp } from './app';
-import findAsyncComponents from './helpers/find-async-components';
+import { findAsyncComponents } from './helpers';
 
 const { app, store, router } = createApp();
 
 Vue.mixin({
+  // See docs to understand why this is the necessary code
   async beforeRouteUpdate(to, from, next) {
     const { fetchData } = this.$options;
 
@@ -21,6 +22,8 @@ Vue.mixin({
   }
 });
 
+// Server filled the store - don't need to do it again
+// on the client side
 if (window.__INITIAL_STATE__) {
   store.replaceState(window.__INITIAL_STATE__);
 }
@@ -45,16 +48,16 @@ router.onReady(() => {
       route: to
     });
 
-    const showProgressBar = asyncDataPromises.length > 0;
+    const promisesExist = asyncDataPromises.length > 0;
 
-    if (showProgressBar) Vue.prototype.$Progress.start();
-
-    await Promise.all(asyncDataPromises);
-
-    if (showProgressBar) Vue.prototype.$Progress.finish();
+    if (promisesExist) {
+      Vue.prototype.$Progress.start();
+      await Promise.all(asyncDataPromises);
+      Vue.prototype.$Progress.finish();
+    }
 
     next();
-  });
+  }); // router.beforeResolve
 
   app.$mount('#app');
 });

@@ -1,9 +1,10 @@
 const _ = require('lodash');
 const User = require('../models/user');
 
-exports.jobName = function(req, res) {
+exports.userInfo = function(req, res) {
+  const { username, job } = req.session;
   return res.json({
-    jobname: req.session.job || ''
+    cookies: { username, job }
   });
 };
 

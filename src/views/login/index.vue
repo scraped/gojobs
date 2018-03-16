@@ -72,7 +72,7 @@ import axios from 'axios';
 
 export default {
   fetchData({ store }) {
-    return store.dispatch('user/getJobname');
+    return store.dispatch('user/getUserInfo');
   },
 
   data() {

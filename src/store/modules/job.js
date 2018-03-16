@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import axios from 'axios';
 
 const state = {
   job: {}
@@ -16,7 +16,7 @@ const actions = {
 
     const id = payload.id || '';
 
-    const response = await Vue.http.post(`http://localhost:3000/api/jobs/id/${id}`);
+    const response = await axios.post(`http://localhost:3000/api/jobs/id/${id}`);
 
     commit('set', { job: response.data });
   }
