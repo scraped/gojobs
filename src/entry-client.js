@@ -4,8 +4,8 @@ import { findAsyncComponents } from './helpers';
 
 const { app, store, router } = createApp();
 
+// See docs to understand why this is the necessary code
 Vue.mixin({
-  // See docs to understand why this is the necessary code
   async beforeRouteUpdate(to, from, next) {
     const { fetchData } = this.$options;
 

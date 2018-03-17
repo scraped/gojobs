@@ -3,9 +3,7 @@ const User = require('../models/user');
 
 exports.userInfo = function(req, res) {
   const { username, job } = req.session;
-  return res.json({
-    cookies: { username, job }
-  });
+  return res.json({ username, job });
 };
 
 exports.signUp = async function(req, res, next) {

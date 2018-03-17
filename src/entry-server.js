@@ -1,14 +1,23 @@
+import config from '../config';
 import { createApp } from './app'
-import { findAsyncComponents } from './helpers';
+import { findAsyncComponents, setupAxios } from './helpers';
+import Vue from 'vue';
 
 export default context => {
+  const { req } = context;
+
   return new Promise((resolve, reject) => {
     const { app, router, store } = createApp();
 
-    if (context.cookies) {
-      console.log(context.cookies);
-      store.commit('user/setCookies', { cookies: context.cookies });
-    }
+    // if (context.session) {
+    //   store.commit('user/setSession', { session: context.session.id });
+    // }
+
+    Vue.prototype.$axios = setupAxios({
+      host: req.hostname,
+      port: config.port,
+      sessionId: req.session.id
+    });
 
     router.push(context.url);
 
