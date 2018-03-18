@@ -39,10 +39,14 @@
                 <h2 class="subtitle is-4">Step 2</h2>
                 <p>In order to confirm your identity, please publish a job named:</p>
                 <div class="title is-4">{{ jobname }}</div>
-                <a
-                  class="button is-primary is-outlined"
-                  href="http://socialclub.rockstargames.com/"
-                  target="_blank">How to publish a job in GTA Online</a><br><br>
+                <div class="buttons">
+                  <a
+                    class="button is-primary is-outlined"
+                    href="http://socialclub.rockstargames.com/"
+                    target="_blank">
+                    How to publish a job in GTA Online
+                  </a>
+                </div>
 
                 <b-field label="E-mail (optional)">
                   <b-input
