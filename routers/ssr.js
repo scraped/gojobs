@@ -50,7 +50,6 @@ module.exports = app => {
     const context = {
       title: 'GTA Online Jobs',
       url: req.url,
-      session: req.session,
       req
     };
 

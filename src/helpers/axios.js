@@ -1,13 +1,9 @@
 import realAxios from 'axios';
-import Vue from 'vue';
 
-export function setupAxios({ host, port, sessionId }) {
-  return realAxios.create({
-    baseURL: `http://${host}:${port}/`,
-    headers: {
-      Cookie: `connect.sid=${sessionId}`
-    }
+export let axios = realAxios;
+
+export function setupAxios({ host, port }) {
+  axios = realAxios.create({
+    baseURL: `http://${host}:${port}/`
   });
 }
-
-export const axios = Vue.prototype.$axios || realAxios;

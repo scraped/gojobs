@@ -9,6 +9,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const prettyError = require('pretty-error');
 const session = require('./middleware/session');
+// const cookieParser = require('cookie-parser');
 
 const jobsRouter = require('./routers/jobs');
 const authRouter = require('./routers/auth');
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(session());
+// app.use(cookieParser(config.cookieSecret));
 app.use(
   '/assets',
   express.static(path.resolve(__dirname, 'dist/assets'))

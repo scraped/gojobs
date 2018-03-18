@@ -2,8 +2,8 @@ const _ = require('lodash');
 const User = require('../models/user');
 
 exports.userInfo = function(req, res) {
-  const { username, job } = req.session;
-  return res.json({ username, job });
+  const { username, jobname } = req.session;
+  return res.json({ username, jobname });
 };
 
 exports.signUp = async function(req, res, next) {
@@ -11,7 +11,7 @@ exports.signUp = async function(req, res, next) {
     USER_NOT_FOUND_MESSAGE = 'User not found',
     USER_EXISTS_MESSAGE = 'This user has already registred';
 
-  if (req.session.job) {
+  if (req.session.jobname) {
     return next();
   }
 
@@ -34,13 +34,13 @@ exports.signUp = async function(req, res, next) {
   const jobname = User.generateTestJobName();
 
   req.session.username = username;
-  req.session.job = jobname;
+  req.session.jobname = jobname;
 
   return res.json({ jobname });
 };
 
 exports.completeSignUp = async function(req, res, next) {
-  if (req.session.job) {
+  if (req.session.jobname) {
     return next();
   }
 

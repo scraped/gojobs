@@ -69,21 +69,23 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex';
 
 export default {
-  fetchData({ store }) {
-    return store.dispatch('auth/getUserInfo');
-  },
-
   data() {
     return {
-      username: '',
       password: '',
       email: '',
       step2: false,
-      jobname: '',
       confirm: false
     }
+  },
+
+  computed: {
+    ...mapState('auth', [
+      'username',
+      'jobname'
+    ])
   },
 
   methods: {

@@ -1,22 +1,26 @@
 import { axios } from 'src/helpers';
 
 const state = {
-  jobName: ''
+  username: '',
+  jobname: ''
 };
 
 const mutations = {
-  setJobName(state, { job }) {
-    state.jobName = job;
+  setUsername(state, { username }) {
+    state.username = username;
+  },
+
+  setJobname(state, { jobname }) {
+    state.jobname = jobname;
   }
 };
 
 const actions = {
   async getUserInfo({ commit }) {
-    const { job } = (await axios.get('/auth/cookies')).data;
+    const { username, jobname } = (await axios.get('/auth/cookies')).data;
 
-    if (job) {
-      commit('setJobName', { job });
-    }
+    if (jobname) commit('setJobname', { jobname });
+    if (username) commit('setUsername', { username });
   }
 };
 

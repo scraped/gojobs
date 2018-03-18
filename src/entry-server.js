@@ -1,7 +1,6 @@
 import config from '../config';
 import { createApp } from './app'
 import { findAsyncComponents, setupAxios } from './helpers';
-import Vue from 'vue';
 
 export default context => {
   const { req } = context;
@@ -9,14 +8,15 @@ export default context => {
   return new Promise((resolve, reject) => {
     const { app, router, store } = createApp();
 
-    // if (context.session) {
-    //   store.commit('user/setSession', { session: context.session.id });
-    // }
+    if (req.session) {
+      const { username, jobname } = req.session;
+      if (username) store.commit('auth/setUsername', { username });
+      if (jobname) store.commit('auth/setJobname', { jobname });
+    }
 
-    Vue.prototype.$axios = setupAxios({
+    setupAxios({
       host: req.hostname,
-      port: config.port,
-      sessionId: req.session.id
+      port: config.port
     });
 
     router.push(context.url);

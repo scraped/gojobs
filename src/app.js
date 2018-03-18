@@ -28,10 +28,9 @@ Vue.use(Buefy);
 
 /**
  * Creates app, store, router and synchronizes the last two
- * @param {object} context arbitrary context object for the server
  * @returns {object} { app, store, router }
  */
-export function createApp(context) {
+export function createApp() {
   const store = createStore();
   const router = createRouter();
 
@@ -40,12 +39,7 @@ export function createApp(context) {
   const app = new Vue({
     render: h => h(App),
     store,
-    router,
-    // data() {
-    //   return {
-    //     jobname: context.user.jobname
-    //   };
-    // }
+    router
   });
 
   return { app, store, router };
