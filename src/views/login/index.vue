@@ -30,22 +30,17 @@
               </b-field>
 
               <a
-                class="button"
-                href="http://socialclub.rockstargames.com/"
+                class="button is-primary is-outlined"
+                href="https://socialclub.rockstargames.com/"
                 target="_blank">Go to RGSC site</a>
               </section>
 
               <section class="section" v-if="jobname">
                 <h2 class="subtitle is-4">Step 2</h2>
-                <b-field label="In order to confirm your identity, please publish a job named:">
-                  <b-input
-                    size="is-large"
-                    v-model="jobname"
-                    required>
-                  </b-input>
-                </b-field>
+                <p>In order to confirm your identity, please publish a job named:</p>
+                <div class="title is-4">{{ jobname }}</div>
                 <a
-                  class="button"
+                  class="button is-primary is-outlined"
                   href="http://socialclub.rockstargames.com/"
                   target="_blank">How to publish a job in GTA Online</a><br><br>
 
