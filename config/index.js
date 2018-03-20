@@ -1,7 +1,7 @@
 let config = {
   port: process.env.PORT || 3000,
   production: process.env.NODE_ENV === 'production',
-  cookieSecret: 'rggsgsehh5hhgerggeegdfssdbsdbsdbd',
+  jwtSecret: 'rggsgsehh5hhgerggeegdfssdbsdbsdbd',
 
   mongo: {
     connectUri: 'mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs',

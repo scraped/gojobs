@@ -39,7 +39,10 @@
           <router-link to="/crews" class="navbar-item">
             <span>Crews</span>
           </router-link>
-          <router-link to="/login" class="navbar-item">
+          <router-link v-if="username" to="/profile" class="navbar-item">
+            <span>@{{ username }}</span>
+          </router-link>
+          <router-link v-else to="/login" class="navbar-item">
             <span>Sign Up</span>
           </router-link>
         </div>
@@ -49,18 +52,15 @@
 </template>
 
 <script>
-// import { mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
-// export default {
-//   computed: {
-//     ...mapGetters('common', [
-//       'currPlatform'
-//     ]),
-//     ...mapState('common', [
-//       'platforms'
-//     ])
-//   }
-// };
+export default {
+  computed: {
+    ...mapState('user', [
+      'username'
+    ])
+  }
+};
 </script>
 
 <style lang="scss">

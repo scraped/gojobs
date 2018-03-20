@@ -2,6 +2,7 @@ import { axios } from 'src/helpers';
 
 const state = {
   username: '',
+  verified: false,
   jobname: ''
 };
 

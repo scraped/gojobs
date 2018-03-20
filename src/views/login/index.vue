@@ -4,52 +4,49 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-half">
-            <h1 class="title is-spaced">Sign Up</h1>
-            <b-message>
-              <b>Welcome to GTA Online Jobs site.</b><br>
-              Процесс регистрации может быть пройден игроками, имеющими действующую учётную запись Rockstar Games Social Club, использующуюся для игры в GTA Online.<br>
-              Для завершения регистрации вам будет предложено опубликовать <b>дело GTA Online</b> с определённым названием <b>в течение 60 минут</b> после начала процесса регистрации, поэтому убедитесь, что:
-              <ul>
-                <li>Вы введёте имя пользователя, совпадающее с ВАШИМ именем пользователя на сайте Rockstar Games Social Club;</li>
-                <li>Вы будете иметь возможность ЗАЙТИ и ОПУБЛИКОВАТЬ дело в GTA Online в течение следующих 60 минут.</li>
-              </ul>
-            </b-message>
-            <b-message type="is-danger">
-              <b>Обратите внимание:</b> на данный момент регистрация доступна далеко не всем пользователям. Просим извинения за доставленные неудобства.
-            </b-message>
+            <template v-if="success">
+              <h1 class="title">Success!</h1>
+              <b-message type="is-cussess">
+                <b>{{ username }}</b>, welcome to GTA Online Jobs site!<br>
+                First of all, <a href="/profile">go to your profile</a> and confirm your identity<template v-if="email">and email</template>.
+              </b-message>
+            </template>
+            <template v-else>
+              <h1 class="title">Sign Up</h1>
+              <b-message>
+                <b>Welcome to GTA Online Jobs site.</b><br>
+                Процесс регистрации может быть пройден игроками, имеющими действующую учётную запись Rockstar Games Social Club, использующуюся для игры в GTA Online.<br>
+                Для завершения регистрации вам будет предложено опубликовать <b>дело GTA Online</b> с определённым названием <b>в течение 60 минут</b> после начала процесса регистрации, поэтому убедитесь, что:
+                <ul>
+                  <li>Вы введёте имя пользователя, совпадающее с ВАШИМ именем пользователя на сайте Rockstar Games Social Club;</li>
+                  <li>Вы будете иметь возможность ЗАЙТИ и ОПУБЛИКОВАТЬ дело в GTA Online в течение следующих 60 минут.</li>
+                </ul>
+              </b-message>
+              <b-message type="is-danger">
+                <b>Обратите внимание:</b> на данный момент регистрация доступна далеко не всем пользователям. Просим извинения за доставленные неудобства.
+              </b-message>
 
-            <form method="post" @submit.prevent="signup">
-              <section class="section">
-              <h2 class="subtitle is-4">Step 1</h2>
-              <b-field label="Your valid Rockstar Games Social Club Username *">
-                <b-input
-                  size="is-large"
-                  v-model="username"
-                  required>
-                </b-input>
-              </b-field>
+              <form method="post" @submit.prevent="signup">
+                <b-field label="Your valid Rockstar Games Social Club Username *">
+                  <b-input
+                    size="is-large"
+                    v-model="username"
+                    required>
+                  </b-input>
+                </b-field>
 
-              <a
-                class="button is-primary is-outlined"
-                href="https://socialclub.rockstargames.com/"
-                target="_blank">Go to RGSC site</a>
-              </section>
-
-              <section class="section" v-if="jobname">
-                <h2 class="subtitle is-4">Step 2</h2>
-                <p>In order to confirm your identity, please publish a job named:</p>
-                <div class="title is-4">{{ jobname }}</div>
                 <div class="buttons">
                   <a
                     class="button is-primary is-outlined"
-                    href="http://socialclub.rockstargames.com/"
+                    href="https://socialclub.rockstargames.com/"
                     target="_blank">
-                    How to publish a job in GTA Online
+                    Go to RGSC site
                   </a>
                 </div>
 
-                <b-field label="E-mail (optional)">
+                <b-field label="E-mail (optional, but recommended)">
                   <b-input
+                    type="email"
                     size="is-large"
                     v-model="email">
                   </b-input>
@@ -65,18 +62,18 @@
                 </b-field>
 
                 <b-field>
-                  <b-checkbox v-model="confirm">
-                    I confirm that I have published a job named <b>{{ jobname }}</b>.
+                  <b-checkbox v-if="username" v-model="confirm">
+                    I confirm that <b>@{{ username }}</b> is my GTA Online account I can use right now.
                   </b-checkbox>
                 </b-field>
-              </section>
 
-              <button
-                class="button is-primary"
-                :disabled="step2 && !confirm">
-                Continue
-              </button>
-            </form>
+                <button
+                  class="button is-primary"
+                  :disabled="!confirm || !password">
+                  Continue
+                </button>
+              </form>
+            </template>
           </div>
         </div>
       </div>
@@ -86,60 +83,43 @@
 
 <script>
 import axios from 'axios';
-import { mapState } from 'vuex';
 
 export default {
   data() {
     return {
+      username: '',
       password: '',
       email: '',
-      confirm: false
+      confirm: false,
+      success: false
     }
-  },
-
-  computed: {
-    username: {
-      get() {
-        return this.$store.state.auth.username;
-      },
-
-      set(value) {
-        this.$store.commit('auth/setUsername', { username: value });
-      }
-    },
-    ...mapState('auth', [
-      'jobname'
-    ])
   },
 
   methods: {
     async signup() {
       const { username, password, email, confirm } = this;
 
-      if (!step2) {
-        const response = await axios.post(
+      try {
+        const res = await axios.post(
           '/auth/signup',
-          { username }
-        );
-
-        if (response.status === 200) {
-          const { jobname } = response.data;
-          this.$store.commit('auth/setJobname', { jobname });
-        } else {
-          this.$snackbar.open({
-            message: response.data.message,
-            duration: 10000,
-            position: 'is-top'
-          });
-        }
-      } else {
-        const response = await axios.post(
-          '/auth/completesignup',
           { username, password, email }
         );
+
+        console.log('here:', res);
+
+        this.success = true;
+        const { jobname } = res.data;
+        this.$store.commit('user/setUsername', { username });
+        this.$store.commit('user/setJoname', { jobname });
+      } catch (error) {
+        console.log('here2:', error);
+        this.$snackbar.open({
+          message: error.response.data.message,
+          duration: 10000,
+          position: 'is-top'
+        });
       }
     }
   }
 };
 </script>
-

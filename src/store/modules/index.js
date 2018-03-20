@@ -1,13 +1,13 @@
 import jobs from './jobs';
 import job from './job';
-import auth from './auth';
+import user from './user';
 import admin from './admin';
 import crews from './crews';
 
 export {
   jobs,
   job,
-  auth,
+  user,
   admin,
   crews
 };

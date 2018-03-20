@@ -8,7 +8,7 @@ import {
   job,
   crews,
   admin,
-  auth
+  user
 } from './modules';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -21,7 +21,7 @@ export function createStore() {
       job,
       crews,
       admin,
-      auth
+      user
     }
   });
 }
