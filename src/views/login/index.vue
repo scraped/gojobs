@@ -6,9 +6,9 @@
           <div class="column is-half">
             <template v-if="success">
               <h1 class="title">Success!</h1>
-              <b-message type="is-cussess">
+              <b-message type="is-success">
                 <b>{{ username }}</b>, welcome to GTA Online Jobs site!<br>
-                First of all, <a href="/profile">go to your profile</a> and confirm your identity<template v-if="email">and email</template>.
+                First of all, <a href="/profile">go to your profile</a> and confirm your identity<template v-if="email"> and email</template>.
               </b-message>
             </template>
             <template v-else>
