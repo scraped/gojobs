@@ -13,15 +13,24 @@ const mutations = {
 
   setJobname(state, { jobname }) {
     state.jobname = jobname;
+  },
+
+  setVerifStatus(state, { verifStatus }) {
+    state.verified = verifStatus;
   }
 };
 
 const actions = {
   async getUserInfo({ commit }) {
-    const { username, jobname } = (await axios.get('/auth/cookies')).data;
+    const {
+      username,
+      jobname,
+      verifStatus
+    } = (await axios.post('/api/user/basicinfo')).data;
 
-    if (jobname) commit('setJobname', { jobname });
-    if (username) commit('setUsername', { username });
+    if (username) commit('setJobname', { jobname });
+    if (jobname) commit('setUsername', { username });
+    if (verifStatus) commit('setVerifStatus', { verifStatus });
   }
 };
 

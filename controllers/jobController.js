@@ -41,7 +41,7 @@ exports.jobsList = async function(req, res) {
   } else if (by === 'user') {
     let info = await User.findOne({ username: byId });
     if (!info) empty = true;
-    if (info) options.author = mongoose.Types.ObjectId(info._id);
+    if (info) options.author = byId;
   } else if (by === 'crew') {
     let info = await Crew.findOne({ crewUrl: byId });
     if (!info) empty = true;

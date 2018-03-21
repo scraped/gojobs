@@ -11,9 +11,12 @@ const prettyError = require('pretty-error');
 // const session = require('./middleware/session');
 const cookieParser = require('cookie-parser');
 
-const jobsRouter = require('./routers/jobs');
-const authRouter = require('./routers/auth');
-const serverSideRendering = require('./routers/ssr');
+const {
+  authRouter,
+  jobsRouter,
+  userRouter
+} = require('./routers');
+const serverSideRendering = require('./lib/ssr');
 
 // better error messages & console.log
 prettyError.start();
@@ -38,6 +41,7 @@ app.use(
 );
 
 app.use('/api/jobs', jobsRouter);
+app.use('/api/user', userRouter);
 app.use('/auth', authRouter);
 
 app.use(serverSideRendering(app));

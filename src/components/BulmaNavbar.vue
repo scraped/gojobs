@@ -40,7 +40,10 @@
             <span>Crews</span>
           </router-link>
           <router-link v-if="username" to="/profile" class="navbar-item">
-            <span>@{{ username }}</span>
+            <figure class="image is-32x32">
+              <img :src="`https://a.rsg.sc/n/${username}/s`" style="border-radius: 50%;">
+            </figure>
+            <span>{{ username }}</span>
           </router-link>
           <router-link v-else to="/login" class="navbar-item">
             <span>Sign Up</span>

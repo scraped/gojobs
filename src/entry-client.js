@@ -29,6 +29,8 @@ if (window.__INITIAL_STATE__) {
 }
 
 router.onReady(() => {
+  store.dispatch('user/getUserInfo');
+
   router.beforeResolve(async (to, from, next) => {
     const matchedPrev = router.getMatchedComponents(from);
     const matched = router.getMatchedComponents(to);

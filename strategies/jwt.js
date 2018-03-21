@@ -1,12 +1,20 @@
+const config = require('../config');
 const passport = require('passport');
 const passportJwt = require('passport-jwt');
 const JwtStrategy = passportJwt.Strategy;
-const { ExtractJwt } = passportJwt;
 const User = require('../models/user');
 
+function cookieExtractor(req) {
+  let token = null;
+    if (req.cookies) {
+      token = req.cookies.jwt;
+    }
+    return token;
+}
+
 const strategyOptions = {
-  secretOrKey: 'supersecretKeyy',
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: config.jwtSecret,
+  jwtFromRequest: cookieExtractor,
   // passport-jwt is verifying the token using jsonwebtoken. Pass here an
   // options object for any other option you can pass the jsonwebtoken
   // verifier. (i.e maxAge)

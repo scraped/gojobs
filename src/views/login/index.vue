@@ -31,6 +31,8 @@
                   <b-input
                     size="is-large"
                     v-model="username"
+                    minlength="6"
+                    maxlength="16"
                     required>
                   </b-input>
                 </b-field>
@@ -57,6 +59,8 @@
                     type="password"
                     size="is-large"
                     v-model="password"
+                    minlength="6"
+                    maxlength="30"
                     required>
                   </b-input>
                 </b-field>
@@ -107,7 +111,7 @@ export default {
 
         const { jobname } = res.data;
         this.$store.commit('user/setUsername', { username });
-        this.$store.commit('user/setJoname', { jobname });
+        this.$store.commit('user/setJobname', { jobname });
         this.success = true;
       } catch (error) {
         this.$snackbar.open({

@@ -61,7 +61,9 @@ exports.signUp = async function(req, res) {
 
   const setCookie = cookie.serialize('jwt', jwtSigned, {
     httpOnly: true,
-    maxAge: 60 * 60 // 1 hour
+    // 1 hour
+    maxAge: 60 * 60,
+    path: '/'
   });
 
   res.set('Set-Cookie', setCookie);

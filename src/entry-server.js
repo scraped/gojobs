@@ -1,6 +1,7 @@
 import config from '../config';
 import { createApp } from './app'
-import { findAsyncComponents, setupAxios } from './helpers';
+import { findAsyncComponents, setAxiosInstance } from './helpers';
+import axios from 'axios';
 
 export default context => {
   const { req } = context;
@@ -8,16 +9,12 @@ export default context => {
   return new Promise((resolve, reject) => {
     const { app, router, store } = createApp();
 
-    if (req.session) {
-      const { username, jobname } = req.session;
-      if (username) store.commit('auth/setUsername', { username });
-      if (jobname) store.commit('auth/setJobname', { jobname });
-    }
-
-    setupAxios({
-      host: req.hostname,
-      port: config.port
-    });
+    setAxiosInstance(axios.create({
+      baseURL: `http://${req.hostname}:${config.port}/`,
+      headers: {
+        Cookie: `jwt=${req.cookies.jwt}`
+      }
+    }));
 
     router.push(context.url);
 
