@@ -21,33 +21,33 @@ exports.signUp = async function(req, res) {
   const { username, password, email } = req.body;
 
   if (!username || !password) {
-    return res.status(401).json({ message: NO_USERNAME_MESSAGE });
+    return res.status(403).json({ message: NO_USERNAME_MESSAGE });
   }
 
   if (!_.inRange(username.length, MIN_USERNAME_LEN, MAX_USERNAME_LEN + 1)
   || !_.inRange(password.length, MIN_PASSWORD_LEN, MAX_PASSWORD_LEN + 1)) {
-    return res.status(401).json({ message: LENGTH_ISSUE_MESSAGE });
+    return res.status(403).json({ message: LENGTH_ISSUE_MESSAGE });
   }
 
   const user = await User.findOne({ username });
 
   if (!user) {
-    return res.status(401).json({ message: USER_NOT_FOUND_MESSAGE });
+    return res.status(403).json({ message: USER_NOT_FOUND_MESSAGE });
   }
 
   if (user.verified) {
-    return res.status(401).json({ message: USER_EXISTS_MESSAGE });
+    return res.status(403).json({ message: USER_EXISTS_MESSAGE });
   }
 
   if (email) {
     if (!validator.isEmail(email)) {
-      return res.status(401).json({ message: INCORRECT_EMAIL_MESSAGE });
+      return res.status(403).json({ message: INCORRECT_EMAIL_MESSAGE });
     }
 
     const userWithSuchEmail = await User.findOne({ email });
 
     if (userWithSuchEmail) {
-      return res.status(401).json({ message: EMAIL_USED_MESSAGE });
+      return res.status(403).json({ message: EMAIL_USED_MESSAGE });
     }
   }
 

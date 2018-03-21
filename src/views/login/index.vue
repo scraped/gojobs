@@ -105,14 +105,11 @@ export default {
           { username, password, email }
         );
 
-        console.log('here:', res);
-
-        this.success = true;
         const { jobname } = res.data;
         this.$store.commit('user/setUsername', { username });
         this.$store.commit('user/setJoname', { jobname });
+        this.success = true;
       } catch (error) {
-        console.log('here2:', error);
         this.$snackbar.open({
           message: error.response.data.message,
           duration: 10000,
