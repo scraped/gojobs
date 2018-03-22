@@ -101,6 +101,18 @@ schema.virtual('scModeName')
     }
   });
 
+schema.virtual('scTypeIcon')
+  .get(function() {
+    return modes[this.scType - 1].icon;
+  })
+
+schema.virtual('scModeIcon')
+  .get(function() {
+    if (this.scMode) {
+      return modes[this.scType - 1].icons[this.scMode - 1];
+    }
+  });
+
 schema.virtual('platformName')
   .set(function(scPlatformName) {
     const platformId = 1 + _.findIndex(

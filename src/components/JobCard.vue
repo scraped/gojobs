@@ -1,7 +1,10 @@
 <template>
   <div class="card">
     <div style="position: absolute; bottom: 0%; right: 15%; opacity: 0.08; font-size: 100px;">
-      <!-- <icon-gta :icon="modes[job.job.gameType - 1].modes[job.job.gameMode - 1].icon"></icon-gta> -->
+      <icon-gta
+        v-if="job.scModeIcon"
+        :icon="job.scModeIcon">
+      </icon-gta>
     </div>
     <router-link :to="{ name: 'job', params: { id: job.jobId } }">
       <div class="card__image">
@@ -16,8 +19,8 @@
           <div class="title is-5">
             <span
               class="tooltip has-text-weight-normal"
-              :data-tooltip="`Game mode:`">
-                <!-- <icon-gta :icon=""></icon-gta> -->
+              :data-tooltip="`Game mode: ${job.scTypeName}`">
+                <icon-gta :icon="job.scTypeIcon"></icon-gta>
             </span><span v-html="job.name"></span>
           </div>
         </div>
@@ -30,36 +33,32 @@
           <figure class="image image-avatar is-48x48">
             <router-link
               :to="{ path: '/', query: genQuery({ author: job.author }) }">
-                <img class="is-rounded" :src="job.authorAvatar.small">
+              <img class="is-rounded" :src="job.authorAvatar.small">
             </router-link>
           </figure>
         </div>
 
         <div class="media-content">
-          <p class="subtitle is-6">
+          <div class="is-size-6">
             <router-link
               :to="{ path: '/', query: genQuery({ author: job.author }) }">
                 @{{ job.author }}
             </router-link>
-            </router-link><br>
-          </p>
+          </div>
         </div>
 
         <!-- <div class="media-right"></div> -->
       </div>
 
-      <div class="is-size-7">
-        <div>
-          Not yet categorized
-        </div>
+      <div class="is-size-7 has-text-grey-light">
         <div class="has-text-grey-light">
-          In-game category: {{ job.scTypeName }}
-          <template v-if="job.scModeName">
-            — {{ job.scModeName }}
-          </template>
-          <br>
-          {{ job.platformName }} · {{ job.maxPl }} players · {{ updatedDate }}
-          <br>Points: {{ job.stats.points }}
+          {{ job.platformName }} ·
+          {{ job.maxPl }} players ·
+          {{ updatedDate }}
+          <!-- <br>Points: {{ job.stats.points }} -->
+        </div>
+        <div v-if="job.scModeName">
+          In-game category: {{ job.scModeName }}
         </div>
       </div>
       <br>

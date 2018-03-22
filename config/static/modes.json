@@ -2,13 +2,25 @@
   {
     "name": "Race",
     "modes": [
-      "Stunt Race",
-      "Special Vehicle Race",
-      "Transform Race",
       "Air Race",
       "Water Race",
       "Bike Race",
-      "Land Race"
+      "Land Race",
+      "Stunt Race",
+      "Special Vehicle Race",
+      "Transform Race",
+      "Target Assault Race"
+    ],
+    "icon": "f17d",
+    "icons": [
+      "f102",
+      "f1a5",
+      "f109",
+      "f168",
+      "e600",
+      "f123",
+      "e600",
+      "e600"
     ]
   },
 
@@ -17,15 +29,22 @@
     "modes": [
       "Team Deathmatch",
       "Vehicle Deathmatch"
+    ],
+    "icon": "f11e",
+    "icons": [
+      "f197",
+      "f1a1"
     ]
   },
 
   {
-    "name": "Last Team Standing"
+    "name": "Last Team Standing",
+    "icon": "f16a"
   },
 
   {
     "name": "Capture",
+    "icon": "f113",
     "modes": [
       "Raid",
       "Contend",
@@ -36,6 +55,7 @@
 
   {
     "name": "Mission",
+    "icon": "f12f",
     "modes": [
       "Adversary Mode",
       "Versus Mission",
@@ -44,6 +64,7 @@
   },
 
   {
-    "name": "Parachuting"
+    "name": "Parachuting",
+    "icon": "f107"
   }
 ]
