@@ -39,15 +39,24 @@
           <router-link to="/crews" class="navbar-item">
             <span>Crews</span>
           </router-link>
-          <router-link v-if="username" to="/profile" class="navbar-item">
-            <figure class="image is-32x32">
-              <img :src="`https://a.rsg.sc/n/${username}/s`" style="border-radius: 50%;">
-            </figure>
-            <span>{{ username }}</span>
-          </router-link>
-          <router-link v-else to="/login" class="navbar-item">
-            <span>Sign Up</span>
-          </router-link>
+          <template v-if="username">
+            <router-link
+              :to="{ path: 'profile', params: { username } }"
+              class="navbar-item">
+              <figure class="image is-32x32">
+                <img :src="`https://a.rsg.sc/n/${username}/s`" style="border-radius: 50%;">
+              </figure>
+              <span>{{ username }}</span>
+            </router-link>
+          </template>
+          <template v-else>
+            <router-link to="/signup" class="navbar-item">
+              <span>Sign Up</span>
+            </router-link>
+            <router-link to="/login" class="navbar-item">
+              <span>Log In</span>
+            </router-link>
+          </template>
         </div>
       </div>
     </div>

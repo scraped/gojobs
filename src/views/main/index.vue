@@ -8,7 +8,7 @@
         <br>
         <bulma-pagination
           :curr-page="page"
-          :total-items="amount"
+          :total-items="number"
           :load-more-button="true"
           :loading="loading">
         </bulma-pagination>
@@ -43,9 +43,9 @@ export default {
   },
 
   computed: {
-    ...mapState('jobs', {
-      amount: state => state.amount,
-    }),
+    ...mapState('jobs', [
+      'number'
+    ]),
     ...mapState('route', {
       page: state => Number(state.query.page) || 1,
     })

@@ -14,7 +14,8 @@ const cookieParser = require('cookie-parser');
 const {
   authRouter,
   jobsRouter,
-  userRouter
+  userRouter,
+  profileRouter
 } = require('./routers');
 const serverSideRendering = require('./lib/ssr');
 
@@ -41,7 +42,8 @@ app.use(
 );
 
 app.use('/api/jobs', jobsRouter);
-app.use('/api/user', userRouter);
+app.use('/api/users', userRouter);
+app.use('/api/profiles', profileRouter);
 app.use('/auth', authRouter);
 
 app.use(serverSideRendering(app));

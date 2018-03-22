@@ -59,7 +59,7 @@
           </template>
           <br>
           {{ job.platformName }} · {{ job.maxPl }} players · {{ updatedDate }}
-          <!-- <br>Points: {{ job.stats.points }} -->
+          <br>Points: {{ job.stats.points }}
         </div>
       </div>
       <br>

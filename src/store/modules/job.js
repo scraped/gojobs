@@ -1,24 +1,23 @@
-import axios from 'axios';
+import { axios } from 'src/helpers';
 
 const state = {
   job: {}
 };
 
 const mutations = {
-  set(state, { job }) {
+  setJob(state, { job }) {
     state.job = job;
   }
 };
 
 const actions = {
-  async fetch({ commit }, payload) {
-    if (!payload) payload = {};
+  async fetchJob({ commit }, { id }) {
 
-    const id = payload.id || '';
+    const response = await axios.post(`/api/jobs/job/${id}`);
 
-    const response = await axios.post(`http://localhost:3000/api/jobs/id/${id}`);
+    const { job } = response.data;
 
-    commit('set', { job: response.data });
+    commit('setJob', { job });
   }
 };
 

@@ -130,7 +130,8 @@ import IconGta from 'src/components/IconGta.vue';
 
 export default {
   fetchData({ store, route }) {
-    return store.dispatch('job/fetch', route.params);
+    const { id } = route.params;
+    return store.dispatch('job/fetchJob', { id });
   },
 
   components: {
@@ -139,9 +140,9 @@ export default {
   },
 
   computed: {
-    ...mapState('job', {
-      job: state => state.job
-    }),
+    ...mapState('job', [
+      'job'
+    ]),
 
     ratingCssClass() {
       let rating = this.job.stats.ratingQuit;

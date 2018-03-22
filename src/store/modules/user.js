@@ -21,12 +21,12 @@ const mutations = {
 };
 
 const actions = {
-  async getUserInfo({ commit }) {
+  async fetchUserInfo({ commit }) {
     const {
       username,
       jobname,
       verifStatus
-    } = (await axios.post('/api/user/basicinfo')).data;
+    } = (await axios.post('/api/users/basicinfo')).data;
 
     if (username) commit('setJobname', { jobname });
     if (jobname) commit('setUsername', { username });

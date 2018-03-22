@@ -28,7 +28,7 @@ exports.jobsList = async function(req, res) {
   if (gameType) options['job.gameType'] = gameType;
   if (maxpl) options['job.maxpl'] = { $lte: maxpl };
 
-  let amount = 0;
+  let number = 0;
   let empty = false;
   let sort = { 'stats.points': -1 };
 
@@ -49,12 +49,12 @@ exports.jobsList = async function(req, res) {
   }
 
   if (!empty) {
-    amount = await Job.count(options);
-    if (!amount) empty = true;
+    number = await Job.count(options);
+    if (!number) empty = true;
   }
 
   if (empty) {
-    return res.json({ amount: 0 });
+    return res.json({ number: 0 });
   }
 
   let jobs = await Job.find(options)
@@ -64,7 +64,7 @@ exports.jobsList = async function(req, res) {
 
   jobs = jobs.map(job => job.toObject());
 
-  res.json({ amount, jobs });
+  res.json({ number, jobs });
 };
 
 exports.jobDetails = async function(req, res) {
@@ -73,13 +73,15 @@ exports.jobDetails = async function(req, res) {
   const job = await Job.findOne({ jobId })
     .populate('details');
 
-  res.json(job.toObject());
+  res.json({
+    job: job.toObject()
+  });
 };
 
 exports.jobsUpload = function(req, res) {
-  const { limit } = req.body;
+  const { limit, forced } = req.body;
 
-  uploadRawJobs({ limit });
+  uploadRawJobs({ limit, forcedUpload: forced });
 
   res.send(`Jobs are being uploaded.`);
 };

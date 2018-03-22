@@ -8,8 +8,7 @@ let schema = new Schema({
   crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
 
   verified: { type: Boolean },
-  veriryJobName: { type: String },
-  verifyDate: { type: Date, required: verificationPending },
+  verifyDate: { type: Date, required: isVerified },
 
   password: { type: String, set: setPassword, required: isVerified },
   email: { type: String }
@@ -23,10 +22,6 @@ let schema = new Schema({
 
 function isVerified() {
   return this.verified;
-}
-
-function verificationPending() {
-  return this.verifyJobName;
 }
 
 function setPassword(password) {

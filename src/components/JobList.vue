@@ -28,18 +28,7 @@
       </li>
     </bulma-tabs>
 
-    <div class="buttons">
-      <router-link
-        class="button is-small is-rounded"
-        :class="{ 'is-primary': gameType === mode.id }"
-        :to="{ name: 'main', query: { gameType: mode.id } }"
-        v-for="mode in modes"
-        :key="mode.id">
-        {{ mode.name }}
-      </router-link>
-    </div>
-
-    <h1 class="title is-4">{{ amount }} jobs found</h1>
+    <h1 class="title is-4">{{ number }} jobs found</h1>
     <p class="subtitle is-size-6 has-text-grey">
       Page {{ page }}
     </p>
@@ -70,20 +59,16 @@ export default {
   },
 
   computed: {
-    ...mapState('jobs', {
-      jobs: state => state.jobs,
-      amount: state => state.amount,
-    }),
+    ...mapState('jobs', [
+      'jobs',
+      'number'
+    ]),
     ...mapState('route', {
       page: state => Number(state.query.page) || 1,
       by: state => state.query.by,
       byId: state => state.query.byId,
       gameType: state => state.query.gameType
-    }),
-    ...mapState('common', {
-      modes: state => state.modes,
-      currMode: state => state.currMode
-    }),
+    })
   }
 }
 </script>

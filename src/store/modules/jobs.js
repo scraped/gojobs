@@ -1,34 +1,31 @@
-import axios from 'axios';
+import { axios } from 'src/helpers';
 import queryString from 'query-string';
 
 const state = {
   jobs: [],
-  amount: 0
+  number: 0
 };
 
 const mutations = {
-  set(state, { jobs, amount, append }) {
-    if (append) {
-      Reflect.apply(Array.prototype.push, state.jobs, jobs);
-    } else {
-      state.jobs = jobs;
-    }
-    state.amount = Number(amount) || 0;
+  setJobs(state, { jobs }) {
+    state.jobs = jobs;
   },
 
-  // append(state, )
+  setNumber(state, { number }) {
+    state.number = number;
+  }
 };
 
 const actions = {
-  async fetch({ commit }, { query, append }) {
-    if (append) query.page++;
+  async fetch({ commit }, { query }) {
     const queryStr = queryString.stringify(query);
 
-    const response = await axios.post(`http://localhost:3000/api/jobs?${queryStr}`);
+    const response = await axios.post(`/api/jobs?${queryStr}`);
 
-    const { jobs, amount } = response.data;
+    const { jobs, number } = response.data;
 
-    commit('set', { jobs, amount, append });
+    commit('setJobs', { jobs });
+    commit('setNumber', { number });
   }
 };
 

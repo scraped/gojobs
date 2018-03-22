@@ -102,7 +102,12 @@
               method="post"
               @submit.prevent="upload($event)">
               <h2 class="subtitle is-4">Upload jobs</h2>
-              <button class="button is-primary is-outlined">
+              <div class="field">
+                <b-checkbox v-model="forced">
+                   Force to upload all jobs (it can take a lot of time)
+                </b-checkbox>
+              </div>
+              <button class="button is-primary">
                 Upload raw jobs
               </button>
             </form>
@@ -119,6 +124,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      forced: false,
       by: 'members',
       id: '',
       platform: 'pc',
@@ -138,7 +144,9 @@ export default {
     },
 
     async upload({ target }) {
-      const response = (await axios.post(target.action)).data;
+      const { forced } = this;
+
+      const response = (await axios.post(target.action, { forced })).data;
 
       this.$snackbar.open(response);
     }

@@ -29,7 +29,7 @@ if (window.__INITIAL_STATE__) {
 }
 
 router.onReady(() => {
-  store.dispatch('user/getUserInfo');
+  store.dispatch('user/fetchUserInfo');
 
   router.beforeResolve(async (to, from, next) => {
     const matchedPrev = router.getMatchedComponents(from);

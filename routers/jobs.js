@@ -8,7 +8,7 @@ const {
 } = require('../controllers/jobController');
 
 router.post('/', jobsList);
-router.post('/id/:id', jobDetails);
+router.post('/job/:id', jobDetails);
 router.post('/upload', jobsUpload);
 router.post('/fetch', jobsFetch);
 
