@@ -12,6 +12,14 @@
               </b-message>
             </template>
             <template v-else>
+              <b-tabs>
+                <b-tab-item label="Sign Up">
+                    Lorem ipsum dolor sit amet.
+                </b-tab-item>
+                <b-tab-item label="Log In">
+                    ergg
+                </b-tab-item>
+              </b-tabs>
               <h1 class="title">Sign Up</h1>
               <b-message>
                 <b>Welcome to GTA Online Jobs site.</b><br>
