@@ -53,6 +53,10 @@ $tabs-border-bottom-width: 2px; // 1px
 $tabs-border-bottom-color: transparent; // $border
 $tabs-link-padding: 0.5em 0; // 0.5em 1em
 
+.tabs li:not(:first-of-type) {
+  margin-left: 1em;
+}
+
 // pagination
 $pagination-margin: 0;
 $pagination-border-color: $rockstar;
