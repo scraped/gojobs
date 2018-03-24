@@ -9,8 +9,58 @@
           jobs
         </span>
 
-        <router-link to="/signup" class="navbar-item">
-          <span>Sign Up</span>
+        <b-dropdown ref="platformDropdown">
+          <a class="navbar-item is-unselectable" slot="trigger">
+            {{ platformName }}
+            <span class="icon">
+              <i class="fa fa-angle-down"></i>
+            </span>
+          </a>
+
+          <b-dropdown-item custom>
+            <div class="subtitle is-6">Show jobs for</div>
+            <b-field>
+              <b-radio
+                v-model="platform"
+                @input="setPlatform"
+                size="is-medium"
+                native-value="pc">
+                <span>PC</span>
+              </b-radio>
+            </b-field>
+
+            <b-field>
+              <b-radio
+                v-model="platform"
+                @input="setPlatform"
+                size="is-medium"
+                native-value="ps4">
+                <span>PS4</span>
+              </b-radio>
+            </b-field>
+
+            <b-field>
+              <b-radio
+                v-model="platform"
+                @input="setPlatform"
+                size="is-medium"
+                native-value="xboxone">
+                <span>Xbox One</span>
+              </b-radio>
+            </b-field>
+
+            <div class="is-clearfix">
+            <div class="button is-primary is-outlined is-hidden-desktop is-pulled-right is-clearfix" @click="closePlatformDropdown">Close</div>
+
+            </div>
+          </b-dropdown-item>
+        </b-dropdown>
+
+        <router-link
+          v-if="username"
+          class="navbar-item is-hidden-desktop"
+          :to="{ name: 'profile', params: { username } }">
+            <img :src="avatars.small" style="border-radius: 50%;">
         </router-link>
 
         <div
@@ -25,18 +75,6 @@
 
       <div class="navbar-menu" :class="{ 'is-active': menuOpened }">
         <div class="navbar-start">
-           <div class="navbar-item has-dropdown">
-            <a class="navbar-link is-unselectable">
-              <span class="is-hidden-desktop">Current platform:</span>
-              PC
-            </a>
-
-            <div class="navbar-dropdown">
-              <a class="navbar-item">PC</a>
-              <a class="navbar-item">PS4</a>
-              <a class="navbar-item">XboxOne</a>
-            </div>
-          </div>
         </div>
 
         <div class="navbar-end">
@@ -46,24 +84,18 @@
           <router-link to="/crews" class="navbar-item">
             <span>Crews</span>
           </router-link>
-          <template v-if="username">
-            <router-link
-              :to="{ path: 'profile', params: { username } }"
-              class="navbar-item">
-              <figure class="image is-32x32">
-                <img :src="`https://a.rsg.sc/n/${username}/s`" style="border-radius: 50%;">
-              </figure>
-              <span>{{ username }}</span>
-            </router-link>
-          </template>
-          <template v-else>
-            <router-link to="/signup" class="navbar-item">
-              <span>Sign Up</span>
-            </router-link>
-            <router-link to="/login" class="navbar-item">
-              <span>Log In</span>
-            </router-link>
-          </template>
+          <router-link
+            v-if="username"
+            class="navbar-item"
+            :to="{ name: 'profile', params: { username } }">
+            <img :src="avatars.small" style="border-radius: 50%;">
+            <span>{{ username }}</span>
+          </router-link>
+          <router-link
+            v-else
+            class="navbar-item" :to="{ name: 'signup' }">
+            <span>Sign Up or Log In</span>
+          </router-link>
         </div>
       </div>
     </div>
@@ -73,24 +105,59 @@
 <script>
 import {mapState} from 'vuex';
 import logo from 'src/images/logo2.png';
+import {userAvatars} from 'src/helpers';
 
 export default {
   data() {
     return {
       logo,
-      menuOpened: false
+      menuOpened: false,
+      platform: ''
     };
   },
 
   computed: {
+    platformName() {
+      const { platform } = this;
+      return {
+        pc: 'PC',
+        ps4: 'PS4',
+        xboxone: 'Xbox One'
+      }[platform];
+    },
+
     ...mapState('user', [
       'username'
-    ])
+    ]),
+
+    avatars() {
+      return userAvatars(this.username);
+    }
+  },
+
+  beforeMount() {
+    this.platform = this.$cookie.get('platform') || 'pc';
   },
 
   methods: {
     toggleMenu() {
       this.menuOpened = !this.menuOpened;
+    },
+
+    setPlatform(platform) {
+      this.$cookie.set('platform', platform, { expires: '1Y' });
+      this.platform = platform;
+      this.$toast.open({
+        message: `Platform set to ${this.platformName}`,
+        type: 'is-info',
+        queue: false
+      });
+      this.closePlatformDropdown();
+      this.$router.push({ path: '/', query: { q: Math.random() } });
+    },
+
+    closePlatformDropdown() {
+      this.$refs.platformDropdown.toggle();
     }
   }
 };

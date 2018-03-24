@@ -12,12 +12,11 @@
           <h1 class="title has-text-dark">
             <span v-html="job.name"></span>
           </h1>
-          <p>@{{ job.author }}</p>
           <p class="is-size-5" v-html="job.details.desc"></p>
           <br>
           <div class="tags">
-            <span class="tag">{{ job.scTypeName }}</span>
-            <span class="tag">{{ job.scModeName }}</span>
+            <span class="tag is-dark">{{ job.scTypeName }}</span>
+            <span class="tag is-dark">{{ job.scModeName }}</span>
           </div>
         </div>
       </div>
@@ -74,7 +73,7 @@
               <div class="media">
                 <div class="media-left">
                   <figure class="image image-avatar is-48x48">
-                    <img class="is-rounded" :src="job.authorAvatar.small">
+                    <img class="is-rounded" :src="avatars.small">
                   </figure>
                 </div>
 
@@ -121,6 +120,7 @@
 <script>
 import moment from 'moment';
 import {mapState} from 'vuex';
+import {userAvatars} from 'src/helpers';
 
 import BulmaHero from 'src/components/BulmaHero.vue';
 import IconGta from 'src/components/IconGta.vue';
@@ -141,6 +141,10 @@ export default {
   },
 
   computed: {
+    avatars() {
+      return userAvatars(this.job.author);
+    },
+
     ...mapState('job', [
       'job'
     ]),

@@ -1,9 +1,11 @@
 import { axios } from 'src/helpers';
 
 const state = {
+  cookies: {},
   username: '',
   verified: false,
-  jobname: ''
+  jobname: '',
+  email: ''
 };
 
 const mutations = {
@@ -17,6 +19,10 @@ const mutations = {
 
   setVerifStatus(state, { verifStatus }) {
     state.verified = verifStatus;
+  },
+
+  setPreferences(state, { cookies }) {
+    state.cookies = cookies;
   }
 };
 

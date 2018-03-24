@@ -5,8 +5,8 @@ import { createRouter } from './router'
 import { sync } from 'vuex-router-sync';
 import * as filters from './filters';
 
-// import VueResource from 'vue-resource';
 import VueProgressBar from 'vue-progressbar';
+import VueCookie from 'vue-cookie';
 import Buefy from 'buefy';
 
 Object.keys(filters).forEach(key => {
@@ -19,12 +19,12 @@ const progressBarOptions = {
   thickness: '6px'
 };
 
-// Vue.use(VueResource);
 Vue.use(VueProgressBar, progressBarOptions);
+Vue.use(VueCookie);
 
-Vue.use(Buefy);
-// Vue.component(Buefy.Tabs.name, Buefy.Tabs);
-// Vue.component(Buefy.TabItem.name, Buefy.TabItem);
+Vue.use(Buefy, {
+  defaultNoticeQueue: false
+});
 
 /**
  * Creates app, store, router and synchronizes the last two

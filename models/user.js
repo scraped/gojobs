@@ -29,15 +29,6 @@ function setPassword(password) {
   return bcrypt.hashSync(password, salt);
 }
 
-schema.virtual('avatar')
-  .get(function() {
-    const username = this.username.toLowerCase();
-    return {
-      small: `https://a.rsg.sc/n/${username}/s`,
-      large: `https://a.rsg.sc/n/${username}/l`
-    }
-  });
-
 schema.methods.checkPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };

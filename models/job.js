@@ -47,15 +47,6 @@ let schema = new Schema({
   }
 });
 
-schema.virtual('authorAvatar')
-  .get(function() {
-    const username = this.author.toLowerCase();
-    return {
-      small: `https://a.rsg.sc/n/${username}/s`,
-      large: `https://a.rsg.sc/n/${username}/l`
-    }
-  });
-
 schema.virtual('imageUrl')
   .set(function(url) {
     const str = url.split('/');

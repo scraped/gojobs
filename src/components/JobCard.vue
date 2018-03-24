@@ -32,8 +32,8 @@
         <div class="media-left">
           <figure class="image image-avatar is-48x48">
             <router-link
-              :to="{ path: '/', query: genQuery({ author: job.author }) }">
-              <img class="is-rounded" :src="job.authorAvatar.small">
+              :to="{ name: 'profile', params: { username: job.author }}">
+              <img class="is-rounded" :src="avatars.small">
             </router-link>
           </figure>
         </div>
@@ -41,8 +41,8 @@
         <div class="media-content">
           <div class="is-size-6">
             <router-link
-              :to="{ path: '/', query: genQuery({ author: job.author }) }">
-                @{{ job.author }}
+              :to="{ name: 'profile', params: { username: job.author }}">
+              @{{ job.author }}
             </router-link>
           </div>
         </div>
@@ -66,7 +66,7 @@
       <div class="tags">
         <span
           :class="`tag is-${ratingCssClass} is-rounded is-medium tooltip`"
-          :data-tooltip="`Dislikes: ${job.stats.dislikes}, optimal rating: ${job.stats.ratingQuit}%`">
+          :data-tooltip="`Dislikes: ${job.stats.dislikes}, RGSC rating: ${job.stats.ratingQuit}%`">
           <span class="icon">
             <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
           </span>
@@ -85,7 +85,7 @@
 
 <script>
 import moment from 'moment';
-
+import {userAvatars} from 'src/helpers';
 import IconGta from 'src/components/IconGta.vue';
 
 export default {
@@ -100,6 +100,10 @@ export default {
   },
 
   computed: {
+    avatars() {
+      return userAvatars(this.job.author);
+    },
+
     ratingCssClass() {
       let rating = this.job.stats.ratingQuit;
       return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';

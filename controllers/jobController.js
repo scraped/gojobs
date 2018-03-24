@@ -1,6 +1,8 @@
+const _ = require('lodash');
 const mongoose = require('../lib/db');
 const { uploadRawJobs } = require('../lib/jobs/upload-rawjobs');
 const { fetchAndSave } = require('../lib/jobs/fetch');
+const platforms = require('../config/static/platforms');
 const Job = require('../models/job');
 const Crew = require('../models/crew');
 const User = require('../models/user');
@@ -13,18 +15,22 @@ exports.jobsList = async function(req, res) {
     perPage,
     by,
     byId,
-    platform,
     gameType,
     maxpl
   } = req.query;
 
+  const { platform = 'pc' } = req.cookies;
+
+  let platformId = 1 + _.findIndex(platforms, plat => {
+    return plat.sc.toLowerCase() === platform;
+  });
+
   page = Number(page) || 1;
   perPage = Number(perPage) || 30;
-  platform = Number(platform) || 1;
   gameType = Number(gameType) || 0;
   maxpl = Number(maxpl) || 0;
 
-  options.platform = platform;
+  options.platform = platformId;
   if (gameType) options['job.gameType'] = gameType;
   if (maxpl) options['job.maxpl'] = { $lte: maxpl };
 
