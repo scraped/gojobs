@@ -3,9 +3,9 @@ import App from './App.vue';
 import { createStore } from './store'
 import { createRouter } from './router'
 import { sync } from 'vuex-router-sync';
-import * as filters from './utils/filters';
+import * as filters from './filters';
 
-import VueResource from 'vue-resource';
+// import VueResource from 'vue-resource';
 import VueProgressBar from 'vue-progressbar';
 import Buefy from 'buefy';
 
@@ -19,7 +19,7 @@ const progressBarOptions = {
   thickness: '6px'
 };
 
-Vue.use(VueResource);
+// Vue.use(VueResource);
 Vue.use(VueProgressBar, progressBarOptions);
 
 Vue.use(Buefy);

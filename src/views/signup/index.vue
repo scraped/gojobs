@@ -14,75 +14,126 @@
             <template v-else>
               <div class="tabs is-large">
                 <ul>
-                  <li :class="{ 'is-active': signup }"><a>Sign Up</a></li>
-                  <li :class="{ 'is-active': !signup }"><a>Log In</a></li>
+                  <li
+                    :class="{ 'is-active': signup }"
+                    @click="signup = true; recovery = false">
+                    <a>Sign Up</a>
+                  </li>
+                  <li
+                    :class="{ 'is-active': !signup }"
+                    @click="signup = false">
+                    <a>Log In</a>
+                  </li>
                 </ul>
               </div>
-              <h1 class="title">Sign Up</h1>
-              <b-message>
-                <b>Welcome to GTA Online Jobs site.</b><br>
-                Процесс регистрации может быть пройден игроками, имеющими действующую учётную запись Rockstar Games Social Club, использующуюся для игры в GTA Online.<br>
-                Для завершения регистрации вам будет предложено опубликовать <b>дело GTA Online</b> с определённым названием <b>в течение 60 минут</b> после начала процесса регистрации, поэтому убедитесь, что:
-                <ul>
-                  <li>Вы введёте имя пользователя, совпадающее с ВАШИМ именем пользователя на сайте Rockstar Games Social Club;</li>
-                  <li>Вы будете иметь возможность ЗАЙТИ и ОПУБЛИКОВАТЬ дело в GTA Online в течение следующих 60 минут.</li>
-                </ul>
-              </b-message>
-              <b-message type="is-danger">
-                <b>Обратите внимание:</b> на данный момент регистрация доступна далеко не всем пользователям. Просим извинения за доставленные неудобства.
-              </b-message>
-
-              <form method="post" @submit.prevent="signup">
-                <b-field label="Your valid Rockstar Games Social Club Username *">
-                  <b-input
-                    size="is-large"
-                    v-model="username"
-                    minlength="6"
-                    maxlength="16"
-                    required>
-                  </b-input>
-                </b-field>
-
-                <div class="buttons">
-                  <a
-                    class="button is-primary is-outlined"
-                    href="https://socialclub.rockstargames.com/"
-                    target="_blank">
-                    Go to RGSC site
-                  </a>
+              <template v-if="signup">
+                <div class="box">
+                  <div class="content">
+                  <h3>Welcome to GTA Online Jobs site.</h3>
+                  <p>Процесс регистрации может быть пройден игроками, имеющими действующую учётную запись Rockstar Games Social Club, использующуюся для игры в GTA Online.</p>
+                  <p>Для завершения регистрации вам будет предложено  опубликовать дело GTA Online с определённым названием в течение 60 минут после начала процесса регистрации, поэтому убедитесь, что:</p>
+                  <ul>
+                    <li>Вы введёте имя пользователя, совпадающее с вашим именем пользователя на сайте Rockstar Games Social Club;</li>
+                    <li>Вы будете иметь возможность <b>зайти и опубликовать дело в GTA Online в течение следующих 60 минут.</b></li>
+                  </ul>
+                  </div>
+                <b-message type="is-warning">
+                  Note that the registration is not open for everybody as of now and most likely you won't be able to sign up (unless you don't have an invite).<br>
+                  But your chances are higher if you have previously published some relatively popular jobs.
+                </b-message>
                 </div>
+              </template>
 
-                <b-field label="E-mail (optional, but recommended)">
-                  <b-input
-                    type="email"
-                    size="is-large"
-                    v-model="email">
-                  </b-input>
-                </b-field>
+              <div class="box">
+                <form method="post" @submit.prevent="auth">
+                  <b-field
+                    v-if="!recovery"
+                    label="Your valid Rockstar Games Social Club Username *">
+                    <b-input
+                      size="is-large"
+                      v-model="username"
+                      minlength="6"
+                      maxlength="16"
+                      required>
+                    </b-input>
+                  </b-field>
 
-                <b-field label="Password *">
-                  <b-input
-                    type="password"
-                    size="is-large"
-                    v-model="password"
-                    minlength="6"
-                    maxlength="30"
-                    required>
-                  </b-input>
-                </b-field>
+                  <b-field
+                    v-if="signup || recovery"
+                    :label="signup ? 'E-mail (optional, but recommended)' : 'E-mail *'">
+                    <b-input
+                      type="email"
+                      size="is-large"
+                      v-model="email"
+                      key="email"
+                      :required="recovery">
+                    </b-input>
+                  </b-field>
 
-                <b-field>
-                  <b-checkbox v-if="username" v-model="confirm">
-                    I confirm that <b>@{{ username }}</b> is my GTA Online account I can use right now.
-                  </b-checkbox>
-                </b-field>
+                  <b-field
+                    v-if="!recovery"
+                    label="Password *">
+                    <b-input
+                      type="password"
+                      size="is-large"
+                      v-model="password"
+                      minlength="6"
+                      maxlength="30"
+                      key="password"
+                      required>
+                    </b-input>
+                  </b-field>
 
-                <button
-                  class="button is-primary"
-                  :disabled="!confirm || !password">
-                  Continue
-                </button>
-              </form>
+                  <b-field
+                    v-if="signup"
+                    label="An invitation code (if you have it)">
+                    <b-input
+                      size="is-large"
+                      v-model="invCode"
+                      minlength="16"
+                      maxlength="16"
+                      placeholder="Currenlty unavailable"
+                      disabled>
+                    </b-input>
+                  </b-field>
+
+                  <b-field v-if="signup">
+                    <b-checkbox v-if="username" v-model="confirm">
+                      I confirm that <b>@{{ username }}</b> is my GTA Online account I can use right now.
+                    </b-checkbox>
+                  </b-field>
+
+                  <div class="buttons">
+                    <button
+                      class="button is-primary"
+                      :disabled="signup && !confirm">
+                      Continue
+                    </button>
+
+                    <a
+                      class="button"
+                      v-if="signup && username"
+                      :href="`https://socialclub.rockstargames.com/member/${username}`"
+                      target="_blank">
+                      Go to your RGSC profile
+                    </a>
+
+                    <a
+                      class="button"
+                      v-if="!signup && !recovery"
+                      @click="recovery = true">
+                      Forget your password?
+                    </a>
+
+                    <a
+                      class="button"
+                      v-if="!signup && recovery"
+                      @click="recovery = false">
+                      Log In
+                    </a>
+                  </div>
+                </form>
+              </div>
             </template>
           </div>
         </div>
@@ -98,28 +149,42 @@ export default {
   data() {
     return {
       signup: true,
+      recovery: false,
       username: '',
       password: '',
       email: '',
+      invCode: '',
       confirm: false,
       success: false
     }
   },
 
   methods: {
-    async signup() {
-      const { username, password, email, confirm } = this;
+    async auth() {
+      const { username, password, email, signup, recovery } = this;
+
+      let url;
+
+      if (signup) {
+        url = '/auth/signup';
+      } else if (recovery) {
+        url = '/auth/recovery';
+      } else {
+        url = '/auth/login';
+      }
 
       try {
-        const res = await axios.post(
-          '/auth/signup',
-          { username, password, email }
-        );
+        const res = await axios.post(url, { username, password, email });
 
         const { jobname } = res.data;
         this.$store.commit('user/setUsername', { username });
         this.$store.commit('user/setJobname', { jobname });
-        this.success = true;
+        this.$snackbar.open({
+          message: 'Success! Now you need to verify your account.',
+          duration: 20000,
+          position: 'is-top'
+        });
+        this.$router.push({ name: 'profile', params: { username } });
       } catch (error) {
         this.$snackbar.open({
           message: error.response.data.message,
