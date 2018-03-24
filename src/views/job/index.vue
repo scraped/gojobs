@@ -18,9 +18,6 @@
           <div class="tags">
             <span class="tag">{{ job.scTypeName }}</span>
             <span class="tag">{{ job.scModeName }}</span>
-            <span class="tag">PITLANE</span>
-            <span class="tag">GTA MODE RECOMMENDED</span>
-            <span class="tag">OLD-STYLE</span>
           </div>
         </div>
       </div>
@@ -123,12 +120,16 @@
 
 <script>
 import moment from 'moment';
-import { mapState } from 'vuex';
+import {mapState} from 'vuex';
 
 import BulmaHero from 'src/components/BulmaHero.vue';
 import IconGta from 'src/components/IconGta.vue';
 
 export default {
+  title() {
+    return this.job.name;
+  },
+
   fetchData({ store, route }) {
     const { id } = route.params;
     return store.dispatch('job/fetchJob', { id });

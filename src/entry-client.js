@@ -1,25 +1,14 @@
 import Vue from 'vue';
-import { createApp } from './app';
-import { findAsyncComponents } from './helpers';
+import {createApp} from './app';
+import {findAsyncComponents} from './helpers';
+import {beforeRouteUpdate, clientTitleMixin} from './mixins';
 
 const { app, store, router } = createApp();
 
-// See docs to understand why this is the necessary code
 Vue.mixin({
-  async beforeRouteUpdate(to, from, next) {
-    const { fetchData } = this.$options;
-
-    if (fetchData) {
-      this.$Progress.start();
-      await fetchData({
-        store: this.$store,
-        route: to
-      });
-      this.$Progress.finish();
-    }
-
-    next();
-  }
+  mounted: clientTitleMixin,
+  // See docs to understand why this is the necessary
+  beforeRouteUpdate
 });
 
 // Server filled the store - don't need to do it again

@@ -12,14 +12,12 @@
               </b-message>
             </template>
             <template v-else>
-              <b-message type="is-info">
-                <p>
-                  Do you already have an account?
-                </p>
-                <div>
-                  <a class="button is-info is-large">Log In</a>
-                </div>
-              </b-message>
+              <div class="tabs is-large">
+                <ul>
+                  <li :class="{ 'is-active': signup }"><a>Sign Up</a></li>
+                  <li :class="{ 'is-active': !signup }"><a>Log In</a></li>
+                </ul>
+              </div>
               <h1 class="title">Sign Up</h1>
               <b-message>
                 <b>Welcome to GTA Online Jobs site.</b><br>
@@ -99,6 +97,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      signup: true,
       username: '',
       password: '',
       email: '',

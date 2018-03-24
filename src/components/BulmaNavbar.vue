@@ -3,32 +3,39 @@
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item">
-          <img src="../images/logo2.png" alt="" title="">
+          <img :src="logo" alt="" title="">
         </router-link>
-        <span class="navbar-item is-size-3" style="font-family: 'SignPainter-HouseScript';">jobs</span>
+        <span class="navbar-item is-size-3" style="font-family: 'SignPainter-HouseScript';">
+          jobs
+        </span>
 
-        <div class="navbar-burger" data-target="navbar-menu">
-          <span></span><span></span><span></span>
+        <router-link to="/signup" class="navbar-item">
+          <span>Sign Up</span>
+        </router-link>
+
+        <div
+          class="navbar-burger"
+          @click="toggleMenu"
+          :class="{ 'is-active': menuOpened }">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </div>
 
-      <div class="navbar-menu" id="navbar-menu">
+      <div class="navbar-menu" :class="{ 'is-active': menuOpened }">
         <div class="navbar-start">
-           <!-- <div class="navbar-item has-dropdown">
+           <div class="navbar-item has-dropdown">
             <a class="navbar-link is-unselectable">
               <span class="is-hidden-desktop">Current platform:</span>
-              {{ currPlatform.name }}
+              PC
             </a>
 
             <div class="navbar-dropdown">
-              <a
-                class="navbar-item"
-                v-for="platform in platforms"
-                :key="platform.id"
-                v-if="platform.id !== currPlatform.id">
-                {{ platform.name }}
-              </a>
-            </div> -->
+              <a class="navbar-item">PC</a>
+              <a class="navbar-item">PS4</a>
+              <a class="navbar-item">XboxOne</a>
+            </div>
           </div>
         </div>
 
@@ -64,13 +71,27 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import {mapState} from 'vuex';
+import logo from 'src/images/logo2.png';
 
 export default {
+  data() {
+    return {
+      logo,
+      menuOpened: false
+    };
+  },
+
   computed: {
     ...mapState('user', [
       'username'
     ])
+  },
+
+  methods: {
+    toggleMenu() {
+      this.menuOpened = !this.menuOpened;
+    }
   }
 };
 </script>

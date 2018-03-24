@@ -1,7 +1,13 @@
 import config from '../config';
-import { createApp } from './app'
-import { findAsyncComponents, setAxiosInstance } from './helpers';
+import Vue from 'vue';
+import {createApp} from './app'
+import {findAsyncComponents, setAxiosInstance} from './helpers';
 import axios from 'axios';
+import {serverTitleMixin} from './mixins';
+
+// Vue.mixin({
+//   created: serverTitleMixin
+// });
 
 export default context => {
   const { req } = context;
