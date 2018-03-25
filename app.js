@@ -11,12 +11,7 @@ const prettyError = require('pretty-error');
 // const session = require('./middleware/session');
 const cookieParser = require('cookie-parser');
 
-const {
-  authRouter,
-  jobsRouter,
-  userRouter,
-  profileRouter
-} = require('./routers');
+const {apiRouter} = require('./routers');
 const serverSideRendering = require('./lib/ssr');
 
 // better error messages & console.log
@@ -41,10 +36,7 @@ app.use(
   express.static(path.resolve(__dirname, 'dist/assets'))
 );
 
-app.use('/api/jobs', jobsRouter);
-app.use('/api/users', userRouter);
-app.use('/api/profiles', profileRouter);
-app.use('/auth', authRouter);
+app.use('/api', apiRouter);
 
 app.use(serverSideRendering(app));
 

@@ -5,9 +5,17 @@ const cookie = require('cookie');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-exports.verify = async (req, res) => {
-
+exports.verify = (req, res) => {
+  return res.send('TODO auth verify');
 };
+
+exports.logIn = (req, res) => {
+  return res.send('TODO auth log in');
+};
+
+exports.logOut = (req, res) => {
+  return res.send('TODO auth log out');
+}
 
 exports.signUp = async (req, res) => {
   const NO_USERNAME_MESSAGE = 'Please enter your login and password',

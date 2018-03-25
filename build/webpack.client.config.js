@@ -4,6 +4,8 @@ const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+
 const { production, development } = require('../config');
 
 const cssName = 'assets/css/[name].[contenthash:6].css';
@@ -57,7 +59,9 @@ let webpackConfig = {
       minChunks: Infinity
     }),
 
-    new VueSSRClientPlugin()
+    new VueSSRClientPlugin(),
+
+    new BundleAnalyzerPlugin()
   ]
 };
 

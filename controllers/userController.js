@@ -1,7 +1,7 @@
 const config = require('../config');
 const jwt = require('jsonwebtoken');
 
-exports.basicInfo = (req, res, next) => {
+exports.basicInfo = (req, res) => {
   try {
     const {
       username,
@@ -14,6 +14,6 @@ exports.basicInfo = (req, res, next) => {
 
     res.json({ username, jobname, date, email });
   } catch (error) {
-    return next();
+    res.json();
   }
 };

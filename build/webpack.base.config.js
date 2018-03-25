@@ -77,7 +77,7 @@ let webpackConfig = {
           });
         });
       }
-    }),
+    })
   ],
 
   performance: {

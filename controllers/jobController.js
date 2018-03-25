@@ -1,13 +1,13 @@
 const _ = require('lodash');
 const mongoose = require('../lib/db');
-const { uploadRawJobs } = require('../lib/jobs/upload-rawjobs');
-const { fetchAndSave } = require('../lib/jobs/fetch');
+const {uploadRawJobs} = require('../lib/jobs/upload-rawjobs');
+const {fetchAndSaveJobs} = require('../lib/jobs/fetch');
 const platforms = require('../config/static/platforms');
 const Job = require('../models/job');
 const Crew = require('../models/crew');
 const User = require('../models/user');
 
-exports.jobsList = async function(req, res) {
+exports.jobList = async (req, res) => {
   let options = {};
 
   let {
@@ -73,7 +73,7 @@ exports.jobsList = async function(req, res) {
   res.json({ number, jobs });
 };
 
-exports.jobDetails = async function(req, res) {
+exports.jobDetails = async (req, res) => {
   const jobId = req.params.id;
 
   const job = await Job.findOne({ jobId })
@@ -84,7 +84,7 @@ exports.jobDetails = async function(req, res) {
   });
 };
 
-exports.jobsUpload = function(req, res) {
+exports.jobUpload = (req, res) => {
   const { limit, forced } = req.body;
 
   uploadRawJobs({ limit, forcedUpload: forced });
@@ -92,8 +92,8 @@ exports.jobsUpload = function(req, res) {
   res.send(`Jobs are being uploaded.`);
 };
 
-exports.jobsFetch = function(req, res) {
-  fetchAndSave(req.body);
+exports.jobFetch = (req, res) => {
+  fetchAndSaveJobs(req.body);
 
   res.send(`Jobs are being fetched.`);
 };
