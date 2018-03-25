@@ -3,11 +3,14 @@ const User = require('../models/user');
 exports.profileDetails = async (req, res) => {
   const { username } = req.params;
 
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username })
+    .populate('crew', 'name slug tag color -_id');
 
   if (!user) {
     return res.json();
   }
 
-  return res.json({ username });
+  const { crew } = user;
+
+  return res.json({ username, crew });
 };

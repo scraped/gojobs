@@ -48,12 +48,15 @@
                 <form method="post" @submit.prevent="auth">
                   <b-field
                     v-if="!recovery"
-                    label="Your valid Rockstar Games Social Club Username *">
+                    :label="signup ? 'Your valid Rockstar Games Social Club Username *' : 'Username *'">
                     <b-input
                       size="is-large"
                       v-model="username"
+                      name="username"
                       minlength="6"
                       maxlength="16"
+                      key="username"
+                      autocomplete="off"
                       required>
                     </b-input>
                   </b-field>
@@ -176,9 +179,11 @@ export default {
       try {
         const res = await axios.post(url, { username, password, email });
 
-        const { jobname } = res.data;
+        const { jobname, date } = res.data;
         this.$store.commit('user/setUsername', { username });
         this.$store.commit('user/setJobname', { jobname });
+        this.$store.commit('user/setDate', { date });
+        if (email) this.$store.commit('user/setEmail', { email });
         this.$snackbar.open({
           message: 'Success! Now you need to verify your account.',
           duration: 20000,

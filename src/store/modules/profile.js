@@ -1,12 +1,17 @@
 import {axios} from 'src/helpers';
 
 const state = {
-  username: ''
+  username: '',
+  crew: null
 };
 
 const mutations = {
   setUsername(state, { username }) {
     state.username = username;
+  },
+
+  setCrew(state, { crew }) {
+    state.crew = crew;
   }
 };
 
@@ -14,10 +19,18 @@ const actions = {
   async fetchUserInfo({ commit }, { user }) {
     const response = await axios.get(`/api/profiles/profile/${user}`);
 
-    const { username } = response.data;
+    console.log('here!!!!!');
+
+    const { username, crew } = response.data;
+
+    console.log('crew:', crew);
 
     if (username) {
       commit('setUsername', { username });
+    }
+
+    if (crew) {
+      commit('setCrew', { crew });
     }
   }
 };

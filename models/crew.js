@@ -1,18 +1,6 @@
 const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
-function notRockstar() {
-  return !this.rockstar;
-}
-
-function setColor(color) {
-  return color.substr(0, 6).toLowerCase();
-}
-
-function getColor(color) {
-  return '#' + color;
-}
-
 let schema = new Schema({
   crewId: { type: Number, unique: true, required: true },
   slug: { type: String, unique: true, required: true },
@@ -48,5 +36,17 @@ schema.virtual('avatarUrl')
     const { avatarId, crewId } = this;
     return `https://prod.cloud.rockstargames.com/crews/sc/${avatarId}/${crewId}/publish/emblem/emblem_128.png`;
   });
+
+function notRockstar() {
+  return !this.rockstar;
+}
+
+function setColor(color) {
+  return color.substr(0, 6).toLowerCase();
+}
+
+function getColor(color) {
+  return '#' + color;
+}
 
 module.exports = mongoose.model('Crew', schema);

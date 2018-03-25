@@ -5,7 +5,11 @@ const cookie = require('cookie');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-exports.signUp = async function(req, res) {
+exports.verify = async (req, res) => {
+
+};
+
+exports.signUp = async (req, res) => {
   const NO_USERNAME_MESSAGE = 'Please enter your login and password',
     USER_NOT_FOUND_MESSAGE = 'User not found: registration is not open for everybody as of now',
     USER_EXISTS_MESSAGE = 'This user has already registred',
@@ -51,10 +55,11 @@ exports.signUp = async function(req, res) {
     }
   }
 
-  const jobname = User.generateTestJobName();
+  const jobname = User.generateTestJobName(),
+    date = Date.now() + 60 * 60 * 1000;
 
   const jwtSigned = jwt.sign(
-    { username, password, email, jobname },
+    { username, password, email, jobname, date },
     config.jwtSecret,
     { expiresIn: '1h' }
   );
@@ -68,5 +73,5 @@ exports.signUp = async function(req, res) {
 
   res.set('Set-Cookie', setCookie);
 
-  return res.json({ jobname });
+  return res.json({ jobname, date });
 };

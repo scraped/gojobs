@@ -1,6 +1,6 @@
 <template>
   <div>
-    <bulma-tabs>
+    <!-- <bulma-tabs>
       <li :class="{ 'is-active': !by }">
         <router-link :to="{ name: 'main' }">
           Trending
@@ -26,7 +26,7 @@
           🔥 Newest
         </router-link>
       </li>
-    </bulma-tabs>
+    </bulma-tabs> -->
 
     <h1 class="title is-4">{{ number }} jobs found</h1>
     <p class="subtitle is-size-6 has-text-grey">

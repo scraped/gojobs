@@ -5,7 +5,8 @@ const state = {
   username: '',
   verified: false,
   jobname: '',
-  email: ''
+  email: '',
+  date: null
 };
 
 const mutations = {
@@ -17,12 +18,20 @@ const mutations = {
     state.jobname = jobname;
   },
 
+  setEmail(state, { email }) {
+    state.email = email;
+  },
+
   setVerifStatus(state, { verifStatus }) {
     state.verified = verifStatus;
   },
 
   setPreferences(state, { cookies }) {
     state.cookies = cookies;
+  },
+
+  setDate(state, { date }) {
+    state.date = new Date(date);
   }
 };
 
@@ -31,12 +40,16 @@ const actions = {
     const {
       username,
       jobname,
-      verifStatus
+      verifStatus,
+      date,
+      email
     } = (await axios.post('/api/users/basicinfo')).data;
 
     if (username) commit('setJobname', { jobname });
     if (jobname) commit('setUsername', { username });
     if (verifStatus) commit('setVerifStatus', { verifStatus });
+    if (date) commit('setDate', { date });
+    if (email) commit('setEmail', { email });
   }
 };
 
