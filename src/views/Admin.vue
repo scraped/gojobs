@@ -7,9 +7,8 @@
         <div class="columns">
           <div class="column is-half">
             <form
-              action="/api/jobs/fetch"
               method="post"
-              @submit.prevent="fetch($event)">
+              @submit.prevent="fetch">
             <h2 class="subtitle is-4">Fetch jobs</h2>
 
             <b-field label="What jobs to fetch"></b-field>
@@ -98,9 +97,8 @@
           </div>
           <div class="column">
             <form
-              action="/api/jobs/upload"
               method="post"
-              @submit.prevent="upload($event)">
+              @submit.prevent="upload">
               <h2 class="subtitle is-4">Upload jobs</h2>
               <div class="field">
                 <b-checkbox v-model="forced">
@@ -135,20 +133,20 @@ export default {
   },
 
   methods: {
-    async fetch({ target }) {
+    async fetch() {
       const { by, id, platform, period, limit, skip } = this;
 
-      const response = (await axios.post(target.action, { by, id, platform, period, limit, skip })).data;
+      const response = (await this.$axios.post('/api/job/fetch', { by, id, platform, period, limit, skip })).data;
 
-      this.$snackbar.open(response);
+      // this.$snackbar.open(response);
     },
 
-    async upload({ target }) {
+    async upload() {
       const { forced } = this;
 
-      const response = (await axios.post(target.action, { forced })).data;
+      const response = (await this.$axios.post('/api/job/upload', { forced })).data;
 
-      this.$snackbar.open(response);
+      // this.$snackbar.open(response);
     }
   }
 };

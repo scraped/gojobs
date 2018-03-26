@@ -52,7 +52,7 @@ axiosInstance.interceptors.response.use(response => {
     });
   } else {
     openSnackbar({
-      message: 'An unexpected error occurred during the HTTP request',
+      message: 'An unexpected error occurred during the HTTP request' + error,
       type: 'is-danger',
       position: 'is-top'
     });

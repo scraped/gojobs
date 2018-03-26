@@ -24,7 +24,7 @@ Vue.use(VueCookie);
 
 Vue.use(Buefy, {
   defaultNoticeQueue: false,
-  defaultSnackbarDuration: 5000
+  defaultSnackbarDuration: 7500
 });
 
 /**
