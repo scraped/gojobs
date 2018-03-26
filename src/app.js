@@ -23,7 +23,8 @@ Vue.use(VueProgressBar, progressBarOptions);
 Vue.use(VueCookie);
 
 Vue.use(Buefy, {
-  defaultNoticeQueue: false
+  defaultNoticeQueue: false,
+  defaultSnackbarDuration: 5000
 });
 
 /**

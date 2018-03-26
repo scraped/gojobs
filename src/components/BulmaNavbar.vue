@@ -153,7 +153,7 @@ export default {
         queue: false
       });
       this.closePlatformDropdown();
-      this.$router.push({ path: '/', query: { q: Math.random() } });
+      this.$router.push({ path: this.$route.path, query: { q: Math.random() } });
     },
 
     closePlatformDropdown() {

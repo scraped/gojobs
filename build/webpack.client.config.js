@@ -61,7 +61,9 @@ let webpackConfig = {
 
     new VueSSRClientPlugin(),
 
-    new BundleAnalyzerPlugin()
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false
+    })
   ]
 };
 
