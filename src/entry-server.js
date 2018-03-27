@@ -15,14 +15,12 @@ export default context => {
   return new Promise((resolve, reject) => {
     const { app, router, store } = createApp();
 
-    const axiosInstance = axios.create({
+    Vue.prototype.$axios = axios.create({
       baseURL: `http://${req.hostname}:${config.port}/`,
       headers: {
         Cookie: `jwt=${req.cookies.jwt}`
       }
     });
-
-    Vue.prototype.$axios = axiosInstance;
 
     router.push(context.url);
 

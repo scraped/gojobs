@@ -1,4 +1,4 @@
-import { axios } from 'src/helpers';
+import {axios} from 'src/helpers';
 import queryString from 'query-string';
 
 const state = {

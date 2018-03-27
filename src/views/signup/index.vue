@@ -177,7 +177,7 @@ export default {
       }
 
       try {
-        const res = await axios.post(url, { username, password, email });
+        const res = await this.$axios.post(url, { username, password, email });
 
         const { jobname, date } = res.data;
         this.$store.commit('user/setUsername', { username });

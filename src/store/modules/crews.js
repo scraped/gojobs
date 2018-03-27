@@ -1,5 +1,4 @@
-import config from '../../../config';
-import axios from 'axios';
+import {axios} from 'src/helpers';
 import queryString from 'query-string';
 
 const state = {
@@ -15,7 +14,7 @@ const mutations = {
 const actions = {
   async fetch({ commit }, payload) {
     const queryStr = queryString.stringify(payload.query),
-      url = `${config.url}/api/crews?${queryStr}`;
+      url = `/api/crews?${queryStr}`;
 
     const response = await axios.get(url);
 

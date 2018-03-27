@@ -1,4 +1,4 @@
-import { axios } from 'src/helpers';
+import {axios} from 'src/helpers';
 
 const state = {
   job: {}
