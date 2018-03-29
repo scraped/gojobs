@@ -20,12 +20,7 @@ Vue.mixin({
 
 const openSnackbar = Vue.prototype.$snackbar.open;
 
-const axiosInstance = axios.create({
-  validateStatus(status) {
-     // Reject only if the status code is greater than or equal to 500
-    return status < 500;
-  }
-});
+const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use(() => {}, () => {
   openSnackbar({

@@ -117,6 +117,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
 
 export default {
@@ -148,7 +149,7 @@ export default {
       console.log('this.axios:', this.$axios);
       console.log('axios:', axios);
 
-      const response = (await axios.post('/api/job/upload', { forced })).data;
+      const response = (await Vue.prototype.$axios.post('/api/job/upload', { forced })).data;
 
       // this.$snackbar.open(response);
     }
