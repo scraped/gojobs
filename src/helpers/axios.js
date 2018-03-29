@@ -1,3 +1,7 @@
-import Vue from 'vue';
+import realAxios from 'axios';
 
-export const axios = Vue.prototype.$axios;
+export let axios = realAxios;
+
+export function setAxios(axiosInstance) {
+  axios = axiosInstance;
+}

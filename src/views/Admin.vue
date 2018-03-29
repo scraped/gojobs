@@ -134,6 +134,7 @@ export default {
 
   methods: {
     async fetch() {
+      console.l
       const { by, id, platform, period, limit, skip } = this;
 
       const response = (await this.$axios.post('/api/job/fetch', { by, id, platform, period, limit, skip })).data;
@@ -144,7 +145,10 @@ export default {
     async upload() {
       const { forced } = this;
 
-      const response = (await this.$axios.post('/api/job/upload', { forced })).data;
+      console.log('this.axios:', this.$axios);
+      console.log('axios:', axios);
+
+      const response = (await axios.post('/api/job/upload', { forced })).data;
 
       // this.$snackbar.open(response);
     }

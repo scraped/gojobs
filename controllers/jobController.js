@@ -87,7 +87,7 @@ exports.jobDetails = async (req, res) => {
 exports.jobUpload = (req, res) => {
   const { limit, forced } = req.body;
 
-  uploadRawJobs({ limit, forcedUpload: forced });
+  // uploadRawJobs({ limit, forcedUpload: forced });
 
   res.send(`Jobs are being uploaded.`);
 };

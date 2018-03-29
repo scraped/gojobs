@@ -37,6 +37,7 @@ const mutations = {
 
 const actions = {
   async fetchUserInfo({ commit }) {
+    console.log(axios);
     const {
       username,
       jobname,

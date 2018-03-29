@@ -1,10 +1,8 @@
 import Vue from 'vue';
 import axios from 'axios';
 import {createApp} from './app';
-import {findAsyncComponents} from './helpers';
+import {findAsyncComponents, setAxios} from './helpers';
 import {beforeRouteUpdate, clientTitleMixin} from './mixins';
-
-const { app, store, router } = createApp();
 
 // *********************
 // Mixins
@@ -52,14 +50,17 @@ axiosInstance.interceptors.response.use(response => {
     });
   } else {
     openSnackbar({
-      message: 'An unexpected error occurred during the HTTP request' + error,
+      message: 'An unexpected error occurred during the HTTP request: ' + error,
       type: 'is-danger',
       position: 'is-top'
     });
+    console.log(error);
   }
 });
 
 Vue.prototype.$axios = axiosInstance;
+
+const { app, store, router } = createApp();
 
 // *********************
 // Replace store

@@ -1,7 +1,7 @@
 import config from '../config';
 import Vue from 'vue';
 import {createApp} from './app'
-import {findAsyncComponents, setAxiosInstance} from './helpers';
+import {findAsyncComponents, setAxios} from './helpers';
 import axios from 'axios';
 // import {serverTitleMixin} from './mixins';
 
@@ -13,14 +13,18 @@ export default context => {
   const { req } = context;
 
   return new Promise((resolve, reject) => {
-    const { app, router, store } = createApp();
-
-    Vue.prototype.$axios = axios.create({
+    const axiosInstance = axios.create({
       baseURL: `http://${req.hostname}:${config.port}/`,
       headers: {
         Cookie: `jwt=${req.cookies.jwt}`
       }
     });
+
+    Vue.prototype.$axios = axiosInstance;
+
+    setAxios(axiosInstance);
+
+    const { app, router, store } = createApp();
 
     router.push(context.url);
 
