@@ -35,6 +35,6 @@ router.post('/user/basicinfo', basicInfo);
 
 // Job
 router.post('/jobs', jobList);
-router.post('/job/:id', jobDetails);
 router.post('/job/upload', jobUpload);
 router.post('/job/fetch', jobFetch);
+router.post('/job/:id', jobDetails);

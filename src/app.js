@@ -43,5 +43,5 @@ export function createApp() {
     router
   });
 
-  return { app, store, router };
+  return {app, store, router};
 }

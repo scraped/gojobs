@@ -146,10 +146,7 @@ export default {
     async upload() {
       const { forced } = this;
 
-      console.log('this.axios:', this.$axios);
-      console.log('axios:', axios);
-
-      const response = (await Vue.prototype.$axios.post('/api/job/upload', { forced })).data;
+      const response = (await this.$axios.post('/api/job/upload', { forced })).data;
 
       // this.$snackbar.open(response);
     }

@@ -40,6 +40,11 @@ app.use('/api', apiRouter);
 
 app.use(serverSideRendering(app));
 
+app.use((err, req, res, next) => {
+  console.log('error!')
+  res.send('500')
+})
+
 app.listen(app.get('port'), () => {
   const port = app.get('port');
   console.log(`http://localhost:${port} server's running`);

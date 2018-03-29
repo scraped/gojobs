@@ -17,13 +17,9 @@ const mutations = {
 
 const actions = {
   async fetchUserInfo({ commit }, { user }) {
-    const response = await axios.get(`/api/profiles/profile/${user}`);
-
-    console.log('here!!!!!');
+    const response = await this.$axios.get(`/api/profile/${user}`);
 
     const { username, crew } = response.data;
-
-    console.log('crew:', crew);
 
     if (username) {
       commit('setUsername', { username });

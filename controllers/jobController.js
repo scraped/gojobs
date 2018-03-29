@@ -79,15 +79,19 @@ exports.jobDetails = async (req, res) => {
   const job = await Job.findOne({ jobId })
     .populate('details');
 
-  res.json({
-    job: job.toObject()
-  });
+  if (job) {
+    return res.json({
+      job: job.toObject()
+    });
+  }
+
+  return res.json();
 };
 
 exports.jobUpload = (req, res) => {
   const { limit, forced } = req.body;
 
-  // uploadRawJobs({ limit, forcedUpload: forced });
+  uploadRawJobs({ limit, forcedUpload: forced });
 
   res.send(`Jobs are being uploaded.`);
 };
