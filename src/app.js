@@ -7,6 +7,8 @@ import * as filters from './filters';
 
 import VueProgressBar from 'vue-progressbar';
 import VueCookie from 'vue-cookie';
+import VueAxios from 'vue-axios';
+
 import Buefy from 'buefy';
 
 Object.keys(filters).forEach(key => {
@@ -43,5 +45,5 @@ export function createApp() {
     router
   });
 
-  return {app, store, router};
+  return { app, store, router };
 }
