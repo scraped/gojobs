@@ -1,4 +1,4 @@
-import {axios} from 'src/helpers';
+import { http } from 'src/utils';
 
 const state = {
   job: {}
@@ -13,7 +13,7 @@ const mutations = {
 const actions = {
   async fetchJob({ commit }, { id }) {
 
-    const response = await axios.post(`/api/jobs/job/${id}`);
+    const response = await http.post(`/api/jobs/job/${id}`);
 
     const { job } = response.data;
 

@@ -12,6 +12,17 @@ const Profile = () => import('src/views/profile/index.vue');
 
 Vue.use(VueRouter);
 
+const routes = [
+  { path: '/', name: 'main', component: Main },
+  { path: '/crews', name: 'crews', component: Crews },
+  { path: '/admin', name: 'admin', component: Admin },
+  { path: '/login', name: 'login', component: Login },
+  { path: '/signup', name: 'signup', component: Signup },
+  { path: '/job/:id', name: 'job', component: Job },
+  { path: '/profile/:username', name: 'profile', component: Profile },
+  { path: '*', name: 'notfound', component: NotFound }
+];
+
 export function createRouter() {
   return new VueRouter({
     mode: 'history',
@@ -20,15 +31,6 @@ export function createRouter() {
       return savedPosition ? savedPosition : { x: 0, y: 0 };
     },
 
-    routes: [
-      { path: '/', name: 'main', component: Main },
-      { path: '/crews', name: 'crews', component: Crews },
-      { path: '/admin', name: 'admin', component: Admin },
-      { path: '/login', name: 'login', component: Login },
-      { path: '/signup', name: 'signup', component: Signup },
-      { path: '/job/:id', name: 'job', component: Job },
-      { path: '/profile/:username', name: 'profile', component: Profile },
-      { path: '*', name: 'notfound', component: NotFound }
-    ]
+    routes
   });
 };

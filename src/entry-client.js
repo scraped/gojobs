@@ -1,12 +1,8 @@
 import Vue from 'vue';
-import axios from 'axios';
-import {createApp} from './app';
-import {findAsyncComponents, setAxios} from './helpers';
-import {beforeRouteUpdate, clientTitleMixin} from './mixins';
-
-// *********************
-// Mixins
-// *********************
+import { createApp } from './app';
+import { findAsyncComponents } from './helpers';
+import { beforeRouteUpdate, clientTitleMixin } from './mixins';
+import { setupHttpClient } from './utils/http'
 
 Vue.mixin({
   mounted: clientTitleMixin,
@@ -14,53 +10,9 @@ Vue.mixin({
   beforeRouteUpdate
 });
 
-// *********************
-// Axios setup
-// *********************
+setupHttpClient();
 
-const openSnackbar = Vue.prototype.$snackbar.open;
-
-const axiosInstance = axios.create({
-  timeout: 7000
-});
-
-axiosInstance.interceptors.request.use(config => config, error => {
-  openSnackbar({
-    message: 'Error: could not complete request',
-    type: 'is-danger',
-    position: 'is-top'
-  });
-  return Promise.reject(error);
-});
-
-axiosInstance.interceptors.response.use(response => {
-  const message = response.data.message || response.data;
-  openSnackbar({
-    message,
-    duration: 10000,
-    position: 'is-top',
-  });
-  return response;
-}, error => {
-  if (error.response) {
-    openSnackbar({
-      message: 'Internal server error occured',
-      type: 'is-danger',
-      position: 'is-top'
-    });
-  } else {
-    openSnackbar({
-      message: 'An unexpected error occurred during the HTTP request',
-      type: 'is-danger',
-      position: 'is-top'
-    });
-  }
-  return Promise.reject(error);
-});
-
-Vue.prototype.$axios = axiosInstance;
-
-const {app, store, router} = createApp();
+const { app, store, router } = createApp();
 
 // *********************
 // Replace store

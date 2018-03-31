@@ -1,4 +1,4 @@
-import {axios} from 'src/helpers';
+import { http } from 'src/utils';
 import queryString from 'query-string';
 
 const state = {
@@ -16,7 +16,7 @@ const actions = {
     const queryStr = queryString.stringify(payload.query),
       url = `/api/crews?${queryStr}`;
 
-    const response = await axios.get(url);
+    const response = await http.get(url);
 
     const { crews } = response.data;
 

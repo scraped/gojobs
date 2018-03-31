@@ -1,4 +1,4 @@
-import {axios} from 'src/helpers';
+import { http } from 'src/utils';
 import queryString from 'query-string';
 
 const state = {
@@ -20,7 +20,7 @@ const actions = {
   async fetch({ commit }, { query }) {
     const queryStr = queryString.stringify(query);
 
-    const response = await axios.post(`/api/jobs?${queryStr}`);
+    const response = await http.post(`/api/jobs?${queryStr}`);
 
     const { jobs, number } = response.data;
 

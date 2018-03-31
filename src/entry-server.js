@@ -1,7 +1,7 @@
 import config from '../config';
-import Vue from 'vue';
-import {createApp} from './app'
-import {findAsyncComponents, setAxios} from './helpers';
+import { createApp } from './app'
+import { findAsyncComponents } from './helpers';
+import { setupHttp } from './utils';
 import axios from 'axios';
 // import {serverTitleMixin} from './mixins';
 
@@ -20,11 +20,9 @@ export default context => {
       }
     });
 
-    Vue.prototype.$axios = axiosInstance;
+    setupHttp(axiosInstance);
 
-    setAxios(axiosInstance);
-
-    const {app, router, store} = createApp();
+    const { app, router, store } = createApp();
 
     router.push(context.url);
 

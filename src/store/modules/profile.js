@@ -1,4 +1,4 @@
-import {axios} from 'src/helpers';
+import { http } from 'src/utils';
 
 const state = {
   username: '',
@@ -17,7 +17,7 @@ const mutations = {
 
 const actions = {
   async fetchUserInfo({ commit }, { user }) {
-    const response = await this.$axios.get(`/api/profile/${user}`);
+    const response = await this.$http.get(`/api/profile/${user}`);
 
     const { username, crew } = response.data;
 

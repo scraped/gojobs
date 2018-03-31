@@ -1,4 +1,4 @@
-import {axios} from 'src/helpers';
+import { http } from 'src/utils';
 
 const state = {
   cookies: {},
@@ -37,14 +37,13 @@ const mutations = {
 
 const actions = {
   async fetchUserInfo({ commit }) {
-    console.log(axios);
     const {
       username,
       jobname,
       verifStatus,
       date,
       email
-    } = (await axios.post('/api/users/basicinfo')).data;
+    } = (await http.post('/api/users/basicinfo')).data;
 
     if (username) commit('setJobname', { jobname });
     if (jobname) commit('setUsername', { username });
