@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { createApp } from './app';
 import { findAsyncComponents } from './helpers';
 import { beforeRouteUpdate, clientTitleMixin } from './mixins';
-import { setupHttpClient } from './utils/http'
+import { setupHttpClient } from './utils'
 
 Vue.mixin({
   mounted: clientTitleMixin,

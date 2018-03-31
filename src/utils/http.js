@@ -1,9 +1,9 @@
 import axios from 'axios';
 import Vue from 'vue';
 
-export let http;
+export let http = null;
 
-function setupHttp(axiosInstance) {
+export function setupHttp(axiosInstance) {
   Vue.prototype.$http = axiosInstance;
   http = axiosInstance;
 }
@@ -11,7 +11,7 @@ function setupHttp(axiosInstance) {
 export function setupHttpClient() {
   const openSnackbar = Vue.prototype.$snackbar.open;
 
-  const axiosInstance = axios.create({
+  let axiosInstance = axios.create({
     timeout: 7000
   });
 

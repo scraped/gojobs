@@ -20,9 +20,9 @@ export default {
   },
 
   computed: {
-    ...mapState('crews', {
-      crews: state => state.crews
-    })
+    ...mapState('crews', [
+      'crews'
+    ])
   }
 };
 </script>

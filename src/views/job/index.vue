@@ -119,8 +119,8 @@
 
 <script>
 import moment from 'moment';
-import {mapState} from 'vuex';
-import {userAvatars} from 'src/helpers';
+import { mapState } from 'vuex';
+import { userAvatars } from 'src/helpers';
 
 import BulmaHero from 'src/components/BulmaHero.vue';
 import IconGta from 'src/components/IconGta.vue';

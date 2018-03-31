@@ -146,8 +146,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   data() {
     return {
@@ -177,7 +175,7 @@ export default {
       }
 
       try {
-        const res = await this.$axios.post(url, { username, password, email });
+        const res = await this.$http.post(url, { username, password, email });
 
         const { jobname, date } = res.data;
         this.$store.commit('user/setUsername', { username });

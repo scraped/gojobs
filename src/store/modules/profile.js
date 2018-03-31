@@ -17,7 +17,7 @@ const mutations = {
 
 const actions = {
   async fetchUserInfo({ commit }, { user }) {
-    const response = await this.$http.get(`/api/profile/${user}`);
+    const response = await http.get(`/api/profile/${user}`);
 
     const { username, crew } = response.data;
 
@@ -31,22 +31,9 @@ const actions = {
   }
 };
 
-const getters = {
-  avatarSmall(state) {
-    const username = state.username.toLowerCase();
-    return `https://a.rsg.sc/n/${username}/s`;
-  },
-
-  avatarLarge(state) {
-    const username = state.username.toLowerCase();
-    return `https://a.rsg.sc/n/${username}/l`;
-  }
-};
-
 export default {
   namespaced: true,
   state,
   mutations,
-  actions,
-  getters
+  actions
 };

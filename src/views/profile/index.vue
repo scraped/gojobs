@@ -125,8 +125,8 @@
 
 <script>
 import moment from 'moment';
-import {mapState, mapGetters} from 'vuex';
-import {userAvatars} from 'src/helpers'
+import { mapState, mapGetters } from 'vuex';
+import { userAvatars } from 'src/helpers'
 
 import JobsList from 'src/components/JobList.vue';
 import BulmaPagination from 'src/components/BulmaPagination.vue';

@@ -29,9 +29,9 @@ export default context => {
     router.onReady(async () => {
       const matchedComponents = router.getMatchedComponents();
 
-      // if (!matchedComponents.length) {
-      //   throw new Error({code: 404});
-      // }
+      if (!matchedComponents.length) {
+        return reject(new Error({ code: 404 }));
+      }
 
       const asyncDataPromises = findAsyncComponents({
         components: matchedComponents,

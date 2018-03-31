@@ -118,7 +118,7 @@
 
 <script>
 import Vue from 'vue';
-import axios from 'axios';
+import http from 'http';
 
 export default {
   data() {
@@ -138,7 +138,7 @@ export default {
       console.l
       const { by, id, platform, period, limit, skip } = this;
 
-      const response = (await this.$axios.post('/api/job/fetch', { by, id, platform, period, limit, skip })).data;
+      const response = (await this.$http.post('/api/job/fetch', { by, id, platform, period, limit, skip })).data;
 
       // this.$snackbar.open(response);
     },
@@ -146,7 +146,7 @@ export default {
     async upload() {
       const { forced } = this;
 
-      const response = (await this.$axios.post('/api/job/upload', { forced })).data;
+      const response = (await this.$http.post('/api/job/upload', { forced })).data;
 
       // this.$snackbar.open(response);
     }
