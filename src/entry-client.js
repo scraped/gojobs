@@ -42,7 +42,14 @@ router.onReady(() => {
     });
 
     if (!activated.length) {
-      return next();
+      if (diffed) {
+        Vue.prototype.$toast.open({
+          type: 'is-danger',
+          message: '404 Not Found',
+          duration: 5000
+        });
+      }
+      return next(false);
     }
 
     const asyncDataPromises = findAsyncComponents({

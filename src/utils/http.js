@@ -25,12 +25,14 @@ export function setupHttpClient() {
   });
 
   axiosInstance.interceptors.response.use(response => {
-    const message = response.data.message || response.data;
-    openSnackbar({
-      message,
-      duration: 10000,
-      position: 'is-top',
-    });
+    const message = response.data.message;
+    if (message) {
+      openSnackbar({
+        message,
+        duration: 10000,
+        position: 'is-top',
+      });
+    }
     return response;
   }, error => {
     if (error.response) {

@@ -96,6 +96,10 @@
             class="navbar-item" :to="{ name: 'signup' }">
             <span>Sign Up or Log In</span>
           </router-link>
+          <router-link
+            class="navbar-item" :to="{ path: '/?q=123' }">
+            <span>404 page</span>
+          </router-link>
         </div>
       </div>
     </div>
