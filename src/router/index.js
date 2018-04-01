@@ -37,5 +37,5 @@ export function createRouter() {
     },
 
     routes
-  });
+  })
 };
