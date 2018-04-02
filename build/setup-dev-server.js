@@ -10,7 +10,7 @@ const MemoryFileSystem = require('memory-fs');
 
 // Calls updateCallback({ bundle, clientManifest, template })
 // when something changes.
-function setupDevServer(app, updateCallback) {
+module.exports = function setupDevServer(app, updateCallback) {
   let resolveReadyPromise;
   const readyPromise = new Promise(r => {
     // link for resolving the promise
@@ -59,13 +59,16 @@ function setupDevServer(app, updateCallback) {
   const clientCompiler = webpack(clientConfig);
   const serverCompiler = webpack(serverConfig);
 
-  const webpackDevMiddlewareInstance = webpackDevMiddleware(clientCompiler, {
-    publicPath: clientConfig.output.publicPath,
-    stats: {
-      colors: true,
-      modules: false
+  const webpackDevMiddlewareInstance = webpackDevMiddleware(
+    clientCompiler,
+    {
+      publicPath: clientConfig.output.publicPath,
+      stats: {
+        colors: true,
+        modules: false
+      }
     }
-  });
+  );
 
   app.use(webpackDevMiddlewareInstance);
 
@@ -105,5 +108,3 @@ function setupDevServer(app, updateCallback) {
 
   return readyPromise;
 }
-
-module.exports = setupDevServer;
