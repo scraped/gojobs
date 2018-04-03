@@ -18,7 +18,7 @@
           </a>
 
           <b-dropdown-item custom>
-            <div class="subtitle is-6">Show jobs for</div>
+            <div class="subtitle is-6">Default platform (if no platform specified, there will be shown jobs only for the selected platform below)</div>
             <b-field>
               <b-radio
                 v-model="platform"
@@ -156,8 +156,7 @@ export default {
         type: 'is-info'
       });
       this.closePlatformDropdown();
-      // this.$router.push({ path: this.$route.path, query: { q: Math.random() } });
-      this.$router.push({ path: this.$route.path });
+      this.$router.push({ path: '/', query: { platform } });
     },
 
     closePlatformDropdown() {

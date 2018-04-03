@@ -167,33 +167,25 @@ export default {
       let url;
 
       if (signup) {
-        url = '/auth/signup';
+        url = '/api/auth/signup';
       } else if (recovery) {
-        url = '/auth/recovery';
+        url = '/api/auth/recovery';
       } else {
-        url = '/auth/login';
+        url = '/api/auth/login';
       }
 
-      try {
-        const res = await this.$http.post(url, { username, password, email });
+      const res = await this.$http.post(
+        url,
+        { username, password, email }
+      );
 
-        const { jobname, date } = res.data;
-        this.$store.commit('user/setUsername', { username });
-        this.$store.commit('user/setJobname', { jobname });
-        this.$store.commit('user/setDate', { date });
-        if (email) this.$store.commit('user/setEmail', { email });
-        this.$snackbar.open({
-          message: 'Success! Now you need to verify your account.',
-          duration: 20000,
-          position: 'is-top'
-        });
+      const { jobname, date } = res.data;
+      this.$store.commit('user/setUsername', { username });
+      this.$store.commit('user/setJobname', { jobname });
+      this.$store.commit('user/setDate', { date });
+      if (email) this.$store.commit('user/setEmail', { email });
+      if (signup) {
         this.$router.push({ name: 'profile', params: { username } });
-      } catch (error) {
-        this.$snackbar.open({
-          message: error.response.data.message,
-          duration: 10000,
-          position: 'is-top'
-        });
       }
     }
   }

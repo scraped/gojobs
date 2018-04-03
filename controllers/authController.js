@@ -6,16 +6,28 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 exports.verify = (req, res) => {
-  return res.send('TODO auth verify');
+  return res.json({
+    message: 'TODO auth verify'
+  });
 };
 
 exports.logIn = (req, res) => {
-  return res.send('TODO auth log in');
+  return res.json({
+    message: 'TODO auth log in'
+  });
 };
 
 exports.logOut = (req, res) => {
-  return res.send('TODO auth log out');
-}
+  return res.json({
+    message: 'TODO auth log out'
+  });
+};
+
+exports.recoveryPass = (req, res) => {
+  return res.json({
+    message: 'TODO recovery pass'
+  });
+};
 
 exports.signUp = async (req, res) => {
   const NO_USERNAME_MESSAGE = 'Please enter your login and password',
@@ -81,5 +93,9 @@ exports.signUp = async (req, res) => {
 
   res.set('Set-Cookie', setCookie);
 
-  return res.json({ jobname, date });
+  return res.json({
+    message: 'Success! Go to your profile and verify your account.',
+    jobname,
+    date
+  });
 };

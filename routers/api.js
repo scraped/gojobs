@@ -5,6 +5,7 @@ const {
   signUp,
   logIn,
   logOut,
+  recoveryPass,
   verify,
 } = require('../controllers/authController');
 
@@ -28,6 +29,7 @@ router.get('/profile/:username', profileDetails);
 router.post('/auth/signup', signUp);
 router.post('/auth/login', logIn);
 router.post('/auth/logout', logOut);
+router.post('/auth/recovery', recoveryPass);
 router.post('/auth/verify', verify);
 
 // User
