@@ -93,11 +93,11 @@
           </router-link>
           <router-link
             v-else
-            class="navbar-item" :to="{ name: 'signup' }">
+            class="navbar-item" :to="{ name: 'auth' }">
             <span>Sign Up or Log In</span>
           </router-link>
           <router-link
-            class="navbar-item" :to="{ path: '/?q=123' }">
+            class="navbar-item" :to="{ path: '/azaza' }">
             <span>404 page</span>
           </router-link>
         </div>
@@ -107,9 +107,9 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from 'vuex';
 import logo from 'src/images/logo2.png';
-import {userAvatars} from 'src/helpers';
+import { userAvatars } from 'src/helpers';
 
 export default {
   data() {
@@ -153,11 +153,11 @@ export default {
       this.platform = platform;
       this.$toast.open({
         message: `Platform set to ${this.platformName}`,
-        type: 'is-info',
-        queue: false
+        type: 'is-info'
       });
       this.closePlatformDropdown();
-      this.$router.push({ path: this.$route.path, query: { q: Math.random() } });
+      // this.$router.push({ path: this.$route.path, query: { q: Math.random() } });
+      this.$router.push({ path: this.$route.path });
     },
 
     closePlatformDropdown() {

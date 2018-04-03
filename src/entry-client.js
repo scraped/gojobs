@@ -49,7 +49,7 @@ router.onReady(() => {
           duration: 5000
         });
       }
-      return next(false);
+      return next();
     }
 
     const asyncDataPromises = findAsyncComponents({
