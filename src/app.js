@@ -7,7 +7,6 @@ import * as filters from './filters';
 
 import VueProgressBar from 'vue-progressbar';
 import VueCookie from 'vue-cookie';
-import VueAxios from 'vue-axios';
 
 import Buefy from 'buefy';
 
@@ -26,7 +25,8 @@ Vue.use(VueCookie);
 
 Vue.use(Buefy, {
   defaultNoticeQueue: false,
-  defaultSnackbarDuration: 7500
+  defaultSnackbarDuration: 7000,
+  defaultToastDuration: 7000
 });
 
 /**

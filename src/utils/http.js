@@ -9,44 +9,47 @@ export function setupHttp(axiosInstance) {
 }
 
 export function setupHttpClient() {
-  const openSnackbar = Vue.prototype.$snackbar.open;
+  // const openSnackbar = Vue.prototype.$snackbar.open;
   const openToast = Vue.prototype.$toast.open;
 
   let axiosInstance = axios.create();
 
   axiosInstance.interceptors.request.use(config => config, error => {
-    openSnackbar({
+    openToast({
       message: 'Error: could not complete HTTP request',
-      type: 'is-danger',
-      position: 'is-top'
+      type: 'is-danger'
     });
     return Promise.reject(error);
   });
 
   axiosInstance.interceptors.response.use(response => {
-    const message = response.data.message;
+    const { message } = response.data;
     if (message) {
       openToast({
         message,
         duration: 10000,
-        type: 'is-success',
-        position: 'is-top',
+        type: 'is-success'
       });
     }
     return response;
   }, error => {
-    if (error.response) {
-      const { status } = error.response;
-      openSnackbar({
-        message: `Error: server responded with ${status} code`,
-        type: 'is-danger',
-        position: 'is-bottom-left'
+    const { response } = error;
+
+    if (response) {
+      const { status } = response;
+      const serverMessage = response.data.message;
+
+      const type = serverMessage ? 'is-warning' : 'is-danger';
+      const message = serverMessage || `Error during the HTTP request: server responded with ${status} code`;
+
+      openToast({
+        message,
+        type
       });
     } else {
-      openSnackbar({
+      openToast({
         message: 'An unexpected error occurred during the HTTP request',
-        type: 'is-danger',
-        position: 'is-bottom-left'
+        type: 'is-danger'
       });
     }
     return Promise.reject(error);

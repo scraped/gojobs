@@ -13,7 +13,7 @@ const mutations = {
 const actions = {
   async fetchJob({ commit }, { id }) {
 
-    const response = await http.post(`/api/jobs/job/${id}`);
+    const response = await http.post(`/api/job/${id}`);
 
     const { job } = response.data;
 

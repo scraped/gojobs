@@ -43,7 +43,7 @@ const actions = {
       verifStatus,
       date,
       email
-    } = (await http.post('/api/users/basicinfo')).data;
+    } = (await http.post('/api/user/basicinfo')).data;
 
     if (username) commit('setJobname', { jobname });
     if (jobname) commit('setUsername', { username });

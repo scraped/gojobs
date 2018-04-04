@@ -3,7 +3,7 @@
     <section class="section">
       <div class="container">
         <h1 class="title">Profile</h1>
-        <div class="media">
+        <div class="media box">
           <figure class="media-left">
             <p class="image is-128x128">
               <img class="is-rounded" :src="avatars.large">
@@ -15,20 +15,21 @@
               <h1 class="title tooltip" data-tooltip="$g4g">@{{ username }}
                 <span
                   v-if="crew"
-                  class="tag is-medium"
+                  class="tag is-white is-medium"
                   :style="`border: 1px solid #${crew.color};`">
                   {{ crew.tag }}
+                  <<a :href="`/crews/${crew.slug}`">{{ crew.name }}</a>>
                 </span>
               </h1>
-              <p
+              <!-- <p
                 v-if="crew"
                 class="has-text-grey">
                 Active crew:
                 <a :href="`/crews/${crew.slug}`">{{ crew.name }}</a>
-              </p>
+              </p> -->
               <div>
                 <a
-                  class="button is-primary is-outlined"
+                  class="button is-outlined"
                   :href="`http://ru.socialclub.rockstargames.com/member/${username}`"
                   target="_blank">
                   Go to RGSC profile

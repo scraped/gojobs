@@ -27,7 +27,7 @@
       "src/images",
       "src/scss",
       "src/index.html",
-      "src/entry-client",
+      "src/entry-client.js",
       "package.json"
     ]
   },
@@ -68,7 +68,6 @@
     "time-stamp": "^2.0.0",
     "validator": "^9.4.1",
     "vue": "^2.5.16",
-    "vue-axios": "^2.1.1",
     "vue-cookie": "^1.1.4",
     "vue-progressbar": "^0.7.4",
     "vue-resource": "^1.5.0",
@@ -108,6 +107,6 @@
     "webpack-dev-server": "^2.11.2",
     "webpack-hot-middleware": "^2.21.2",
     "webpack-merge": "^4.1.2",
-    "webpack-node-externals": "^1.6.0"
+    "webpack-node-externals": "^1.7.2"
   }
 }

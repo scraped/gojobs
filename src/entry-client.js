@@ -34,21 +34,27 @@ router.onReady(() => {
 
   router.beforeResolve(async (to, from, next) => {
     const matchedPrev = router.getMatchedComponents(from);
-    const matched = router.getMatchedComponents(to);
+    const matchedCurr = router.getMatchedComponents(to);
 
     let diffed = false;
-    const activated = matched.filter((Component, i) => {
-      return diffed || (diffed = (matchedPrev[i] !== Component));
+    const activated = matchedCurr.filter((component, i) => {
+      return diffed || (diffed = (matchedPrev[i] !== component));
     });
 
+    // 404: message + stay on the current page
+    if (!matchedCurr.length) {
+      Vue.prototype.$toast.open({
+        message: 'Error 404: Page Not Found',
+        type: 'is-danger'
+      });
+      return next(false);
+    }
+
+    // console.log('no progress bar anymore :(')
+    // Vue.prototype.$Progress.fail();
+
+    // Don't need to resolve async components if nothing changed
     if (!activated.length) {
-      if (diffed) {
-        Vue.prototype.$toast.open({
-          type: 'is-danger',
-          message: '404 Not Found',
-          duration: 5000
-        });
-      }
       return next();
     }
 
@@ -59,11 +65,17 @@ router.onReady(() => {
     });
 
     const promisesExist = asyncDataPromises.length > 0;
+    const progressBar = Vue.prototype.$Progress;
 
     if (promisesExist) {
-      Vue.prototype.$Progress.start();
-      await Promise.all(asyncDataPromises);
-      Vue.prototype.$Progress.finish();
+      progressBar.start();
+      try {
+        await Promise.all(asyncDataPromises);
+      } catch (error) {
+        progressBar.fail();
+        return next(false);
+      }
+      progressBar.finish();
     }
 
     next();

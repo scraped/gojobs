@@ -96,10 +96,6 @@
             class="navbar-item" :to="{ name: 'auth' }">
             <span>Sign Up or Log In</span>
           </router-link>
-          <router-link
-            class="navbar-item" :to="{ path: '/azaza' }">
-            <span>404 page</span>
-          </router-link>
         </div>
       </div>
     </div>
