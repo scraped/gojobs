@@ -42,14 +42,12 @@ router.onReady(() => {
     });
 
     if (!activated.length) {
-      if (diffed) {
-        Vue.prototype.$toast.open({
-          type: 'is-danger',
-          message: '404 Not Found',
-          duration: 5000
-        });
-      }
-      return next();
+      Vue.prototype.$toast.open({
+        type: 'is-danger',
+        message: '404 Not Found',
+        duration: 5000
+      });
+      return next(false);
     }
 
     const asyncDataPromises = findAsyncComponents({
