@@ -3,8 +3,10 @@ const merge = require('webpack-merge');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 const webpackNodeExternals = require('webpack-node-externals');
 
+const entry = './src/entry-server.js';
+
 const webpackConfig = {
-  entry: './src/entry-server.js',
+  entry,
 
   output: {
     libraryTarget: 'commonjs2'

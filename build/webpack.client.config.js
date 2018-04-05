@@ -2,13 +2,11 @@ const baseWebpackConfig = require('./webpack.base.config');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
-// const UglifyJSWebpackPlugin = require('uglifyjs-webpack-plugin');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
-const { production, development } = require('../config');
+const { production } = require('../config');
 
 const {
   sassLoadersDevelopment,
