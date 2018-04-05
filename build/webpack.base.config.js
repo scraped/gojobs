@@ -12,16 +12,19 @@ const imagesName = 'assets/images/[name].[hash:6].[ext]';
 
 const { production } = config;
 
+const mode = production ? 'production' : 'development';
+
 // Why no clean-webpack-plugin? Two bundles need dist dir so no one
 // can delete it. You must delete it manually before bunding
 // (using rimraf, for example).
-
 let webpackConfig = {
+  mode,
+
   output: {
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: '/',
     filename: jsName,
-    chunkFilename: jsChunkName
+    chunkFilename: jsChunkName,
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: '/'
   },
 
   resolve: {
@@ -67,7 +70,7 @@ let webpackConfig = {
 
   plugins: [
     new FriendlyErrorsPlugin({
-      onErrors (severity, errors) {
+      onErrors(severity, errors) {
         if (severity !== 'error') return;
         errors.forEach(error => {
           notifier.notify({
@@ -95,10 +98,7 @@ if (production) {
 
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    }),
-
-    // https://webpack.js.org/plugins/module-concatenation-plugin/
-    new webpack.optimize.ModuleConcatenationPlugin(),
+    })
   );
 }
 
