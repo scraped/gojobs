@@ -152,7 +152,7 @@ export default {
         type: 'is-info'
       });
       this.closePlatformDropdown();
-      this.$router.push({ path: '/', query: { platform } });
+      this.$router.push({ path: this.$route.path, query: { platform } });
     },
 
     closePlatformDropdown() {

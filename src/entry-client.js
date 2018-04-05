@@ -50,9 +50,6 @@ router.onReady(() => {
       return next(false);
     }
 
-    // console.log('no progress bar anymore :(')
-    // Vue.prototype.$Progress.fail();
-
     // Don't need to resolve async components if nothing changed
     if (!activated.length) {
       return next();

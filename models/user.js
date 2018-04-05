@@ -37,14 +37,11 @@ schema.methods.checkPassword = function(password) {
 schema.statics.generateTestJobName = function() {
   const values = 'abcdefghijklmnopqrstuvwxyz',
     VALUES_NUMBER = values.length,
-    NAME_MIN_LEN = 15,
-    NAME_MAX_LEN = 20;
+    NAME_LENGTH = 18;
 
-  const nameLength = _.random(NAME_MIN_LEN, NAME_MAX_LEN);
+  let jobNameArray = [];
 
-  let jobNameArray = new Array(nameLength);
-
-  for (let i = 0; i < nameLength; i++) {
+  for (let i = 0; i < NAME_LENGTH; i++) {
     jobNameArray[i] = values[_.random(0, VALUES_NUMBER - 1)];
   }
 

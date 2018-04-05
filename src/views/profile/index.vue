@@ -41,7 +41,9 @@
       </div>
     </section>
 
-    <section class="section" v-if="authUsername === username && !verified">
+    <section
+      v-if="authUsername === username && !verified"
+      class="section">
       <div class="container">
         <div class="columns">
           <div class="column is-half">
@@ -49,8 +51,8 @@
               <h2 class="title is-4">Verification</h2>
               <b-message type="is-info" :closable="false">
                 In order to verify your account you need to publish <b>GTA Online Job</b> named
-                <div class="is-size-1 is-uppercase" style="font-family: 'Courier New', monospace">
-                  {{ jobname }}</div>
+                <div class="mono is-size-1 is-uppercase">{{ jobname }}</div>
+                (case doesn't matter)
               </b-message>
 
               <div class="tags">
@@ -197,6 +199,9 @@ export default {
 };
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .mono {
+    font-family: "Courier New", monospace;
+  }
 </style>
+

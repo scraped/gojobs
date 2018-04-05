@@ -87,6 +87,20 @@
                     </b-input>
                   </b-field>
 
+                  <!-- <b-field
+                    v-if="signup"
+                    label="Repeat password *">
+                    <b-input
+                      type="rep-password"
+                      size="is-large"
+                      v-model="repPassword"
+                      minlength="6"
+                      maxlength="30"
+                      key="rep-password"
+                      required>
+                    </b-input>
+                  </b-field> -->
+
                   <b-field
                     v-if="signup"
                     label="An invitation code (if you have it)">
@@ -153,6 +167,7 @@ export default {
       recovery: false,
       username: '',
       password: '',
+      repPassword: '',
       email: '',
       invCode: '',
       confirm: false,
@@ -180,11 +195,14 @@ export default {
       );
 
       const { jobname, date } = res.data;
-      this.$store.commit('user/setUsername', { username });
-      this.$store.commit('user/setJobname', { jobname });
-      this.$store.commit('user/setDate', { date });
-      if (email) this.$store.commit('user/setEmail', { email });
-      if (signup) {
+
+      if (!recovery) {
+        this.$store.commit('user/setUsername', { username });
+        this.$store.commit('user/setJobname', { jobname });
+        this.$store.commit('user/setDate', { date });
+        if (email) {
+          this.$store.commit('user/setEmail', { email });
+        }
         this.$router.push({ name: 'profile', params: { username } });
       }
     }

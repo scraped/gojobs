@@ -1,13 +1,8 @@
 import config from '../config';
 import { createApp } from './app'
 import { findAsyncComponents } from './helpers';
-import { setupHttp } from './utils';
+import { setupHttp, serializeCookies } from './utils';
 import axios from 'axios';
-// import {serverTitleMixin} from './mixins';
-
-// Vue.mixin({
-//   created: serverTitleMixin
-// });
 
 export default context => {
   const { req } = context;
@@ -16,7 +11,7 @@ export default context => {
     const axiosInstance = axios.create({
       baseURL: `http://${req.hostname}:${config.port}/`,
       headers: {
-        Cookie: `jwt=${req.cookies.jwt}`
+        Cookie: serializeCookies(req.cookies)
       }
     });
 
@@ -30,7 +25,7 @@ export default context => {
       const matchedComponents = router.getMatchedComponents();
 
       if (!matchedComponents.length) {
-        return reject({ code: 404 });
+        return reject(new Error({ code: 404 }));
       }
 
       const asyncDataPromises = findAsyncComponents({
