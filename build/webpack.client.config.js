@@ -5,6 +5,7 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 
 const { production } = require('../config');
 
@@ -55,15 +56,24 @@ let webpackConfig = {
 
 // PRODUCTION
 if (production) {
+  webpackConfig.optimization.minimizer = [
+    new OptimizeCSSAssetsPlugin()
+  ];
+
   webpackConfig.plugins.push(
     new MiniCssExtractPlugin({
       filename: cssName
+    }),
+
+    new UglifyjsWebpackPlugin({
+      sourceMap: true,
+      uglifyOptions: {
+        compress: {
+          warnings: false
+        }
+      }
     })
   );
-
-  webpackConfig.optimization.minimizer = [
-    new OptimizeCSSAssetsPlugin()
-  ]
 // DEVELOPMENT
 } else {
   webpackConfig.entry.app = [
@@ -72,8 +82,7 @@ if (production) {
   ];
 
   webpackConfig.plugins.push(
-    new webpack.HotModuleReplacementPlugin(),
-    // new webpack.NoEmitOnErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin()
   )
 }
 
