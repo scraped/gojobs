@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 
 const { production } = require('../config');
@@ -24,7 +24,30 @@ let webpackConfig = {
     styles: entryStyles
   },
 
-  optimization: {},
+  optimization: {
+    minimizer: [
+      new OptimizeCssAssetsPlugin(),
+
+      new UglifyjsWebpackPlugin({
+        sourceMap: true,
+        uglifyOptions: {
+          compress: {
+            warnings: false
+          }
+        }
+      })
+    ],
+
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          // name: "vendors",
+          chunks: "all"
+        }
+      }
+    }
+  },
 
   devtool: production ? 'none' : '#cheap-inline-module-source-map',
 
@@ -46,32 +69,18 @@ let webpackConfig = {
   },
 
   plugins: [
-    new VueSSRClientPlugin(),
-    new BundleAnalyzerPlugin({
-      analyzerMode: production ? 'static' : 'server',
-      openAnalyzer: false
-    })
+    new VueSSRClientPlugin()
   ]
 };
 
+const addPlugin = webpackConfig.plugins.push;
+
 // PRODUCTION
 if (production) {
-  webpackConfig.optimization.minimizer = [
-    new OptimizeCSSAssetsPlugin()
-  ];
-
+  // We use it only in production because this plugin doesn't support HMR
   webpackConfig.plugins.push(
     new MiniCssExtractPlugin({
       filename: cssName
-    }),
-
-    new UglifyjsWebpackPlugin({
-      sourceMap: true,
-      uglifyOptions: {
-        compress: {
-          warnings: false
-        }
-      }
     })
   );
 // DEVELOPMENT
@@ -83,7 +92,14 @@ if (production) {
 
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin()
-  )
+  );
 }
+
+webpackConfig.plugins.push(
+  new BundleAnalyzerPlugin({
+    analyzerMode: production ? 'static' : 'server',
+    openAnalyzer: false
+  })
+);
 
 module.exports = merge(baseWebpackConfig, webpackConfig);

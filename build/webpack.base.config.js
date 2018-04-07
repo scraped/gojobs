@@ -7,7 +7,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 // hash instead of chunkhash due to HMR
 const jsName = 'assets/js/[name].[hash:6].js';
-const jsChunkName = 'assets/js/dynamic/[id].[chunkhash:6].js';
+const jsChunkName = 'assets/js/[name].[chunkhash:6].js';
 const imagesName = 'assets/images/[name].[hash:6].[ext]';
 
 const { production } = config;
