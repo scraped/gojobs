@@ -39,11 +39,13 @@ let webpackConfig = {
     ],
 
     splitChunks: {
+      automaticNameDelimiter: '-',
+
       cacheGroups: {
-        vendor: {
+        commons: {
           test: /[\\/]node_modules[\\/]/,
-          // name: "vendors",
-          chunks: "all"
+          name: 'vendors',
+          chunks: 'all'
         }
       }
     }
