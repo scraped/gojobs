@@ -2,6 +2,7 @@ const config = require('../config');
 const path = require('path');
 const webpack = require('webpack');
 const notifier = require('node-notifier');
+require('babel-polyfill');
 
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
