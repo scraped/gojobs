@@ -9,11 +9,15 @@ export default {
   props: [
     'icon'
   ]
-}
+};
 </script>
 
 <style lang="scss">
 .icon-gta {
-  font-family: 'gtav-icon-font';
+  vertical-align: top;
+  font: {
+    family: 'gtav-icon-font';
+    size: 0.95em;
+  }
 }
 </style>

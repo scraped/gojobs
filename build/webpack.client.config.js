@@ -21,7 +21,8 @@ let webpackConfig = {
   // Why we don't use a separate entry for styles? They'll be extracted
   // from generated chunk and it will be empty
   entry: {
-    app: entryApp
+    app: entryApp,
+    polyfill: 'babel-polyfill'
   },
 
   optimization: {
@@ -67,6 +68,12 @@ let webpackConfig = {
           :
             sassLoadersDevelopment
       },
+
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      }
     ]
   },
 

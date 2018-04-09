@@ -11,12 +11,12 @@ const Profile = () => import('src/views/profile/index.vue');
 
 Vue.use(VueRouter);
 
-let routes = [
+const routes = [
   { path: '/', name: 'main', component: Main },
   { path: '/crews', name: 'crews', component: Crews },
   { path: '/admin', name: 'admin', component: Admin },
   { path: '/auth', name: 'auth', component: Auth },
-  { path: '/job/:id', name: 'job', component: Job },
+  { path: '/job/:id/:slug', name: 'job', component: Job },
   { path: '/profile/:username', name: 'profile', component: Profile }
 ];
 

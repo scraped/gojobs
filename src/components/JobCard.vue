@@ -1,18 +1,22 @@
 <template>
   <div class="card">
-    <div style="position: absolute; bottom: 0%; right: 15%; opacity: 0.08; font-size: 100px;">
+    <!-- <div style="position: absolute; bottom: 0%; right: 15%; opacity: 0.08; font-size: 100px;">
       <icon-gta
         v-if="job.scModeIcon"
         :icon="job.scModeIcon">
       </icon-gta>
-    </div>
-    <router-link :to="{ name: 'job', params: { id: job.jobId } }">
+    </div> -->
+    <router-link :to="{
+      name: 'job',
+      params: { id: job.jobId, slug: job.slug } }
+    ">
       <div class="card__image">
-        <figure class="image is-2by1">
+        <figure class="image is-2by1 is-clipped">
           <img :src="job.imageUrl" :alt="job.name">
         </figure>
         <div
-          :class="`card__strip is-${ratingCssClass}`"
+          class="card__strip"
+          :class="ratingCssClass"
           :style="`width: ${job.stats.rating}%;`">
         </div>
         <div class="card__title">
@@ -20,7 +24,7 @@
             <span
               class="tooltip has-text-weight-normal"
               :data-tooltip="`Game mode: ${job.scTypeName}`">
-                <icon-gta :icon="job.scTypeIcon"></icon-gta>
+              <icon-gta :icon="job.scTypeIcon"></icon-gta>
             </span><span v-html="job.name"></span>
           </div>
         </div>
@@ -30,7 +34,7 @@
     <div class="card-content">
       <div class="media">
         <div class="media-left">
-          <figure class="image image-avatar is-48x48">
+          <figure class="image is-48x48">
             <router-link
               :to="{ name: 'profile', params: { username: job.author }}">
               <img class="is-rounded" :src="avatars.small">
@@ -50,43 +54,61 @@
         <!-- <div class="media-right"></div> -->
       </div>
 
-      <div class="is-size-7 has-text-grey-light">
-        <div class="has-text-grey-light">
+      <div class="is-size-7 has-text-grey">
+        <div>
           {{ job.platformName }} ·
           {{ job.maxPl }} players ·
           {{ updatedDate }}
           <!-- <br>Points: {{ job.stats.points }} -->
         </div>
-        <div v-if="job.scModeName">
-          In-game category: {{ job.scModeName }}
+        <div>
+          In-game category: {{ job.scModeName || job.scTypeName }}
         </div>
       </div>
       <br>
 
-      <div class="tags">
-        <span
-          :class="`tag is-${ratingCssClass} is-rounded is-medium tooltip`"
-          :data-tooltip="`Dislikes: ${job.stats.dislikes}, RGSC rating: ${job.stats.ratingQuit}%`">
-          <span class="icon">
-            <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-          </span>
-          <span>{{ job.stats.likes | formatNumber }}</span></span>
-        <span
-          class="tag is-light is-rounded is-medium tooltip"
-          :data-tooltip="`People played this: ${job.stats.playUnq}`">
-          <span class="icon">
-            <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
-          </span>
-          <span>{{ job.stats.playTot | formatNumber }}</span></span>
+      <div class="field is-grouped is-grouped-multiline">
+        <div class="control">
+          <div
+            class="tags has-addons tooltip"
+            :data-tooltip="`Real rating: ${job.stats.rating}%, RGSC rating: ${job.stats.ratingQuit}%`">
+            <span
+              class="tag is-rounded is-medium"
+              :class="ratingCssClass">
+              <span class="icon">
+                <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+              </span>
+              <span>{{ job.stats.likes | formatNumber }}</span></span>
+            <span
+              class="tag is-light is-rounded is-medium has-text-grey-light">
+              <span class="icon">
+                <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
+              </span>
+              <span>{{ job.stats.dislikes | formatNumber }}</span></span>
+          </div>
+        </div>
+
+        <div class="control">
+          <span
+            class="tag is-light is-rounded is-medium tooltip"
+            :data-tooltip="job.stats.playUnq  | formatNumber('People played this')">
+            <span class="icon">
+              <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
+            </span>
+            <span>{{ job.stats.playTot | formatNumber }}</span></span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import moment from 'moment';
-import {userAvatars} from 'src/helpers';
 import IconGta from 'src/components/IconGta.vue';
+import {
+  userAvatars,
+  rgscRatingCssClass,
+  updatedDate
+} from 'src/helpers';
 
 export default {
   props: {
@@ -105,47 +127,38 @@ export default {
     },
 
     ratingCssClass() {
-      let rating = this.job.stats.ratingQuit;
-      return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
+      return rgscRatingCssClass(this.job.stats.ratingQuit);
     },
 
     updatedDate() {
-      const date = moment(this.job.scUpdated).fromNow(),
-        { ver } = this.job;
-
-      if (ver === 1) {
-        return `added ${date}`;
-      } else {
-        return `${date} (version ${ver})`;
-      }
+      const { ver } = this.job;
+      return updatedDate({ date: this.job.scUpdated, ver });
     },
-  },
-
-  methods: {
-    genQuery(obj) {
-      return Object.assign({}, this.$route.query, { page: 1 }, obj);
-    }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "src/scss/vars";
 
+$card-image-hover-scale: 1.03;
+$card-image-hover-transition-duration: 350ms;
+
+$card-strip-height: 4px;
+$card-strip-opacity: 0.5;
+
 .card__image {
-  overflow: hidden;
   position: relative;
-  .image {
-    transition-duration: 0.5s;
+  img {
+    transition-duration: $card-image-hover-transition-duration;
   }
-  &:hover .image {
-    transform: scale(1.05);
+  &:hover img {
+    transform: scale($card-image-hover-scale);
   }
 }
 
 .card__title {
   position: absolute;
-  z-index: 1;
   right: 0;
   bottom: 0;
   left: 0;
@@ -161,9 +174,8 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
-  height: 5px;
-  opacity: 0.6;
+  height: $card-strip-height;
+  opacity: $card-strip-opacity;
   &.is-success {
     background: $success;
   }

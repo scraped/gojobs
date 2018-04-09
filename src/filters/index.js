@@ -4,12 +4,22 @@ export function formatDate(date) {
   return moment(date).fromNow();
 }
 
-export function formatNumber(num) {
+export function formatNumber(num, message = '') {
   const MILLION = 1000000;
   const THOUSAND = 1000;
 
-  if (num >= MILLION) return (num / MILLION).toFixed(2) + 'm';
-  if (num >= THOUSAND) return (num / THOUSAND).toFixed(2) + 'k';
+  let pre = '',
+    formatted = num;
 
-  return num;
+  if (num >= MILLION) {
+    formatted = (num / MILLION).toFixed(2) + 'm';
+  } else if (num >= THOUSAND) {
+    formatted = (num / THOUSAND).toFixed(2) + 'k';
+  }
+
+  if (message) {
+    pre = message + ': ';
+  }
+
+  return pre + formatted;
 }

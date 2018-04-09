@@ -28,10 +28,17 @@
       </li>
     </bulma-tabs> -->
 
-    <h1 class="title is-4">{{ number }} jobs found</h1>
-    <p class="subtitle is-size-6 has-text-grey">
-      Page {{ page }}
-    </p>
+    <template v-if="number">
+      <h1 class="title is-4">
+        {{ number }} jobs found
+      </h1>
+      <p class="subtitle is-size-6 has-text-grey">
+        Page {{ page }}
+      </p>
+    </template>
+    <b-message v-else type="is-info" size="is-medium">
+      No jobs found.
+    </b-message>
 
     <div class="columns is-multiline">
       <div

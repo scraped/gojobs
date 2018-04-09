@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="showLoadMoreButton">
+    <!-- <template v-if="showLoadMoreButton">
       <div
         class="button is-large is-fullwidth"
         :class="{ 'is-loading': loading }"
@@ -8,7 +8,7 @@
         <span>Load more</span>
       </div>
       <br>
-    </template>
+    </template> -->
 
     <div class="buttons has-addons is-pulled-right">
       <router-link
