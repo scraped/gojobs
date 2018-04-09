@@ -15,13 +15,13 @@ const {
 } = require('./sass-setup');
 
 const entryApp = './src/entry-client.js',
-  entryStyles = './src/scss/main.scss',
   cssName = 'assets/css/[name].[contenthash:6].css';
 
 let webpackConfig = {
+  // Why we don't use a separate entry for styles? They'll be extracted
+  // from generated chunk and it will be empty
   entry: {
-    app: entryApp,
-    styles: entryStyles
+    app: entryApp
   },
 
   optimization: {
@@ -51,7 +51,7 @@ let webpackConfig = {
     }
   },
 
-  devtool: production ? 'none' : '#cheap-inline-module-source-map',
+  devtool: production ? 'none' : 'cheap-module-inline-source-map',
 
   module: {
     rules: [
@@ -74,8 +74,6 @@ let webpackConfig = {
     new VueSSRClientPlugin()
   ]
 };
-
-const addPlugin = webpackConfig.plugins.push;
 
 // PRODUCTION
 if (production) {

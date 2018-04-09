@@ -1,3 +1,5 @@
+import './scss/main.scss';
+
 import Vue from 'vue';
 import { createApp } from './app';
 import { findAsyncComponents } from './helpers';

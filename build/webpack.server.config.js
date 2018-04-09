@@ -12,18 +12,7 @@ const webpackConfig = {
     libraryTarget: 'commonjs2'
   },
 
-  module: {
-    rules: [
-      {
-        test: /\.scss/,
-        use: 'null-loader'
-      },
-    ]
-  },
-
   target: 'node',
-
-  devtool: 'none',
 
   externals: webpackNodeExternals(),
 
