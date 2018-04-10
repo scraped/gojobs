@@ -118,7 +118,6 @@
 
 <script>
 import Vue from 'vue';
-import http from 'http';
 
 export default {
   data() {

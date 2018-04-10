@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const mongoose = require('../lib/db');
-const {uploadRawJobs} = require('../lib/jobs/upload-rawjobs');
-const {fetchAndSaveJobs} = require('../lib/jobs/fetch');
+const { uploadRawJobs } = require('../lib/jobs/upload-rawjobs');
+const { fetchAndSave } = require('../lib/jobs');
 const platforms = require('../config/static/platforms');
 const Job = require('../models/job');
 const Crew = require('../models/crew');
@@ -96,8 +96,12 @@ exports.jobUpload = (req, res) => {
   res.send(`Jobs are being uploaded.`);
 };
 
-exports.jobFetch = (req, res) => {
-  fetchAndSaveJobs(req.body);
+exports.jobFetch = async (req, res) => {
+  try {
+    await fetchAndSave(req.body);
+  } catch (error) {
+    console.log('Error while fetch and save jobs:', error);
+  }
 
   res.send(`Jobs are being fetched.`);
 };
