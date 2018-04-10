@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <bulma-tabs>
+    <bulma-tabs>
       <li :class="{ 'is-active': !by }">
         <router-link :to="{ name: 'main' }">
           Trending
@@ -26,7 +26,7 @@
           🔥 Newest
         </router-link>
       </li>
-    </bulma-tabs> -->
+    </bulma-tabs>
 
     <template v-if="number">
       <h1 class="title is-4">
@@ -35,6 +35,12 @@
       <p class="subtitle is-size-6 has-text-grey">
         Page {{ page }}
       </p>
+
+      <div class="buttons">
+        <div class="button is-outlined is-rounded is-small">Races</div>
+        <div class="button is-outlined is-rounded is-small">Rockstar Jobs</div>
+        <div class="button is-outlined is-rounded is-small">Rockstar Verified Jobs</div>
+      </div>
     </template>
     <b-message v-else type="is-info" size="is-medium">
       No jobs found.
@@ -42,7 +48,7 @@
 
     <div class="columns is-multiline">
       <div
-        class="column is-one-third"
+        class="column is-one-third-widescreen is-half-tablet"
         v-for="job in jobs"
         :key="job.jobId">
         <job-card :job="job"></job-card>

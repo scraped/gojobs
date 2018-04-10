@@ -66,7 +66,6 @@
     "query-string": "^6.0.0",
     "redis": "^2.8.0",
     "slug": "^0.9.1",
-    "time-stamp": "^2.0.0",
     "validator": "^9.4.1",
     "vue": "^2.5.16",
     "vue-cookie": "^1.1.4",
