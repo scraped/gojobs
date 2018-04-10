@@ -103,5 +103,7 @@ exports.jobFetch = async (req, res) => {
     console.log('Error while fetch and save jobs:', error);
   }
 
-  res.send(`Jobs are being fetched.`);
+  res.json({
+    message: 'Jobs are being fetched.'
+  });
 };

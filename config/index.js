@@ -1,5 +1,6 @@
 let config = {
   port: process.env.PORT || 3000,
+  kuePort: 4000,
   production: process.env.NODE_ENV === 'production',
   jwtSecret: 'rggsgsehh5hhgerggeegdfssdbsdbsdbd',
 
