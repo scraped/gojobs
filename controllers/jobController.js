@@ -93,7 +93,9 @@ exports.jobUpload = (req, res) => {
 
   uploadRawJobs({ limit, forcedUpload: forced });
 
-  res.send(`Jobs are being uploaded.`);
+  res.json({
+    message: 'Jobs are being uploaded.'
+  });
 };
 
 exports.jobFetch = async (req, res) => {
