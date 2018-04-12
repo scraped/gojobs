@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const mongoose = require('../lib/db');
-const { uploadRawJobs } = require('../lib/jobs/upload-rawjobs');
+const { processAllJobs } = require('../lib/jobs/process');
 const { fetchAndSave } = require('../lib/jobs');
 const platforms = require('../config/static/platforms');
 const Job = require('../models/job');
@@ -91,7 +91,7 @@ exports.jobDetails = async (req, res) => {
 exports.jobUpload = (req, res) => {
   const { limit, forced } = req.body;
 
-  uploadRawJobs({ limit, forcedUpload: forced });
+  processAllJobs({ limit, forcedUpload: forced });
 
   res.json({
     message: 'Jobs are being uploaded.'
