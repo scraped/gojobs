@@ -99,8 +99,37 @@ exports.jobUpload = (req, res) => {
 };
 
 exports.jobFetch = async (req, res) => {
+  const {
+    by, username, crew_id, platform, period, limit, skip
+  } = req.body;
+
+  const limitInt = Number(limit),
+    skipInt = Number(skip);
+
+  let options = {
+    period
+  };
+
+  if (by) {
+    options.by = by;
+    if (by === 'member' && username) options.username = username;
+    if (by === 'crew' && crew_id) options.crewId = crewId;
+  }
+
+  if (by !== 'rstar' && by !== 'rstarverified') {
+    options.platform = platform;
+  }
+
+  if (limitInt) {
+    options.limit = limitInt;
+  }
+
+  if (skipInt) {
+    options.skip = skipInt;
+  }
+
   try {
-    await fetchAndSave(req.body);
+    await fetchAndSave(options);
   } catch (error) {
     console.log('Error while fetch and save jobs:', error);
   }
