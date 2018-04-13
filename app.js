@@ -10,7 +10,7 @@ const prettyError = require('pretty-error');
 // const session = require('./middleware/session');
 const cookieParser = require('cookie-parser');
 
-const {apiRouter} = require('./routers');
+const { apiRouter } = require('./routers');
 const serverSideRendering = require('./lib/ssr');
 
 // better error messages & console.log
@@ -40,5 +40,5 @@ app.use(serverSideRendering(app));
 
 app.listen(app.get('port'), () => {
   const port = app.get('port');
-  console.log(`http://localhost:${port} server's running`);
+  console.log(`Server is running on http://localhost:${port}`);
 });

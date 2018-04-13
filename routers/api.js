@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const {profileDetails} = require('../controllers/profileController');
+const {
+  profileDetails
+} = require('../controllers/profileController');
 
 const {
   signUp,
@@ -16,7 +18,9 @@ const {
   jobFetch
 } = require('../controllers/jobController');
 
-const {basicInfo} = require('../controllers/userController');
+const {
+  basicInfo
+} = require('../controllers/userController');
 
 module.exports = router;
 

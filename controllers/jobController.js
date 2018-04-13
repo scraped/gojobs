@@ -8,69 +8,78 @@ const Crew = require('../models/crew');
 const User = require('../models/user');
 
 exports.jobList = async (req, res) => {
-  let options = {};
+  const { query, cookies } = req;
 
-  let {
-    page,
-    perPage,
-    by,
-    byId,
-    gameType,
-    maxpl
-  } = req.query;
+  const options = {
+    page: Number(query.page) || 1,
+    platform: query.platform || cookies.platform || 'pc'
+  };
 
-  const { platform = 'pc' } = req.cookies;
-
-  let platformId = 1 + _.findIndex(platforms, plat => {
+  const platformId = 1 + _.findIndex(platforms, plat => {
     return plat.sc.toLowerCase() === platform;
   });
 
-  page = Number(page) || 1;
-  perPage = Number(perPage) || 30;
-  gameType = Number(gameType) || 0;
-  maxpl = Number(maxpl) || 0;
-
-  options.platform = platformId;
-  if (gameType) options['job.gameType'] = gameType;
-  if (maxpl) options['job.maxpl'] = { $lte: maxpl };
-
-  let number = 0;
-  let empty = false;
+  let query = {};
   let sort = { 'stats.points': -1 };
 
-  if (by === 'featured') {
-    options.starred = true;
-  } else if (by === 'updated') {
-    sort = { 'dates.updated': -1 };
-  } else if (by === 'added') {
-    sort = { 'dates.added': -1 };
-  } else if (by === 'user') {
-    let info = await User.findOne({ username: byId });
-    if (!info) empty = true;
-    if (info) options.author = byId;
-  } else if (by === 'crew') {
-    let info = await Crew.findOne({ crewUrl: byId });
-    if (!info) empty = true;
-    if (info) options.crew = mongoose.Types.ObjectId(info._id);
+  switch (by) {
+    case 'updated':
+      sort = { 'scUpdated': -1 };
   }
 
-  if (!empty) {
-    number = await Job.count(options);
-    if (!number) empty = true;
-  }
+  const jobsNumber = await Job.count(query);
 
-  if (empty) {
-    return res.json({ number: 0 });
-  }
-
-  let jobs = await Job.find(options)
-    .skip(Math.abs((page - 1) * perPage))
-    .limit(perPage)
+  const jobs = await Job
+    .find(query)
+    .skip((page - 1) * 30)
     .sort(sort);
 
-  jobs = jobs.map(job => job.toObject());
+  res.json({
+    number: jobsNumber,
+    jobs
+  })
 
-  res.json({ number, jobs });
+  // options.platform = platformId;
+  // if (gameType) options['job.gameType'] = gameType;
+  // if (maxpl) options['job.maxpl'] = { $lte: maxpl };
+
+  // let number = 0;
+  // let empty = false;
+  // let sort = { 'stats.points': -1 };
+
+  // if (by === 'featured') {
+  //   options.starred = true;
+  // } else if (by === 'updated') {
+  //   sort = { 'dates.updated': -1 };
+  // } else if (by === 'added') {
+  //   sort = { 'dates.added': -1 };
+  // } else if (by === 'user') {
+  //   let info = await User.findOne({ username: byId });
+  //   if (!info) empty = true;
+  //   if (info) options.author = byId;
+  // } else if (by === 'crew') {
+  //   let info = await Crew.findOne({ crewUrl: byId });
+  //   if (!info) empty = true;
+  //   if (info) options.crew = mongoose.Types.ObjectId(info._id);
+  // }
+
+  // if (!empty) {
+  //   number = await Job.count(options);
+  //   if (!number) empty = true;
+  // }
+
+  // if (empty) {
+  //   return res.json({ number: 0 });
+  // }
+
+  // let jobs = await Job.find(options)
+  //   .skip(Math.abs((page - 1) * perPage))
+  //   .limit(perPage)
+  //   .sort(sort);
+
+  // jobs = jobs.map(job => job.toObject());
+
+  // res.json({ number, jobs });
 };
 
 exports.jobDetails = async (req, res) => {
