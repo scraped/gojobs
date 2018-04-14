@@ -100,7 +100,10 @@ schema.virtual('scTypeIcon')
 schema.virtual('scModeIcon')
   .get(function() {
     if (this.scMode) {
-      return modes[this.scType - 1].icons[this.scMode - 1];
+      const typeModes = modes[this.scType - 1].modes;
+      if (typeModes) {
+        return modes[this.scMode - 1].icon;
+      }
     }
   });
 
@@ -115,7 +118,9 @@ schema.virtual('platformName')
     }
   })
   .get(function() {
-    return platforms[this.platform - 1].name;
+    if (this.platform) {
+      return platforms[this.platform - 1].name;
+    }
   });
 
 function notRockstar() {

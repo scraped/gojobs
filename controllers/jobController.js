@@ -10,34 +10,50 @@ const User = require('../models/user');
 exports.jobList = async (req, res) => {
   const { query, cookies } = req;
 
-  const options = {
-    page: Number(query.page) || 1,
-    platform: query.platform || cookies.platform || 'pc'
-  };
+  const { by } = query,
+    page = Number(query.page) || 1,
+    platform = query.platform || cookies.platform || 'pc';
 
-  const platformId = 1 + _.findIndex(platforms, plat => {
-    return plat.sc.toLowerCase() === platform;
-  });
-
-  let query = {};
-  let sort = { 'stats.points': -1 };
+  let conditions = {};
+  let sort = null;
 
   switch (by) {
     case 'updated':
       sort = { 'scUpdated': -1 };
+      break;
+    default:
+      sort = { 'stats.points': -1 };
   }
 
-  const jobsNumber = await Job.count(query);
+  if (query.rockstar) {
+    conditions.rockstar = true;
+  } else {
+    const platformId = 1 + _.findIndex(platforms, plat => {
+      return plat.sc.toLowerCase() === platform;
+    });
+    conditions.platform = platformId;
+  }
 
-  const jobs = await Job
-    .find(query)
-    .skip((page - 1) * 30)
-    .sort(sort);
+  const jobsNumber = await Job.count(conditions);
 
-  res.json({
-    number: jobsNumber,
-    jobs
-  })
+  try {
+    const jobs = await Job
+      .find(conditions)
+      .select('-_id -details')
+      .skip((page - 1) * 30)
+      .limit(30)
+      .sort(sort);
+
+    res.json({
+      number: jobsNumber,
+      jobs
+      // jobs: jobs.map(job => job.toObject())
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.json('ашыпка111!');
+  }
 
   // options.platform = platformId;
   // if (gameType) options['job.gameType'] = gameType;

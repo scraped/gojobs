@@ -33,9 +33,9 @@ let webpackConfig = {
     }
   },
 
-  externals: {
-    moment: 'moment'
-  },
+  // externals: {
+  //   moment: 'moment'
+  // },
 
   module: {
     rules: [
