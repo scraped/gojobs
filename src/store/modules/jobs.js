@@ -18,9 +18,9 @@ const mutations = {
 
 const actions = {
   async fetch({ commit }, { query }) {
-    const queryStr = queryString.stringify(query);
+    // const queryStr = queryString.stringify(query);
 
-    const response = await http.post(`/api/jobs?${queryStr}`);
+    const response = await http.post(`/api/jobs`, query);
 
     const { jobs, number } = response.data;
 

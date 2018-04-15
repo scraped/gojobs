@@ -15,7 +15,7 @@ const { production } = config;
 const mode = production ? 'production' : 'development';
 
 // Why no clean-webpack-plugin? Two bundles utilize dist dir so no one
-// can delete it. You should delete it manually before bunding (using rimraf,
+// can delete it. You should delete it manually before bundling (using rimraf,
 // for example).
 let webpackConfig = {
   mode,

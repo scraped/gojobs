@@ -44,10 +44,15 @@
 
         <div class="media-content">
           <div class="is-size-6">
-            <router-link
-              :to="{ name: 'profile', params: { username: job.author }}">
-              @{{ job.author }}
-            </router-link>
+            <template v-if="job.rockstar">
+              <span class="tag has-text-white" style="background: #01498E;"><img :src="rockstarIcon">Rockstar Job</span>
+            </template>
+            <template v-else>
+              <router-link
+                :to="{ name: 'profile', params: { username: job.author }}">
+                @{{ job.author }}
+              </router-link>
+            </template>
           </div>
         </div>
 
@@ -56,7 +61,9 @@
 
       <div class="is-size-7 has-text-grey">
         <div>
-          {{ job.platformName }} ·
+          <template v-if="!job.rockstar">
+            {{ job.platformName }} ·
+          </template>
           {{ job.maxPl }} players ·
           {{ updatedDate }}
           <!-- <br>Points: {{ job.stats.points }} -->
@@ -103,6 +110,8 @@
 </template>
 
 <script>
+import rockstarIcon from 'src/images/rockstar-2.png';
+
 import IconGta from 'src/components/IconGta.vue';
 import {
   userAvatars,
@@ -119,6 +128,12 @@ export default {
 
   components: {
     IconGta
+  },
+
+  data() {
+    return {
+      rockstarIcon
+    }
   },
 
   computed: {

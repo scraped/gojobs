@@ -8,14 +8,14 @@ const Crew = require('../models/crew');
 const User = require('../models/user');
 
 exports.jobList = async (req, res) => {
-  const { query, cookies } = req;
+  const { body, cookies } = req;
 
-  const { by } = query,
-    page = Number(query.page) || 1,
-    platform = query.platform || cookies.platform || 'pc';
+  const { by } = body,
+    page = Number(body.page) || 1,
+    platform = body.platform || cookies.platform || 'pc';
 
   let conditions = {};
-  let sort = null;
+  let sort = {};
 
   switch (by) {
     case 'updated':
@@ -25,8 +25,10 @@ exports.jobList = async (req, res) => {
       sort = { 'stats.points': -1 };
   }
 
-  if (query.rockstar) {
+  if (body.rockstar) {
     conditions.rockstar = true;
+  } if (body.rockstarverified) {
+    // t o d o
   } else {
     const platformId = 1 + _.findIndex(platforms, plat => {
       return plat.sc.toLowerCase() === platform;
