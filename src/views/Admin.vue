@@ -139,7 +139,7 @@
                 <b-message
                   v-if="forceUploadAll"
                   type="is-warning">
-                  <b>Warning:</b> it can take A LOT of time.
+                  <b>Warning:</b> this can take A LOT of time.
                 </b-message>
 
                 <button class="button is-primary">
