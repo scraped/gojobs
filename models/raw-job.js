@@ -6,19 +6,17 @@ let schema = new Schema({
   jobCurrId: { type: String, required: true },
 
   job: { type: Schema.Types.Mixed, required: true },
+  jobDelta: { type: Schema.Types.Mixed, required: true },
 
   version: { type: Number, required: true },
-  uploaded: { type: Boolean },
+  uploaded: { type: Boolean, required: true },
 
-  fetched: { type: Date, required: true }
+  fetchDate: { type: Date, required: true },
+  uploadDate: { type: Date, required: isUploaded }
 });
 
-// schema.post('save', doc => {
-//   console.log(`JobRaw: ${doc.jobId} added`);
-// });
-
-// schema.post('findOneAndUpdate', doc => {
-//   console.log(`JobRaw: ${doc.jobId} updated`);
-// })
+function isUploaded() {
+  return this.uploaded;
+}
 
 module.exports = mongoose.model('RawJob', schema);
