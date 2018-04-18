@@ -6,9 +6,8 @@ let schema = new Schema({
   jobCurrId: { type: String, required: true },
 
   job: { type: Schema.Types.Mixed, required: true },
-  jobDelta: { type: Schema.Types.Mixed, required: true },
+  delta: { type: Schema.Types.Mixed },
 
-  version: { type: Number, required: true },
   uploaded: { type: Boolean, required: true },
 
   fetchDate: { type: Date, required: true },

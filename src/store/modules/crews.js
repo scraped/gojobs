@@ -12,11 +12,8 @@ const mutations = {
 };
 
 const actions = {
-  async fetch({ commit }, payload) {
-    const queryStr = queryString.stringify(payload.query),
-      url = `/api/crews?${queryStr}`;
-
-    const response = await http.get(url);
+  async fetch({ commit }, { query }) {
+    const response = await http.post('/api/crews', query);
 
     const { crews } = response.data;
 

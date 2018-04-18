@@ -27,7 +27,7 @@ exports.jobList = async (req, res) => {
 
   if (body.rockstar) {
     conditions.rockstar = true;
-  } if (body.rockstarverified) {
+  } else if (body.rockstarverified) {
     // t o d o
   } else {
     const platformId = 1 + _.findIndex(platforms, plat => {

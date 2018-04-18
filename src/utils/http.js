@@ -14,46 +14,52 @@ export function setupHttpClient() {
 
   let axiosInstance = axios.create();
 
-  axiosInstance.interceptors.request.use(config => config, error => {
-    openToast({
-      message: 'Error: could not complete HTTP request',
-      type: 'is-danger'
-    });
-    return Promise.reject(error);
-  });
-
-  axiosInstance.interceptors.response.use(response => {
-    const { message } = response.data;
-    if (message) {
+  axiosInstance.interceptors.request.use(
+    config => config,
+    error => {
       openToast({
-        message,
-        duration: 10000,
-        type: 'is-success'
-      });
-    }
-    return response;
-  }, error => {
-    const { response } = error;
-
-    if (response) {
-      const { status } = response;
-      const serverMessage = response.data.message;
-
-      const type = serverMessage ? 'is-warning' : 'is-danger';
-      const message = serverMessage || `Error during the HTTP request: server responded with ${status} code`;
-
-      openToast({
-        message,
-        type
-      });
-    } else {
-      openToast({
-        message: 'An unexpected error occurred during the HTTP request',
+        message: 'Error: could not complete HTTP request',
         type: 'is-danger'
       });
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
-  });
+  );
+
+  axiosInstance.interceptors.response.use(
+    response => {
+      const { message } = response.data;
+      if (message) {
+        openToast({
+          message,
+          duration: 10000,
+          type: 'is-success'
+        });
+      }
+      return response;
+    },
+    error => {
+      const { response } = error;
+
+      if (response) {
+        const { status } = response;
+        const serverMessage = response.data.message;
+
+        const type = serverMessage ? 'is-warning' : 'is-danger';
+        const message = serverMessage || `Error during the HTTP request: server responded with ${status} code`;
+
+        openToast({
+          message,
+          type
+        });
+      } else {
+        openToast({
+          message: 'An unexpected error occurred during the HTTP request',
+          type: 'is-danger'
+        });
+      }
+      return Promise.reject(error);
+    }
+  );
 
   setupHttp(axiosInstance);
 }

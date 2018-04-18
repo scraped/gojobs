@@ -22,6 +22,10 @@ const {
   basicInfo
 } = require('../controllers/userController');
 
+const {
+  crewList
+} = require('../controllers/crewController');
+
 module.exports = router;
 
 // const authNeeded = passport.authenticate('jwt', { session: false });
@@ -44,3 +48,6 @@ router.post('/jobs', jobList);
 router.post('/job/upload', jobUpload);
 router.post('/job/fetch', jobFetch);
 router.post('/job/:id', jobDetails);
+
+// Crew
+router.post('/crews', crewList);

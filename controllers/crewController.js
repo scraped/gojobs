@@ -3,12 +3,11 @@ const Crew = require('../models/crew');
 exports.crewList = async (req, res) => {
   const CREWS_PER_PAGE = 60;
 
-  let { page } = req.query;
-
-  page = Number(page);
+  const page = Number(req.body) || 1;
 
   const crews = await Crew.find()
-    .skip((page - 1) * CREWS_PER_PAGE);
+    .skip((page - 1) * CREWS_PER_PAGE)
+    .limit(CREWS_PER_PAGE);
 
-  res.send(crews);
+  res.json({ crews: crews.map(crew => crew.toObject()) });
 };

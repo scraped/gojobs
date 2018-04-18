@@ -25,7 +25,8 @@ export default context => {
       const matchedComponents = router.getMatchedComponents();
 
       if (!matchedComponents.length) {
-        return reject(new Error({ code: 404 }));
+        // stringify because new error accepts only strings
+        return reject(new Error(JSON.stringify({ code: 404 })));
       }
 
       const asyncDataPromises = findAsyncComponents({

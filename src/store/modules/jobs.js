@@ -1,5 +1,4 @@
 import { http } from 'src/utils';
-import queryString from 'query-string';
 
 const state = {
   jobs: [],
@@ -18,9 +17,7 @@ const mutations = {
 
 const actions = {
   async fetch({ commit }, { query }) {
-    // const queryStr = queryString.stringify(query);
-
-    const response = await http.post(`/api/jobs`, query);
+    const response = await http.post('/api/jobs', query);
 
     const { jobs, number } = response.data;
 

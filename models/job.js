@@ -102,7 +102,7 @@ schema.virtual('scModeIcon')
     if (this.scMode) {
       const typeModes = modes[this.scType - 1].modes;
       if (typeModes) {
-        return modes[this.scMode - 1].icon;
+        return typeModes[this.scMode - 1].icon;
       }
     }
   });
