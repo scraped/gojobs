@@ -127,11 +127,8 @@ exports.jobUpload = (req, res) => {
 
 exports.jobFetch = async (req, res) => {
   const {
-    by, username, crew_id, platform, period, limit, skip
+    by, key, platform, period, limit, skip
   } = req.body;
-
-  const limitInt = Number(limit),
-    skipInt = Number(skip);
 
   let options = {
     period
@@ -139,20 +136,21 @@ exports.jobFetch = async (req, res) => {
 
   if (by) {
     options.by = by;
-    if (by === 'member' && username) options.username = username;
-    if (by === 'crew' && crew_id) options.crewId = crewId;
+    if (by === 'member' || by === 'crew' || by === 'job') {
+      options.key = key;
+    }
   }
 
   if (by !== 'rstar' && by !== 'rstarverified') {
     options.platform = platform;
   }
 
-  if (limitInt) {
-    options.limit = limitInt;
+  if (limit) {
+    options.limit = Number(limit);
   }
 
-  if (skipInt) {
-    options.skip = skipInt;
+  if (skip) {
+    options.skip = Number(skip);
   }
 
   try {

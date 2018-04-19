@@ -1,0 +1,215 @@
+<template>
+  <div class="box">
+    <form
+      method="post"
+      @submit.prevent="fetch">
+      <h2 class="subtitle is-4">Fetch jobs from RGSC</h2>
+
+      <div class="content">
+        Fetching jobs is efficient: it remembers what jobs needs fetching & refetching in order to avoid unnecessary parsing. Internally uses Redis.
+      </div>
+
+      <div class="columns">
+        <div class="column is-one-third">
+
+          <b-field label="Author(s)"></b-field>
+            <b-field>
+              <b-radio v-model="by" native-value="members" type="is-danger">
+                All RGSC Members
+              </b-radio>
+            </b-field>
+
+            <b-field>
+              <b-radio v-model="by" native-value="member">
+                Specific User
+              </b-radio>
+            </b-field>
+
+            <b-field>
+              <b-radio v-model="by" native-value="crew">
+                Specific Crew
+              </b-radio>
+            </b-field>
+
+            <b-field>
+              <b-radio v-model="by" native-value="job">
+                Specific Job
+              </b-radio>
+            </b-field>
+
+            <b-field>
+              <b-radio v-model="by" native-value="rockstar">
+                Rockstar
+              </b-radio>
+            </b-field>
+
+            <b-field>
+              <b-radio v-model="by" native-value="rstarverified">
+                Rockstar Verified Jobs
+              </b-radio>
+            </b-field>
+        </div>
+        <div class="column">
+          <template v-if="by !== 'job'">
+            <b-field label="Platform"></b-field>
+
+            <b-field>
+              <b-radio-button v-model="platform" native-value="pc" size="is-large" :disabled="platformDisabled">
+                PC
+              </b-radio-button>
+
+              <b-radio-button v-model="platform" native-value="ps4" size="is-large" :disabled="platformDisabled">
+                PS4
+              </b-radio-button>
+
+              <b-radio-button v-model="platform" native-value="xbox" size="is-large" :disabled="platformDisabled">
+                Xbox One
+              </b-radio-button>
+            </b-field>
+
+            <b-message v-if="platformDisabled"  type="is-info">
+              Rockstar jobs available on all platforms.
+            </b-message>
+          </template>
+
+          <b-field
+            label="Username"
+            v-if="by === 'member'">
+            <b-input
+              v-model="key"
+              size="is-large"
+              placeholder="andreww2012"
+              required>
+            </b-input>
+          </b-field>
+
+          <b-field
+            label="Crew ID"
+            v-if="by === 'crew'">
+            <b-input
+              v-model="key"
+              size="is-large"
+              placeholder="Crew digital ID"
+              required>
+            </b-input>
+          </b-field>
+
+          <b-field
+            label="Job ID"
+            v-if="by === 'job'">
+            <b-input
+              v-model="key"
+              size="is-large"
+              placeholder="NcO4vELhLEqKahHQy-IWPA"
+              minlength="22"
+              maxlength="22"
+              required>
+            </b-input>
+          </b-field>
+
+          <b-message v-if="by === 'job'" type="is-warning">
+            Sometimes you need current job ID to fetch the information.
+          </b-message>
+        </div>
+      </div>
+
+      <template v-if="by !== 'job'">
+        <b-field label="Period"></b-field>
+        <b-field>
+          <b-radio-button v-model="period" native-value="">
+            Any Time
+          </b-radio-button>
+
+          <b-radio-button v-model="period" native-value="lastMonth">
+            Last Month
+          </b-radio-button>
+
+          <b-radio-button v-model="period" native-value="last7">
+            Last 7 Days
+          </b-radio-button>
+
+          <b-radio-button v-model="period" native-value="today">
+            Today
+          </b-radio-button>
+        </b-field>
+
+        <b-field label="Limit">
+          <b-input
+            type="number"
+            v-model="limit"
+            size="is-medium"
+            min="1"
+            max="100">
+          </b-input>
+        </b-field>
+
+        <b-field label="To skip"></b-field>
+        <div class="field">
+          <b-checkbox v-model="forceSkip">
+            Manually specify how many jobs to skip
+          </b-checkbox>
+        </div>
+
+        <div class="field">
+          <b-input
+            v-if="forceSkip"
+            type="number"
+            v-model="skip"
+            size="is-medium">
+          </b-input>
+        </div>
+      </template>
+
+      <div class="buttons">
+        <button
+          class="button is-primary"
+          :class="{ 'is-loading': awaiting }"
+          :disabled="awaiting">
+          Fetch
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      awaiting: false,
+      forceSkip: false,
+      by: 'members',
+      key: '',
+      platform: 'pc',
+      period: '',
+      limit: 50,
+      skip: 0
+    }
+  },
+
+  methods: {
+    async fetch() {
+      const {
+        by, key, platform, period, limit, skip, forceSkip
+      } = this;
+
+      const autoSkip = !forceSkip;
+
+      this.awaiting = true;
+
+      await this.$http.post('/api/job/fetch', {
+        by, key, platform, period, limit, autoSkip, skip
+      });
+
+      this.awaiting = false;
+    }
+  },
+
+  computed: {
+    platformDisabled() {
+      const { by } = this;
+      return by === 'rockstar' || by === 'rstarverified'
+    }
+  }
+};
+</script>
