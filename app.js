@@ -1,4 +1,5 @@
 const config = require('./config');
+const chalk = require('chalk');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -40,5 +41,5 @@ app.use(serverSideRendering(app));
 
 app.listen(app.get('port'), () => {
   const port = app.get('port');
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(chalk.blue(`Server is running on http://localhost:${port}`));
 });

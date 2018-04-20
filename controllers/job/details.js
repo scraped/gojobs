@@ -1,6 +1,6 @@
 const Job = require('../../models/job');
 
-module.jobDetailsPost = jobDetailsPost;
+exports.jobDetailsPost = jobDetailsPost;
 
 async function jobDetailsPost(req, res) {
   const jobId = req.params.id;

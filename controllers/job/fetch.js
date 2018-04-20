@@ -1,8 +1,28 @@
 const { fetchAndSave } = require('../../lib/jobs');
+const redisClient = require('../../lib/redis');
 
 module.exports = {
   jobFetchPost
 };
+
+// async function fetchedListPost(req, res) {
+//   const LIMIT = 10;
+
+//   let list = [];
+//   let cursorValue = '0', values;
+
+//   while (list.length < LIMIT) {
+//     [cursorValue, values] = await redisClient.scanAsync(cursorValue);
+//     if (Number(cursorValue) === 0) {
+//       break;
+//     }
+//     list.push(...(values || []));
+//   }
+
+//   if (list.length > LIMIT) {
+//     list.length = LIMIT;
+//   }
+// }
 
 async function jobFetchPost(req, res) {
   const {
