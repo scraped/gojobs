@@ -1,13 +1,9 @@
-const _ = require('lodash');
-const mongoose = require('../lib/db');
-const { processAllJobs } = require('../lib/jobs/process');
-const { fetchAndSave } = require('../lib/jobs');
-const platforms = require('../config/static/platforms');
-const Job = require('../models/job');
-const Crew = require('../models/crew');
-const User = require('../models/user');
+const platforms = require('../../config/static/platforms');
+const Job = require('../../models/job');
 
-exports.jobList = async (req, res) => {
+exports.jobListPost = jobListPost;
+
+async function jobListPost(req, res) {
   const { body, cookies } = req;
 
   const { by } = body,
@@ -98,68 +94,4 @@ exports.jobList = async (req, res) => {
   // jobs = jobs.map(job => job.toObject());
 
   // res.json({ number, jobs });
-};
-
-exports.jobDetails = async (req, res) => {
-  const jobId = req.params.id;
-
-  const job = await Job.findOne({ jobId })
-    .populate('details');
-
-  if (job) {
-    return res.json({
-      job: job.toObject()
-    });
-  }
-
-  return res.json();
-};
-
-exports.jobUpload = (req, res) => {
-  const { limit, forced } = req.body;
-
-  processAllJobs({ limit, forcedUpload: forced });
-
-  res.json({
-    message: 'Jobs are being uploaded.'
-  });
-};
-
-exports.jobFetch = async (req, res) => {
-  const {
-    by, key, platform, period, limit, skip
-  } = req.body;
-
-  let options = {
-    period
-  };
-
-  if (by) {
-    options.by = by;
-    if (by === 'member' || by === 'crew' || by === 'job') {
-      options.key = key;
-    }
-  }
-
-  if (by !== 'rstar' && by !== 'rstarverified') {
-    options.platform = platform;
-  }
-
-  if (limit) {
-    options.limit = Number(limit);
-  }
-
-  if (skip) {
-    options.skip = Number(skip);
-  }
-
-  try {
-    await fetchAndSave(options);
-  } catch (error) {
-    console.log('Error while fetch and save jobs:', error);
-  }
-
-  res.json({
-    message: 'Jobs are being fetched.'
-  });
 };

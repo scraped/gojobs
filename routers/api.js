@@ -12,11 +12,13 @@ const {
 } = require('../controllers/authController');
 
 const {
-  jobList,
-  jobDetails,
-  jobUpload,
-  jobFetch
-} = require('../controllers/jobController');
+  jobListPost,
+  jobDetailsPost,
+  jobUploadPost,
+  jobFetchPost
+} = require('../controllers/job');
+
+console.log(jobDetailsPost);
 
 const {
   basicInfo
@@ -28,7 +30,11 @@ const {
 
 module.exports = router;
 
-// const authNeeded = passport.authenticate('jwt', { session: false });
+function todoController(req, res) {
+  res.json({
+    message: `TODO: ${req.method} ${req.path}`
+  })
+}
 
 // Profile
 router.get('/profile/:username', profileDetails);
@@ -44,10 +50,11 @@ router.post('/auth/verify', verify);
 router.post('/user/basicinfo', basicInfo);
 
 // Job
-router.post('/jobs', jobList);
-router.post('/job/upload', jobUpload);
-router.post('/job/fetch', jobFetch);
-router.post('/job/:id', jobDetails);
+router.post('/jobs', jobListPost);
+router.post('/job/:id', jobDetailsPost);
+router.post('/job/fetch', jobFetchPost);
+router.post('/job/fetched', todoController);
+router.post('/job/upload', jobUploadPost);
 
 // Crew
 router.post('/crews', crewList);
