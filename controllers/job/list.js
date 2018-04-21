@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const platforms = require('../../config/static/platforms');
 const Job = require('../../models/job');
 
@@ -94,4 +95,4 @@ async function jobListPost(req, res) {
   // jobs = jobs.map(job => job.toObject());
 
   // res.json({ number, jobs });
-};
+}

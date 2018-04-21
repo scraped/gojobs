@@ -80,7 +80,7 @@
                 label="Username"
                 v-if="by === 'member'">
                 <b-input
-                  v-model="key"
+                  v-model.trim="key"
                   size="is-medium"
                   placeholder="andreww2012"
                   required>
@@ -91,7 +91,7 @@
                 label="Crew ID"
                 v-if="by === 'crew'">
                 <b-input
-                  v-model="key"
+                  v-model.trim="key"
                   size="is-medium"
                   placeholder="Crew digital ID"
                   required>
@@ -102,7 +102,7 @@
                 label="Job ID"
                 v-if="by === 'job'">
                 <b-input
-                  v-model="key"
+                  v-model.trim="key"
                   size="is-medium"
                   placeholder="NcO4vELhLEqKahHQy-IWPA"
                   minlength="22"
@@ -121,15 +121,15 @@
             <b-field label="Period"></b-field>
             <b-field>
               <b-radio-button v-model="period" native-value="">
-                Any Time
+                Any time
               </b-radio-button>
 
               <b-radio-button v-model="period" native-value="lastMonth">
-                Last Month
+                Last 30 days
               </b-radio-button>
 
               <b-radio-button v-model="period" native-value="last7">
-                Last 7 Days
+                Last 7 days
               </b-radio-button>
 
               <b-radio-button v-model="period" native-value="today">
@@ -140,7 +140,7 @@
             <b-field label="Limit">
               <b-input
                 type="number"
-                v-model="limit"
+                v-model.number="limit"
                 size="is-medium"
                 min="1"
                 max="100">
@@ -158,7 +158,7 @@
               <b-input
                 v-if="forceSkip"
                 type="number"
-                v-model="skip"
+                v-model.number="skip"
                 size="is-medium">
               </b-input>
             </div>
