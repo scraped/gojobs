@@ -185,7 +185,7 @@ Property | Type | Flags | Description
 `char`      | `integer` | `!` | (?) Always 0
 `endtype`   | `integer` | `!` | `(?) 0`, `2`-`5` for Versus Mission, LTS, AM, Capture IF rockstar, else for Captures ONLY (see stats below)
 `mtnum`     | `integer` | `!` | (?) `1` or `2`
-`rad`       | `integer` | `!` | (?) Always 0
+`rad`       | `integer` | `!` | (?) Always `0`
 `photo`     | `boolean` | `!` | (?) Rarely `true`
 
 ## `Content.Metadata.data.mission.race`
@@ -198,6 +198,7 @@ Property | Type | Flags | Description
 `chp`      | `integer`          |      | Number of checkpoints
 `lap`      | `integer`          |      | Default number of laps (`0` if `P2P`)
 `rdis`     | `float`            |      | Distance in metres
+`ivm`      | `integer`          | `x`  | Default vehicle ID
 `aveh`     | `array<string>`    | `xe` | Available vehicle classes (`undefined` if target assault race)
 `chl`      | `array<Location2>` | `x`  | Checkpoint locations
 `sndchk`   | `array<Location2>` | `xe` | Sec. checkpoint locations (`(0, 0)` if no corresponding secondary checkpoint) (can be `undefined`)
@@ -206,20 +207,19 @@ Property | Type | Flags | Description
 `subtype`  | `integer`          | `!`  | (?) `20` - tr. race, `21` - special vehicle race
 `dist`     | `string`           | `!`  | Formatted distance like `10.01 miles` (DON'T use it)
 `gw`       | `integer`          | `!`  | (?) Sometimes values like `4.5`, `6.75`, otherwise `0`
-`ivm`      | `integer`          | `!`  | (?) Always 0
 `clbs`     | `integer`          | `!`  | (?) Some number...
 
 ## (?) `Content.Metadata.data.mission.rule`
 
 Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
+`tod`      | `integer` |     | "Time of day": `0` - current, `1` - morning, `2` - noon, `3` - night)
+`pol`      | `integer` |     | For races: `0` - wanted levels off, `1` - wanted levels on
+`traf`     | `integer` |     | Traffic: `0` - default, `1` - off, `2` - low, `3` - medium, `4` - high)
 `liv`      | `integer` | `!` | (?) Always 0
-`pol`      | `integer` | `!` | (?) `0`-`5` (police?)
 `score`    | `integer` | `!` | (?) Up to `19` for DM, `0` otherwise
 `tdm`      | `integer` | `!` | (?) `1` if Team DM & other cases `0` otherwise
 `time`     | `integer` | `!` | (?) `1`-`6` only for DM
-`tod`      | `integer` | `!` | (?) `0`-`4` (time of day?: `0` - current, `1` - morning, `2` - night)
-`traf`     | `integer` | `!` | (?) `0`-`5` (traffic?: `0` - default, `1` - off, `2` - low)
 `vdm`      | `integer` | `!` | (?) `1` if Vehicle DM, `0` otherwise
 
 ## (extended object) `Content.Metadata.data.mission.weap`
