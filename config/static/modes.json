@@ -46,10 +46,10 @@
     "name": "Capture",
     "icon": "f113",
     "modes": [
-      "Raid",
-      "Contend",
-      "GTA",
-      "Hold"
+      "Capture: Raid",
+      "Capture: Contend",
+      "Capture: GTA",
+      "Capture: Hold"
     ]
   },
 

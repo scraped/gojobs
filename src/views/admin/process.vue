@@ -36,7 +36,7 @@ export default {
       const { forceUploadAll } = this;
 
       await this.$http.post('/api/job/upload', {
-        forced: forceUploadAll
+        uploadAll: Number(forceUploadAll)
       });
     }
   }

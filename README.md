@@ -139,8 +139,8 @@ Property | Type | Flags | Description
 `latest`                 | `boolean`   |     | `false` is it is not a latest version
 `RootContentId`          | `MissionId` |     | **UNIQUE** job ID (persists over time - **use it**, **differs** from `MissionId`!)
 `cat`                    | `string`    |     | Category: `none`, `rstar`, `verif`
-`cdate`                  | `date`      |     | "Creation date" - don't use it
-`pdate`                  | `date`      |     | "Publication date" - for example, for rockstar jobs `cdate` < `pdate` (pdate is always tuesday). So use it, not `cdate`
+`cdate`                  | `date`      |     | "Creation date"
+`pdate`                  | `date`      | `e` | "Publication date" - for example, for rockstar jobs `cdate` < `pdate` (pdate is always tuesday). So use it, but very rarely it is not available, then use `cdate`
 `name`                   | `string`    |     | Name
 `desc`                   | `string`    |     | Description
 `nickname`               | `string`    | `e` | Author nickname

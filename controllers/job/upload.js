@@ -1,11 +1,13 @@
 const { processAllJobs } = require('../../lib/jobs/process');
 
-exports.jobUploadPost = jobUploadPost;
+module.exports = {
+  jobUploadPost
+};
 
 function jobUploadPost(req, res) {
-  const { limit, forced } = req.body;
+  const { uploadAll } = req.body;
 
-  processAllJobs({ limit, forcedUpload: forced });
+  processAllJobs({ forceUploadAll: Boolean(uploadAll) });
 
   res.json({
     message: 'Jobs are being uploaded.'

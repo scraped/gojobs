@@ -15,8 +15,21 @@
           <p class="is-size-5" v-html="job.details.desc"></p>
           <br>
           <div class="tags">
-            <span class="tag is-dark">{{ job.scTypeName }}</span>
-            <span class="tag is-dark">{{ job.scModeName }}</span>
+            <span
+              class="tag is-info is-uppercase">
+              {{ job.scTypeName }}
+            </span>
+            <span
+              v-if="job.scModeName"
+              class="tag is-info is-uppercase">
+              {{ job.scModeName }}
+            </span>
+            <span
+              class="tag is-info is-uppercase"
+              v-for="tag in job.tags"
+              :key="tag">
+              {{ tag }}
+            </span>
           </div>
         </div>
       </div>
@@ -72,14 +85,20 @@
               <div class="label">Author</div>
               <div class="media">
                 <div class="media-left">
-                  <figure class="image image-avatar is-48x48">
-                    <img class="is-rounded" :src="avatars.small">
-                  </figure>
+                  <router-link
+                    :to="{ name: 'profile', params: { username: job.author }}">
+                    <figure class="image image-avatar is-48x48">
+                      <img class="is-rounded" :src="avatars.small">
+                    </figure>
+                  </router-link>
                 </div>
 
                 <div class="media-content">
                   <p class="subtitle is-6">
-                    @{{ job.author }}
+                    <router-link
+                      :to="{ name: 'profile', params: { username: job.author }}">
+                      @{{ job.author }}
+                    </router-link>
                   </p>
                 </div>
               </div>

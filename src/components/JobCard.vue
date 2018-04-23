@@ -1,5 +1,8 @@
 <template>
-  <div class="card">
+  <div
+    class="card"
+    :class="{ 'is-bad': job.bad }"
+  >
     <!-- <div style="position: absolute; bottom: 0%; right: 15%; opacity: 0.08; font-size: 100px;">
       <icon-gta
         v-if="job.scModeIcon"
@@ -8,8 +11,8 @@
     </div> -->
     <router-link :to="{
       name: 'job',
-      params: { id: job.jobId, slug: job.slug } }
-    ">
+      params: { id: job.jobId, slug: job.slug }
+    }">
       <div class="card__image">
         <figure class="image is-2by1 is-clipped">
           <img :src="job.imageUrl" :alt="job.name">
@@ -44,14 +47,21 @@
 
         <div class="media-content">
           <div class="is-size-6">
-            <template v-if="job.rockstar">
-              <span class="tag has-text-white" style="background: #01498E;"><img :src="rockstarIcon">Rockstar Job</span>
-            </template>
-            <template v-else>
+            <template v-if="job.author">
               <router-link
                 :to="{ name: 'profile', params: { username: job.author }}">
                 @{{ job.author }}
               </router-link>
+            </template>
+            <template v-if="job.rockstar">
+              <span class="tag is-primary">
+                <template v-if="job.author">
+                  Rockstar Verified Job
+                </template>
+                <template v-else>
+                  Rockstar Job
+                </template>
+              </span>
             </template>
           </div>
         </div>
@@ -161,6 +171,10 @@ $card-image-hover-transition-duration: 350ms;
 
 $card-strip-height: 4px;
 $card-strip-opacity: 0.5;
+
+.is-bad {
+  opacity: 0.25;
+}
 
 .card__image {
   position: relative;

@@ -12,13 +12,13 @@
 
           <div class="media-content">
             <div class="content">
-              <h1 class="title tooltip" data-tooltip="$g4g">@{{ username }}
+              <h1 class="title">@{{ username }}
                 <span
                   v-if="crew"
-                  class="tag is-white is-medium"
-                  :style="`border: 1px solid #${crew.color};`">
+                  class="tag is-white is-medium tooltip has-text-weight-normal"
+                  :style="`border: 1px solid #${crew.color};`"
+                  :data-tooltip="crew.name">
                   {{ crew.tag }}
-                  <<a :href="`/crews/${crew.slug}`">{{ crew.name }}</a>>
                 </span>
               </h1>
               <!-- <p
