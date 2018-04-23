@@ -28,9 +28,9 @@ Property                     | Type      | Description
 `SearchOptSort`              | `string`  | Sort type
 `SearchOptPlayers`           | `integer` | Number of players a job fits (1..30 or empty)
 `SearchText`                 | `string`  | Search text
-`Locations`                  | `array<Location>` |
-`Vehicles`                   | `array<Vehicle>`  |
-`Weapons`                    | `array<Weapon>`   |
+`Locations`                  | `array<Location2>` |
+`Vehicles`                   | `array<Vehicle>`   |
+`Weapons`                    | `array<Weapon>`    |
 
 ## Job Types IDs (`SearchOptType`)
 Value     | Description
@@ -226,8 +226,8 @@ Property | Type | Flags | Description
 
 Note: sizes of these arrays are the same.
 
-Property | Type | Description
--------- | ---- | -----------
+Property | Type | Flags | Description
+-------- | ---- | ----- | -----------
 `loc`  | `array<Location2>` |     | Weapons locations
 `type` | `array<string>`    |     | Actual names of the weapons (see below)
 `sub`  | `array<string>`    | `!` | "Weapons" on the map, the only possible values: `BOOST`, `ROCKET` (don't use it)
