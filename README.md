@@ -1,3 +1,12 @@
+# Special types
+Type | Basic type | Description
+---- | ---------- | -----------
+`MissionId` | `string`  | String that pepresents job ID (22 chars)
+`Location2` | `object`  | `{x: float, y: float}`
+`Location3` | `object`  | `{x: float, y: float, z: float}`
+`Weapon`    | `integer` | Weapon ID
+`Vehicle`   | `integer` | Vehicle ID
+
 # URLs
 
 * [1] `POST https://socialclub.rockstargames.com/games/gtav/ajax/search` - jobs bunches (20 jobs per request, used for search)
@@ -6,22 +15,22 @@
 
 # RGSC jobs search request structure ([1])
 
-Property                      | Type      | Description
------------------------------ | --------- | -----------
-`__RequestVerificationToken`  | `string`  | Token. Can be set via cookies
-`onlyCount`                   | `boolean` | ?
-`offset`                      | `integer` | Offset
-`SearchOptType`               | `integer` | Job type
-`SearchOptSubType`            | `string`  | Job subtype
-`SearchOptPublisher`          | `string`  | Publisher
-`SearchOptDate`               | `string`  | Date in a special format
-`SearchOptNamed`              | `string`  | Author nickname
-`SearchOptSort`               | `string`  | Sort type
-`SearchOptPlayers`            | `integer` | Number of players a job fits (1..30 or empty)
-`SearchText`                  | `string`  | Search text
-`Locations`                   | `array<Location>`   |
-`Vehicles`                    | `array<Vehicle>`   |
-`Weapons`                     | `array<Weapon>`   |
+Property                     | Type      | Description
+---------------------------- | --------- | -----------
+`__RequestVerificationToken` | `string`  | Token. Also can be set via cookies
+`onlyCount`                  | `boolean` | ?
+`offset`                     | `integer` | Offset
+`SearchOptType`              | `integer` | Job type
+`SearchOptSubType`           | `string`  | Job subtype
+`SearchOptPublisher`         | `string`  | Publisher
+`SearchOptDate`              | `string`  | Date in a special format
+`SearchOptNamed`             | `string`  | Author nickname
+`SearchOptSort`              | `string`  | Sort type
+`SearchOptPlayers`           | `integer` | Number of players a job fits (1..30 or empty)
+`SearchText`                 | `string`  | Search text
+`Locations`                  | `array<Location>` |
+`Vehicles`                   | `array<Vehicle>`  |
+`Weapons`                    | `array<Weapon>`   |
 
 ## Job Types IDs (`SearchOptType`)
 Value     | Description
@@ -73,7 +82,7 @@ Type | Description
 `last7`     | Last 7 days' jobs
 `lastMonth` | Last month's jobs
 
-## Sort (`SearchOptSort`)
+## Sort Types (`SearchOptSort`)
 Type | Description
 ---- | -----------
 `CreatedDate` | Sort by date of creation
@@ -86,85 +95,76 @@ Type | Description
 
 ## Flags
 * `x` - can only be retrieved from e**x**tended job object
-* `u` - can be `undefined`
-* `e` - can be empty
-* `!` - can be incorrect OR needs some transformation for further use OR even meaning isn't known properly
-
-## Special types
-Type | Basic type | Description
----- | ---------- | -----------
-`MissionId` | `string`  | String that pepresents job ID
-`Location`  | `object`  | `{x: float, y: float}`
-`Weapon`    | `integer` | Weapon ID
-`Vehicle`   | `integer` | Vehicle ID
+* `e` - can be empty OR `undefined` (if an array, usually this means empty array unless otherwise specified)
+* `!` - not recommended for use OR meaning isn't known properly
 
 ## Root properties
 
 Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
-`MissionId` | `MissionId` |     | **CURRENT** job ID (changes every new version)
-`Players`   | `array<?>`  | `!` | (?) Always empty array
+`MissionId` | `MissionId` |      | **CURRENT** job ID (changes every new version)
+`Players`   | `array<?>`  | `!e` | (?) Always empty array
 
 ## `Content.stats`
 
 Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
-`pt` | `integer` | `u` | Played total
-`pu` | `integer` | `u` | Played unique
-`qt` | `integer` | `u` | Quit total 
-`qu` | `integer` | `u` | Quit unique
-`dt` | `integer` | `!u`| (?) Always 0
-`du` | `integer` | `!u`| (?) Always 0
+`pt` | `integer` | `e`  | "Played total"
+`pu` | `integer` | `e`  | "Played unique"
+`qt` | `integer` | `e`  | "Quit total"
+`qu` | `integer` | `e`  | "Quit unique"
+`dt` | `integer` | `!e` | (?) Always 0, "??? total"
+`du` | `integer` | `!e` | (?) Always 0, "??? unique"
 
 ## `Content.ratings`
 
 Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
-`rt_pos`     | `integer` | `u`  | Likes
-`rt_neg`     | `integer` | `u`  | Dislikes (actual dislikes + `Content.stats.qu`)
-`rt_unq`     | `integer` | `u`  | `rt_pos` + `rt_neg`
-`rt_pos_pct` | `float`   | `u`  | % of `rt_pos`
-`rt_neg_pct` | `float`   | `u`  | % of `rt_neg`
-`bkmk_unq`   | `integer` | `u`  | People bokmarked this (DON'T USE IT - absolutely incorrect)
-`avg`        | `string`  | `!u` | `rt_pos_pct` + '%'
-`rt_avg`     | `float`   | `!u` | 99,99% alias of `rt_pos_pct`
-`rt_tot`     | `integer` | `!u` | Always 0?
+`rt_pos`     | `integer` | `e`  | Likes
+`rt_neg`     | `integer` | `e`  | Dislikes (actual dislikes + `Content.stats.qu`)
+`rt_unq`     | `integer` | `e`  | `rt_pos` + `rt_neg`
+`rt_pos_pct` | `float`   | `e`  | % of `rt_pos`
+`rt_neg_pct` | `float`   | `e`  | % of `rt_neg`
+`bkmk_unq`   | `integer` | `!e` | People bookmarked this (DON'T USE IT - absolutely incorrect)
+`avg`        | `string`  | `!e` | `rt_pos_pct` + '%'
+`rt_avg`     | `float`   | `!e` | 99,99% alias of `rt_pos_pct`
+`rt_tot`     | `integer` | `!e` | (?) Always 0
 
 ## `Content.Metadata`
 
 Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
-`_id`                     | `MissionId` | | `MissionId` alias
-`latestVersionContentId`  | `MissionId` | | `MissionId` alias
-`RootContentId`           | `MissionId` | | **UNIQUE** job ID (persists over time - **use it**) - **NOT** a `MissionId` alias!
-`cat`                     | `string`    | | Category: `none`, `rstar`, `verif`
-`cdate`                   | `date`      | | Update date
-`pdate`                   | `date`      | | Update date (alias)
-`name`                    | `string`    | | Name
-`desc`                    | `string`    | | Description
-`nickname`                | `string`    | | Author nickname
-`avatar`                  | `string`    | | `n/lowecased_nickname` or a link to the default avatar
-`rockstarId`              | `integer`   | `e` | User ID
-`creatorMedal`            | `string`    | `u` | "Medals": `white`, `bronze`, `silver`, `gold`, `platinum`
-`crewurl`                 | `string `   | `u` | `/crew/<crew_name>` 
-`crewtag`                 | `string`    | `u` | Crew tag (not always uppercased)
-`crewrank`                | `integer`   |     | Crew within the crew from `1` to `4`, `0` if no crew
-`crewcolor`               | `string`    | `u` | Color in `#rrggbb` or `#rrggbbaa` format
-`isfoundercrew`           | `boolean`   |     | If founder of the crew?
-`isprivate`               | `boolean`   |     | If crew is private, `false` also means no crew
-`thumbnail`               | `string`    |     | `https://prod.cloud.rockstargames.com/ugc/gta5mission/<unique number>/<ID>/<1, 2 or 3>_0.jpg`
-`plat`                    | `string`    |     | `Ps3`, `Ps4`, `XBox`, `XBoxOne`, `PC` (NOTE: even rockstar jobs have this property!)
-`tags`                    | `Array<string>` | `e` | Array of tags
-`ver`                     | `integer`   |      | Job version
-`url`                     | `string`    |      | `/games/gtav/jobs/job/<MissionId>`
-`copiedFrom`              | `MissionId` | `u`  | Original job ID (relevant only for rockstar verified jobs)
-`originalCreatorId`       | `integer`   | `x`  | (only for R* verified) `rockstarId`
-`originalCreatorName`     | `string`    | `x`  | (only for R* verified) `nickname`
-`latest`                  | `boolean`   | `!`  | Always `true` ?
-`isOwner`                 | `boolean`   | `!`  | Always `false`?
-`bkmr`                    | `boolean`   | `!`  | Always `false`?
-`subscribed`              | `boolean`   | `!`  | Always `false`?
-`cansubscribe`            | `boolean`   | `!`  | Always `false`?
+`_id`                    | `MissionId` |     | `MissionId` alias
+`latestVersionContentId` | `MissionId` |     | `MissionId` alias
+`RootContentId`          | `MissionId` |     | **UNIQUE** job ID (persists over time - **use it**, **differs** from `MissionId`!)
+`cat`                    | `string`    |     | Category: `none`, `rstar`, `verif`
+`cdate`                  | `date`      |     | "Creation date" - don't use it
+`pdate`                  | `date`      |     | "Publication date" - for example, for rockstar jobs `cdate` < `pdate` (pdate is always tuesday). So use it, not `cdate`
+`name`                   | `string`    |     | Name
+`desc`                   | `string`    |     | Description
+`nickname`               | `string`    | `e` | Author nickname
+`avatar`                 | `string`    |     | `n/lowecased_nickname` or a link to the default avatar
+`rockstarId`             | `integer`   | `e` | User ID
+`creatorMedal`           | `string`    | `e` | "Medals": `white`, `bronze`, `silver`, `gold`, `platinum`
+`crewurl`                | `string `   | `e` | `/crew/<crew_name>` 
+`crewtag`                | `string`    | `e` | Crew tag (not always uppercased)
+`crewrank`               | `integer`   |     | Rank within the crew from `1` to `4`, `0` if no crew
+`crewcolor`              | `string`    | `e` | Color in `#rrggbb` or `#rrggbbaa` format
+`isfoundercrew`          | `boolean`   |     | If founder of the crew?
+`isprivate`              | `boolean`   |     | If crew is private, `false` also means no crew
+`thumbnail`              | `string`    |     | `https://prod.cloud.rockstargames.com/ugc/gta5mission/<unique number>/<ID>/<1, 2 or 3>_0.jpg`
+`plat`                   | `string`    |     | `Ps3`, `Ps4`, `XBox`, `XBoxOne`, `PC` (NOTE: even rockstar jobs have this property!)
+`tags`                   | `Array<string>` | `e` | Array of tags
+`ver`                    | `integer`   |     | Job version
+`url`                    | `string`    |     | `/games/gtav/jobs/job/<MissionId>`
+`copiedFrom`             | `MissionId` | `e` | Original job ID (relevant only for rockstar verified jobs)
+`originalCreatorId`      | `integer`   | `x` | (only for R* verified) `rockstarId`
+`originalCreatorName`    | `string`    | `x` | (only for R* verified) `nickname`
+`latest`                 | `boolean`   | `!` | (?) Always `true`
+`isOwner`                | `boolean`   | `!` | (?) Always `false`
+`bkmr`                   | `boolean`   | `!` | (?) Always `false`
+`subscribed`             | `boolean`   | `!` | (?) Always `false`
+`cansubscribe`           | `boolean`   | `!` | (?) Always `false`
 
 ## `Content.Metadata.data.mission.gen`
 
@@ -173,20 +173,20 @@ Property | Type | Flags | Description
 `type`      | `string`  |     | Job type (see possible values below)
 `min`       | `integer` |     | Min players
 `num`       | `integer` |     | Max players
-`start`     | `object`  |     | Trigger's pos (`x`, `y`, `z` - `float`s)
+`start`     | `Location3` |   | Trigger position
 `subtype`   | `integer` |     | Mode **ID** (see below)
 `tnum`      | `integer` |     | Max number of teams (`1` - `4`)
 `icon`      | `string`  |     | Mode **icon** (see below)
 `mode`      | `string`  |     | Mode **full name** (see below)
 `ivm`       | `integer` |     | ID of a default vehicle set by job author OR a number from `0` to `15` for races, `0` for DMs & Parachuting, `-1` else
 `adverm`    | `integer` | `e` | ID of the adversary mode, `0` if not an AM
-`racetype`  | `string`  | `u` | (only for races) `Laps`, `Point To Point`
+`racetype`  | `string`  | `e` | (only for races) `Laps`, `Point To Point`
 `rank`      | `integer` | `!` | Min rank to play a job
-`char`      | `integer` | `!` | Always 0?
-`endtype`   | `integer` | `!` | `0`, `2`-`5` for Versus Mission, LTS, AM, Capture IF rockstar, else for Captures ONLY (see stats below) (?) | -
-`mtnum`     | `integer` | `!` | `1` or `2` (?)
-`rad`       | `integer` | `!` | Always 0?
-`photo`     | `boolean` | `!` | Rarely `true` (?)
+`char`      | `integer` | `!` | (?) Always 0
+`endtype`   | `integer` | `!` | `(?) 0`, `2`-`5` for Versus Mission, LTS, AM, Capture IF rockstar, else for Captures ONLY (see stats below)
+`mtnum`     | `integer` | `!` | (?) `1` or `2`
+`rad`       | `integer` | `!` | (?) Always 0
+`photo`     | `boolean` | `!` | (?) Rarely `true`
 
 ## `Content.Metadata.data.mission.race`
 
@@ -194,23 +194,22 @@ For races only.
 
 Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
-`type`     | `string`          |      | Race type (see below)
-`chp`      | `integer`         |      | Number of checkpoints
-`lap`      | `integer`         |      | Default number of laps (`0` if P2P)
-`rdis`     | `float`           |      | Distance in metres
-`aveh`     | `array<string>`   | `xu` | Available vehicle classes (undefined if target assault race)
-`chl`      | `array<Location>` | `x`  | Checkpoint locations
-`sndchk`   | `array<Location>` | `xu` | Sec. checkpoint locations (`(0, 0)` if no corresponding secondary checkpoint)
-`cptfrm`   | `array<integer>`  | `x` | (only for tr. races) `-1` if no transformation on current CP, else means transform vehicle ID (basically these IDs are `trfmvmn` array indexes)
-`trfmvmn`  | `array<string>`   | `x` | List of vehicles available for transformation in. `0` usually `Base vehicle`. Not all of them may be used in the race, check `cptfrm` property
-`subtype`  | `integer`         | `!`  | (?) `20` - tr. race, `21` - special vehicle race
-`aveh`     | `array<string>`   | `!`  | Vehicle classes (no info (empty array) in most cases)
-`dist`     | `string`          | `!`  | Formatted distance like `10.01 miles` (DON'T use it)
-`gw`       | `integer`         | `!`  | (?) Sometimes values like `4.5`, `6.75`, otherwise `0`
-`ivm`      | `integer`         | `!`  | (?) Always 0
-`clbs`     | `integer`         | `!`  | (?) Some number...
+`type`     | `string`           |      | Race type (see below)
+`chp`      | `integer`          |      | Number of checkpoints
+`lap`      | `integer`          |      | Default number of laps (`0` if `P2P`)
+`rdis`     | `float`            |      | Distance in metres
+`aveh`     | `array<string>`    | `xe` | Available vehicle classes (`undefined` if target assault race)
+`chl`      | `array<Location2>` | `x`  | Checkpoint locations
+`sndchk`   | `array<Location2>` | `xe` | Sec. checkpoint locations (`(0, 0)` if no corresponding secondary checkpoint) (can be `undefined`)
+`cptfrm`   | `array<integer>`   | `x` | (only for tr. races) `-1` if no transformation on current CP, else means transform vehicle ID (basically these IDs are `trfmvmn` array indexes)
+`trfmvmn`  | `array<string>`    | `x` | List of vehicles available for transformation in. `0` usually `Base vehicle`. Not all of them may be used in the race, check `cptfrm` property
+`subtype`  | `integer`          | `!`  | (?) `20` - tr. race, `21` - special vehicle race
+`dist`     | `string`           | `!`  | Formatted distance like `10.01 miles` (DON'T use it)
+`gw`       | `integer`          | `!`  | (?) Sometimes values like `4.5`, `6.75`, otherwise `0`
+`ivm`      | `integer`          | `!`  | (?) Always 0
+`clbs`     | `integer`          | `!`  | (?) Some number...
 
-## `Content.Metadata.data.mission.rule`
+## (?) `Content.Metadata.data.mission.rule`
 
 Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
@@ -225,38 +224,40 @@ Property | Type | Flags | Description
 
 ## (extended object) `Content.Metadata.data.mission.weap`
 
+Note: sizes of these arrays are the same.
+
 Property | Type | Description
 -------- | ---- | -----------
-`sub`  | `array<string>`   | "Weapons" on the map: `BOOST`, `ROCKET` (don't use it)
-`loc`  | `array<Location>` | Weapons locations
-`type` | `array<object>`   | Actual names of the weapons: `Vehicle - Powerups`, `Vehicle - Health`, `Vehicle - Molotov` (races), e.g. `Sniper Rifle`, `Armor`, `Heavy Revolver` for DMs, ...
+`loc`  | `array<Location2>` |     | Weapons locations
+`type` | `array<string>`    |     | Actual names of the weapons (see below)
+`sub`  | `array<string>`    | `!` | "Weapons" on the map, the only possible values: `BOOST`, `ROCKET` (don't use it)
 
 ## (extended object) `Content.Metadata.data.mission.ene`
 
-`array<Location>` - ??
+`array<Location2>` - ??
 
 ## (extended object) `Content.Metadata.data.mission.(d)props, .veh, .obj`
 
-`(d)props` - rRegular & dynamic props\
+`(d)props` - regular (dynamic) props\
 `veh` - initial spawn points for vehicles\
 `obj` - ??
 
 Property | Type | Description
 -------- | ---- | -----------
-`loc`   | `array<Location>` | Props (vehicles) locations
-`model` | `array<string>`   | Names, e.g. `Medium Ramp`, `	Large Closed Container`, `Barrel Line`, `Water Machine`,...
+`loc`   | `array<Location2>` | Props (vehicles) locations
+`model` | `array<string>`    | Names, e.g. `Medium Ramp`, `	Large Closed Container`, `Barrel Line`, `Water Machine`,... (see below)
 
 ## `Content.Metadata.data.meta`
 
 Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
-`vehcl` | `array<string>`   |      | (only for races) excluded vehicle classes for races **(use this!)**
-`veh`   | `array<Vehicle>`  | `u`  | Vehicles used in a job
-`wp`    | `array<Weapon>`   | `u`  | Weapons used in a job if applicable
-`loc`   | `array<Location>` | `u`  | Locations (short names) (see below)
-`locn`  | `array<Location>` | `x`  | Locations (full names) (see below)
-`ems`   | `boolean`         | `!`  | (?) `true` for some LTS, Capture, Versus, ADM
-`mrule` | `array<integer>`  | `!u` | (?) Array like `0,2,11` only for Capture, LTS, Versus
+`vehcl` | `array<string>`    |      | (only for races) excluded vehicle classes for races **(use this!)**
+`veh`   | `array<Vehicle>`   | `e`  | Vehicles used in a job
+`wp`    | `array<Weapon>`    | `e`  | Weapons used in a job if applicable
+`loc`   | `array<Location2>` | `e`  | Locations (short names) (see below)
+`locn`  | `array<Location2>` | `x`  | Locations (full names) (see below)
+`ems`   | `boolean`          | `!`  | (?) `true` for some LTS, Capture, Versus, ADM
+`mrule` | `array<integer>`   | `!u` | (?) Array like `0,2,11` only for Capture, LTS, Versus
 
 # Types, modes, locations, vehicles, weapons, vehicle classes
 
@@ -420,11 +421,11 @@ Zancudo River                     | `Zancudo`
 
 ## Vehicles
 
-See `vehicles.json`.
+See `config/static/vehicles.json`.
 
 ## Pickups
 
-See `pickups.json`.
+See `config/static/pickups.json`.
 
 ## Vehicle classes
 
