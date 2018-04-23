@@ -135,7 +135,8 @@ Property | Type | Flags | Description
 Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
 `_id`                    | `MissionId` |     | `MissionId` alias
-`latestVersionContentId` | `MissionId` |     | `MissionId` alias
+`latestVersionContentId` | `MissionId` |     | ID of a latest version `MissionId`
+`latest`                 | `boolean`   |     | `false` is it is not a latest version
 `RootContentId`          | `MissionId` |     | **UNIQUE** job ID (persists over time - **use it**, **differs** from `MissionId`!)
 `cat`                    | `string`    |     | Category: `none`, `rstar`, `verif`
 `cdate`                  | `date`      |     | "Creation date" - don't use it
@@ -160,7 +161,6 @@ Property | Type | Flags | Description
 `copiedFrom`             | `MissionId` | `e` | Original job ID (relevant only for rockstar verified jobs)
 `originalCreatorId`      | `integer`   | `x` | (only for R* verified) `rockstarId`
 `originalCreatorName`    | `string`    | `x` | (only for R* verified) `nickname`
-`latest`                 | `boolean`   | `!` | (?) Always `true`
 `isOwner`                | `boolean`   | `!` | (?) Always `false`
 `bkmr`                   | `boolean`   | `!` | (?) Always `false`
 `subscribed`             | `boolean`   | `!` | (?) Always `false`
