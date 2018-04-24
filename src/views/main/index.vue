@@ -1,17 +1,27 @@
 <template>
   <div>
-    <!-- <bulma-hero class="is-medium" text="GTA Online Jobs"></bulma-hero> -->
+    <div class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">GTA Online Jobs</h1>
+        </div>
+      </div>
+    </div>
     <section class="section">
       <div class="container">
-        <h1 class="title">GTA Online Jobs</h1>
+        <!-- <h1 class="title">GTA Online Jobs</h1> -->
+        <div class="box">
         <jobs-list></jobs-list>
+        </div>
         <br>
+        <div class="box">
         <bulma-pagination
           :curr-page="page"
           :total-items="number"
           :load-more-button="true"
           :loading="loading">
         </bulma-pagination>
+        </div>
       </div>
     </section>
   </div>

@@ -82,7 +82,7 @@ export function createRouter() {
         : { x: 0, y: 0 };
     },
 
-    linkActiveClass: 'is-active',
+    linkExactActiveClass: 'is-active',
 
     routes
   })

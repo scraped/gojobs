@@ -1,32 +1,24 @@
 <template>
   <div>
-    <bulma-tabs>
-      <li :class="{ 'is-active': !by }">
-        <router-link :to="{ name: 'main' }">
-          Trending
+    <div class="tabs">
+      <ul>
+        <router-link :to="{ name: 'main' }" tag="li" active-class="is-active">
+          <a>Trending</a>
         </router-link>
-      </li>
-      <li :class="{ 'is-active': by === 'rating' }">
-        <router-link :to="{ name: 'main', query: { by: 'rating' } }">
-          By rating
+        <router-link :to="{ name: 'main', query: { by: 'rating' } }" tag="li">
+          <a>By rating</a>
         </router-link>
-      </li>
-      <li :class="{ 'is-active': by === 'featured' }">
-        <router-link :to="{ name: 'main', query: { by: 'featured' } }">
-          Featured
+        <router-link :to="{ name: 'main', query: { by: 'featured' } }" tag="li">
+          <a>Featured</a>
         </router-link>
-      </li>
-      <li :class="{ 'is-active': by === 'updated' }">
-        <router-link :to="{ name: 'main', query: { by: 'updated' } }">
-          Updated
+        <router-link :to="{ name: 'main', query: { by: 'updated' } }" tag="li">
+          <a>Updated</a>
         </router-link>
-      </li>
-      <li :class="{ 'is-active': by === 'newest' }">
-        <router-link :to="{ name: 'main', query: { by: 'newest' } }">
-          🔥 Newest
+        <router-link :to="{ name: 'main', query: { by: 'newest' } }" tag="li">
+          <a>🔥 Newest</a>
         </router-link>
-      </li>
-    </bulma-tabs>
+      </ul>
+    </div>
 
     <template v-if="number">
       <h1 class="title is-4">
@@ -37,9 +29,8 @@
       </p>
 
       <div class="buttons">
-        <div class="button is-outlined is-rounded is-small">Races</div>
-        <div class="button is-outlined is-rounded is-small">Rockstar Jobs</div>
-        <div class="button is-outlined is-rounded is-small">Rockstar Verified Jobs</div>
+        <router-link :to="{ query: { rockstar: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Jobs</router-link>
+        <router-link :to="{ query: { rockstarverified: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Verified Jobs</router-link>
       </div>
     </template>
     <b-message v-else type="is-info" size="is-medium">

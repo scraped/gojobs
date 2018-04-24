@@ -2,7 +2,7 @@
   <nav class="navbar is-dark is-fixed-top">
     <div class="container">
       <div class="navbar-brand">
-        <router-link to="/" class="navbar-item">
+        <router-link to="/" class="navbar-item" exact-active-class="">
           <img :src="logo" alt="" title="">
         </router-link>
         <span class="navbar-item is-size-3" style="font-family: 'SignPainter-HouseScript';">
@@ -18,7 +18,7 @@
           </a>
 
           <b-dropdown-item custom>
-            <div class="subtitle is-6">Default platform (if no platform specified, there will be shown jobs only for the selected platform below)</div>
+            <div class="subtitle is-6">Default platform</div>
             <b-field>
               <b-radio
                 v-model="platform"
