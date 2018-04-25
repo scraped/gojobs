@@ -8,6 +8,14 @@ const schema = new Schema({
 
   crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
 
+  background: [{
+    type: String,
+  }],
+
+  foregroundLight: {
+    type: Boolean,
+  },
+
   specific: Schema.Types.Mixed
 }, {
   id: false

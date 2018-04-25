@@ -1,15 +1,19 @@
 <template>
   <div>
-    <bulma-hero
+    <!-- <bulma-hero
       class="is-medium"
       :background="job.imageUrl"
       :text="job.name">
-    </bulma-hero>
-
-    <div class="hero" style="background: #afdafc;">
+    </bulma-hero> -->
+    <div
+      class="hero is-dark"
+      :style="bgFgStyle">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title has-text-dark">
+          <div class="content has-text-centered">
+            <img :src="job.imageUrl">
+          </div>
+          <h1 class="title">
             <span v-html="job.name"></span>
           </h1>
           <p class="is-size-5" v-html="job.details.desc"></p>
@@ -167,6 +171,22 @@ export default {
     ...mapState('job', [
       'job'
     ]),
+
+    bgFgStyle() {
+      const { background, foregroundLight } = this.job.details;
+      if (background && foregroundLight) {
+        const bgStyle = background.reduce((prev, curr) => {
+          return prev + `, rgb(${curr})`;
+        }, 'background: linear-gradient(to right') + ');';
+
+        const foreground = foregroundLight ? 'ffffff' : '000000';
+        const fgStyle = `color: #${foreground};`;
+
+        const style = bgStyle + fgStyle;
+        console.log(style);
+        return style;
+      }
+    },
 
     ratingCssClass() {
       let rating = this.job.stats.ratingQuit;
