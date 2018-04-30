@@ -1,46 +1,147 @@
 const _ = require('lodash');
 const { platforms, modes } = require('../config/static');
 
-const mongoose = require('../lib/db');
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let schema = new Schema({
-  jobId: { type: String, unique: true },
-  jobCurrId: { type: String, required: true },
-
-  rockstar: { type: Boolean },
-  star: { type: Boolean },
-  bad: { type: Boolean },
-
-  author: { type: String, required: notRockstar },
-  name: { type: String, trim: true, required: true },
-  slug: { type: String, required: true },
-  image: { type: String, required: true },
-
-  maxPl: { type: Number, set: setMaxPlayers, required: true },
-  platform: { type: Number, required: notRockstar },
-  scType: { type: Number, required: true },
-  scMode: { type: Number },
-
-  tags: { type: [String] },
-  details: { type: Schema.Types.Mixed, ref: 'JobDetails', required: true },
-
-  stats: {
-    points: { type: Number, required: true },
-    playTot: { type: Number, required: true },
-    playUnq: { type: Number, required: true },
-    quitTot: { type: Number, required: true },
-    quitUnq: { type: Number, required: true },
-    likes: { type: Number, required: true },
-    dislikes: { type: Number, required: true },
-    dislikesQuit: { type: Number, required: true },
-    rating: { type: Number, required: true },
-    ratingQuit: { type: Number, required: true },
+  jobId: {
+    type: String,
+    unique: true
   },
 
-  ver: { type: Number, required: true },
-  scAdded: { type: Date },
-  scUpdated: { type: Date, required: true }
+  jobCurrId: {
+    type: String,
+    required: true
+  },
+
+  rockstar: {
+    type: Boolean
+  },
+
+  star: {
+    type: Boolean
+  },
+
+  bad: {
+    type: Boolean
+  },
+
+  author: {
+    type: String,
+    required: notRockstar
+  },
+
+  name: {
+    type: String,
+    trim: true,
+    required: true
+  },
+
+  slug: {
+    type: String,
+    required: true
+  },
+
+  image: {
+    type: String,
+    required: true
+  },
+
+  maxPl: {
+    type: Number,
+    set: setMaxPlayers,
+    required: true
+  },
+
+  platform: {
+    type: Number,
+    required: notRockstar
+  },
+
+  scType: {
+    type: Number,
+    required: true
+  },
+
+  scMode: {
+    type: Number
+  },
+
+  tags: {
+    type: [String]
+  },
+
+  details: {
+    type: Schema.Types.Mixed,
+    ref: 'JobDetails',
+    required: true
+  },
+
+  stats: {
+    points: {
+      type: Number,
+      required: true
+    },
+
+    playTot: {
+      type: Number,
+      required: true
+    },
+
+    playUnq: {
+      type: Number,
+      required: true
+    },
+
+    quitTot: {
+      type: Number,
+      required: true
+    },
+
+    quitUnq: {
+      type: Number,
+      required: true
+    },
+
+    likes: {
+      type: Number,
+      required: true },
+
+    dislikes: {
+      type: Number,
+      required: true
+    },
+
+    dislikesQuit: {
+      type: Number,
+      required: true
+    },
+
+    rating: {
+      type: Number,
+      required: true
+    },
+
+    ratingQuit: {
+      type: Number,
+      required: true
+    },
+  },
+
+  ver: {
+    type: Number,
+    required: true
+  },
+
+  scAdded: {
+    type: Date
+  },
+
+  scUpdated: {
+    type: Date,
+    required: true
+  }
 }, {
   id: false,
   toObject: {
