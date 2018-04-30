@@ -7,34 +7,44 @@
     </bulma-hero> -->
     <div
       class="hero is-dark"
-      :style="bgFgStyle">
+      :style="`background: linear-gradient(to right${gradient});`">
       <div class="hero-body">
         <div class="container">
           <div class="content has-text-centered">
             <img :src="job.imageUrl">
           </div>
-          <h1 class="title">
-            <span v-html="job.name"></span>
+          <div style="text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);">
+          <h1
+            class="title"
+            :class="colorCssClass"
+            v-html="job.name">
           </h1>
-          <p class="is-size-5" v-html="job.details.desc"></p>
-          <br>
-          <div class="tags">
+          <p
+            class="is-size-5"
+            :class="colorCssClass"
+            v-html="job.details.desc">
+          </p>
+          </div>
+          <!-- <div class="tags">
             <span
-              class="tag is-info is-uppercase">
+              class="tag"
+              style="opacity: 0.7;">
               {{ job.scTypeName }}
             </span>
             <span
               v-if="job.scModeName"
-              class="tag is-info is-uppercase">
+              class="tag"
+              style="opacity: 0.7;">
               {{ job.scModeName }}
             </span>
             <span
-              class="tag is-info is-uppercase"
+              class="tag"
+              style="opacity: 0.7;"
               v-for="tag in job.tags"
               :key="tag">
               {{ tag }}
             </span>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -43,12 +53,6 @@
         <div class="columns is-multiline">
           <div class="column">
             <div class="box">
-
-              <br>
-              <figure>
-                <img :src="job.imageUrl" :alt="job.name">
-              </figure>
-
               <br>
               <div class="tags">
                 <span
@@ -172,20 +176,19 @@ export default {
       'job'
     ]),
 
-    bgFgStyle() {
-      const { background, foregroundLight } = this.job.details;
-      if (background && foregroundLight) {
-        const bgStyle = background.reduce((prev, curr) => {
-          return prev + `, rgb(${curr})`;
-        }, 'background: linear-gradient(to right') + ');';
-
-        const foreground = foregroundLight ? 'ffffff' : '000000';
-        const fgStyle = `color: #${foreground};`;
-
-        const style = bgStyle + fgStyle;
-        console.log(style);
-        return style;
+    gradient() {
+      const { background } = this.job.details;
+      if (background && background.length) {
+        return background.reduce((prev, curr) => {
+          return prev + `, rgba(${curr})`;
+        }, '');
       }
+    },
+
+    colorCssClass() {
+      const { foregroundLight } = this.job.details;
+      // return (foregroundLight === false) ? 'has-text-dark' : 'has-text-white';
+      return 'has-text-white';
     },
 
     ratingCssClass() {
