@@ -8,15 +8,13 @@ const logger = require('morgan');
 const helmet = require('helmet');
 const compression = require('compression');
 const prettyError = require('pretty-error');
-// const session = require('./middleware/session');
 const cookieParser = require('cookie-parser');
 
 const { apiRouter } = require('./routers');
 const serverSideRendering = require('./lib/ssr');
 
-// better error messages & console.log
+// better error messages
 prettyError.start();
-// require('./lib/log');
 
 const app = express();
 
@@ -28,7 +26,6 @@ app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
-// app.use(session());
 app.use(cookieParser());
 app.use(
   '/assets',
