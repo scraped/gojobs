@@ -1,23 +1,22 @@
 <template>
   <span
-    class="icon icon-gta is-unselectable"
+    class="icon icon__gta is-unselectable"
     v-html="`&#x${icon};`"></span>
 </template>
 
 <script>
-export default {
-  props: [
-    'icon'
-  ]
-};
+  export default {
+    props: [
+      'icon'
+    ]
+  };
 </script>
 
 <style lang="scss">
-.icon-gta {
-  vertical-align: top;
+.icon__gta {
   font: {
     family: 'gtav-icon-font';
-    size: 0.95em;
+    size: 0.9em;
   }
 }
 </style>
