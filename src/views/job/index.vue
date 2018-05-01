@@ -10,18 +10,23 @@
       :style="`background: linear-gradient(to right${gradient});`">
       <div class="hero-body">
         <div class="container">
-          <div class="content has-text-centered">
+          <div class="content">
             <img :src="job.imageUrl">
           </div>
-          <div style="text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);">
+        </div>
+      </div>
+    </div>
+    <div class="hero is-primary">
+      <div class="hero-body">
+        <div class="container has-text-dark">
+          <div>
           <h1
-            class="title"
-            :class="colorCssClass"
+            class="title is-uppercase is-size-1"
+            style="font-family: 'Oswald', sans-serif; font-weight: normal;"
             v-html="job.name">
           </h1>
           <p
-            class="is-size-5"
-            :class="colorCssClass"
+            class="is-size-4"
             v-html="job.details.desc">
           </p>
           </div>
@@ -52,7 +57,7 @@
       <div class="container">
         <div class="columns is-multiline">
           <div class="column">
-            <div class="box">
+            <div class="box has-background-dark has-text-white">
               <br>
               <div class="tags">
                 <span
@@ -82,7 +87,7 @@
                   <span>{{ job.stats.playUnq | formatNumber }}</span></span>
               </div>
 
-              <div class="has-text-grey">
+              <div>
                 {{ job.platformName }} · {{ job.maxPl }} players
               </div>
             </div>
