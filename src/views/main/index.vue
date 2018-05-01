@@ -10,9 +10,7 @@
     <section class="section">
       <div class="container">
         <!-- <h1 class="title">GTA Online Jobs</h1> -->
-        <div class="box">
         <jobs-list></jobs-list>
-        </div>
         <br>
         <div class="box">
         <bulma-pagination

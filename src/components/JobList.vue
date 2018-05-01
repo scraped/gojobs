@@ -1,39 +1,42 @@
 <template>
   <div>
-    <div class="tabs">
-      <ul>
-        <router-link :to="{ name: 'main' }" tag="li" active-class="is-active">
-          <a>Trending</a>
-        </router-link>
-        <router-link :to="{ name: 'main', query: { by: 'rating' } }" tag="li">
-          <a>By rating</a>
-        </router-link>
-        <router-link :to="{ name: 'main', query: { by: 'featured' } }" tag="li">
-          <a>Featured</a>
-        </router-link>
-        <router-link :to="{ name: 'main', query: { by: 'updated' } }" tag="li">
-          <a>Updated</a>
-        </router-link>
-        <router-link :to="{ name: 'main', query: { by: 'newest' } }" tag="li">
-          <a>🔥 Newest</a>
-        </router-link>
-      </ul>
+    <div class="box">
+      <div class="tabs">
+        <ul>
+          <router-link :to="{ name: 'main' }" tag="li" active-class="is-active">
+            <a>Trending</a>
+          </router-link>
+          <router-link :to="{ name: 'main', query: { by: 'rating' } }" tag="li">
+            <a>By rating</a>
+          </router-link>
+          <router-link :to="{ name: 'main', query: { by: 'featured' } }" tag="li">
+            <a>Featured</a>
+          </router-link>
+          <router-link :to="{ name: 'main', query: { by: 'updated' } }" tag="li">
+            <a>Updated</a>
+          </router-link>
+          <router-link :to="{ name: 'main', query: { by: 'newest' } }" tag="li">
+            <a>🔥 Newest</a>
+          </router-link>
+        </ul>
+      </div>
+
+      <template v-if="number">
+        <h1 class="title is-4">
+          {{ number }} jobs found
+        </h1>
+        <p class="subtitle is-size-6 has-text-grey">
+          Page {{ page }}
+        </p>
+
+        <div class="buttons">
+          <router-link :to="{ query: { rockstar: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Jobs</router-link>
+          <router-link :to="{ query: { rockstarverified: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Verified Jobs</router-link>
+        </div>
+      </template>
     </div>
 
-    <template v-if="number">
-      <h1 class="title is-4">
-        {{ number }} jobs found
-      </h1>
-      <p class="subtitle is-size-6 has-text-grey">
-        Page {{ page }}
-      </p>
-
-      <div class="buttons">
-        <router-link :to="{ query: { rockstar: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Jobs</router-link>
-        <router-link :to="{ query: { rockstarverified: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Verified Jobs</router-link>
-      </div>
-    </template>
-    <b-message v-else type="is-info" size="is-medium">
+    <b-message v-if="!number" type="is-info" size="is-medium">
       No jobs found.
     </b-message>
 

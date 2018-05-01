@@ -15,41 +15,41 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="hero is-primary">
-      <div class="hero-body">
-        <div class="container has-text-dark">
-          <div>
-          <h1
-            class="title is-uppercase is-size-1"
-            style="font-family: 'Oswald', sans-serif; font-weight: normal;"
-            v-html="job.name">
-          </h1>
-          <p
-            class="is-size-4"
-            v-html="job.details.desc">
-          </p>
+      <div class="hero" style="background: rgba(0, 0, 0, 0.2);">
+        <div class="hero-body">
+          <div class="container">
+            <div>
+            <h1
+              class="title is-uppercase is-size-1"
+              style="font-family: 'Oswald', sans-serif; font-weight: normal;"
+              v-html="job.name">
+            </h1>
+            <p
+              class="is-size-4"
+              v-html="job.details.desc">
+            </p>
+            </div>
+            <!-- <div class="tags">
+              <span
+                class="tag"
+                style="opacity: 0.7;">
+                {{ job.scTypeName }}
+              </span>
+              <span
+                v-if="job.scModeName"
+                class="tag"
+                style="opacity: 0.7;">
+                {{ job.scModeName }}
+              </span>
+              <span
+                class="tag"
+                style="opacity: 0.7;"
+                v-for="tag in job.tags"
+                :key="tag">
+                {{ tag }}
+              </span>
+            </div> -->
           </div>
-          <!-- <div class="tags">
-            <span
-              class="tag"
-              style="opacity: 0.7;">
-              {{ job.scTypeName }}
-            </span>
-            <span
-              v-if="job.scModeName"
-              class="tag"
-              style="opacity: 0.7;">
-              {{ job.scModeName }}
-            </span>
-            <span
-              class="tag"
-              style="opacity: 0.7;"
-              v-for="tag in job.tags"
-              :key="tag">
-              {{ tag }}
-            </span>
-          </div> -->
         </div>
       </div>
     </div>
@@ -57,8 +57,8 @@
       <div class="container">
         <div class="columns is-multiline">
           <div class="column">
-            <div class="box has-background-dark has-text-white">
-              <br>
+            <div class="box">
+              <h2 class="subtitle">Map</h2>
               <div class="tags">
                 <span
                   :class="`tag is-${ratingCssClass} is-rounded is-medium`">

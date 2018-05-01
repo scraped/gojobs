@@ -3,8 +3,10 @@
 
 @import "./custom-vars";
 
-$primary: #a6caf0;
+// $primary: #a6caf0;
+$primary: #75c1ff;
 $primary-invert: findColorInvert($primary);
+// $primary-invert: #ffffff;
 
 $success: hsl(161, 60%, 43%); // 151, 71%, 48%
 $warning: hsl(48, 95%, 60%); // 100%, 67%
