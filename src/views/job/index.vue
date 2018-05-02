@@ -1,10 +1,5 @@
 <template>
   <div>
-    <!-- <bulma-hero
-      class="is-medium"
-      :background="job.imageUrl"
-      :text="job.name">
-    </bulma-hero> -->
     <div
       class="hero is-dark"
       :style="`background: linear-gradient(to right${gradient});`">
@@ -15,55 +10,21 @@
           </div>
         </div>
       </div>
-      <!-- <div class="hero" style="background: rgba(0, 0, 0, 0.2);">
-        <div class="hero-body">
-          <div class="container">
-            <div>
-            <h1
-              class="title is-uppercase is-size-1"
-              style="font-family: 'Oswald', sans-serif; font-weight: normal;"
-              v-html="job.name">
-            </h1>
-            <p
-              class="is-size-4"
-              v-html="job.details.desc">
-            </p>
-            </div>
-            <!- <div class="tags">
-              <span
-                class="tag"
-                style="opacity: 0.7;">
-                {{ job.scTypeName }}
-              </span>
-              <span
-                v-if="job.scModeName"
-                class="tag"
-                style="opacity: 0.7;">
-                {{ job.scModeName }}
-              </span>
-              <span
-                class="tag"
-                style="opacity: 0.7;"
-                v-for="tag in job.tags"
-                :key="tag">
-                {{ tag }}
-              </span>
-            </div> ->
-          </div>
-        </div>
-      </div> -->
     </div>
     <section class="section">
       <div class="container">
         <div class="columns is-multiline">
           <div class="column">
-            <div class="box">
-              <h1
-                class="title is-uppercase is-size-1"
-                style="font-family: 'Oswald', sans-serif; font-weight: normal;">
-                <span class="tooltip" :data-tooltip="job.scTypeName">
+            <div class="box" style="position: relative;">
+              <div class="has-text-grey-lighter" style="position: absolute; top: 0.5em; right: 0.5em; font-size: 7em; line-height: 0;">
+                <span>
                   <icon-gta :icon="job.scTypeIcon" ></icon-gta>
                 </span>
+              </div>
+              <h1
+                class="title is-uppercase is-size-1"
+                style="font-family: 'Oswald', sans-serif; font-weight: normal;"
+                v-html="job.name">
                 {{ job.name }}
               </h1>
 
@@ -78,12 +39,31 @@
                 </div>
 
                 <div class="media-content">
-                  <p class="has-text-grey">
+                  <p>
                     <router-link
+                      v-if="job.author"
                       :to="{ name: 'profile', params: { username: job.author }}">
                       @{{ job.author }}
                     </router-link>
-                    <br>
+                    <span
+                      v-if="!job.author && job.rockstar"
+                      class="tag is-white is-uppercase"
+                      style="border: 1px solid #01498E; color: #01498E;">
+                      <span class="icon is-small">
+                        <i class="fa fa-check"></i>
+                      </span>
+                      <span>Rockstar Job</span>
+                    </span>
+                    <span
+                      v-if="job.author && job.rockstar"
+                      class="tag is-white is-uppercase" style="border: 1px solid #FCAF17; color: #01498E;">
+                      <span class="icon is-small">
+                        <i class="fa fa-check"></i>
+                      </span>
+                      <span>Rockstar Verified Job</span>
+                    </span>
+                  </p>
+                  <p class="has-text-grey">
                     {{ job.scTypeName }}
                     <template v-if="job.scModeName">
                       — {{ job.scModeName }}
@@ -98,6 +78,7 @@
 
               <hr>
 
+
               <div class="content">
                 <p
                   class="is-size-5 is-italic"
@@ -105,9 +86,11 @@
                 </p>
 
                 <div class="tags">
-                  <span class="tag">Lap length: {{ job.details.specific.race.dist | mToKm }} km</span>
+                  <template v-if="job.details.specific.race">
+                    <span class="tag">Lap length: {{ job.details.specific.race.dist | mToKm }} km</span>
 
-                  <span class="tag">Number of checkpoints: {{ job.details.specific.race.chp }}</span>
+                    <span class="tag">Number of checkpoints: {{ job.details.specific.race.chp }}</span>
+                  </template>
 
                   <template v-if="job.tags && job.tags.length">
                     <router-link
@@ -121,113 +104,99 @@
               </div>
 
               <nav class="level is-mobile">
-                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em;">
+                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em 0;">
                   <div>
                     <p class="heading">Likes</p>
-                    <span
-                  :class="`tag is-${ratingCssClass} is-rounded is-medium`">
-                  <span class="icon">
-                    <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                  </span>
-                  <span>{{ job.stats.likes | formatNumber }}</span></span>
-
+                    <p class="is-size-6">
+                      <span class="icon">
+                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                      </span><span>{{ job.stats.likes | formatNumber }}</span>
+                    </p>
                   </div>
                 </div>
                 <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em;">
                   <div>
                     <p class="heading">Dislikes</p>
-                    <span class="tag is-transparent is-rounded is-medium">
-                  <span class="icon">
-                    <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
-                  </span>
-                  <span>{{ job.stats.dislikes | formatNumber }}</span></span>
+                    <p>
+                      <span class="icon">
+                        <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
+                      </span><span>{{ job.stats.dislikes | formatNumber }}</span>
+                    </p>
                   </div>
                 </div>
                 <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em;">
                   <div>
                     <p class="heading">Launches</p>
-                    <span
-                  class="tag is-rounded is-medium tooltip"
-                  data-tooltip="Launches">
-                  <span class="icon">
-                    <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
-                  </span>
-                  <span>{{ job.stats.playTot | formatNumber }}</span></span>
+                    <p>
+                      <span class="icon">
+                        <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
+                      </span><span>{{ job.stats.playTot | formatNumber }}</span>
+                    </p>
                   </div>
                 </div>
                 <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em;">
                   <div>
                     <p class="heading">Players</p>
-                    <span
-                  class="tag is-rounded is-medium tooltip"
-                  data-tooltip="People played this">
-                  <span class="icon">
-                    <i class="fa fa-users fa-lg" aria-hidden="true"></i>
-                  </span>
-                  <span>{{ job.stats.playUnq | formatNumber }}</span></span>
+                    <p>
+                      <span class="icon">
+                        <i class="fa fa-users fa-lg" aria-hidden="true"></i>
+                      </span><span>{{ job.stats.playUnq | formatNumber }}</span>
+                    </p>
                   </div>
                 </div>
               </nav>
 
-              <!-- <div class="tags">
-                <span
-                  :class="`tag is-${ratingCssClass} is-rounded is-medium`">
-                  <span class="icon">
-                    <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                  </span>
-                  <span>{{ job.stats.likes | formatNumber }}</span></span>
-                <span class="tag is-rounded is-medium">
-                  <span class="icon">
-                    <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
-                  </span>
-                  <span>{{ job.stats.dislikes | formatNumber }}</span></span>
-                <span
-                  class="tag is-rounded is-medium tooltip"
-                  data-tooltip="Launches">
-                  <span class="icon">
-                    <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
-                  </span>
-                  <span>{{ job.stats.playTot | formatNumber }}</span></span>
-                <span
-                  class="tag is-rounded is-medium tooltip"
-                  data-tooltip="People played this">
-                  <span class="icon">
-                    <i class="fa fa-users fa-lg" aria-hidden="true"></i>
-                  </span>
-                  <span>{{ job.stats.playUnq | formatNumber }}</span></span>
-              </div> -->
+              <p class="has-text-grey-light">
+                <template v-if="job.ver > 1">
+                  Updated {{ job.scUpdated | formatDate }}
+                  (version {{ job.ver }})
+                </template>
+                <template v-if="job.scAdded">
+                  <template v-if="job.ver > 1">
+                    ·
+                  </template>
+                  Added {{ job.scAdded | formatDate }}
+                </template>
+              </p>
             </div>
           </div>
 
           <div class="column is-one-third-widescreen is-two-fifths-desktop is-12-tablet">
             <div class="box">
-              <h2 class="subtitle">Author</h2>
+              <h2 class="subtitle">Ratings</h2>
+              <div class="content">
+                <p><span class="has-text-weight-bold">RGSC Rating:</span> {{ job.stats.ratingQuit }}%</p>
+                <progress
+                  :class="`progress is-${ratingCssClass(job.stats.ratingQuit)}`"
+                  :value="job.stats.ratingQuit" max="100">
+                  {{ job.stats.ratingQuit }}%
+                </progress>
 
-              <br>
-              <h2 class="subtitle">RGSC rating & actual rating</h2>
-              <!-- <div class="has-text-grey-light is-size-7">
-                This rating doesn't consider quits and based only on the actual likes and dislikes.
-              </div> -->
-              <div>{{ job.stats.rating }}%</div>
+                <p><span class="has-text-weight-bold">Actual Rating:</span> {{ job.stats.rating }}%</p>
+                <progress
+                  :class="`progress is-${ratingCssClass(job.stats.rating)}`"
+                  :value="job.stats.rating" max="100">
+                  {{ job.stats.rating }}%
+                </progress>
 
-              <br>
-              <div class="label">RGSC rating</div>
-              <div>
-                {{ job.stats.ratingQuit }}%
-                <span class="has-text-grey">
-                  (diff: {{ job.stats.rating - job.stats.ratingQuit }}%)
-                </span>
+                <p class="is-size-7">
+                  <router-link to="/">What is the difference?</router-link>
+                </p>
               </div>
 
-              <br>
-              <div class="label">Updated</div>
-              <div>{{ job.scUpdated | formatDate }} (version {{ job.ver }})</div>
+              <a
+                :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/${job.jobCurrId}`"
+                target="_blank"
+                class="is-block button is-link is-outlined is-medium">
+                Go to RGSC Job Page
+              </a>
+            </div>
 
-              <template v-if="job.scAdded">
-                <br>
-                <div class="label">Added</div>
-                <div>{{ job.scAdded | formatDate }}</div>
-              </template>
+            <div class="box">
+              <h2 class="subtitle">You might also like</h2>
+              <b-message>
+                Currently unavailable.
+              </b-message>
             </div>
           </div>
         </div>
@@ -241,7 +210,6 @@ import moment from 'moment';
 import { mapState } from 'vuex';
 import { userAvatars } from 'src/helpers';
 
-import BulmaHero from 'src/components/BulmaHero.vue';
 import IconGta from 'src/components/IconGta.vue';
 
 export default {
@@ -255,8 +223,13 @@ export default {
   },
 
   components: {
-    BulmaHero,
     IconGta
+  },
+
+  methods: {
+    ratingCssClass(rating) {
+      return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
+    }
   },
 
   computed: {
@@ -281,11 +254,6 @@ export default {
       const { foregroundLight } = this.job.details;
       // return (foregroundLight === false) ? 'has-text-dark' : 'has-text-white';
       return 'has-text-white';
-    },
-
-    ratingCssClass() {
-      let rating = this.job.stats.ratingQuit;
-      return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
     }
   }
 }
