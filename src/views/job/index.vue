@@ -61,41 +61,61 @@
               <h1
                 class="title is-uppercase is-size-1"
                 style="font-family: 'Oswald', sans-serif; font-weight: normal;">
-                <icon-gta :icon="job.scTypeIcon"></icon-gta>
+                <span class="tooltip" :data-tooltip="job.scTypeName">
+                  <icon-gta :icon="job.scTypeIcon" ></icon-gta>
+                </span>
                 {{ job.name }}
               </h1>
+
+              <div class="media">
+                <div class="media-left">
+                  <router-link
+                    :to="{ name: 'profile', params: { username: job.author }}">
+                    <figure class="image image-avatar is-48x48">
+                      <img class="is-rounded" :src="avatars.small">
+                    </figure>
+                  </router-link>
+                </div>
+
+                <div class="media-content">
+                  <p class="has-text-grey">
+                    <router-link
+                      :to="{ name: 'profile', params: { username: job.author }}">
+                      @{{ job.author }}
+                    </router-link>
+                    <br>
+                    {{ job.scTypeName }}
+                    <template v-if="job.scModeName">
+                      — {{ job.scModeName }}
+                    </template>
+                    ·
+                    {{ job.platformName || 'All platforms' }}
+                    ·
+                    {{ job.maxPl }} players
+                  </p>
+                </div>
+              </div>
+
+              <hr>
+
               <div class="content">
-                <p class="has-text-grey">
-                {{ job.scTypeName }}
-                <template v-if="job.scModeName">
-                  — {{ job.scModeName }}
-                </template>
-                ·
-                {{ job.platformName || 'All platforms' }}
-                ·
-                {{ job.maxPl }} players
+                <p
+                  class="is-size-5 is-italic"
+                  v-html="job.details.desc">
                 </p>
 
-                <p class="is-size-5 is-italic" v-html="job.details.desc"></p>
-
                 <div class="tags">
-                  <template v-if="job.details.specific.teamNum">
-                    <div class="tag">Number of teams: {{ job.details.specific.teamNum }}</div>
-                  </template>
+                  <span class="tag">Lap length: {{ job.details.specific.race.dist | mToKm }} km</span>
 
-                  <template v-if="job.details.specific.race">
-                    <span class="tag">Lap length: {{ job.details.specific.race.dist | mToKm }} km</span>
-
-                    <div class="tag">Number of checkpoints: {{ job.details.specific.race.chp }}</div>
-                  </template>
+                  <span class="tag">Number of checkpoints: {{ job.details.specific.race.chp }}</span>
 
                   <template v-if="job.tags && job.tags.length">
-                    <span
-                      class="tag is-capitalized"
+                    <router-link
+                      to="/"
+                      class="tag is-link is-capitalized"
                       v-for="tag in job.tags"
                       :key="tag">
-                      {{ tag }}
-                    </span>
+                      {{ tag }}</router-link>
                   </template>
                 </div>
               </div>
@@ -181,29 +201,10 @@
 
           <div class="column is-one-third-widescreen is-two-fifths-desktop is-12-tablet">
             <div class="box">
-              <div class="label">Author</div>
-              <div class="media">
-                <div class="media-left">
-                  <router-link
-                    :to="{ name: 'profile', params: { username: job.author }}">
-                    <figure class="image image-avatar is-48x48">
-                      <img class="is-rounded" :src="avatars.small">
-                    </figure>
-                  </router-link>
-                </div>
-
-                <div class="media-content">
-                  <p class="subtitle is-6">
-                    <router-link
-                      :to="{ name: 'profile', params: { username: job.author }}">
-                      @{{ job.author }}
-                    </router-link>
-                  </p>
-                </div>
-              </div>
+              <h2 class="subtitle">Author</h2>
 
               <br>
-              <div class="label">Actual rating</div>
+              <h2 class="subtitle">RGSC rating & actual rating</h2>
               <!-- <div class="has-text-grey-light is-size-7">
                 This rating doesn't consider quits and based only on the actual likes and dislikes.
               </div> -->
