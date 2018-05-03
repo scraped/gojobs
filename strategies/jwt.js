@@ -6,10 +6,10 @@ const User = require('../models/user');
 
 function cookieExtractor(req) {
   let token = null;
-    if (req.cookies) {
-      token = req.cookies.jwt;
-    }
-    return token;
+  if (req.cookies) {
+    token = req.cookies.jwt;
+  }
+  return token;
 }
 
 const strategyOptions = {
@@ -17,7 +17,7 @@ const strategyOptions = {
   jwtFromRequest: cookieExtractor,
   // passport-jwt is verifying the token using jsonwebtoken. Pass here an
   // options object for any other option you can pass the jsonwebtoken
-  // verifier. (i.e maxAge)
+  // verifier. (i. e. maxAge)
   // see https://github.com/auth0/node-jsonwebtoken
   jsonWebTokenOptions: {
     maxAge: '7d'
