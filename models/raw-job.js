@@ -16,21 +16,30 @@ let schema = new Schema({
   job: {
     type: Schema.Types.Mixed,
     validate: {
-      validator: function(job) {
+      validator(job) {
         return Object.keys(job).length;
       },
-      message: '"Job" should be rockstar job object'
+      message: 'Job cannot be empty object'
     },
     required: true
   },
 
-  delta: {
+  extended: {
+    type: Boolean,
+    default: false
+  },
+
+  statsDelta: {
     type: Schema.Types.Mixed
   },
 
   fetchDate: {
     type: Date,
     required: true
+  },
+
+  fetchPrevDate: {
+    type: Date,
   },
 
   uploaded: {

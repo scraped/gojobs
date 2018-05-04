@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 let schema = new Schema({
   by: {
     type: String,
-    enum: ['members', 'member', 'crew', 'job', 'rockstar', 'rstarverified'],
+    enum: ['members', 'member', 'crew', 'rockstar', 'rstarverified'],
     required: true
   },
 
@@ -34,20 +34,9 @@ let schema = new Schema({
     default: 0
   },
 
-  jobIds: {
-    type: [{
-      id: {
-        type: String,
-        minlength: 22,
-        maxlength: 22,
-        required: true
-      },
-
-      processed: {
-        type: Boolean,
-        default: false
-      }
-    }]
+  skip: {
+    type: Number,
+    default: 0
   }
 });
 
@@ -58,7 +47,7 @@ function isKeyRequired() {
 
 function isPlatformRequired() {
   const { by } = this;
-  return by !== 'rockstar' && by !== 'rstarverified' && by !== 'job';
+  return by !== 'rockstar' && by !== 'rstarverified';
 }
 
-module.exports = mongoose.model('FetchJob', schema);
+module.exports = mongoose.model('FetchedJobs', schema);
