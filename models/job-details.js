@@ -12,11 +12,17 @@ const schema = new Schema({
     type: String,
   }],
 
-  foregroundLight: {
-    type: Boolean,
-  },
-
-  specific: Schema.Types.Mixed
+  specific: {
+    teamNum: { type: Number },
+    race: {
+      chp: { type: Number },
+      chpLocs: { type: [Number] },
+      dist: { type: Number },
+      defVehId: { type: Number },
+      p2p: { type: Boolean },
+      laps: { type: Number }
+    }
+  }
 }, {
   id: false
 });

@@ -85,6 +85,12 @@
                   v-html="job.details.desc">
                 </p>
 
+                <p>
+                  <span class="button is-link is-outlined">Show map</span>
+                </p>
+
+                <race-map></race-map>
+
                 <div class="tags">
                   <template v-if="job.details.specific.race">
                     <span class="tag">Lap length: {{ job.details.specific.race.dist | mToKm }} km</span>
@@ -206,11 +212,11 @@
 </template>
 
 <script>
-import moment from 'moment';
 import { mapState } from 'vuex';
 import { userAvatars } from 'src/helpers';
 
 import IconGta from 'src/components/IconGta.vue';
+import RaceMap from './RaceMap.vue';
 
 export default {
   title() {
@@ -223,7 +229,8 @@ export default {
   },
 
   components: {
-    IconGta
+    IconGta,
+    RaceMap
   },
 
   methods: {
