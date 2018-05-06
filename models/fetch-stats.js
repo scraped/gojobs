@@ -2,15 +2,13 @@ const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
 let schema = new Schema({
-  by: {
+  category: {
     type: String,
-    enum: ['members', 'member', 'crew', 'rockstar', 'rstarverified'],
-    required: true
+    enum: ['user', 'crew', 'rockstar', 'rockstarverified']
   },
 
-  key: {
-    type: String,
-    required: isKeyRequired
+  obj: {
+    type: Schema.Types.ObjectId
   },
 
   platform: {
@@ -40,14 +38,9 @@ let schema = new Schema({
   }
 });
 
-function isKeyRequired() {
-  const { by } = this;
-  return by === 'member' || by === 'crew' || by === 'job';
-}
-
 function isPlatformRequired() {
   const { by } = this;
   return by !== 'rockstar' && by !== 'rstarverified';
 }
 
-module.exports = mongoose.model('FetchedJobs', schema);
+module.exports = mongoose.model('FetchStats', schema);
