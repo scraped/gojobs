@@ -1,20 +1,25 @@
 <template>
   <div>
-    <svg :viewBox="`0 0 ${metrics.maxDistX + 24} ${metrics.maxDistY + 24}`">
-      <circle
-        fill="orange"
-        v-for="loc in locNorm"
-        :cx="loc.x"
-        :cy="loc.y"
-        r="10px" />
+    <svg
+      :viewBox="`0 0 ${metrics.maxDistX + 32} ${metrics.maxDistY + 32}`">
       <line
+        stroke="#f0c850"
+        stroke-width="8px"
         v-for="(loc, i) in locNorm"
-        stroke="black"
-        stroke-width="3px"
+        :key="i"
         :x1="loc.x"
         :y1="loc.y"
         :x2="i === locNorm.length - 1 ? locNorm[0].x : locNorm[i + 1].x"
         :y2="i === locNorm.length - 1 ? locNorm[0].y : locNorm[i + 1].y" />
+      <circle
+        fill="#f0c850"
+        stroke="#000000"
+        stroke-width="2px"
+        v-for="(loc, i) in locNorm"
+        :key="i"
+        :cx="loc.x"
+        :cy="loc.y"
+        r="6px" />
     </svg>
   </div>
 </template>
@@ -175,8 +180,8 @@ export default {
       const maxX = Math.max(...locationsX);
       const maxY = Math.max(...locationsY);
       return {
-        offsetX: 6 + (minX < 0 ? -minX : 0),
-        offsetY: 6 + (minY < 0 ? -minY : 0),
+        offsetX: 8 + (minX < 0 ? -minX : 0),
+        offsetY: 8 + (minY < 0 ? -minY : 0),
         maxDistX: Math.abs(maxX - minX),
         maxDistY: Math.abs(maxY - minY)
       };
@@ -186,8 +191,8 @@ export default {
       const { offsetX, offsetY, maxDistY } = this.metrics;
       return this.locations.map(loc => {
         return {
-          x: 12 + loc.x + offsetX,
-          y: 12 + maxDistY - (loc.y + offsetY)
+          x: 16 + loc.x + offsetX,
+          y: 16 + maxDistY - (loc.y + offsetY)
         };
       });
     }

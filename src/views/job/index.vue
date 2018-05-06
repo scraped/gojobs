@@ -85,11 +85,15 @@
                   v-html="job.details.desc">
                 </p>
 
-                <p>
-                  <span class="button is-link is-outlined">Show map</span>
+                <p v-if="!mapShowed">
+                  <span
+                    class="button is-link is-outlined"
+                    @click="mapShowed = true">Show map</span>
                 </p>
 
-                <race-map></race-map>
+                <p v-else>
+                  <race-map></race-map>
+                </p>
 
                 <div class="tags">
                   <template v-if="job.details.specific.race">
@@ -101,7 +105,7 @@
                   <template v-if="job.tags && job.tags.length">
                     <router-link
                       to="/"
-                      class="tag is-link is-capitalized"
+                      class="tag is-capitalized"
                       v-for="tag in job.tags"
                       :key="tag">
                       {{ tag }}</router-link>
@@ -114,37 +118,37 @@
                   <div>
                     <p class="heading">Likes</p>
                     <p class="is-size-6">
-                      <span class="icon">
+                      <span class="icon is-hidden-mobile">
                         <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
                       </span><span>{{ job.stats.likes | formatNumber }}</span>
                     </p>
                   </div>
                 </div>
-                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em;">
+                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em 0;">
                   <div>
                     <p class="heading">Dislikes</p>
                     <p>
-                      <span class="icon">
+                      <span class="icon is-hidden-mobile">
                         <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
                       </span><span>{{ job.stats.dislikes | formatNumber }}</span>
                     </p>
                   </div>
                 </div>
-                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em;">
+                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em 0;">
                   <div>
                     <p class="heading">Launches</p>
                     <p>
-                      <span class="icon">
+                      <span class="icon is-hidden-mobile">
                         <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
                       </span><span>{{ job.stats.playTot | formatNumber }}</span>
                     </p>
                   </div>
                 </div>
-                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em;">
+                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em 0;">
                   <div>
                     <p class="heading">Players</p>
                     <p>
-                      <span class="icon">
+                      <span class="icon is-hidden-mobile">
                         <i class="fa fa-users fa-lg" aria-hidden="true"></i>
                       </span><span>{{ job.stats.playUnq | formatNumber }}</span>
                     </p>
@@ -231,6 +235,12 @@ export default {
   components: {
     IconGta,
     RaceMap
+  },
+
+  data() {
+    return {
+      mapShowed: false
+    };
   },
 
   methods: {
