@@ -4,27 +4,30 @@ const Schema = mongoose.Schema;
 let schema = new Schema({
   category: {
     type: String,
-    enum: ['user', 'crew', 'rockstar', 'rockstarverified']
+    enum: ['rockstar', 'rockstarverified']
   },
 
-  obj: {
-    type: Schema.Types.ObjectId
+  username: {
+    type: String
+  },
+  
+  crewId: {
+    type: String
   },
 
   platform: {
     type: String,
-    enum: ['pc', 'ps4', 'xbox'],
+    enum: ['pc', 'ps4', 'xb1'],
     required: isPlatformRequired
   },
 
   period: {
     type: String,
-    enum: ['today', 'last7', 'lastMonth']
+    enum: ['today', 'last7', 'last30']
   },
 
   lastFetch: {
-    type: Date,
-    required: true
+    type: Date
   },
 
   total: {
