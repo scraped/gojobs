@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 let schema = new Schema({
   category: {
     type: String,
-    enum: ['rockstar', 'rockstarverified']
+    enum: ['all', 'rockstar', 'rockstarverified']
   },
 
   username: {
@@ -23,7 +23,7 @@ let schema = new Schema({
 
   period: {
     type: String,
-    enum: ['today', 'last7', 'last30']
+    enum: ['today', 'last7', 'lastMonth']
   },
 
   lastFetch: {
