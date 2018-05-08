@@ -3,21 +3,21 @@ const Schema = mongoose.Schema;
 
 let schema = new Schema({
   category: {
-    type: String,
+    type:String,
     enum: ['all', 'rockstar', 'rockstarverified']
   },
 
   username: {
     type: String
   },
-  
+
   crewId: {
     type: String
   },
 
   platform: {
     type: String,
-    enum: ['pc', 'ps4', 'xb1'],
+    enum: ['pc', 'ps4', 'xboxone'],
     required: isPlatformRequired
   },
 
