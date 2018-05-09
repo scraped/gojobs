@@ -1,4 +1,7 @@
-const { fetchAndSave } = require('../../lib/jobs');
+const {
+  fetchJobsAndSave,
+  fetchJobsBunchesAndSave
+} = require('../../lib/jobs');
 const redisClient = require('../../lib/redis');
 
 module.exports = {
@@ -25,37 +28,40 @@ module.exports = {
 // }
 
 async function jobFetchPost(req, res) {
-  const {
-    by, key, platform, period, limit, skip
-  } = req.body;
+  const { category, id, platform, period, limit } = req.body;
 
   let options = {
-    period
+    period,
+    category: category || 'all',
+    bLimit: limit
   };
 
-  if (by) {
-    options.by = by;
-    if (by === 'member' || by === 'crew' || by === 'job') {
-      options.key = key;
-    }
+  if (category === 'member' || category === 'crew') {
+    options.id = id;
   }
 
-  if (by !== 'rstar' && by !== 'rstarverified') {
+  if (category !== 'rockstar' && category !== 'rstarverified') {
     options.platform = platform;
   }
 
-  if (limit) {
-    options.limit = Number(limit);
-  }
-
-  if (skip) {
-    options.skip = Number(skip);
-  }
-
   try {
-    await fetchAndSave(options);
+    let total = 0;
+    let failures = 0;
+    let jobs = [];
+
+    if (category === 'job') {
+      ({ total, failures, jobs } = await fetchJobsAndSave({ jobId: id }));
+    } else {
+      ({ total, failures, jobs } = await fetchJobsBunchesAndSave(options));
+    }
+
+    console.log(`Job(s) fetched, total: ${total}, failures: ${failures}, quantity: ${jobs.length}, ids:`);
+
+    jobs.forEach((jobId, i) => {
+      console.log(`${i+1}) ${jobId}`);
+    });
   } catch (error) {
-    console.log('Error while fetch and save jobs:', error);
+    console.log('Job(s) not fetched, error:', error);
   }
 
   res.json({

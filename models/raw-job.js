@@ -29,9 +29,12 @@ let schema = new Schema({
     default: false
   },
 
-  statsDelta: {
-    type: Schema.Types.Mixed
-  },
+  statsDeltas: [
+    {
+      delta: { type: Schema.Types.Mixed },
+      date: { type: Date }
+    }
+  ],
 
   fetchDate: {
     type: Date,
