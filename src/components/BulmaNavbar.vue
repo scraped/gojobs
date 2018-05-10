@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-dark is-fixed-top">
+  <nav class="navbar is-dark is-fixed-top" style="box-shadow: 0 5px 15px 0  rgba(0, 0, 0, 0.5);">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item" exact-active-class="">
