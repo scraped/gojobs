@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 let schema = new Schema({
   category: {
-    type:String,
+    type: String,
     enum: ['all', 'rockstar', 'rockstarverified']
   },
 

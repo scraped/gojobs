@@ -16,44 +16,44 @@
 
               <b-field label="Author(s)"></b-field>
                 <b-field>
-                  <b-radio v-model="by" native-value="members" type="is-danger">
+                  <b-radio v-model="category" native-value="members" type="is-danger">
                     All RGSC Members
                   </b-radio>
                 </b-field>
 
                 <b-field>
-                  <b-radio v-model="by" native-value="member">
+                  <b-radio v-model="category" native-value="member">
                     Specific User
                   </b-radio>
                 </b-field>
 
                 <b-field>
-                  <b-radio v-model="by" native-value="crew">
+                  <b-radio v-model="category" native-value="crew">
                     Specific Crew
                   </b-radio>
                 </b-field>
 
                 <b-field>
-                  <b-radio v-model="by" native-value="job">
+                  <b-radio v-model="category" native-value="job">
                     Specific Job
                   </b-radio>
                 </b-field>
 
                 <b-field>
-                  <b-radio v-model="by" native-value="rockstar">
+                  <b-radio v-model="category" native-value="rockstar">
                     Rockstar
                   </b-radio>
                 </b-field>
 
                 <b-field>
-                  <b-radio v-model="by" native-value="rstarverified">
+                  <b-radio v-model="category" native-value="rockstarverified">
                     Rockstar Verified
                   </b-radio>
                 </b-field>
             </div>
             <div class="column">
               <template v-if="platformDisabled">
-                <b-message v-if="by !== 'job'" type="is-info">
+                <b-message v-if="category !== 'job'" type="is-info">
                   Rockstar jobs available on all platforms.
                 </b-message>
               </template>
@@ -70,7 +70,7 @@
                     PS4
                   </b-radio-button>
 
-                  <b-radio-button v-model="platform" native-value="xbox">
+                  <b-radio-button v-model="platform" native-value="xboxone">
                     XB1
                   </b-radio-button>
                 </b-field>
@@ -78,9 +78,9 @@
 
               <b-field
                 label="Username"
-                v-if="by === 'member'">
+                v-if="category === 'member'">
                 <b-input
-                  v-model.trim="key"
+                  v-model.trim="id"
                   size="is-medium"
                   placeholder="andreww2012"
                   required>
@@ -89,9 +89,9 @@
 
               <b-field
                 label="Crew ID"
-                v-if="by === 'crew'">
+                v-if="category === 'crew'">
                 <b-input
-                  v-model.trim="key"
+                  v-model.trim="id"
                   size="is-medium"
                   placeholder="Crew digital ID"
                   required>
@@ -100,9 +100,9 @@
 
               <b-field
                 label="Job ID"
-                v-if="by === 'job'">
+                v-if="category === 'job'">
                 <b-input
-                  v-model.trim="key"
+                  v-model.trim="id"
                   size="is-medium"
                   placeholder="NcO4vELhLEqKahHQy-IWPA"
                   minlength="22"
@@ -111,13 +111,13 @@
                 </b-input>
               </b-field>
 
-              <b-message v-if="by === 'job'" type="is-warning">
-                You may use both current and permanent Rockstar Job ID. Also take into account that sometimes Rockstar servers can't find the job by its permanent ID.
+              <b-message v-if="category === 'job'" type="is-warning">
+                Take into account that sometimes Rockstar servers can't find the job category its permanent ID.
               </b-message>
             </div>
           </div>
 
-          <template v-if="by !== 'job'">
+          <template v-if="category !== 'job'">
             <b-field label="Period"></b-field>
             <b-field>
               <b-radio-button v-model="period" native-value="">
@@ -147,7 +147,7 @@
               </b-input>
             </b-field>
 
-            <b-field label="To skip"></b-field>
+            <!-- <b-field label="To skip"></b-field>
             <div class="field">
               <b-checkbox v-model="forceSkip">
                 Manually specify how many jobs to skip
@@ -161,7 +161,7 @@
                 v-model.number="skip"
                 size="is-medium">
               </b-input>
-            </div>
+            </div> -->
           </template>
 
           <div class="buttons">
@@ -192,8 +192,8 @@ export default {
     return {
       awaiting: false,
       forceSkip: false,
-      by: 'members',
-      key: '',
+      category: 'members',
+      id: '',
       platform: 'pc',
       period: '',
       limit: 50,
@@ -204,16 +204,20 @@ export default {
   methods: {
     async fetch() {
       const {
-        by, key, platform, period, limit, skip, forceSkip
+        category, id, platform, period, limit, skip, forceSkip
       } = this;
 
       const autoSkip = !forceSkip;
 
       this.awaiting = true;
 
-      await this.$http.post('/api/job/fetch', {
-        by, key, platform, period, limit, autoSkip, skip
-      });
+      try {
+        await this.$http.post('/api/job/fetch', {
+          category, key, platform, period, limit, autoSkip, skip
+        });
+      } catch (error) {
+        this.awaiting = false;
+      }
 
       this.awaiting = false;
     }
@@ -221,8 +225,8 @@ export default {
 
   computed: {
     platformDisabled() {
-      const { by } = this;
-      return by === 'rockstar' || by === 'rstarverified' || by === 'job'
+      const { category } = this;
+      return category === 'rockstar' || category === 'rockstarverified' || category === 'job'
     }
   }
 };
