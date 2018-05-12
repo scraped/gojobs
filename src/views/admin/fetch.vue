@@ -16,13 +16,13 @@
 
               <b-field label="Author(s)"></b-field>
                 <b-field>
-                  <b-radio v-model="category" native-value="members" type="is-danger">
-                    All RGSC Members
+                  <b-radio v-model="category" native-value="all" type="is-danger">
+                    RGSC Members
                   </b-radio>
                 </b-field>
 
                 <b-field>
-                  <b-radio v-model="category" native-value="member">
+                  <b-radio v-model="category" native-value="user">
                     Specific User
                   </b-radio>
                 </b-field>
@@ -78,7 +78,7 @@
 
               <b-field
                 label="Username"
-                v-if="category === 'member'">
+                v-if="category === 'user'">
                 <b-input
                   v-model.trim="id"
                   size="is-medium"
@@ -192,7 +192,7 @@ export default {
     return {
       awaiting: false,
       forceSkip: false,
-      category: 'members',
+      category: 'all',
       id: '',
       platform: 'pc',
       period: '',
@@ -211,13 +211,9 @@ export default {
 
       this.awaiting = true;
 
-      try {
-        await this.$http.post('/api/job/fetch', {
-          category, key, platform, period, limit, autoSkip, skip
-        });
-      } catch (error) {
-        this.awaiting = false;
-      }
+      await this.$http.post('/api/job/fetch', {
+        category, id, platform, period, limit, autoSkip, skip
+      });
 
       this.awaiting = false;
     }

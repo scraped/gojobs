@@ -36,7 +36,7 @@ async function jobFetchPost(req, res) {
     bLimit: limit
   };
 
-  if (category === 'member' || category === 'crew') {
+  if (category === 'user' || category === 'crew') {
     options.id = id;
   }
 
@@ -46,29 +46,24 @@ async function jobFetchPost(req, res) {
 
   try {
     let total = 0;
-    let failures = 0;
-    let jobs = [];
+    let result = [];
 
     if (category === 'job') {
-      ({ total, failures, jobs } = await fetchJobsAndSave({ jobId: id }));
+      ({ total, result } = await fetchJobsAndSave({ jobId: id }));
     } else {
-      ({ total, failures, jobs } = await fetchJobsBunchesAndSave(options));
+      ({ total, result } = await fetchJobsBunchesAndSave(options));
     }
 
-    console.log(`Job(s) fetched, total: ${total}, failures: ${failures}, quantity: ${jobs.length}, ids:`);
+    console.log(`Job(s) fetched, total: ${total}, results:`);
 
-    jobs.forEach((jobId, i) => {
-      console.log(`${i+1}) ${jobId}`);
+    result.forEach((res, i) => {
+      console.log(`${i+1}) ${res.id}: ${res.success ? 'saved' : 'not saved'}`);
     });
   } catch (error) {
     console.log('Job(s) not fetched, error:', error);
   }
 
   res.json({
-    message: 'Jobs are being fetched.'
+    message: 'Jobs fetched.'
   });
 };
-
-async function jobFetchedPost(req, res) {
-
-}

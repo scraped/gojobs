@@ -29,12 +29,9 @@ let schema = new Schema({
     default: false
   },
 
-  statsDeltas: [
-    {
-      delta: { type: Schema.Types.Mixed },
-      date: { type: Date }
-    }
-  ],
+  statsDelta: {
+    type: Schema.Types.Mixed
+  },
 
   fetchDate: {
     type: Date,
@@ -47,7 +44,7 @@ let schema = new Schema({
 
   uploaded: {
     type: Boolean,
-    required: false
+    default: false
   },
 
   uploadDate: {
