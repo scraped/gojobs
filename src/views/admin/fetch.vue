@@ -5,12 +5,10 @@
         <form
           method="post"
           @submit.prevent="fetch">
-          <h2 class="subtitle is-4">Fetch jobs from RGSC</h2>
-
-          <div class="content">
-            Fetching jobs is efficient: it remembers what jobs needs fetching & refetching in order to avoid unnecessary parsing. Internally uses Redis.
-          </div>
-
+          <h2 class="subtitle is-4">
+            <span class="tag is-rounded">1</span>
+            Fetching jobs from RGSC
+          </h2>
           <div class="columns">
             <div class="column is-half">
 
@@ -177,9 +175,40 @@
     </div>
     <div class="column is-one-third">
       <div class="box">
-        <h2 class="subtitle is-4">Process</h2>
+        <h2 class="subtitle is-4">
+          <span class="tag is-rounded">2</span>
+          Further fetching
+        </h2>
         <div class="content">
-          You can upload jobs to the site from here.
+          <p>All jobs need further fetching to restore all information.</p>
+
+          <form @submit.prevent="furtherFetch">
+            <button
+              class="button is-primary"
+              :class="{ 'is-loading': awaiting }"
+              :disabled="awaiting">
+              Fetch
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="box">
+        <h2 class="subtitle is-4">
+          <span class="tag is-rounded">3</span>
+          Processing
+        </h2>
+        <div class="content">
+          <p>You can upload jobs to the site from here.</p>
+
+          <form @submit.prevent="process">
+            <button
+              class="button is-primary"
+              :class="{ 'is-loading': awaiting }"
+              :disabled="awaiting">
+              Process
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -216,8 +245,25 @@ export default {
       });
 
       this.awaiting = false;
+    },
+
+    async furtherFetch() {
+      this.awaiting = true;
+
+      await this.$http.post('/api/job/fetchextended');
+
+      this.awaiting = false;
+    },
+
+    async process() {
+      this.awaiting = true;
+
+      await this.$http.post('/api/job/upload');
+
+      this.awaiting = false;
     }
   },
+
 
   computed: {
     platformDisabled() {
