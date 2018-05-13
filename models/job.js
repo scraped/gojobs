@@ -48,6 +48,10 @@ let schema = new Schema({
     required: true
   },
 
+  minPl: {
+    type: Number
+  },
+
   maxPl: {
     type: Number,
     set: setMaxPlayers,
@@ -127,6 +131,11 @@ let schema = new Schema({
       type: Number,
       required: true
     },
+
+    changeMp: {
+      type: Number,
+      default: 0
+    }
   },
 
   ver: {
@@ -139,6 +148,11 @@ let schema = new Schema({
   },
 
   scUpdated: {
+    type: Date,
+    required: true
+  },
+
+  fetched: {
     type: Date,
     required: true
   }

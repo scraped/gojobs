@@ -2,18 +2,26 @@ const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-  jobId: { type: String, unique: true },
+  jobId: {
+    type: String,
+    unique: true
+  },
 
-  desc: { type: String, trim: true, required: true },
-
-  crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
+  desc: {
+    type: String,
+    trim: true,
+    required: true
+  },
 
   background: [{
     type: String,
   }],
 
   specific: {
-    teamNum: { type: Number },
+    teamNum: {
+      type: Number
+    },
+
     race: {
       laps: { type: Number },
       chp: { type: Number },
@@ -26,7 +34,8 @@ const schema = new Schema({
         y: { type: Number }
       }],
       dist: { type: Number },
-      vehDef: { type: Number }
+      defVeh: { type: Number },
+      trfVeh: [{ type: Number }]
     }
   }
 }, {
