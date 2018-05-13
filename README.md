@@ -196,14 +196,17 @@ Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
 `type`     | `string`           |      | Race type (see below)
 `chp`      | `integer`          |      | Number of checkpoints
-`lap`      | `integer`          |      | Default number of laps (`0` if `P2P`)
+`lap`      | `integer`          |      | Default number of laps (`0` if point to point race)
 `rdis`     | `float`            |      | Distance in metres
 `ivm`      | `integer`          | `x`  | Default vehicle ID
 `aveh`     | `array<string>`    | `xe` | Available vehicle classes (`undefined` if target assault race)
 `chl`      | `array<Location2>` | `x`  | Checkpoint locations
 `sndchk`   | `array<Location2>` | `xe` | Sec. checkpoint locations (`(0, 0)` if no corresponding secondary checkpoint) (can be `undefined`)
-`cptfrm`   | `array<integer>`   | `x` | (only for tr. races) `-1` if no transformation on current CP, else means transform vehicle ID (basically these IDs are `trfmvmn` array indexes)
-`trfmvmn`  | `array<string>`    | `x` | List of vehicles available for transformation in. `0` usually `Base vehicle`. Not all of them may be used in the race, check `cptfrm` property
+`trfmvm`   | `array<Vehicle>`   | `x`  | List of vehicles available for transformation in. Not all of them can be used in the race, check `cptfrm` property
+`trfmvmn`  | `array<string>`    | `x`  | Corresponding vehicle names
+`cptfrm`   | `array<integer>`   | `x`  | (only for tr. races) `-1` if no transformation on current CP, else `trfmvmn` array indexes
+`cptfrms`  | `array<integer>`   | `x`  | exactly the same, but for secondary checkpoints
+`isLapsRace` | `boolean`        | `!`  | (?) always `false` - probably error
 `subtype`  | `integer`          | `!`  | (?) `20` - tr. race, `21` - special vehicle race
 `dist`     | `string`           | `!`  | Formatted distance like `10.01 miles` (DON'T use it)
 `gw`       | `integer`          | `!`  | (?) Sometimes values like `4.5`, `6.75`, otherwise `0`
