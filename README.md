@@ -190,7 +190,7 @@ Property | Type | Flags | Description
 
 ## `Content.Metadata.data.mission.race`
 
-For races only.
+For **races and parachuting** only.
 
 Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
@@ -204,13 +204,13 @@ Property | Type | Flags | Description
 `sndchk`   | `array<Location2>` | `xe` | Sec. checkpoint locations (`(0, 0)` if no corresponding secondary checkpoint) (can be `undefined`)
 `trfmvm`   | `array<Vehicle>`   | `x`  | List of vehicles available for transformation in. Not all of them can be used in the race, check `cptfrm` property
 `trfmvmn`  | `array<string>`    | `x`  | Corresponding vehicle names
-`cptfrm`   | `array<integer>`   | `x`  | (only for tr. races) `-1` if no transformation on current CP, else `trfmvmn` array indexes
+`cptfrm`   | `array<integer>`   | `x`  | `-1` if no transformation on current CP, else `trfmvm` (`trfmvmn`) array indexes
 `cptfrms`  | `array<integer>`   | `x`  | exactly the same, but for secondary checkpoints
 `isLapsRace` | `boolean`        | `!`  | (?) always `false` - probably error
 `subtype`  | `integer`          | `!`  | (?) `20` - tr. race, `21` - special vehicle race
 `dist`     | `string`           | `!`  | Formatted distance like `10.01 miles` (DON'T use it)
 `gw`       | `integer`          | `!`  | (?) Sometimes values like `4.5`, `6.75`, otherwise `0`
-`clbs`     | `integer`          | `!`  | (?) Some number...
+`clbs`     | `integer`          | `!`  | (?) Always `2^n` or `-2147482625`
 
 ## (?) `Content.Metadata.data.mission.rule`
 

@@ -4,12 +4,16 @@ module.exports = {
   jobUploadPost
 };
 
-function jobUploadPost(req, res) {
-  const { uploadAll } = req.body;
-
-  processAllJobs({ forceUploadAll: Boolean(uploadAll) });
-
+async function jobUploadPost(req, res) {
   res.json({
-    message: 'Jobs are being uploaded.'
+    message: 'Jobs are being processed.'
   });
-};
+
+  const result = await processAllJobs();
+
+  console.log(`Job(s) processed, results:`);
+
+  result.forEach((res, i) => {
+    console.log(`${i + 1}) ${res.jobId}: ${res.success ? 'processed' : 'not processed'}`);
+  });
+}

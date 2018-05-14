@@ -1,6 +1,7 @@
 [
   {
     "name": "Race",
+    "icon": "f17d",
     "modes": [
       "Air Race",
       "Water Race",
@@ -11,7 +12,6 @@
       "Transform Race",
       "Target Assault Race"
     ],
-    "icon": "f17d",
     "icons": [
       "f102",
       "f1a5",
@@ -26,11 +26,11 @@
 
   {
     "name": "Deathmatch",
+    "icon": "f11e",
     "modes": [
       "Team Deathmatch",
       "Vehicle Deathmatch"
     ],
-    "icon": "f11e",
     "icons": [
       "f197",
       "f1a1"
@@ -44,13 +44,7 @@
 
   {
     "name": "Capture",
-    "icon": "f113",
-    "modes": [
-      "Capture: Raid",
-      "Capture: Contend",
-      "Capture: GTA",
-      "Capture: Hold"
-    ]
+    "icon": "f113"
   },
 
   {

@@ -2,27 +2,66 @@ const mongoose = require('../lib/db');
 const Schema = mongoose.Schema;
 
 let schema = new Schema({
-  crewId: { type: Number, unique: true, required: true },
-  slug: { type: String, unique: true, required: true },
-
-  rockstar: { type: Boolean },
-  leader: { type: String, required: notRockstar },
-
-  name: { type: String, trim: true, required: true },
-  desc: { type: String, trim: true },
-  motto: { type: String, trim: true, required: notRockstar },
-
-  tag: { type: String, uppercase: true, required: true },
-  color: { type: String, set: setColor, get: getColor, required: notRockstar },
-  avatarId: { type: String, required: notRockstar },
-
-  jobs: {
-    fetched: { type: Number, default: 0, required: true },
-    total: { type: Number, default: 0, required: true }
+  crewId: {
+    type: Number,
+    unique: true,
+    required: true
   },
 
-  lastFetch: { type: Date },
-  lastUpload: { type: Date }
+  slug: {
+    type: String,
+    unique: true,
+    required: true
+  },
+
+  rockstar: {
+    type: Boolean
+  },
+
+  leader: {
+    type: String,
+    required: notRockstar
+  },
+
+  name: {
+    type: String,
+    trim: true,
+    required: true
+  },
+
+  desc: {
+    type: String,
+    trim: true
+  },
+
+  motto: {
+    type: String,
+    trim: true
+  },
+
+  tag: {
+    type: String,
+    uppercase: true,
+    required: true
+  },
+
+  color: {
+    type: String,
+    set: setColor,
+    get: getColor,
+    required: notRockstar
+  },
+
+  avatar: {
+    type: String,
+    select: false,
+    required: notRockstar
+  },
+
+  lastInfoFetch: {
+    type: Date,
+    default: new Date()
+  }
 }, {
   id: false,
   toObject: {

@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { platforms, modes } = require('../config/static');
+const { platforms } = require('../config/static');
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -23,10 +23,6 @@ let schema = new Schema({
     type: Boolean
   },
 
-  bad: {
-    type: Boolean
-  },
-
   author: {
     type: String,
     required: notRockstar
@@ -45,6 +41,8 @@ let schema = new Schema({
 
   image: {
     type: String,
+    set: setImage,
+    select: false,
     required: true
   },
 
@@ -54,7 +52,6 @@ let schema = new Schema({
 
   maxPl: {
     type: Number,
-    set: setMaxPlayers,
     required: true
   },
 
@@ -110,7 +107,8 @@ let schema = new Schema({
 
     likes: {
       type: Number,
-      required: true },
+      required: true
+    },
 
     dislikes: {
       type: Number,
@@ -132,7 +130,7 @@ let schema = new Schema({
       required: true
     },
 
-    changeMp: {
+    growthRate: {
       type: Number,
       default: 0
     }
@@ -150,11 +148,6 @@ let schema = new Schema({
   scUpdated: {
     type: Date,
     required: true
-  },
-
-  fetched: {
-    type: Date,
-    required: true
   }
 }, {
   id: false,
@@ -164,18 +157,19 @@ let schema = new Schema({
   }
 });
 
+function setImage(url) {
+  const str = url.split('/');
+  return `${str[5]}.${str[7]}`;
+}
+
 schema.virtual('imageUrl')
-  .set(function(url) {
-    const str = url.split('/');
-    this.image = `${str[5]}.${str[7]}`;
-  })
   .get(function() {
     const img = this.image.split('.');
     const { jobCurrId } = this;
     return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${jobCurrId}/${img[1]}.jpg`;
   });
 
-schema.virtual('scTypeAndModeName')
+schema.virtual('scTypeAndModeId')
   .set(function({ scTypeName, scModeName }) {
     const typeId = 1 + _.findIndex(
       modes,
@@ -184,42 +178,15 @@ schema.virtual('scTypeAndModeName')
 
     this.scType = typeId;
 
-    const currModes = modes[typeId - 1].modes;
+    const modes = modes[typeId - 1].modes;
 
-    if (currModes) {
+    if (modes) {
       const modeId = 1 + _.findIndex(
-        currModes,
+        modes,
         mode => mode === scModeName
       );
       if (modeId) {
         this.scMode = modeId;
-      }
-    }
-  });
-
-schema.virtual('scTypeName')
-  .get(function() {
-    return modes[this.scType - 1].name;
-  });
-
-schema.virtual('scModeName')
-  .get(function() {
-    if (this.scMode) {
-      return modes[this.scType - 1].modes[this.scMode - 1];
-    }
-  });
-
-schema.virtual('scTypeIcon')
-  .get(function() {
-    return modes[this.scType - 1].icon;
-  })
-
-schema.virtual('scModeIcon')
-  .get(function() {
-    if (this.scMode) {
-      const typeModes = modes[this.scType - 1].modes;
-      if (typeModes) {
-        return typeModes[this.scMode - 1].icon;
       }
     }
   });
@@ -233,19 +200,10 @@ schema.virtual('platformName')
     if (platformId) {
       this.platform = platformId;
     }
-  })
-  .get(function() {
-    if (this.platform) {
-      return platforms[this.platform - 1].name;
-    }
   });
 
 function notRockstar() {
   return !this.rockstar;
-}
-
-function setMaxPlayers(n) {
-  return _.clamp(n, 1, 30);
 }
 
 module.exports = mongoose.model('Job', schema);

@@ -18,7 +18,7 @@ const schema = new Schema({
   }],
 
   specific: {
-    teamNum: {
+    teams: {
       type: Number
     },
 

@@ -36,7 +36,7 @@ async function jobFetchExtendedPost(req, res) {
   console.log(`Job(s) fetched, results:`);
 
   result.forEach((res, i) => {
-    console.log(`${i+1}) ${res.jobId}: ${res.success ? 'saved' : 'not saved'}`);
+    console.log(`${i + 1}) ${res.jobId}: ${res.success ? 'saved' : 'not saved'}`);
   });
 
   res.json({
@@ -74,7 +74,7 @@ async function jobFetchPost(req, res) {
     console.log(`Job(s) fetched, total: ${total}, results:`);
 
     result.forEach((res, i) => {
-      console.log(`${i+1}) ${res.jobId}: ${res.success ? 'saved' : 'not saved'}`);
+      console.log(`${i + 1}) ${res.jobId}: ${res.success ? 'saved' : 'not saved'}`);
     });
   } catch (error) {
     console.log('Job(s) not fetched, error:', error);
@@ -83,4 +83,4 @@ async function jobFetchPost(req, res) {
   res.json({
     message: 'Jobs fetched.'
   });
-};
+}
