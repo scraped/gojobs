@@ -18,7 +18,7 @@
             <div class="box" style="position: relative;">
               <div class="has-text-grey-lighter" style="position: absolute; top: 0.5em; right: 0.5em; font-size: 7em; line-height: 0;">
                 <span>
-                  <icon-gta :icon="job.scTypeIcon" ></icon-gta>
+                  <icon-gta :icon="scInfo.scTypeIcon" ></icon-gta>
                 </span>
               </div>
               <h1
@@ -64,14 +64,14 @@
                     </span>
                   </p>
                   <p class="has-text-grey">
-                    {{ job.scTypeName }}
-                    <template v-if="job.scModeName">
-                      — {{ job.scModeName }}
+                    {{ scInfo.scTypeName }}
+                    <template v-if="scInfo.scModeName">
+                      — {{ scInfo.scModeName }}
                     </template>
                     ·
-                    {{ job.platformName || 'All platforms' }}
+                    {{ scInfo.platformName || 'All platforms' }}
                     ·
-                    {{ job.maxPl }} players
+                    <template v-if="job.minPl">{{ job.minPl }}-</template>{{ job.maxPl }} players
                   </p>
                 </div>
               </div>
@@ -92,7 +92,10 @@
                 </p>
 
                 <p v-else>
-                  <race-map></race-map>
+                  <race-map
+                    :locations="job.details.specific.race.chpLocs"
+                    :slocations="job.details.specific.race.chpSecLocs">
+                  </race-map>
                 </p>
 
                 <div class="tags">
@@ -100,6 +103,15 @@
                     <span class="tag">Lap length: {{ job.details.specific.race.dist | mToKm }} km</span>
 
                     <span class="tag">Number of checkpoints: {{ job.details.specific.race.chp }}</span>
+
+                    <span class="tag">
+                      <template v-if="job.details.specific.race.laps">
+                        Default number of laps: {{ job.details.specific.race.laps }}
+                      </template>
+                      <template v-else>
+                        Point To Point
+                      </template>
+                    </span>
                   </template>
 
                   <template v-if="job.tags && job.tags.length">
@@ -177,14 +189,16 @@
               <div class="content">
                 <p><span class="has-text-weight-bold">RGSC Rating:</span> {{ job.stats.ratingQuit }}%</p>
                 <progress
-                  :class="`progress is-${ratingCssClass(job.stats.ratingQuit)}`"
+                  class="progress"
+                  :class="ratingCssClass(job.stats.ratingQuit)"
                   :value="job.stats.ratingQuit" max="100">
                   {{ job.stats.ratingQuit }}%
                 </progress>
 
                 <p><span class="has-text-weight-bold">Actual Rating:</span> {{ job.stats.rating }}%</p>
                 <progress
-                  :class="`progress is-${ratingCssClass(job.stats.rating)}`"
+                  class="progress"
+                  :class="ratingCssClass(job.stats.rating)"
                   :value="job.stats.rating" max="100">
                   {{ job.stats.rating }}%
                 </progress>
@@ -217,7 +231,13 @@
 
 <script>
 import { mapState } from 'vuex';
-import { userAvatars } from 'src/helpers';
+import {
+  userAvatars,
+  rgscRatingCssClass,
+  updatedDate,
+  scTypeModeIcon,
+  scPlatformName
+} from 'src/helpers';
 
 import IconGta from 'src/components/IconGta.vue';
 import RaceMap from './RaceMap.vue';
@@ -244,19 +264,33 @@ export default {
   },
 
   methods: {
-    ratingCssClass(rating) {
-      return (rating >= 67) ? 'success' : (rating >= 34) ? 'warning' : 'danger';
+    ratingCssClass(value) {
+      return rgscRatingCssClass(value);
     }
   },
 
   computed: {
+    ...mapState('job', [
+      'job'
+    ]),
+
     avatars() {
       return userAvatars(this.job.author);
     },
 
-    ...mapState('job', [
-      'job'
-    ]),
+    updatedDate() {
+      const { ver } = this.job;
+      return updatedDate({ date: this.job.scUpdated, ver });
+    },
+
+    scInfo() {
+      const { scType, scMode, platform } = this.job;
+      // { scTypeName, scTypeIcon, scModeName, platformName }
+      return {
+        ...scTypeModeIcon({ scType, scMode }),
+        ...scPlatformName({ platform })
+      };
+    },
 
     gradient() {
       const { background } = this.job.details;
@@ -265,13 +299,7 @@ export default {
           return prev + `, rgba(${curr})`;
         }, '');
       }
-    },
-
-    colorCssClass() {
-      const { foregroundLight } = this.job.details;
-      // return (foregroundLight === false) ? 'has-text-dark' : 'has-text-white';
-      return 'has-text-white';
     }
   }
-}
+};
 </script>

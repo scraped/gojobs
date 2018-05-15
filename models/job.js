@@ -41,7 +41,6 @@ let schema = new Schema({
 
   image: {
     type: String,
-    set: setImage,
     required: true
   },
 
@@ -149,19 +148,14 @@ let schema = new Schema({
     required: true
   }
 }, {
-  id: false,
-  toObject: {
-    versionKey: false,
-    virtuals: true
-  }
+  id: false
 });
 
-function setImage(url) {
-  const str = url.split('/');
-  return `${str[5]}.${str[7]}`;
-}
-
 schema.virtual('imageUrl')
+  .set(function(url) {
+    const str = url.split('/');
+    return `${str[5]}.${str[7]}`;
+  })
   .get(function() {
     const img = this.image.split('.');
     const { jobCurrId } = this;

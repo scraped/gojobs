@@ -26,10 +26,10 @@ const schema = new Schema({
       laps: { type: Number },
       chp: { type: Number },
       chpLocs: {
-        type: [Number]
+        type: [[Number]]
       },
       chpSecLocs: {
-        type: [Number]
+        type: [[Number]]
       },
       dist: { type: Number },
       defVeh: { type: Number },
