@@ -29,17 +29,9 @@ let schema = new Schema({
     default: false
   },
 
-  statsDelta: {
-    type: Schema.Types.Mixed
-  },
-
   fetchDate: {
     type: Date,
     required: true
-  },
-
-  fetchPrevDate: {
-    type: Date,
   },
 
   uploaded: {

@@ -1,4 +1,10 @@
 const moment = require('moment');
+const {
+  modes,
+  platforms,
+  vehClasses,
+  vehicles
+} = require('../../config/static');
 
 export function rgscRatingCssClass(rating) {
   if (rating >= 67) return 'is-success';
@@ -14,3 +20,25 @@ export function updatedDate({ date, ver }) {
   }
   return `${dateFromNow} (version ${ver})`;
 };
+
+export function scTypeModeIcon({ scType, scMode }) {
+  const { name, icon } = modes[scType - 1];
+
+  let scModeName = '';
+
+  if (scMode) {
+    scModeName = modes[scType - 1].modes[scMode - 1];
+  }
+
+  return {
+    scTypeName: name,
+    scTypeIcon: icon,
+    scModeName
+  };
+}
+
+export function scPlatformName({ platform }) {
+  return {
+    platformName: platform ? platforms[platform - 1].name : ''
+  };
+}

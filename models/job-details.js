@@ -25,14 +25,12 @@ const schema = new Schema({
     race: {
       laps: { type: Number },
       chp: { type: Number },
-      chpLocs: [{
-        x: { type: Number },
-        y: { type: Number }
-      }],
-      chpSecLocs: [{
-        x: { type: Number },
-        y: { type: Number }
-      }],
+      chpLocs: {
+        type: [Number]
+      },
+      chpSecLocs: {
+        type: [Number]
+      },
       dist: { type: Number },
       defVeh: { type: Number },
       trfVeh: [{ type: Number }]

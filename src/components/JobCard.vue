@@ -26,8 +26,8 @@
           <div class="title is-5">
             <span
               class="tooltip has-text-weight-normal"
-              :data-tooltip="`Game mode: ${job.scTypeName}`">
-              <icon-gta :icon="job.scTypeIcon"></icon-gta>
+              :data-tooltip="`Game mode: ${scInfo.scTypeName}`">
+              <icon-gta :icon="scInfo.scTypeIcon"></icon-gta>
             </span><span v-html="job.name"></span>
           </div>
         </div>
@@ -72,14 +72,14 @@
       <div class="is-size-7 has-text-grey">
         <div>
           <template v-if="!job.rockstar">
-            {{ job.platformName }} ·
+            {{ scInfo.platformName }} ·
           </template>
-          {{ job.maxPl }} players ·
+          <template v-if="job.minPl">{{ job.minPl }}-</template>{{ job.maxPl }} players ·
           {{ updatedDate }}
           <!-- <br>Points: {{ job.stats.points }} -->
         </div>
         <div>
-          In-game category: {{ job.scModeName || job.scTypeName }}
+          In-game category: {{ scInfo.scModeName || scInfo.scTypeName }}
         </div>
       </div>
       <br>
@@ -121,13 +121,14 @@
 
 <script>
 import rockstarIcon from 'src/images/rockstar-2.png';
-
-import IconGta from 'src/components/IconGta.vue';
 import {
   userAvatars,
   rgscRatingCssClass,
-  updatedDate
+  updatedDate,
+  scTypeModeIcon,
+  scPlatformName
 } from 'src/helpers';
+import IconGta from 'src/components/IconGta.vue';
 
 export default {
   props: {
@@ -159,6 +160,15 @@ export default {
       const { ver } = this.job;
       return updatedDate({ date: this.job.scUpdated, ver });
     },
+
+    scInfo() {
+      const { scType, scMode, platform } = this.job;
+      // { scTypeName, scTypeIcon, scModeName, platformName }
+      return {
+        ...scTypeModeIcon({ scType, scMode }),
+        ...scPlatformName({ platform })
+      };
+    }
   }
 };
 </script>

@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { platforms } = require('../config/static');
+const { platforms, modes } = require('../config/static');
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -42,7 +42,6 @@ let schema = new Schema({
   image: {
     type: String,
     set: setImage,
-    select: false,
     required: true
   },
 
@@ -178,11 +177,11 @@ schema.virtual('scTypeAndModeId')
 
     this.scType = typeId;
 
-    const modes = modes[typeId - 1].modes;
+    const typeModes = modes[typeId - 1].modes;
 
-    if (modes) {
+    if (typeModes) {
       const modeId = 1 + _.findIndex(
-        modes,
+        typeModes,
         mode => mode === scModeName
       );
       if (modeId) {
