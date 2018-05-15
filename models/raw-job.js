@@ -29,11 +29,6 @@ let schema = new Schema({
     default: false
   },
 
-  differ: {
-    type: Boolean,
-    default: true
-  },
-
   statsDelta: {
     type: Schema.Types.Mixed
   },

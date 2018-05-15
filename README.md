@@ -138,6 +138,9 @@ Property | Type | Flags | Description
 `latestVersionContentId` | `MissionId` |     | ID of a latest version `MissionId`
 `latest`                 | `boolean`   |     | `false` is it is not a latest version
 `RootContentId`          | `MissionId` |     | **UNIQUE** job ID (persists over time - **use it**, **differs** from `MissionId`!)
+`copiedFrom`             | `MissionId` | `e` | Original job ID (relevant only for rockstar verified jobs)
+`url`                    | `string`    |     | `/games/gtav/jobs/job/<MissionId>`
+`ver`                    | `integer`   |     | Job version
 `cat`                    | `string`    |     | Category: `none`, `rstar`, `verif`
 `cdate`                  | `date`      |     | "Creation date"
 `pdate`                  | `date`      | `e` | "Publication date" - for example, for rockstar jobs `cdate` < `pdate` (pdate is always tuesday). So use it, but very rarely it is not available, then use `cdate`
@@ -153,12 +156,9 @@ Property | Type | Flags | Description
 `crewcolor`              | `string`    | `e` | Color in `#rrggbb` or `#rrggbbaa` format
 `isfoundercrew`          | `boolean`   |     | If founder of the crew?
 `isprivate`              | `boolean`   |     | If crew is private, `false` also means no crew
-`thumbnail`              | `string`    |     | `https://prod.cloud.rockstargames.com/ugc/gta5mission/<unique number>/<ID>/<1, 2 or 3>_0.jpg`
+`thumbnail`              | `string`    |     | `https://prod.cloud.rockstargames.com/ugc/gta5mission/<unique number>/<MissionId>/<1, 2 or 3>_0.jpg`
 `plat`                   | `string`    |     | `Ps3`, `Ps4`, `XBox`, `XBoxOne`, `PC` (NOTE: even rockstar jobs have this property!)
 `tags`                   | `Array<string>` | `e` | Array of tags
-`ver`                    | `integer`   |     | Job version
-`url`                    | `string`    |     | `/games/gtav/jobs/job/<MissionId>`
-`copiedFrom`             | `MissionId` | `e` | Original job ID (relevant only for rockstar verified jobs)
 `originalCreatorId`      | `integer`   | `x` | (only for R* verified) `rockstarId`
 `originalCreatorName`    | `string`    | `x` | (only for R* verified) `nickname`
 `isOwner`                | `boolean`   | `!` | (?) Always `false`
