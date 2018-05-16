@@ -34,18 +34,23 @@ let schema = new Schema({
     required: true
   },
 
+  processed: {
+    type: Boolean,
+    default: false
+  },
+
   uploaded: {
     type: Boolean,
     default: false
   },
 
-  uploadDate: {
+  processDate: {
     type: Date,
-    required: isUploaded
+    required: isProcessed
   }
 });
 
-function isUploaded() {
+function isProcessed() {
   return this.uploaded;
 }
 
