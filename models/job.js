@@ -148,13 +148,17 @@ let schema = new Schema({
     required: true
   }
 }, {
-  id: false
+  id: false,
+  toObject: {
+    virtuals: true,
+    versionKey: false
+  }
 });
 
 schema.virtual('imageUrl')
   .set(function(url) {
     const str = url.split('/');
-    return `${str[5]}.${str[7]}`;
+    this.image = `${str[5]}.${str[7]}`;
   })
   .get(function() {
     const img = this.image.split('.');

@@ -46,7 +46,7 @@ async function jobListPost(req, res) {
     res.json({
       number: jobsNumber,
       jobs
-      // jobs: jobs.map(job => job.toObject())
+      // : jobs.map(job => job.toObject())
     });
 
   } catch (error) {
