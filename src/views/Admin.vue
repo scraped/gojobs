@@ -18,8 +18,7 @@
           <div class="column">
             <div class="tabs">
               <ul>
-                <router-link to="/admin/fetch" tag="li"><a>Fetch</a></router-link>
-                <router-link to="/admin/process" tag="li"><a>Process</a></router-link>
+                <router-link to="/admin/fetch" tag="li"><a>Fetch jobs</a></router-link>
               </ul>
             </div>
             <router-view></router-view>

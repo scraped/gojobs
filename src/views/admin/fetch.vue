@@ -5,10 +5,7 @@
         <form
           method="post"
           @submit.prevent="fetch">
-          <h2 class="subtitle is-4">
-            <span class="tag is-rounded">1</span>
-            Fetching jobs from RGSC
-          </h2>
+          <h2 class="subtitle is-4">Fetch job bunches</h2>
           <div class="columns">
             <div class="column is-half">
 
@@ -175,12 +172,17 @@
     </div>
     <div class="column is-one-third">
       <div class="box">
-        <h2 class="subtitle is-4">
-          <span class="tag is-rounded">2</span>
-          Further fetching
-        </h2>
+        <h2 class="subtitle is-4">Further fetching</h2>
         <div class="content">
           <p>All jobs need further fetching to restore all information.</p>
+
+          <b-field label="Proxy server">
+            <b-input
+              v-model.trim="proxy"
+              size="is-medium"
+              placeholder="127.0.0.1:8080">
+            </b-input>
+          </b-field>
 
           <form @submit.prevent="furtherFetch">
             <button
@@ -194,10 +196,7 @@
       </div>
 
       <div class="box">
-        <h2 class="subtitle is-4">
-          <span class="tag is-rounded">3</span>
-          Processing
-        </h2>
+        <h2 class="subtitle is-4">Processing</h2>
         <div class="content">
           <p>You can upload jobs to the site from here.</p>
 
@@ -226,7 +225,8 @@ export default {
       platform: 'pc',
       period: '',
       limit: 50,
-      skip: 0
+      skip: 0,
+      proxy: ''
     }
   },
 
@@ -248,9 +248,11 @@ export default {
     },
 
     async furtherFetch() {
+      const { proxy } = this;
+
       this.awaiting = true;
 
-      await this.$http.post('/api/job/fetchextended');
+      await this.$http.post('/api/job/fetchextended', { proxy });
 
       this.awaiting = false;
     },
