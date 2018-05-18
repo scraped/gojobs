@@ -2,45 +2,31 @@ const {
   fetchJobsAndSave,
   fetchJobsBunchesAndSave
 } = require('../../lib/jobs');
-// const redisClient = require('../../lib/redis');
 
 module.exports = {
   jobFetchPost,
   jobFetchExtendedPost
 };
 
-// async function fetchedListPost(req, res) {
-//   const LIMIT = 10;
-
-//   let list = [];
-//   let cursorValue = '0', values;
-
-//   while (list.length < LIMIT) {
-//     [cursorValue, values] = await redisClient.scanAsync(cursorValue);
-//     if (Number(cursorValue) === 0) {
-//       break;
-//     }
-//     list.push(...(values || []));
-//   }
-
-//   if (list.length > LIMIT) {
-//     list.length = LIMIT;
-//   }
-// }
-
 async function jobFetchExtendedPost(req, res) {
   const { jobId, proxy } = req.body;
 
   const { result } = await fetchJobsAndSave({ jobId, proxy });
 
-  console.log(`Job(s) fetched, results:`);
+  console.log(`Job(s) fetched`);
+
+  const fetched = result.length;
+  let saved = 0;
 
   result.forEach((res, i) => {
-    console.log(`${i + 1}) ${res.jobId} ${res.success ? 'saved' : 'not saved'}`);
+    const { jobId, success } = res;
+    const verdict = success ? 'saved' : 'not saved';
+    if (success) saved++;
+    console.log(`${i + 1}) ${jobId} fetched & ${verdict}`);
   });
 
   res.json({
-    message: 'Job(s) fetched.'
+    message: `${fetched} jobs fetched and ${saved} jobs saved.`
   });
 }
 
