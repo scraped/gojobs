@@ -1,7 +1,7 @@
 const Crew = require('../models/crew');
 
 exports.crewList = async (req, res) => {
-  const CREWS_PER_PAGE = 60;
+  const CREWS_PER_PAGE = 600;
 
   const page = Number(req.body) || 1;
 

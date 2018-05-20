@@ -9,7 +9,7 @@
             :key="crew.crewId"
             class="column is-one-third-widescreen is-half-tablet">
             <div class="box">
-              <img :src="`https://prod.cloud.rockstargames.com/crews/sc/${crew.avatarId}/${crew.crewId}/publish/emblem/emblem_128.png`">
+              <img :src="crew.avatarUrl">
               {{ crew.name }}<br>
               {{ crew.crewId }}
             </div>

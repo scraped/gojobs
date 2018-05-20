@@ -65,15 +65,15 @@ let schema = new Schema({
 }, {
   id: false,
   toObject: {
-    virtual: true,
+    virtuals: true,
     versionKey: false
   }
 });
 
 schema.virtual('avatarUrl')
   .get(function() {
-    const { avatarId, crewId } = this;
-    return `https://prod.cloud.rockstargames.com/crews/sc/${avatarId}/${crewId}/publish/emblem/emblem_128.png`;
+    const { avatar, crewId } = this;
+    return `https://prod.cloud.rockstargames.com/crews/sc/${avatar}/${crewId}/publish/emblem/emblem_128.png`;
   });
 
 function notRockstar() {
