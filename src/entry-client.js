@@ -23,6 +23,7 @@ const { app, store, router } = createApp();
 // Server filled the store - don't need to do it again
 // on the client side
 if (window.__INITIAL_STATE__) {
+  console.log('here');
   store.replaceState(window.__INITIAL_STATE__);
 }
 

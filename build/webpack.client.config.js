@@ -9,13 +9,8 @@ const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 
 const { production } = require('../config');
 
-const {
-  sassLoadersDevelopment,
-  sassLoadersProduction
-} = require('./sass-setup');
-
-const entryApp = './src/entry-client.js',
-  cssName = 'assets/css/[name].[contenthash:6].css';
+const entryApp = './src/entry-client.js';
+// const cssName = 'assets/css/[name].[contenthash:6].css';
 
 let webpackConfig = {
   // Why we don't use a separate entry for styles? They'll be extracted
@@ -57,19 +52,6 @@ let webpackConfig = {
   module: {
     rules: [
       {
-        test: /\.scss/,
-        use:
-          production
-          ?
-            [
-              MiniCssExtractPlugin.loader,
-              ...sassLoadersProduction
-            ]
-          :
-            sassLoadersDevelopment
-      },
-
-      {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
@@ -78,18 +60,23 @@ let webpackConfig = {
   },
 
   plugins: [
-    new VueSSRClientPlugin()
+    new VueSSRClientPlugin(),
+
+    new BundleAnalyzerPlugin({
+      analyzerMode: production ? 'static' : 'server',
+      openAnalyzer: false
+    })
   ]
 };
 
 // PRODUCTION
 if (production) {
   // We use it only in production because this plugin doesn't support HMR
-  webpackConfig.plugins.push(
-    new MiniCssExtractPlugin({
-      filename: cssName
-    })
-  );
+  // webpackConfig.plugins.push(
+  //   new MiniCssExtractPlugin({
+  //     filename: cssName
+  //   })
+  // );
 // DEVELOPMENT
 } else {
   webpackConfig.entry.app = [
@@ -102,11 +89,11 @@ if (production) {
   );
 }
 
-webpackConfig.plugins.push(
-  new BundleAnalyzerPlugin({
-    analyzerMode: production ? 'static' : 'server',
-    openAnalyzer: false
-  })
-);
+// webpackConfig.plugins.push(
+//   new BundleAnalyzerPlugin({
+//     analyzerMode: production ? 'static' : 'server',
+//     openAnalyzer: false
+//   })
+// );
 
 module.exports = merge(baseWebpackConfig, webpackConfig);

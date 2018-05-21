@@ -3,12 +3,20 @@ const path = require('path');
 const webpack = require('webpack');
 const notifier = require('node-notifier');
 
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const {
+  sassLoadersDevelopment,
+  sassLoadersProduction
+} = require('./sass-setup');
 
 // hash instead of chunkhash due to HMR
 const jsName = 'assets/js/[name].[hash:6].js';
 const jsChunkName = 'assets/js/[name].[chunkhash:6].js';
 const imagesName = 'assets/images/[name].[hash:6].[ext]';
+const cssName = 'assets/css/[name].[contenthash:6].css';
 
 const { production } = config;
 
@@ -41,13 +49,20 @@ let webpackConfig = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            'scss': 'vue-style-loader!css-loader!sass-loader',
-            'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
-          }
-        }
+        loader: 'vue-loader'
+      },
+
+      {
+        test: /\.scss/,
+        use:
+          production
+          ?
+            [
+              MiniCssExtractPlugin.loader,
+              ...sassLoadersProduction
+            ]
+          :
+            sassLoadersDevelopment
       },
 
       {
@@ -63,6 +78,8 @@ let webpackConfig = {
   },
 
   plugins: [
+    new VueLoaderPlugin(),
+
     new FriendlyErrorsPlugin({
       onErrors(severity, errors) {
         if (severity !== 'error') return;
@@ -84,6 +101,11 @@ let webpackConfig = {
 
 if (production) {
   webpackConfig.plugins.push(
+    // We use it only in production because this plugin doesn't support HMR
+    new MiniCssExtractPlugin({
+      filename: cssName
+    }),
+
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'

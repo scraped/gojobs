@@ -16,6 +16,15 @@ const webpackConfig = {
 
   externals: webpackNodeExternals(),
 
+  module: {
+    rules: [
+      {
+        test: /\.scss/,
+        use: 'null-loader'
+      }
+    ]
+  },
+
   plugins: [
     new VueSSRServerPlugin()
   ]
