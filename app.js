@@ -34,7 +34,8 @@ app.use(
 
 app.use('/api', apiRouter);
 
-app.use(serverSideRendering(app));
+// Should be after all the routes
+serverSideRendering(app);
 
 app.listen(app.get('port'), () => {
   const port = app.get('port');

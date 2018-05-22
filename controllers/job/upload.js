@@ -1,4 +1,4 @@
-const { processAllJobs } = require('../../lib/jobs/process');
+const { processJobs } = require('../../lib/jobs/process');
 
 module.exports = {
   jobUploadPost
@@ -9,7 +9,7 @@ async function jobUploadPost(req, res) {
     message: 'Jobs are being processed.'
   });
 
-  const result = await processAllJobs();
+  const result = await processJobs();
 
   console.log(`Job(s) processed, results:`);
 

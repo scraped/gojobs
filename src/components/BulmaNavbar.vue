@@ -3,7 +3,7 @@
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item" exact-active-class="">
-          <img :src="logo" alt="" title="">
+          <img src="../images/logo2.png" alt="" title="">
         </router-link>
         <span class="navbar-item is-size-3" style="font-family: 'SignPainter-HouseScript';">
           jobs
@@ -104,13 +104,13 @@
 
 <script>
 import { mapState } from 'vuex';
-import logo from 'src/images/logo2.png';
+// import logo from 'src/images/logo2.png';
 import { userAvatars } from 'src/helpers';
 
 export default {
   data() {
     return {
-      logo,
+      // logo,
       menuOpened: false,
       platform: ''
     };

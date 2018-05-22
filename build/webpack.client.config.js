@@ -3,20 +3,17 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 
-const { production } = require('../config');
-
-const entryApp = './src/entry-client.js';
-// const cssName = 'assets/css/[name].[contenthash:6].css';
+const { production, development } = require('../config');
 
 let webpackConfig = {
   // Why we don't use a separate entry for styles? They'll be extracted
   // from generated chunk and it will be empty
   entry: {
-    app: entryApp,
+    app: './src/entry-client.js',
     polyfill: 'babel-polyfill'
   },
 
@@ -47,7 +44,9 @@ let webpackConfig = {
     }
   },
 
-  devtool: production ? 'none' : 'cheap-module-inline-source-map',
+  devtool: production
+    ? 'none'
+    : 'cheap-module-inline-source-map',
 
   module: {
     rules: [
@@ -69,16 +68,7 @@ let webpackConfig = {
   ]
 };
 
-// PRODUCTION
-if (production) {
-  // We use it only in production because this plugin doesn't support HMR
-  // webpackConfig.plugins.push(
-  //   new MiniCssExtractPlugin({
-  //     filename: cssName
-  //   })
-  // );
-// DEVELOPMENT
-} else {
+if (development) {
   webpackConfig.entry.app = [
     'webpack-hot-middleware/client?reload=true',
     webpackConfig.entry.app
@@ -88,12 +78,5 @@ if (production) {
     new webpack.HotModuleReplacementPlugin()
   );
 }
-
-// webpackConfig.plugins.push(
-//   new BundleAnalyzerPlugin({
-//     analyzerMode: production ? 'static' : 'server',
-//     openAnalyzer: false
-//   })
-// );
 
 module.exports = merge(baseWebpackConfig, webpackConfig);

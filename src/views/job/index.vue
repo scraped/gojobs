@@ -85,21 +85,38 @@
                   v-html="job.details.desc">
                 </p>
 
-                <p v-if="!mapShowed">
-                  <span
-                    class="button is-link is-outlined"
-                    @click="mapShowed = true">Show map</span>
-                </p>
+                <template v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
+                  <p v-if="!mapShowed">
+                    <span
+                      class="button is-link is-outlined"
+                      @click="mapShowed = true">Show map</span>
+                  </p>
 
-                <p v-else>
-                  <race-map
-                    :locations="job.details.specific.race.chpLocs"
-                    :slocations="job.details.specific.race.chpSecLocs">
-                  </race-map>
-                </p>
+                  <p v-else>
+                    <b-message>
+                      The first checkpoint (start/finish line for lap races) is a
+                      <span style="color: #00ff00;">green</span>
+                      checkpoint, and the last checkpoint (finish for point to point races) is a
+                      <span style="color: #ff0000;">red one</span>.
+                      <br>
+                      Knowing these two checkpoints you can figure out the race direction.
+                    </b-message>
+                    <race-map
+                      :point-to-point="!job.details.specific.race.laps"
+                      :locations="job.details.specific.race.chpLocs"
+                      :slocations="job.details.specific.race.chpSecLocs">
+                    </race-map>
+                  </p>
+                </template>
 
                 <div class="tags">
-                  <template v-if="job.details.specific.race">
+                  <span
+                    class="tag is-warning"
+                    v-if="job.details.specific.teams">
+                    <template v-if="job.details.specific.teams > 2">2-</template>{{ job.details.specific.teams }} teams required
+                  </span>
+
+                  <template v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
                     <span class="tag">Lap length: {{ job.details.specific.race.dist | mToKm }} km</span>
 
                     <span class="tag">Number of checkpoints: {{ job.details.specific.race.chp }}</span>

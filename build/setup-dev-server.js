@@ -2,24 +2,32 @@ const path = require('path');
 const fs = require('fs');
 const chokidar = require('chokidar');
 const webpack = require('webpack');
+const chalk = require('chalk');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+const MemoryFileSystem = require('memory-fs');
 const clientConfig = require('./webpack.client.config');
 const serverConfig = require('./webpack.server.config');
-const MemoryFileSystem = require('memory-fs');
 
-// Calls updateCallback({ bundle, clientManifest, template })
-// when something changes.
-module.exports = function setupDevServer(app, updateCallback) {
+module.exports = setupDevServer;
+
+/**
+ * Calls updateCallback({ bundle, clientManifest, template })
+ * when something changes
+ * @param {object} app express instance
+ * @param {function} updateCallback callback to be invoked
+ * @returns {Promise} fullfilled when we're ready
+ */
+function setupDevServer(app, updateCallback) {
   let resolveReadyPromise;
+
   const readyPromise = new Promise(r => {
-    // link for resolving the promise
     resolveReadyPromise = r;
   });
 
-  let bundle,
-    clientManifest,
-    template;
+  let bundle;
+  let clientManifest;
+  let template;
 
   const templatePath = './src/index.html';
 
@@ -50,7 +58,7 @@ module.exports = function setupDevServer(app, updateCallback) {
   chokidar.watch(templatePath).on('change', () => {
     updateTemplate();
     update();
-    console.log('Template updated');
+    console.log(chalk.blue('Template updated'));
   });
 
   // ***************************

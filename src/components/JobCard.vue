@@ -74,7 +74,8 @@
           <template v-if="!job.rockstar">
             {{ scInfo.platformName }} ·
           </template>
-          <template v-if="job.minPl">{{ job.minPl }}-</template>{{ job.maxPl }} players ·
+          <template v-if="job.minPl === job.maxPl">Only for</template>
+          <template v-else>{{ job.minPl || 1 }}-</template>{{ job.maxPl }} players ·
           {{ updatedDate }}
           <!-- <br>Points: {{ job.stats.points }} -->
         </div>

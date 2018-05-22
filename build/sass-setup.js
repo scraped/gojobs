@@ -1,4 +1,4 @@
-exports.sassLoadersProduction = [
+const sassLoadersProduction = [
   {
     loader: 'css-loader',
     options: { sourceMap: true }
@@ -15,9 +15,16 @@ exports.sassLoadersProduction = [
   }
 ];
 
-exports.sassLoadersDevelopment = [
+const sassLoadersDevelopment = [
   {
-    loader: 'style-loader',
+    loader: 'vue-style-loader',
     options: { sourceMap: true }
-  }
-].concat(exports.sassLoadersProduction);
+  },
+
+  ...sassLoadersProduction
+];
+
+module.exports = {
+  sassLoadersProduction,
+  sassLoadersDevelopment
+};

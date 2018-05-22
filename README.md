@@ -198,7 +198,6 @@ Property | Type | Flags | Description
 `chp`      | `integer`          |      | Number of checkpoints
 `lap`      | `integer`          |      | Default number of laps (`0` if point to point race)
 `rdis`     | `float`            |      | Distance in metres
-`ivm`      | `integer`          | `x`  | Default vehicle ID
 `aveh`     | `array<string>`    | `xe` | Available vehicle classes (`undefined` if target assault race)
 `chl`      | `array<Location2>` | `x`  | Checkpoint locations
 `sndchk`   | `array<Location2>` | `xe` | Sec. checkpoint locations (`(0, 0)` if no corresponding secondary checkpoint) (can be `undefined`)
@@ -206,6 +205,7 @@ Property | Type | Flags | Description
 `trfmvmn`  | `array<string>`    | `x`  | Corresponding vehicle names
 `cptfrm`   | `array<integer>`   | `x`  | `-1` if no transformation on current CP, else `trfmvm` (`trfmvmn`) array indexes
 `cptfrms`  | `array<integer>`   | `x`  | exactly the same, but for secondary checkpoints
+`ivm`      | `integer`          | `!`  | Always 0?
 `isLapsRace` | `boolean`        | `!`  | (?) always `false` - probably error
 `subtype`  | `integer`          | `!`  | (?) `20` - tr. race, `21` - special vehicle race
 `dist`     | `string`           | `!`  | Formatted distance like `10.01 miles` (DON'T use it)

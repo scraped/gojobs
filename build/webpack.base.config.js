@@ -20,13 +20,11 @@ const cssName = 'assets/css/[name].[contenthash:6].css';
 
 const { production } = config;
 
-const mode = production ? 'production' : 'development';
-
 // Why no clean-webpack-plugin? Two bundles utilize dist dir so no one
-// can delete it. You should delete it manually before bundling (using rimraf,
-// for example).
+// can delete it. You should delete it manually before bundling
+// (using rimraf, for example).
 let webpackConfig = {
-  mode,
+  mode: production ? 'production' : 'development',
 
   output: {
     filename: jsName,
@@ -40,10 +38,6 @@ let webpackConfig = {
       'src': path.resolve(__dirname, '../src')
     }
   },
-
-  // externals: {
-  //   moment: 'moment'
-  // },
 
   module: {
     rules: [
