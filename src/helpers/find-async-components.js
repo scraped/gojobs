@@ -8,4 +8,4 @@ export function findAsyncComponents({ components, store, route }) {
   });
 
   return fetchDataPromises;
-};
+}

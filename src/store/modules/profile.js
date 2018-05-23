@@ -1,4 +1,4 @@
-import { http } from 'src/utils';
+import { http } from '@/utils';
 
 const state = {
   username: '',

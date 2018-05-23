@@ -1,4 +1,4 @@
-// код миксина взят отсюда:
+// Код миксина взят отсюда:
 // https://ssr.vuejs.org/ru/head.html
 
 const mandatoryTitlePart = 'GTA Online Jobs';

@@ -16,6 +16,10 @@ $body-background-color: $white-ter;
 
 $family-primary: "Lato", sans-serif;
 
+//
+// Bulma derived variables
+//
+
 @import "~bulma/sass/utilities/derived-variables";
 
 // input
@@ -69,7 +73,3 @@ $pagination-active-border-color: $pagination-border-color;
 
 // footer
 $footer-background-color: $dark;
-
-// message
-// $message-body-radius: 0;
-// $message-body-border: none;

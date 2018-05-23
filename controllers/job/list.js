@@ -28,7 +28,7 @@ async function jobListPost(req, res) {
     // t o d o
   } else {
     const platformId = 1 + _.findIndex(platforms, plat => {
-      return plat.sc.toLowerCase() === platform;
+      return plat.short === platform;
     });
     conditions.platform = platformId;
   }

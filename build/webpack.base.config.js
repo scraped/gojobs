@@ -24,7 +24,9 @@ const { production } = config;
 // can delete it. You should delete it manually before bundling
 // (using rimraf, for example).
 let webpackConfig = {
-  mode: production ? 'production' : 'development',
+  mode: production
+    ? 'production'
+    : 'development',
 
   output: {
     filename: jsName,
@@ -35,7 +37,7 @@ let webpackConfig = {
 
   resolve: {
     alias: {
-      'src': path.resolve(__dirname, '../src')
+      '@': path.resolve(__dirname, '../src')
     }
   },
 

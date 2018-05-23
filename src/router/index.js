@@ -1,16 +1,16 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-const Main = () => import('src/views/main/index.vue');
-const Crews = () => import('src/views/crews/index.vue');
-const Admin = () => import('src/views/admin.vue');
-const AdminIndex = () => import('src/views/admin/index.vue');
-const AdminRawJobs = () => import('src/views/admin/raw-jobs.vue');
-const AdminFetch = () => import('src/views/admin/fetch.vue');
-const AdminProcess = () => import('src/views/admin/process.vue');
-const Auth = () => import('src/views/auth/index.vue');
-const Job = () => import('src/views/job/index.vue');
-const Profile = () => import('src/views/profile/index.vue');
+const Main = () => import('@/views/main/index.vue');
+const Crews = () => import('@/views/crews/index.vue');
+const Admin = () => import('@/views/admin.vue');
+const AdminIndex = () => import('@/views/admin/index.vue');
+const AdminRawJobs = () => import('@/views/admin/raw-jobs.vue');
+const AdminFetch = () => import('@/views/admin/fetch.vue');
+const AdminProcess = () => import('@/views/admin/process.vue');
+const Auth = () => import('@/views/auth/index.vue');
+const Job = () => import('@/views/job/index.vue');
+const Profile = () => import('@/views/profile/index.vue');
 
 Vue.use(VueRouter);
 

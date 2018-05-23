@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import genQuery from 'src/utils/gen-query.js';
+import genQuery from '@/utils/gen-query.js';
 
 export default {
   mixins: [

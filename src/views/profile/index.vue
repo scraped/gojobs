@@ -129,18 +129,19 @@
 <script>
 import moment from 'moment';
 import { mapState, mapGetters } from 'vuex';
-import { userAvatars } from 'src/helpers'
+import { userAvatars } from '@/helpers'
 
-import JobsList from 'src/components/JobList.vue';
-import BulmaPagination from 'src/components/BulmaPagination.vue';
+import JobsList from '@/components/JobList.vue';
+import CustomPagination from '@/components/CustomPagination.vue';
 
 export default {
   title() {
-    return this.username + ' Profile';
+    return `${this.username} Profile`;
   },
 
   fetchData({ store, route }) {
     const { username } = route.params;
+
     return Promise.all([
       store.dispatch('profile/fetchUserInfo', { user: username }),
       store.dispatch('jobs/fetch', { query: { by: 'user', byId: username } })
@@ -149,7 +150,7 @@ export default {
 
   components: {
     JobsList,
-    BulmaPagination
+    CustomPagination
   },
 
   data() {
@@ -200,8 +201,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .mono {
-    font-family: "Courier New", monospace;
-  }
+.mono {
+  font-family: "Courier New", monospace;
+}
 </style>
 

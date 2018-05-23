@@ -121,15 +121,15 @@
 </template>
 
 <script>
-import rockstarIcon from 'src/images/rockstar-2.png';
 import {
   userAvatars,
   rgscRatingCssClass,
   updatedDate,
   scTypeModeIcon,
   scPlatformName
-} from 'src/helpers';
-import IconGta from 'src/components/IconGta.vue';
+} from '@/helpers';
+
+import IconGta from '@/components/IconGta.vue';
 
 export default {
   props: {
@@ -140,12 +140,6 @@ export default {
 
   components: {
     IconGta
-  },
-
-  data() {
-    return {
-      rockstarIcon
-    }
   },
 
   computed: {

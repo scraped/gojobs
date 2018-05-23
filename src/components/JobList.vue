@@ -54,10 +54,10 @@
 <script>
 import Vue from 'vue';
 import { mapState } from 'vuex';
-import genQuery from 'src/utils/gen-query.js';
+import genQuery from '@/utils/gen-query.js';
 
-import BulmaTabs from 'src/components/BulmaTabs.vue';
-import JobCard from 'src/components/JobCard.vue';
+import BulmaTabs from '@/components/BulmaTabs.vue';
+import JobCard from '@/components/JobCard.vue';
 
 export default {
   components: {
@@ -70,6 +70,7 @@ export default {
       'jobs',
       'number'
     ]),
+
     ...mapState('route', {
       page: state => Number(state.query.page) || 1,
       by: state => state.query.by,

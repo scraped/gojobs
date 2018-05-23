@@ -1,5 +1,6 @@
 import { findAsyncComponents } from './find-async-components';
 import { userAvatars } from './user';
+
 import {
   rgscRatingCssClass,
   updatedDate,

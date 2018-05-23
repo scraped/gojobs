@@ -1,5 +1,4 @@
-import { http } from 'src/utils';
-import queryString from 'query-string';
+import { http } from '@/utils';
 
 const state = {
   crews: []

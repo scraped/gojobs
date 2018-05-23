@@ -3,7 +3,7 @@
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item" exact-active-class="">
-          <img src="../images/logo2.png" alt="" title="">
+          <img src="@/images/logo2.png" alt="" title="">
         </router-link>
         <span class="navbar-item is-size-3" style="font-family: 'SignPainter-HouseScript';">
           jobs
@@ -103,14 +103,14 @@
 </template>
 
 <script>
+import platforms from '../../config/static/platforms'
 import { mapState } from 'vuex';
-// import logo from 'src/images/logo2.png';
-import { userAvatars } from 'src/helpers';
+import { userAvatars } from '@/helpers';
+import { findIndex } from 'lodash';
 
 export default {
   data() {
     return {
-      // logo,
       menuOpened: false,
       platform: ''
     };
@@ -119,11 +119,17 @@ export default {
   computed: {
     platformName() {
       const { platform } = this;
-      return {
-        pc: 'PC',
-        ps4: 'PS4',
-        xboxone: 'Xbox One'
-      }[platform];
+      const index = findIndex(platforms, pl => pl.short === platform);
+      if (platforms[index]){
+        return platforms[index].name;
+      }
+      return 'azaza';
+
+      // return {
+      //   pc: 'PC',
+      //   ps4: 'PS4',
+      //   xboxone: 'Xbox One'
+      // }[platform];
     },
 
     ...mapState('user', [
@@ -163,7 +169,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "src/scss/vars";
+@import "@/scss/vars.scss";
 
 .navbar {
   background-color: transparent;

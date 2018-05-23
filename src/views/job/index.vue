@@ -248,15 +248,16 @@
 
 <script>
 import { mapState } from 'vuex';
+
 import {
   userAvatars,
   rgscRatingCssClass,
   updatedDate,
   scTypeModeIcon,
   scPlatformName
-} from 'src/helpers';
+} from '@/helpers';
 
-import IconGta from 'src/components/IconGta.vue';
+import IconGta from '@/components/IconGta.vue';
 import RaceMap from './RaceMap.vue';
 
 export default {

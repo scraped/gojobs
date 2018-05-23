@@ -192,7 +192,7 @@ schema.virtual('platformName')
   .set(function(scPlatformName) {
     const platformId = 1 + _.findIndex(
       platforms,
-      plat => plat.sc === scPlatformName
+      plat => plat.short === scPlatformName.toLowerCase()
     );
     if (platformId) {
       this.platform = platformId;

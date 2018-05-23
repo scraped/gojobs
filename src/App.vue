@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import BulmaNavbar from 'src/components/BulmaNavbar.vue';
-import BulmaFooter from 'src/components/BulmaFooter.vue';
+import BulmaNavbar from '@/layout/LayoutNavbar.vue';
+import BulmaFooter from '@/layout/LayoutFooter.vue';
 
 export default {
   components: {
