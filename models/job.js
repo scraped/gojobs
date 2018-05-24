@@ -128,9 +128,9 @@ let schema = new Schema({
       required: true
     },
 
-    growthRate: {
+    growRate: {
       type: Number,
-      default: 0
+      default: 1
     }
   },
 

@@ -9,13 +9,13 @@
           jobs
         </span>
 
-        <b-dropdown ref="platformDropdown">
           <a class="navbar-item is-unselectable" slot="trigger">
             {{ platformName }}
             <span class="icon">
               <i class="fa fa-angle-down"></i>
             </span>
           </a>
+        <b-dropdown ref="platformDropdown">
 
           <b-dropdown-item custom>
             <div class="subtitle is-6">Default platform</div>
@@ -123,7 +123,7 @@ export default {
       if (platforms[index]){
         return platforms[index].name;
       }
-      return 'azaza';
+      return '';
 
       // return {
       //   pc: 'PC',

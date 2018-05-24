@@ -85,10 +85,14 @@
                   v-html="job.details.desc">
                 </p>
 
+                <p v-if="defaultVehicle">
+                  Tested in Creator with <b>{{ defaultVehicle }}</b>.
+                </p>
+
                 <template v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
                   <p v-if="!mapShowed">
                     <span
-                      class="button is-link is-outlined"
+                      class="button is-primary"
                       @click="mapShowed = true">Show map</span>
                   </p>
 
@@ -259,6 +263,8 @@ import {
 
 import IconGta from '@/components/IconGta.vue';
 import RaceMap from './RaceMap.vue';
+import vehicles from '@/../config/static/vehicles';
+import { findIndex } from 'lodash';
 
 export default {
   title() {
@@ -291,6 +297,11 @@ export default {
     ...mapState('job', [
       'job'
     ]),
+
+    defaultVehicle() {
+      const defVeh = String(this.job.details.specific.race.defVeh);
+      return vehicles[defVeh];
+    },
 
     avatars() {
       return userAvatars(this.job.author);

@@ -51,7 +51,7 @@ let schema = new Schema({
 });
 
 function isProcessed() {
-  return this.uploaded;
+  return this.processed;
 }
 
 module.exports = mongoose.model('RawJob', schema);
