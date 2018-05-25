@@ -93,22 +93,34 @@
                 </b-input>
               </b-field>
 
-              <b-field
-                label="Job ID"
-                v-if="category === 'job'">
-                <b-input
-                  v-model.trim="id"
-                  size="is-medium"
-                  placeholder="NcO4vELhLEqKahHQy-IWPA"
-                  minlength="22"
-                  maxlength="22"
-                  required>
-                </b-input>
-              </b-field>
+              <template v-if="category === 'job'">
+                <b-field
+                  label="Job Permanent ID *"
+                  v-if="category === 'job'">
+                  <b-input
+                    v-model.trim="id"
+                    size="is-medium"
+                    minlength="22"
+                    maxlength="22"
+                    required>
+                  </b-input>
+                </b-field>
 
-              <b-message v-if="category === 'job'" type="is-warning">
-                Take into account that sometimes Rockstar servers can't find the job category its permanent ID.
-              </b-message>
+                <b-field
+                  label="Job Current ID"
+                  v-if="category === 'job'">
+                  <b-input
+                    v-model.trim="idCurr"
+                    size="is-medium"
+                    minlength="22"
+                    maxlength="22">
+                  </b-input>
+                </b-field>
+
+                <b-message v-if="category === 'job'" type="is-warning">
+                  Take into account that sometimes Rockstar servers can't find the job category its permanent ID.
+                </b-message>
+              </template>
             </div>
           </div>
 
@@ -176,13 +188,13 @@
         <div class="content">
           <p>All jobs need further fetching to restore all information.</p>
 
-          <b-field label="Proxy server">
+          <!-- <b-field label="Proxy server">
             <b-input
               v-model.trim="proxy"
               size="is-medium"
               placeholder="127.0.0.1:8080">
             </b-input>
-          </b-field>
+          </b-field> -->
 
           <form @submit.prevent="furtherFetch">
             <button
@@ -222,6 +234,7 @@ export default {
       forceSkip: false,
       category: 'all',
       id: '',
+      idCurr: '',
       platform: 'pc',
       period: '',
       limit: 50,
@@ -233,7 +246,7 @@ export default {
   methods: {
     async fetch() {
       const {
-        category, id, platform, period, limit, skip, forceSkip
+        category, id, idCurr, platform, period, limit, skip, forceSkip
       } = this;
 
       const autoSkip = !forceSkip;

@@ -128,7 +128,7 @@ let schema = new Schema({
       required: true
     },
 
-    growRate: {
+    growth: {
       type: Number,
       default: 1
     }
@@ -144,6 +144,11 @@ let schema = new Schema({
   },
 
   scUpdated: {
+    type: Date,
+    required: true
+  },
+
+  fetchDate: {
     type: Date,
     required: true
   }

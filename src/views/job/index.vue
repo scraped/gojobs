@@ -89,30 +89,6 @@
                   Tested in Creator with <b>{{ defaultVehicle }}</b>.
                 </p>
 
-                <template v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
-                  <p v-if="!mapShowed">
-                    <span
-                      class="button is-primary"
-                      @click="mapShowed = true">Show map</span>
-                  </p>
-
-                  <p v-else>
-                    <b-message>
-                      The first checkpoint (start/finish line for lap races) is a
-                      <span style="color: #00ff00;">green</span>
-                      checkpoint, and the last checkpoint (finish for point to point races) is a
-                      <span style="color: #ff0000;">red one</span>.
-                      <br>
-                      Knowing these two checkpoints you can figure out the race direction.
-                    </b-message>
-                    <race-map
-                      :point-to-point="!job.details.specific.race.laps"
-                      :locations="job.details.specific.race.chpLocs"
-                      :slocations="job.details.specific.race.chpSecLocs">
-                    </race-map>
-                  </p>
-                </template>
-
                 <div class="tags">
                   <span
                     class="tag is-warning"
@@ -125,13 +101,13 @@
 
                     <span class="tag">Number of checkpoints: {{ job.details.specific.race.chp }}</span>
 
-                    <span class="tag">
-                      <template v-if="job.details.specific.race.laps">
-                        Default number of laps: {{ job.details.specific.race.laps }}
-                      </template>
-                      <template v-else>
-                        Point To Point
-                      </template>
+                    <span class="tag" v-if="job.details.specific.race.laps">
+                      Default number of laps:
+                      {{ job.details.specific.race.laps }}
+                    </span>
+
+                    <span class="tag" v-if="job.details.specific.race.p2p">
+                      Point To Point
                     </span>
                   </template>
 
@@ -144,6 +120,28 @@
                       {{ tag }}</router-link>
                   </template>
                 </div>
+
+                <template v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
+                  <p>
+                    <span
+                      class="is-block button"
+                      @click="mapShowed = !mapShowed">
+                      <template v-if="mapShowed">Hide  Route</template>
+                      <template v-else> Show Route</template>
+                    </span>
+                  </p>
+
+                  <p v-if="mapShowed">
+                    <b-message type="is-info">
+                      The first checkpoint (start/finish line for lap races) is a green checkpoint, and the last checkpoint (finish for point to point races) is a red one. Knowing these two checkpoints you can figure out the race direction.
+                    </b-message>
+                    <race-map
+                      :point-to-point="job.details.specific.race.p2p"
+                      :locations="job.details.specific.race.chpLocs"
+                      :slocations="job.details.specific.race.chpSecLocs">
+                    </race-map>
+                  </p>
+                </template>
               </div>
 
               <nav class="level is-mobile">

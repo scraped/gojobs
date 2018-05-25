@@ -24,6 +24,7 @@ const schema = new Schema({
 
     race: {
       laps: { type: Number },
+      p2p: { type: Boolean },
       chp: { type: Number },
       chpLocs: {
         type: [[Number]]
