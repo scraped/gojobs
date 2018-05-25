@@ -78,7 +78,6 @@
 
               <hr>
 
-
               <div class="content">
                 <p
                   class="is-size-5 is-italic"
@@ -86,49 +85,68 @@
                 </p>
 
                 <p v-if="defaultVehicle">
-                  Tested in Creator with <b>{{ defaultVehicle }}</b>.
+                   — Tested in Creator with <b>{{ defaultVehicle }}</b>.
                 </p>
 
-                <div class="tags">
-                  <span
-                    class="tag is-warning"
-                    v-if="job.details.specific.teams">
-                    <template v-if="job.details.specific.teams > 2">2-</template>{{ job.details.specific.teams }} teams required
-                  </span>
+                <p v-if="job.tags && job.tags.length">
+                  <router-link
+                    to="/"
+                    v-for="(tag, i) in job.tags"
+                    :key="tag">#{{ tag }}<template v-if="i !== job.tags.length - 1">, </template></router-link>
+                </p>
+
+                <div class="field is-grouped is-grouped-multiline">
+                  <div
+                    v-if="job.details.specific.teams"
+                    class="control">
+                    <span
+                      class="tag">
+                      <template v-if="job.details.specific.teams > 2">2-</template>{{ job.details.specific.teams }} teams required
+                    </span>
+                  </div>
 
                   <template v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
-                    <span class="tag">Lap length: {{ job.details.specific.race.dist | mToKm }} km</span>
+                    <div class="control">
+                      <div class="tags has-addons">
+                        <span class="tag is-primary">{{ job.details.specific.race.dist | mToKm }} km</span>
+                        <span class="tag">Lap Length</span>
+                      </div>
+                    </div>
 
-                    <span class="tag">Number of checkpoints: {{ job.details.specific.race.chp }}</span>
+                    <div class="control">
+                      <div class="tags has-addons">
+                        <span class="tag is-primary">{{ job.details.specific.race.chp }}</span>
+                        <span class="tag">Checkpoints</span>
+                      </div>
+                    </div>
 
-                    <span class="tag" v-if="job.details.specific.race.laps">
-                      Default number of laps:
-                      {{ job.details.specific.race.laps }}
-                    </span>
+                    <div
+                      v-if="job.details.specific.race.laps"
+                      class="control">
+                      <div class="tags has-addons">
+                        <span class="tag is-primary">{{ job.details.specific.race.laps }}</span>
+                        <span class="tag">Default Number Of Laps</span>
+                      </div>
+                    </div>
 
-                    <span class="tag" v-if="job.details.specific.race.p2p">
-                      Point To Point
-                    </span>
-                  </template>
-
-                  <template v-if="job.tags && job.tags.length">
-                    <router-link
-                      to="/"
-                      class="tag is-capitalized"
-                      v-for="tag in job.tags"
-                      :key="tag">
-                      {{ tag }}</router-link>
+                    <div class="control">
+                      <span
+                        v-if="job.details.specific.race.p2p"
+                        class="tag">
+                        Point To Point
+                      </span>
+                    </div>
                   </template>
                 </div>
 
-                <template v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
+                <div v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
                   <p>
-                    <span
+                    <div
                       class="is-block button"
                       @click="mapShowed = !mapShowed">
-                      <template v-if="mapShowed">Hide  Route</template>
+                      <template v-if="mapShowed">Hide Route</template>
                       <template v-else> Show Route</template>
-                    </span>
+                    </div>
                   </p>
 
                   <p v-if="mapShowed">
@@ -141,7 +159,8 @@
                       :slocations="job.details.specific.race.chpSecLocs">
                     </race-map>
                   </p>
-                </template>
+                </div>
+
               </div>
 
               <nav class="level is-mobile">

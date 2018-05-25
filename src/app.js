@@ -26,7 +26,8 @@ Vue.use(VueCookie);
 Vue.use(Buefy, {
   defaultNoticeQueue: false,
   defaultSnackbarDuration: 7000,
-  defaultToastDuration: 7000
+  defaultToastDuration: 7000,
+  defaultIconPack: 'fa'
 });
 
 /**

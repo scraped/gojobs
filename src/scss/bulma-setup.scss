@@ -4,7 +4,7 @@
 @import "./custom-vars";
 
 // $primary: #a6caf0;
-$primary: #7019c2;
+$primary: #ed9a6d;
 $primary-invert: findColorInvert($primary);
 // $primary-invert: #ffffff;
 
@@ -30,16 +30,23 @@ $input-shadow: none;
 $section-padding: 1rem 1rem; // 3rem 1.5rem
 
 // button
+.button {
+  @extend .button;
+  font-family: 'Oswald';
+  transition-duration: $speed;
+}
+
 $button-focus-box-shadow-size: 0;
 
-$button-color: $grey-dark;
-$button-hover-color: $black-bis;
+// $button-color: $grey-dark;
+// $button-hover-color: $black-bis;
 
-$button-background-color: $white-ter;
+// $button-background-color: $white-ter;
 
-$button-border-color: transparent;
-$button-hover-border-color: $button-border-color;
-$button-active-border-color: $button-border-color;
+$button-border-color: $grey-lighter;
+$button-hover-border-color: $grey-light;
+$button-active-border-color: $button-hover-border-color;
+$button-focus-border-color: $button-border-color;
 
 // navbar
 $navbar-height: 4rem;

@@ -10,66 +10,63 @@
             <div class="column is-half">
 
               <b-field label="Author(s)"></b-field>
-                <b-field>
-                  <b-radio v-model="category" native-value="all" type="is-danger">
-                    RGSC Members
-                  </b-radio>
-                </b-field>
+              <b-field>
+                <b-radio v-model="category" native-value="all">
+                  RGSC Members
+                </b-radio>
+              </b-field>
 
-                <b-field>
-                  <b-radio v-model="category" native-value="user">
-                    Specific User
-                  </b-radio>
-                </b-field>
+              <b-field>
+                <b-radio v-model="category" native-value="user">
+                  Specific User
+                </b-radio>
+              </b-field>
 
-                <b-field>
-                  <b-radio v-model="category" native-value="crew">
-                    Specific Crew
-                  </b-radio>
-                </b-field>
+              <b-field>
+                <b-radio v-model="category" native-value="crew">
+                  Specific Crew
+                </b-radio>
+              </b-field>
 
-                <b-field>
-                  <b-radio v-model="category" native-value="job">
-                    Specific Job
-                  </b-radio>
-                </b-field>
+              <b-field>
+                <b-radio v-model="category" native-value="job">
+                  Specific Job
+                </b-radio>
+              </b-field>
 
-                <b-field>
-                  <b-radio v-model="category" native-value="rockstar">
-                    Rockstar
-                  </b-radio>
-                </b-field>
+              <b-field>
+                <b-radio v-model="category" native-value="rockstar">
+                  Rockstar
+                </b-radio>
+              </b-field>
 
-                <b-field>
-                  <b-radio v-model="category" native-value="rockstarverified">
-                    Rockstar Verified
-                  </b-radio>
-                </b-field>
+              <b-field>
+                <b-radio v-model="category" native-value="rockstarverified">
+                  Rockstar Verified
+                </b-radio>
+              </b-field>
             </div>
             <div class="column">
-              <template v-if="platformDisabled">
-                <b-message v-if="category !== 'job'" type="is-info">
-                  Rockstar jobs available on all platforms.
-                </b-message>
-              </template>
+              <b-field label="Platform"></b-field>
 
-              <template v-else>
-                <b-field label="Platform"></b-field>
+              <div
+                v-if="platformDisabled"
+                class="field has-text-grey is-italic">Not applicable.
+              </div>
 
-                <b-field>
-                  <b-radio-button v-model="platform" native-value="pc">
-                    PC
-                  </b-radio-button>
+              <b-field v-else>
+                <b-radio-button v-model="platform" native-value="pc">
+                  PC
+                </b-radio-button>
 
-                  <b-radio-button v-model="platform" native-value="ps4">
-                    PS4
-                  </b-radio-button>
+                <b-radio-button v-model="platform" native-value="ps4">
+                  PS4
+                </b-radio-button>
 
-                  <b-radio-button v-model="platform" native-value="xboxone">
-                    XB1
-                  </b-radio-button>
-                </b-field>
-              </template>
+                <b-radio-button v-model="platform" native-value="xboxone">
+                  XB1
+                </b-radio-button>
+              </b-field>
 
               <b-field
                 label="Username"
@@ -92,37 +89,42 @@
                   required>
                 </b-input>
               </b-field>
-
-              <template v-if="category === 'job'">
-                <b-field
-                  label="Job Permanent ID *"
-                  v-if="category === 'job'">
-                  <b-input
-                    v-model.trim="id"
-                    size="is-medium"
-                    minlength="22"
-                    maxlength="22"
-                    required>
-                  </b-input>
-                </b-field>
-
-                <b-field
-                  label="Job Current ID"
-                  v-if="category === 'job'">
-                  <b-input
-                    v-model.trim="idCurr"
-                    size="is-medium"
-                    minlength="22"
-                    maxlength="22">
-                  </b-input>
-                </b-field>
-
-                <b-message v-if="category === 'job'" type="is-warning">
-                  Take into account that sometimes Rockstar servers can't find the job category its permanent ID.
-                </b-message>
-              </template>
             </div>
           </div>
+
+          <template v-if="category === 'job'">
+              <b-field
+                label="Job Permanent ID *"
+                key="permId">
+                <b-input
+                  v-model.trim="id"
+                  size="is-medium"
+                  minlength="22"
+                  maxlength="22"
+                  required>
+                </b-input>
+              </b-field>
+
+              <b-field
+                label="Job Current ID"
+                key="currId">
+                <b-input
+                  v-model.trim="idCurr"
+                  size="is-medium"
+                  minlength="22"
+                  maxlength="22">
+                </b-input>
+            </b-field>
+
+            <b-notification
+              v-if="category === 'job'"
+              type="is-warning"
+              :closable="false"
+              has-icon>
+              Take into account that sometimes Rockstar servers can't find the job category its permanent ID.
+            </b-notification>
+          </template>
+
 
           <template v-if="category !== 'job'">
             <b-field label="Period"></b-field>
