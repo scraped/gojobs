@@ -22,21 +22,22 @@ $family-primary: "Lato", sans-serif;
 
 @import "~bulma/sass/utilities/derived-variables";
 
+.input, .button {
+  transition-duration: $speed;
+}
+
 // input
-$input-hover-border-color: $grey-lighter;
+// $input-hover-border-color: $grey-lighter;
 $input-shadow: none;
+$input-focus-box-shadow-size: 0 0 10px 0;
+$input-focus-border-color: $grey;
+$input-focus-box-shadow-color: rgba($input-focus-border-color, 0.25);
 
 // section
 $section-padding: 1rem 1rem; // 3rem 1.5rem
 
 // button
-.button {
-  @extend .button;
-  font-family: 'Oswald';
-  transition-duration: $speed;
-}
-
-$button-focus-box-shadow-size: 0;
+$button-focus-box-shadow-size: 0 0 10px 0;
 
 // $button-color: $grey-dark;
 // $button-hover-color: $black-bis;

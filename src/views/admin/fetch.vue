@@ -4,8 +4,9 @@
       <div class="box">
         <form
           method="post"
-          @submit.prevent="fetch">
-          <h2 class="subtitle is-4">Fetch job bunches</h2>
+          @submit.prevent="fetchBunches">
+          <h2 class="subtitle">Fetch job bunches</h2>
+          <hr>
           <div class="columns">
             <div class="column is-half">
 
@@ -25,12 +26,6 @@
               <b-field>
                 <b-radio v-model="category" native-value="crew">
                   Specific Crew
-                </b-radio>
-              </b-field>
-
-              <b-field>
-                <b-radio v-model="category" native-value="job">
-                  Specific Job
                 </b-radio>
               </b-field>
 
@@ -92,94 +87,95 @@
             </div>
           </div>
 
-          <template v-if="category === 'job'">
-              <b-field
-                label="Job Permanent ID *"
-                key="permId">
-                <b-input
-                  v-model.trim="id"
-                  size="is-medium"
-                  minlength="22"
-                  maxlength="22"
-                  required>
-                </b-input>
-              </b-field>
+          <b-field label="Period"></b-field>
+          <b-field>
+            <b-radio-button v-model="period" native-value="">
+              Any time
+            </b-radio-button>
 
-              <b-field
-                label="Job Current ID"
-                key="currId">
-                <b-input
-                  v-model.trim="idCurr"
-                  size="is-medium"
-                  minlength="22"
-                  maxlength="22">
-                </b-input>
-            </b-field>
+            <b-radio-button v-model="period" native-value="lastMonth">
+              Last 30 days
+            </b-radio-button>
 
-            <b-notification
-              v-if="category === 'job'"
-              type="is-warning"
-              :closable="false"
-              has-icon>
-              Take into account that sometimes Rockstar servers can't find the job category its permanent ID.
-            </b-notification>
-          </template>
+            <b-radio-button v-model="period" native-value="last7">
+              Last 7 days
+            </b-radio-button>
 
+            <b-radio-button v-model="period" native-value="today">
+              Today
+            </b-radio-button>
+          </b-field>
 
-          <template v-if="category !== 'job'">
-            <b-field label="Period"></b-field>
-            <b-field>
-              <b-radio-button v-model="period" native-value="">
-                Any time
-              </b-radio-button>
+          <b-field label="Bunches Limit (100 is maximum)">
+            <b-input
+              type="number"
+              v-model.number="limit"
+              size="is-medium"
+              min="1"
+              max="100">
+            </b-input>
+          </b-field>
 
-              <b-radio-button v-model="period" native-value="lastMonth">
-                Last 30 days
-              </b-radio-button>
+          <!-- <b-field label="To skip"></b-field>
+          <div class="field">
+            <b-checkbox v-model="forceSkip">
+              Manually specify how many jobs to skip
+            </b-checkbox>
+          </div>
 
-              <b-radio-button v-model="period" native-value="last7">
-                Last 7 days
-              </b-radio-button>
+          <div class="field">
+            <b-input
+              v-if="forceSkip"
+              type="number"
+              v-model.number="skip"
+              size="is-medium">
+            </b-input>
+          </div> -->
 
-              <b-radio-button v-model="period" native-value="today">
-                Today
-              </b-radio-button>
-            </b-field>
+          <button
+            class="button is-primary"
+            :class="{ 'is-loading': awaiting }"
+            :disabled="awaiting">
+            Fetch
+          </button>
+        </form>
+      </div>
 
-            <b-field label="Limit">
-              <b-input
-                type="number"
-                v-model.number="limit"
-                size="is-medium"
-                min="1"
-                max="100">
-              </b-input>
-            </b-field>
+      <div class="box">
+        <form
+          method="post"
+          @submit.prevent="fetchSingle">
+          <h2 class="subtitle">Fetch by ID</h2>
+          <hr>
 
-            <!-- <b-field label="To skip"></b-field>
-            <div class="field">
-              <b-checkbox v-model="forceSkip">
-                Manually specify how many jobs to skip
-              </b-checkbox>
-            </div>
+          <b-field
+            label="Job ID *"
+            key="permId">
+            <b-input
+              v-model.trim="jobId"
+              size="is-medium"
+              minlength="22"
+              maxlength="22"
+              required>
+            </b-input>
+          </b-field>
 
-            <div class="field">
-              <b-input
-                v-if="forceSkip"
-                type="number"
-                v-model.number="skip"
-                size="is-medium">
-              </b-input>
-            </div> -->
-          </template>
+          <b-notification
+            type="is-warning"
+            :closable="false"
+            has-icon>
+            Take into account that sometimes job won't be available by its "permanent" or even "actual" ID: rockstar servers returns either empty object or an empty object with "latest" key set to true.
+          </b-notification>
 
           <div class="buttons">
-            <button
-              class="button is-primary"
-              :class="{ 'is-loading': awaiting }"
-              :disabled="awaiting">
-              Fetch
-            </button>
+            <button class="button is-primary">Fetch</button>
+            <a
+              v-if="jobId.length === 22"
+              class="button is-light"
+              :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/z2iGq4xJHEy7C69toKa75w`"
+              target="_blank">
+              Proceed to RGSC job page
+            </a>
           </div>
         </form>
       </div>
@@ -236,55 +232,49 @@ export default {
       forceSkip: false,
       category: 'all',
       id: '',
-      idCurr: '',
+      jobId: '',
       platform: 'pc',
       period: '',
-      limit: 50,
+      limit: 100,
       skip: 0,
       proxy: ''
     }
   },
 
   methods: {
-    async fetch() {
+    async fetchBunches() {
       const {
-        category, id, idCurr, platform, period, limit, skip, forceSkip
+        category, id, platform, period, limit, skip, forceSkip
       } = this;
 
       const autoSkip = !forceSkip;
 
-      this.awaiting = true;
-
       await this.$http.post('/api/job/fetch', {
         category, id, platform, period, limit, autoSkip, skip
       });
+    },
 
-      this.awaiting = false;
+    async fetchSingle() {
+      const { jobId } = this;
+
+      await this.$http.post('/api/job/fetchextended', { jobId });
     },
 
     async furtherFetch() {
       const { proxy } = this;
 
-      this.awaiting = true;
-
       await this.$http.post('/api/job/fetchextended', { proxy });
-
-      this.awaiting = false;
     },
 
     async process() {
-      this.awaiting = true;
-
       await this.$http.post('/api/job/upload');
-
-      this.awaiting = false;
     }
   },
 
   computed: {
     platformDisabled() {
       const { category } = this;
-      return category === 'rockstar' || category === 'rockstarverified' || category === 'job'
+      return category === 'rockstar' || category === 'rockstarverified';
     }
   }
 };

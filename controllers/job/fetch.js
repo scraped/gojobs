@@ -11,22 +11,20 @@ module.exports = {
 async function jobFetchExtendedPost(req, res) {
   const { jobId, proxy } = req.body;
 
+  res.json({
+    message: 'Jobs are being fetched.'
+  });
+
   const { result } = await fetchJobsAndSave({ jobId, proxy });
 
-  console.log(`Job(s) fetched`);
-
-  const fetched = result.length;
-  let saved = 0;
+  // const fetched = result.length;
+  // let saved = 0;
 
   result.forEach((res, i) => {
     const { jobId, success } = res;
     const verdict = success ? 'saved' : 'not saved';
-    if (success) saved++;
+    // if (success) saved++;
     console.log(`${i + 1}) ${jobId} fetched & ${verdict}`);
-  });
-
-  res.json({
-    message: `${fetched} jobs fetched and ${saved} jobs saved.`
   });
 }
 
@@ -48,14 +46,7 @@ async function jobFetchPost(req, res) {
   }
 
   try {
-    let total = 0;
-    let result = [];
-
-    if (category === 'job') {
-      ({ total, result } = await fetchJobsAndSave({ jobId: id }));
-    } else {
-      ({ total, result } = await fetchJobsBunchesAndSave(options));
-    }
+    let { total, result } = await fetchJobsBunchesAndSave(options);
 
     console.log(`Job(s) fetched, total: ${total}, results:`);
 

@@ -19,7 +19,7 @@ async function jobListPost(req, res) {
       sort = { 'scUpdated': -1 };
       break;
     default:
-      sort = { 'stats.points': -1 };
+      sort = { 'stats.growth': -1 };
   }
 
   if (body.rockstar) {
