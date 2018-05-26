@@ -1,63 +1,30 @@
 const {
-  fetchJobsAndSave,
-  fetchJobsBunchesAndSave
+  fetchJobsAndSave
 } = require('../../lib/jobs');
 
 module.exports = {
-  jobFetchPost,
-  jobFetchExtendedPost
+  jobsFetchPost
 };
 
-async function jobFetchExtendedPost(req, res) {
-  const { jobId, proxy } = req.body;
+async function jobsFetchPost(req, res) {
+  const { bunches, category, id, platform, period, reqLimit } = req.body;
 
   res.json({
     message: 'Jobs are being fetched.'
   });
 
-  const { result } = await fetchJobsAndSave({ jobId, proxy });
-
-  // const fetched = result.length;
-  // let saved = 0;
-
-  result.forEach((res, i) => {
-    const { jobId, success } = res;
-    const verdict = success ? 'saved' : 'not saved';
-    // if (success) saved++;
-    console.log(`${i + 1}) ${jobId} fetched & ${verdict}`);
-  });
-}
-
-async function jobFetchPost(req, res) {
-  const { category, id, platform, period, limit } = req.body;
-
-  let options = {
-    period,
-    category: category || 'all',
-    bLimit: limit
-  };
-
-  if (category === 'user' || category === 'crew') {
-    options.id = id;
-  }
-
-  if (category !== 'rockstar' && category !== 'rstarverified') {
-    options.platform = platform;
-  }
-
   try {
-    let { total, result } = await fetchJobsBunchesAndSave(options);
+    const { saveResults } = await fetchJobsAndSave(
+      { bunches, category, id, platform, period, reqLimit }
+    );
 
-    console.log(`Job(s) fetched, total: ${total}, results:`);
-
-    result.forEach((res, i) => {
-      console.log(`${i + 1}) ${res.jobId} ${res.success ? 'saved' : 'not saved'}`);
+    saveResults.forEach((result, i) => {
+      const { jobId, success } = result;
+      const verdict = success ? 'saved' : 'not saved';
+      // if (success) saved++;
+      console.log(`${i + 1}) ${jobId} fetched & ${verdict}`);
     });
   } catch (error) {
-    console.log('Job(s) not fetched, error:', error);
+    console.log('jobsFetchPost error:', error);
   }
-
-  res.json({
-    message: 'Jobs fetched.'
-  });
 }

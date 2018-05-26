@@ -16,8 +16,7 @@ const {
   jobListPost,
   jobDetailsPost,
   jobUploadPost,
-  jobFetchPost,
-  jobFetchExtendedPost
+  jobsFetchPost,
 } = require('../controllers/job');
 
 const {
@@ -51,8 +50,7 @@ router.post('/user/basicinfo', basicInfo);
 
 // Job
 router.post('/jobs', jobListPost);
-router.post('/job/fetch', jobFetchPost);
-router.post('/job/fetchextended', jobFetchExtendedPost);
+router.post('/job/fetch', jobsFetchPost);
 router.post('/job/fetched', todoController);
 router.post('/job/upload', jobUploadPost);
 router.post('/job/:id', jobDetailsPost);
