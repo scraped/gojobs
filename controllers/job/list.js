@@ -7,30 +7,41 @@ exports.jobListPost = jobListPost;
 async function jobListPost(req, res) {
   const { body, cookies } = req;
 
-  const { by } = body,
-    page = Number(body.page) || 1,
-    platform = body.platform || cookies.platform || 'pc';
+  const { by, rockstar, rockstarverified } = body;
+  const page = Number(body.page) || 1;
+  const platform = body.platform || cookies.platform || 'pc';
 
   let conditions = {};
   let sort = {};
 
   switch (by) {
+    case 'rating':
+      sort = { 'stats.points': -1 };
+      break;
+
     case 'updated':
       sort = { 'scUpdated': -1 };
       break;
+
+    case 'featured':
+      conditions.star = true;
+      break;
+
+    case 'newest':
+      sort = { scAdded: -1 };
+      break;
+
     default:
       sort = { 'stats.growth': -1 };
   }
 
-  if (body.rockstar) {
+  if (rockstar || rockstarverified) {
     conditions.rockstar = true;
-  } else if (body.rockstarverified) {
-    // t o d o
+    conditions.author = { $exists: Boolean(rockstarverified) };
   } else {
-    const platformId = 1 + _.findIndex(platforms, plat => {
+    conditions.platform = 1 + _.findIndex(platforms, plat => {
       return plat.short === platform;
     });
-    conditions.platform = platformId;
   }
 
   const jobsNumber = await Job.count(conditions);
@@ -46,7 +57,6 @@ async function jobListPost(req, res) {
     res.json({
       number: jobsNumber,
       jobs
-      // : jobs.map(job => job.toObject())
     });
 
   } catch (error) {

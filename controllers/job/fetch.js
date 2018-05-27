@@ -7,16 +7,24 @@ module.exports = {
 };
 
 async function jobsFetchPost(req, res) {
-  const { bunches, category, id, platform, period, reqLimit } = req.body;
+  const {
+    bunches, strict, category, id, platform, period, reqLimit
+  } = req.body;
 
   res.json({
     message: 'Jobs are being fetched.'
   });
 
   try {
-    const { saveResults } = await fetchJobsAndSave(
-      { bunches, category, id, platform, period, reqLimit }
-    );
+    const { saveResults } = await fetchJobsAndSave({
+      bunches,
+      strict: Boolean(strict),
+      category,
+      id,
+      platform,
+      period,
+      reqLimit
+    });
 
     saveResults.forEach((result, i) => {
       const { jobId, success } = result;

@@ -3,7 +3,7 @@
     <div class="box">
       <div class="tabs">
         <ul>
-          <router-link :to="{ name: 'main' }" tag="li" active-class="is-active">
+          <router-link :to="{ name: 'main' }" tag="li" exact>
             <a>Trending</a>
           </router-link>
           <router-link :to="{ name: 'main', query: { by: 'rating' } }" tag="li">
@@ -36,9 +36,12 @@
       </template>
     </div>
 
-    <b-message v-if="!number" type="is-info" size="is-medium">
+    <b-notification
+      v-if="!number"
+      type="is-info is-size-4"
+      :closable="false">
       No jobs found.
-    </b-message>
+    </b-notification>
 
     <div class="columns is-multiline">
       <div
@@ -56,12 +59,10 @@ import Vue from 'vue';
 import { mapState } from 'vuex';
 import genQuery from '@/utils/gen-query.js';
 
-import BulmaTabs from '@/components/BulmaTabs.vue';
 import JobCard from '@/components/JobCard.vue';
 
 export default {
   components: {
-    BulmaTabs,
     JobCard
   },
 

@@ -16,6 +16,10 @@
             <b-checkbox v-model="bunches" @input="bunchesCheckboxEvent">Fetch bunches - convinient to retrieve info for new jobs</b-checkbox>
           </b-field>
 
+          <b-field label="Strict">
+            <b-checkbox v-model="strict">Enable strict mode</b-checkbox>
+          </b-field>
+
           <div class="columns">
             <div class="column is-half">
 
@@ -190,6 +194,7 @@ export default {
   data() {
     return {
       bunches: false,
+      strict: true,
       category: 'all',
       id: '',
       platform: 'pc',
@@ -211,11 +216,17 @@ export default {
 
     async fetch() {
       const {
-        bunches, category, id, platform, period, reqLimit
+        bunches, strict, category, id, platform, period, reqLimit
       } = this;
 
       await this.$http.post('/api/job/fetch', {
-        bunches, category, id, platform, period, reqLimit
+        bunches,
+        strict: Number(strict),
+        category,
+        id,
+        platform,
+        period,
+        reqLimit
       });
     },
 

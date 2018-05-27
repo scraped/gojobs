@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="hero is-primary is-medium" style="background: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent), url(https://media.rockstargames.com/rockstargames-newsite/uploads/d22704253e0132da7ddaec02a6ca7559aed835ba.jpg) 50% 50%;">
+    <!-- <div class="hero is-primary is-medium" style="background: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent), url(https://media.rockstargames.com/rockstargames-newsite/uploads/d22704253e0132da7ddaec02a6ca7559aed835ba.jpg) 50% 50%;">
       <div class="hero-body">
         <div class="container">
           <h1 class="is-uppercase is-size-1" style="font-family: 'Oswald', sans-serif; font-weight: normal;">GTA Online Jobs</h1>
         </div>
       </div>
-    </div>
+    </div> -->
     <section class="section">
       <div class="container">
         <!-- <h1 class="title">GTA Online Jobs</h1> -->

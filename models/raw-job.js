@@ -31,7 +31,7 @@ let schema = new Schema({
 
   fetchDate: {
     type: Date,
-    required: true
+    required: isFetchDateRequired
   },
 
   processed: {
@@ -52,6 +52,10 @@ let schema = new Schema({
 
 function isProcessed() {
   return this.processed;
+}
+
+function isFetchDateRequired() {
+  return this.extended;
 }
 
 module.exports = mongoose.model('RawJob', schema);

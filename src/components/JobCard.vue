@@ -23,12 +23,18 @@
           :style="`width: ${job.stats.rating}%;`">
         </div>
         <div class="card__title">
-          <div class="title is-5">
+          <div class="is-size-5 has-text-white">
             <span
-              class="tooltip has-text-weight-normal"
+              class="tooltip"
               :data-tooltip="`Game mode: ${scInfo.scTypeName}`">
               <icon-gta :icon="scInfo.scTypeIcon"></icon-gta>
-            </span><span v-html="job.name"></span>
+            </span><span class="has-text-weight-bold" v-html="job.name"></span>
+            <span
+              v-if="recentlyAdded"
+              class="tooltip"
+            ` data-tooltip="Added less than 2 weeks ago">
+              🔥
+            </span>
           </div>
         </div>
       </div>
@@ -54,7 +60,7 @@
               </router-link>
             </template>
             <template v-if="job.rockstar">
-              <span class="tag is-primary">
+              <span class="tag">
                 <template v-if="job.author">
                   Rockstar Verified Job
                 </template>
@@ -143,6 +149,11 @@ export default {
   },
 
   computed: {
+    recentlyAdded() {
+      return new Date() - new Date(this.job.scAdded)
+        <= 1000 * 60 * 60 * 24 * 14;
+    },
+
     avatars() {
       return userAvatars(this.job.author);
     },
@@ -197,7 +208,7 @@ $card-strip-opacity: 0.5;
   bottom: 0;
   left: 0;
   padding: 1rem 1.5rem;
-  background: linear-gradient(to top, rgba($black, 0.4), transparent);
+  background: linear-gradient(to top, rgba($black, 0.45), transparent);
   .title {
     color: rgba($white, 0.85);
     text-shadow: 1px 1px 10px rgba($black, 0.4);
