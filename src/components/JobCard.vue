@@ -32,7 +32,7 @@
             <span
               v-if="recentlyAdded"
               class="tooltip"
-            ` data-tooltip="Added less than 2 weeks ago">
+              data-tooltip="Added less than 2 weeks ago">
               🔥
             </span>
           </div>

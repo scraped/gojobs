@@ -113,8 +113,8 @@
           </ul>
         </div>
 
-        <jobs-list></jobs-list>
-        <br>
+        <job-list :min-info="true"></job-list>
+        <!-- <br> -->
         <!-- <bulma-pagination
           :curr-page="page"
           :total-items="number"
@@ -131,7 +131,7 @@ import moment from 'moment';
 import { mapState, mapGetters } from 'vuex';
 import { userAvatars } from '@/helpers'
 
-import JobsList from '@/components/JobList.vue';
+import JobList from '@/components/JobList.vue';
 import CustomPagination from '@/components/CustomPagination.vue';
 
 export default {
@@ -144,12 +144,12 @@ export default {
 
     return Promise.all([
       store.dispatch('profile/fetchUserInfo', { user: username }),
-      store.dispatch('jobs/fetch', { query: { by: 'user', byId: username } })
+      store.dispatch('jobs/fetch', { query: { user: username } })
     ]);
   },
 
   components: {
-    JobsList,
+    JobList,
     CustomPagination
   },
 
@@ -192,6 +192,10 @@ export default {
     ...mapState('jobs', [
       'number'
     ]),
+
+    ...mapState('route', {
+      page: state => Number(state.query.page) || 1,
+    }),
 
     avatars() {
       return userAvatars(this.username);

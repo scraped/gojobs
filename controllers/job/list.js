@@ -7,7 +7,8 @@ exports.jobListPost = jobListPost;
 async function jobListPost(req, res) {
   const { body, cookies } = req;
 
-  const { by, rockstar, rockstarverified } = body;
+  const { by, rockstar, rockstarverified, user } = body;
+
   const page = Number(body.page) || 1;
   const platform = body.platform || cookies.platform || 'pc';
 
@@ -33,6 +34,10 @@ async function jobListPost(req, res) {
 
     default:
       sort = { 'stats.growth': -1 };
+  }
+
+  if (user) {
+    conditions.author = user;
   }
 
   if (rockstar || rockstarverified) {

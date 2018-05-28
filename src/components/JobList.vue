@@ -1,47 +1,36 @@
 <template>
   <div>
+    <h1
+      v-if="!minInfo"
+      class="title">
+      GTA Online Jobs
+    </h1>
+
     <div class="box">
-      <div class="tabs">
-        <ul>
-          <router-link :to="{ name: 'main' }" tag="li" exact>
-            <a>Trending</a>
-          </router-link>
-          <router-link :to="{ name: 'main', query: { by: 'rating' } }" tag="li">
-            <a>By rating</a>
-          </router-link>
-          <router-link :to="{ name: 'main', query: { by: 'featured' } }" tag="li">
-            <a>Featured</a>
-          </router-link>
-          <router-link :to="{ name: 'main', query: { by: 'updated' } }" tag="li">
-            <a>Updated</a>
-          </router-link>
-          <router-link :to="{ name: 'main', query: { by: 'newest' } }" tag="li">
-            <a>🔥 Newest</a>
-          </router-link>
-        </ul>
-      </div>
+      <b-select
+        class="is-pulled-right"
+        v-model="sort"
+        @input="sortChanged">
+        <option value="">Trending</option>
+        <option value="rating">By rating</option>
+        <option value="feautured">Featured</option>
+        <option value="updated">Updated</option>
+        <option value="newest">🔥 Newest</option>
+      </b-select>
+      <h2 class="is-size-4">{{ number }} jobs found</h2>
+      <p
+        v-if="number"
+        class="subtitle is-size-6 has-text-grey">
+        Page {{ page }}
+      </p>
 
-      <template v-if="number">
-        <h1 class="title is-4">
-          {{ number }} jobs found
-        </h1>
-        <p class="subtitle is-size-6 has-text-grey">
-          Page {{ page }}
-        </p>
-
+      <template v-if="!minInfo">
         <div class="buttons">
           <router-link :to="{ query: { rockstar: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Jobs</router-link>
           <router-link :to="{ query: { rockstarverified: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Verified Jobs</router-link>
         </div>
       </template>
     </div>
-
-    <b-notification
-      v-if="!number"
-      type="is-info is-size-4"
-      :closable="false">
-      No jobs found.
-    </b-notification>
 
     <div class="columns is-multiline">
       <div
@@ -62,6 +51,13 @@ import genQuery from '@/utils/gen-query.js';
 import JobCard from '@/components/JobCard.vue';
 
 export default {
+  props: {
+    minInfo: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   components: {
     JobCard
   },
@@ -73,11 +69,18 @@ export default {
     ]),
 
     ...mapState('route', {
-      page: state => Number(state.query.page) || 1,
-      by: state => state.query.by,
-      byId: state => state.query.byId,
-      gameType: state => state.query.gameType
+      sort: state => state.query.by || '',
+      page: state => Number(state.query.page) || 1
     })
+  },
+
+  methods: {
+    sortChanged(value) {
+      this.$router.push({
+        path: this.$route.path,
+        query: { ...this.$route.query, by: value }
+      });
+    }
   }
 }
 </script>
