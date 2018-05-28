@@ -1,9 +1,9 @@
 <template>
-  <nav class="navbar is-dark is-fixed-top">
+  <nav class="navbar is-fixed-top is-white has-background-grey-lighter">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item" exact-active-class="">
-          <img src="@/images/logo2.png" alt="" title="">
+          <img src="@/images/gtaonline-logo-mini.png" alt="" title="">
         </router-link>
         <span class="navbar-item is-size-3" style="font-family: 'SignPainter-HouseScript';">
           jobs

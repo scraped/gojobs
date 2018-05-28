@@ -84,8 +84,8 @@
                   v-html="job.details.desc">
                 </p>
 
-                <p v-if="defaultVehicle">
-                   — Tested in Creator with <b>{{ defaultVehicle }}</b>.
+                <p v-if="defaultVehicle" class="has-text-grey-dark">
+                   Tested in Creator with <b>{{ defaultVehicle }}</b>.
                 </p>
 
                 <p v-if="job.tags && job.tags.length">
@@ -108,15 +108,15 @@
                   <template v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
                     <div class="control">
                       <div class="tags has-addons">
-                        <span class="tag is-primary">{{ job.details.specific.race.dist | mToKm }} km</span>
-                        <span class="tag">Lap Length</span>
+                        <span class="tag is-dark">Lap length</span>
+                        <span class="tag is-info">{{ job.details.specific.race.dist | mToKm }} km</span>
                       </div>
                     </div>
 
                     <div class="control">
                       <div class="tags has-addons">
-                        <span class="tag is-primary">{{ job.details.specific.race.chp }}</span>
-                        <span class="tag">Checkpoints</span>
+                        <span class="tag is-dark">Number of checkpoints</span>
+                        <span class="tag is-info">{{ job.details.specific.race.chp }}</span>
                       </div>
                     </div>
 
@@ -140,19 +140,25 @@
                 </div>
 
                 <div v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
-                  <p>
+                  <div class="buttons">
+                    <a
+                      class="is-block button"
+                      :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/${job.jobCurrId}`"
+                      target="_blank">
+                      Go to RGSC Job Page
+                    </a>
                     <div
                       class="is-block button"
                       @click="mapShowed = !mapShowed">
                       <template v-if="mapShowed">Hide Route</template>
                       <template v-else> Show Route</template>
                     </div>
-                  </p>
+                  </div>
 
                   <p v-if="mapShowed">
-                    <b-message type="is-info">
+                    <b-notification type="is-info" :closable="false">
                       The first checkpoint (start/finish line for lap races) is a green checkpoint, and the last checkpoint (finish for point to point races) is a red one. Knowing these two checkpoints you can figure out the race direction.
-                    </b-message>
+                    </b-notification>
                     <race-map
                       :point-to-point="job.details.specific.race.p2p"
                       :locations="job.details.specific.race.chpLocs"
@@ -224,6 +230,8 @@
           <div class="column is-one-third-widescreen is-two-fifths-desktop is-12-tablet">
             <div class="box">
               <h2 class="subtitle">Ratings</h2>
+              <hr>
+
               <div class="content">
                 <p><span class="has-text-weight-bold">RGSC Rating:</span> {{ job.stats.ratingQuit }}%</p>
                 <progress
@@ -245,20 +253,6 @@
                   <router-link to="/">What is the difference?</router-link>
                 </p>
               </div>
-
-              <a
-                :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/${job.jobCurrId}`"
-                target="_blank"
-                class="is-block button is-link is-outlined is-medium">
-                Go to RGSC Job Page
-              </a>
-            </div>
-
-            <div class="box">
-              <h2 class="subtitle">You might also like</h2>
-              <b-message>
-                Currently unavailable.
-              </b-message>
             </div>
           </div>
         </div>
