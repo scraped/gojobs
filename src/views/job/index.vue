@@ -84,8 +84,12 @@
                   v-html="job.details.desc">
                 </p>
 
-                <p v-if="defaultVehicle" class="has-text-grey-dark">
+                <p v-if="defaultVehicle" class="has-text-grey">
                    Tested in Creator with <b>{{ defaultVehicle }}</b>.
+                </p>
+
+                <p v-if="transformVehicles" class="has-text-grey">
+                  Feautures <b>{{ transformVehicles }}</b>.
                 </p>
 
                 <p v-if="job.tags && job.tags.length">
@@ -124,8 +128,8 @@
                       v-if="job.details.specific.race.laps"
                       class="control">
                       <div class="tags has-addons">
-                        <span class="tag is-primary">{{ job.details.specific.race.laps }}</span>
-                        <span class="tag">Default Number Of Laps</span>
+                        <span class="tag is-dark">Default number of laps</span>
+                        <span class="tag is-info">{{ job.details.specific.race.laps }}</span>
                       </div>
                     </div>
 
@@ -312,6 +316,21 @@ export default {
     defaultVehicle() {
       const defVeh = String(this.job.details.specific.race.defVeh);
       return vehicles[defVeh];
+    },
+
+    transformVehicles() {
+      const { trfVeh } = this.job.details.specific.race;
+
+      let vehiclesString = '';
+
+      if (trfVeh && trfVeh.length) {
+        vehiclesString += vehicles[trfVeh[0]];
+        for (let i = 1; i < trfVeh.length; i++) {
+          vehiclesString += `, ${vehicles[trfVeh[i]]}`;
+        }
+      }
+
+      return vehiclesString;
     },
 
     avatars() {

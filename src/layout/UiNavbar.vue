@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-fixed-top is-white has-background-grey-lighter">
+  <nav class="navbar is-fixed-top is-white has-background-grey-lighter" style="opacity: 0.95;">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item" exact-active-class="">

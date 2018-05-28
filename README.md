@@ -204,6 +204,7 @@ Property | Type | Flags | Description
 `trfmvm`   | `array<Vehicle>`   | `x`  | List of vehicles available for transformation in. Not all of them can be used in the race, check `cptfrm` property
 `trfmvmn`  | `array<string>`    | `x`  | Corresponding vehicle names
 `cptfrm`   | `array<integer>`   | `x`  | `-1` if no transformation on current CP, else `trfmvm` (`trfmvmn`) array indexes
+`cpbs1`    | `array<integer>`   | `x`  | A bit mask for each checkpoint (lengths of arrays are the same). 27th bit from the right means warp checkpoint 
 `cptfrms`  | `array<integer>`   | `x`  | exactly the same, but for secondary checkpoints
 `ivm`      | `integer`          | `!`  | Always 0?
 `isLapsRace` | `boolean`        | `!`  | (?) always `false` - probably error
