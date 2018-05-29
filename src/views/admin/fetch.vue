@@ -149,7 +149,9 @@
             </b-field>
           </template>
 
-          <b-field label="Requests limit">
+          <b-field
+            v-if="category !== 'job'"
+            label="Requests limit">
             <b-input
               type="number"
               v-model.number="reqLimit"

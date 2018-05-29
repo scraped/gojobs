@@ -13,7 +13,7 @@
         @input="sortChanged">
         <option value="">Trending</option>
         <option value="rating">By rating</option>
-        <option value="feautured">Featured</option>
+        <option value="featured">Featured</option>
         <option value="updated">Updated</option>
         <option value="newest">🔥 Newest</option>
       </b-select>

@@ -286,6 +286,7 @@ Official name | ID | Type | Icon name
 `Deathmatch`           | 0 | `Deathmatch`  | `Deathmatch`
 `Team Deathmatch`      | 1 | `Deathmatch`  | `TeamDeathmatch`
 `Vehicle Deathmatch`   | 2 | `Deathmatch`  | `VehicleDeathmatch`
+`Contact Mission`      | 2 | `FreeMission` | `ContactMission`
 `Versus Mission`       | 4 | `FreeMission` | `VersusMission`
 `Adversary Mode`       | 4 | `FreeMission` | `VersusMission` (?)
 `Last Team Standing`   | 5 | `FreeMission` | `LastTeamStanding`
