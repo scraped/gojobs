@@ -110,6 +110,16 @@
                 Jobs
               </router-link>
             </li>
+            <li>
+              <router-link :to="{ name: 'main' }">
+                Collections
+              </router-link>
+            </li>
+            <li>
+              <router-link :to="{ name: 'main' }">
+                Events
+              </router-link>
+            </li>
           </ul>
         </div>
 

@@ -1,18 +1,18 @@
 {
   "land": [
-    "Bikes",
-    "Classics",
     "Compacts",
     "Coupes",
     "Cycles",
     "Industrial",
-    "Mucle",
-    "OffRoad",
+    "Motorcycles",
+    "Muscle",
+    "Off-Road",
     "Sedans",
     "Special",
     "Sports",
+    "Sports Classics",
     "Super",
-    "SUV",
+    "SUVs",
     "Utility",
     "Vans"
   ],

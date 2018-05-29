@@ -16,7 +16,7 @@ async function jobsFetchPost(req, res) {
   });
 
   try {
-    const { saveResults } = await fetchJobsAndSave({
+    await fetchJobsAndSave({
       bunches,
       strict: Boolean(strict),
       category,
@@ -24,13 +24,6 @@ async function jobsFetchPost(req, res) {
       platform,
       period,
       reqLimit
-    });
-
-    saveResults.forEach((result, i) => {
-      const { jobId, success } = result;
-      const verdict = success ? 'saved' : 'not saved';
-      // if (success) saved++;
-      console.log(`${i + 1}) ${jobId} fetched & ${verdict}`);
     });
   } catch (error) {
     console.log('jobsFetchPost error:', error);
