@@ -194,7 +194,7 @@ export default {
   data() {
     return {
       bunches: false,
-      strict: true,
+      strict: false,
       category: 'all',
       id: '',
       platform: 'pc',
