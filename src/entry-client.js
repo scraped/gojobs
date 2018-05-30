@@ -23,7 +23,6 @@ const { app, store, router } = createApp();
 // Server filled the store - don't need to do it again
 // on the client side
 if (window.__INITIAL_STATE__) {
-  console.log('here');
   store.replaceState(window.__INITIAL_STATE__);
 }
 
@@ -64,10 +63,9 @@ router.onReady(() => {
       route: to
     });
 
-    const promisesExist = asyncDataPromises.length > 0;
     const progressBar = Vue.prototype.$Progress;
 
-    if (promisesExist) {
+    if (asyncDataPromises.length > 0) {
       progressBar.start();
       try {
         await Promise.all(asyncDataPromises);
@@ -79,7 +77,7 @@ router.onReady(() => {
     }
 
     next();
-  }); // router.beforeResolve
+  });
 
   app.$mount('#app');
 });
