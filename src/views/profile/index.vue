@@ -150,11 +150,11 @@ export default {
   },
 
   fetchData({ store, route }) {
-    const { username } = route.params;
+    const { username: user } = route.params;
 
     return Promise.all([
-      store.dispatch('profile/fetchUserInfo', { user: username }),
-      store.dispatch('jobs/fetch', { query: { user: username } })
+      store.dispatch('profile/fetchUserInfo', { user }),
+      store.dispatch('jobs/fetch', { user })
     ]);
   },
 

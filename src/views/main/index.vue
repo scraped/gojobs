@@ -29,7 +29,7 @@ import CustomPagination from '@/components/CustomPagination.vue';
 
 export default {
   fetchData({ store, route }) {
-    return store.dispatch('jobs/fetch', { query: route.query });
+    return store.dispatch('jobs/fetch');
   },
 
   data() {
