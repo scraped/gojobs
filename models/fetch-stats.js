@@ -26,8 +26,14 @@ let schema = new Schema({
     enum: ['today', 'last7', 'lastMonth']
   },
 
+  firstFetch: {
+    type: Date,
+    required: true
+  },
+
   lastFetch: {
-    type: Date
+    type: Date,
+    required: true
   },
 
   total: {
@@ -42,8 +48,8 @@ let schema = new Schema({
 });
 
 function isPlatformRequired() {
-  const { by } = this;
-  return by !== 'rockstar' && by !== 'rstarverified';
+  const { category } = this;
+  return category !== 'rockstar' && category !== 'rstarverified';
 }
 
 module.exports = mongoose.model('FetchStats', schema);
