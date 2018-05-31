@@ -240,7 +240,7 @@ Property | Type | Flags | Description
 
 `array<Location2>` - ??
 
-## (extended object) `Content.Metadata.data.mission.(d)props, .veh, .obj`
+## (extended object) `Content.Metadata.data.mission.(d)prop, .veh, .obj`
 
 `(d)props` - regular (dynamic) props\
 `veh` - initial spawn points for vehicles\
@@ -280,8 +280,8 @@ ID = `Content.Metadata.data.mission.gen.subtype`
 
 If an item has two IDs, the second one means `P2P` mode (looks like).
 
-Official name | ID | Type | Icon name
-------------- | -- | ---- | ---------
+Official name          | ID | Type         | Icon name
+---------------------- | -- | ------------ | ---------
 `Survival`             | 0 | `Survival`    | `Survival`
 `Deathmatch`           | 0 | `Deathmatch`  | `Deathmatch`
 `Team Deathmatch`      | 1 | `Deathmatch`  | `TeamDeathmatch`
@@ -292,14 +292,14 @@ Official name | ID | Type | Icon name
 `Last Team Standing`   | 5 | `FreeMission` | `LastTeamStanding`
 `Capture`              | 6 | `FreeMission` | `Capture`
 `Parachuting`          | 8 | `Parachuting` | `Parachuting`
-`Land Race`            | 0, 1   | `Race` | `LandRace`, `LandRaceP2P`
-`Water Race`           | 2, 3   | `Race` | `WaterRace`, `WaterRaceP2P`
-`Air Race`             | 4, 5   | `Race` | `AirRace`, `AirRaceP2P`
-`Stunt Race`           | 6, 7   | `Race` | `StuntRace`, `StuntRaceP2P`
-`Special Vehicle Race` | 6, 7   | `Race` | `StuntRace`, `StuntRaceP2P` (?)
-`Transform Race`       | 6, 7   | `Race` | `StuntRace`, `StuntRaceP2P` (?)
-`Bike Race`            | 13     | `Race` | `BikeRace`, `BikeRaceP2P`
-`Target Assault Race`  | 18, 19 | `Race` | `StuntRace`, `StuntRaceP2P` (?)
+`Land Race`            | 0, 1   | `Race`   | `LandRace`, `LandRaceP2P`
+`Water Race`           | 2, 3   | `Race`   | `WaterRace`, `WaterRaceP2P`
+`Air Race`             | 4, 5   | `Race`   | `AirRace`, `AirRaceP2P`
+`Stunt Race`           | 6, 7   | `Race`   | `StuntRace`, `StuntRaceP2P`
+`Special Vehicle Race` | 6, 7   | `Race`   | `StuntRace`, `StuntRaceP2P` (?)
+`Transform Race`       | 6, 7   | `Race`   | `StuntRace`, `StuntRaceP2P` (?)
+`Bike Race`            | 13     | `Race`   | `BikeRace`, `BikeRaceP2P`
+`Target Assault Race`  | 18, 19 | `Race`   | `StuntRace`, `StuntRaceP2P` (?)
 
 ## Race types (`Content.Metadata.data.mission.race.type`)
 
