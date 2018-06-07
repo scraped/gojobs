@@ -17,19 +17,28 @@
         <option value="updated">Updated</option>
         <option value="newest">🔥 Newest</option>
       </b-select>
+
       <h2 class="is-size-4">{{ number }} jobs found</h2>
       <p
-        v-if="number"
         class="subtitle is-size-6 has-text-grey">
         Page {{ page }}
       </p>
 
-      <template v-if="!minInfo">
-        <div class="buttons">
-          <router-link :to="{ query: { rockstar: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Jobs</router-link>
-          <router-link :to="{ query: { rockstarverified: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Verified Jobs</router-link>
+      <b-collapse :open="false">
+        <div
+          class="button is-light is-small is-rounded"
+          slot="trigger">
+          Show filters
         </div>
-      </template>
+
+        <div class="content">
+          <div class="buttons">
+            <router-link :to="{ query: { rockstar: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Jobs</router-link>
+            <router-link :to="{ query: { rockstarverified: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Verified Jobs</router-link>
+          </div>
+
+        </div>
+      </b-collapse>
     </div>
 
     <div class="columns is-multiline">
