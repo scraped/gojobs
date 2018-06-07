@@ -9,7 +9,7 @@
     <div class="box">
       <b-select
         class="is-pulled-right"
-        v-model="sort"
+        v-typel="sort"
         @input="sortChanged">
         <option value="">Trending</option>
         <option value="rating">By rating</option>
@@ -24,21 +24,32 @@
         Page {{ page }}
       </p>
 
-      <b-collapse :open="false">
-        <div
-          class="button is-light is-small is-rounded"
-          slot="trigger">
-          Show filters
-        </div>
+      <div class="buttons">
+        <router-link
+          v-for="(type, i) in modes"
+          :key="i"
+          v-if="!$route.query.type || $route.query.type === i + 1"
+          :to="{ query: { ...$route.query, type: i + 1 } }"
+          class="button is-small is-rounded"
+          exact-active-class="is-primary">
+          <icon-gta :icon="type.icon"></icon-gta>
+          <span>{{ type.name }}</span>
+          <b-icon v-if="$route.query.type === i + 1"  pack="fa" icon="close" size="is-small"></b-icon>
+        </router-link>
 
-        <div class="content">
-          <div class="buttons">
-            <router-link :to="{ query: { rockstar: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Jobs</router-link>
-            <router-link :to="{ query: { rockstarverified: 1 } }" class="button is-rounded is-small" active-class="is-dark">Rockstar Verified Jobs</router-link>
-          </div>
-
-        </div>
-      </b-collapse>
+        <template v-if="$route.query.type && modes[$route.query.type - 1].modes">
+          <router-link
+            v-for="(mode, i) in modes[$route.query.type - 1].modes"
+            :key="i"
+            :to="{ query: { mode: i + i } }"
+            class="button is-small is-rounded"
+            exact-active-class="is-primary">
+            <icon-gta :icon="modes[$route.query.type - 1].icons[i]"></icon-gta>
+            <span>{{ mode }}</span>
+          </router-link>
+        </template>
+        <!-- <router-link href="" class="button is-dark is-small is-rounded" style="background: #01498E;">Rockstar</a> -->
+      </div>
     </div>
 
     <div class="columns is-multiline">
@@ -56,8 +67,10 @@
 import Vue from 'vue';
 import { mapState } from 'vuex';
 import genQuery from '@/utils/gen-query.js';
+import modes from '@/../config/static/modes';
 
 import JobCard from '@/components/JobCard.vue';
+import IconGta from '@/components/IconGta.vue';
 
 export default {
   props: {
@@ -67,8 +80,15 @@ export default {
     }
   },
 
+  data() {
+    return {
+      modes
+    };
+  },
+
   components: {
-    JobCard
+    JobCard,
+    IconGta
   },
 
   computed: {
