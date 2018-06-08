@@ -6,16 +6,24 @@
       GTA Online Jobs
     </h1>
 
-
-
     <div class="columns is-multiline">
       <div
         class="column is-one-third-widescreen is-half-tablet">
-        <div class="box">
+        <div class="box" style="height: 100%; background: hsla(0, 100%, 26%, 10%)">
           <h2 class="is-size-4">
             <b-dropdown v-model="sort" @change="sortChanged">
-              <span slot="trigger" class="is-unselectable" style="cursor: pointer;">
-                {{ sortTypes[sort] }} <span class="has-text-primary">{{ number }}</span>
+              <span
+                slot="trigger"
+                class="dropdown__trigger is-unselectable"
+              >
+                {{ sortTypes[sort] }}
+                <span class="has-text-primary">{{ number }} jobs</span>
+                <b-icon
+                  pack="fa"
+                  icon="angle-down"
+                  custom-class="is-size-5"
+                >
+                </b-icon>
               </span>
 
               <b-dropdown-item
@@ -29,31 +37,61 @@
             Page {{ page }}
           </p>
 
-          <div class="buttons">
-            <router-link
-              v-for="(type, i) in modes"
-              :key="i"
-              v-if="!$route.query.type || $route.query.type === i + 1"
-              :to="{ query: Object.assign($route.query, { type: i + 1 }) }"
-              class="button is-small is-rounded"
-              exact-active-class="is-primary">
-              <icon-gta :icon="type.icon"></icon-gta>
-              <span>{{ type.name }}</span>
-              <b-icon v-if="$route.query.type === i + 1" pack="fa" icon="close" size="is-small"></b-icon>
-            </router-link>
+          <div class="content">
+            <h5>
+              Type
+              <router-link
+                v-if="$route.query.type"
+                :to="{ query: Object.assign({}, $route.query, { type: '' }) }"
+              >
+                <b-icon pack="fa" icon="remove" size="is-small"></b-icon>
+              </router-link>
+            </h5>
+            <div class="buttons">
+              <router-link
+                v-for="(type, i) in modes"
+                :key="i"
+                :to="{ query: Object.assign({}, $route.query, { type: i + 1 }) }"
+                class="button is-small is-rounded is-dark"
+                exact-active-class="is-primary">
+                <icon-gta :icon="type.icon" class="is-hidden-touch"></icon-gta>
+                <span>{{ type.name }}</span>
+                <!-- <b-icon v-if="$route.query.type === i + 1" pack="fa" icon="close" size="is-small"></b-icon> -->
+              </router-link>
+            </div>
 
             <template v-if="$route.query.type && modes[$route.query.type - 1].modes">
-              <router-link
-                v-for="(mode, i) in modes[$route.query.type - 1].modes"
-                :key="mode"
-                :to="{ query: { mode: i + i } }"
-                class="button is-small is-rounded"
-                exact-active-class="is-primary">
-                <icon-gta :icon="modes[$route.query.type - 1].icons[i]"></icon-gta>
-                <span>{{ mode }}</span>
-              </router-link>
+              <h5>
+                Game Mode
+                <router-link
+                  v-if="$route.query.mode"
+                  :to="{ query: Object.assign({}, $route.query, { mode: '' }) }"
+                >
+                  <b-icon pack="fa" icon="remove" size="is-small"></b-icon>
+                </router-link>
+              </h5>
+              <div class="buttons">
+                <router-link
+                  v-for="(mode, j) in modes[$route.query.type - 1].modes"
+                  :key="mode"
+                  :to="{ query: Object.assign({}, $route.query, { mode: j + 1 }) }"
+                  class="button is-small is-rounded is-light"
+                  exact-active-class="has-text-primary"
+                  active-class="">
+                  <icon-gta
+                    :icon="modes[$route.query.type - 1].icons[j]"
+                    class="is-hidden-touch">
+                  </icon-gta>
+                  <span>{{ mode }}</span>
+                </router-link>
+              </div>
             </template>
-            <!-- <router-link href="" class="button is-dark is-small is-rounded" style="background: #01498E;">Rockstar</a> -->
+
+            <h5>Author</h5>
+            <div class="buttons">
+              <router-link to="/" class="button is-dark is-small is-rounded" style="background: #01498E;">Rockstar</router-link>
+              <router-link to="/" class="button is-dark is-small is-rounded" style="background: #01498E;">Rockstar Verified</router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -70,7 +108,6 @@
 <script>
 import Vue from 'vue';
 import { mapState } from 'vuex';
-import genQuery from '@/utils/gen-query.js';
 import modes from '@/../config/static/modes';
 
 import JobCard from '@/components/JobCard.vue';
@@ -114,13 +151,29 @@ export default {
     })
   },
 
+  beforeMount() {
+    console.log(this.$route.query)
+  },
+
   methods: {
     sortChanged(value) {
       this.$router.push({
-        path: this.$route.path,
-        query: { ...this.$route.query, by: value }
+        query: { ...this.$route.query, by: value, page: 1 }
       });
     }
   }
 }
 </script>
+
+<style lang="scss">
+@import "@/scss/vars.scss";
+
+.dropdown__trigger {
+  cursor: pointer;
+
+  &:hover {
+    color: $primary;
+  }
+}
+</style>
+

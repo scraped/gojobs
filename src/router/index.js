@@ -1,16 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-const Main = () => import('@/views/main/index.vue');
-const Crews = () => import('@/views/crews/index.vue');
-const Admin = () => import('@/views/admin.vue');
-const AdminIndex = () => import('@/views/admin/index.vue');
-const AdminRawJobs = () => import('@/views/admin/raw-jobs.vue');
-const AdminFetch = () => import('@/views/admin/fetch.vue');
-const AdminProcess = () => import('@/views/admin/process.vue');
-const Auth = () => import('@/views/auth/index.vue');
-const Job = () => import('@/views/job/index.vue');
-const Profile = () => import('@/views/profile/index.vue');
+const resolve = name => () => import(`@/views/${name}.vue`);
 
 Vue.use(VueRouter);
 
@@ -18,37 +9,37 @@ const routes = [
   {
     path: '/',
     name: 'main',
-    component: Main
+    component: resolve('main/index')
   },
 
   {
     path: '/crews',
     name: 'crews',
-    component: Crews
+    component: resolve('crews/index')
   },
 
   {
     path: '/admin',
-    component: Admin,
+    component: resolve('Admin'),
     children: [
       {
         path: '',
-        component: AdminIndex
+        component: resolve('admin/index')
       },
 
       {
         path: 'raw',
-        component: AdminRawJobs
+        component: resolve('admin/raw-jobs')
       },
 
       {
         path: 'fetch',
-        component: AdminFetch
+        component: resolve('admin/fetch')
       },
 
       {
         path: 'process',
-        component: AdminProcess
+        component: resolve('admin/process')
       }
     ]
   },
@@ -56,19 +47,19 @@ const routes = [
   {
     path: '/auth',
     name: 'auth',
-    component: Auth
+    component: resolve('auth/index')
   },
 
   {
     path: '/job/:id/:slug',
     name: 'job',
-    component: Job
+    component: resolve('job/index')
   },
 
   {
     path: '/profile/:username',
     name: 'profile',
-    component: Profile
+    component: resolve('profile/index')
   }
 ];
 
@@ -85,5 +76,5 @@ export function createRouter() {
     linkExactActiveClass: 'is-active',
 
     routes
-  })
-};
+  });
+}

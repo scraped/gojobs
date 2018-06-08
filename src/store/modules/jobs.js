@@ -22,20 +22,13 @@ const mutations = {
 };
 
 const actions = {
-  async fetch({ commit, rootState: state }, query = {}) {
-    try {
-      const response = await http.post('/api/jobs', {
-        ...state.route.query,
-        ...query
-      });
+  async fetch({ commit }, query = {}) {
+    const response = await http.post('/api/jobs', query);
 
-      const { jobs, number } = response.data;
+    const { jobs, number } = response.data;
 
-      commit('setJobs', { jobs });
-      commit('setNumber', { number });
-    } catch (error) {
-      console.log(error);
-    }
+    commit('setJobs', { jobs });
+    commit('setNumber', { number });
   }
 };
 

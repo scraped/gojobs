@@ -7,7 +7,7 @@ exports.jobListPost = jobListPost;
 async function jobListPost(req, res) {
   const { body, cookies } = req;
 
-  const { by, rockstar, rockstarverified, user } = body;
+  const { by, rockstar, rockstarverified, user, type, mode } = body;
 
   const page = Number(body.page) || 1;
   const platform = body.platform || cookies.platform || 'pc';
@@ -38,6 +38,14 @@ async function jobListPost(req, res) {
 
   if (user) {
     conditions.author = user;
+  }
+
+  if (type) {
+    conditions.scType = type;
+  }
+
+  if (mode) {
+    conditions.scMode = mode;
   }
 
   if (rockstar || rockstarverified) {
