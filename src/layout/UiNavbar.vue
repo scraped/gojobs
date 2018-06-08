@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-fixed-top is-white has-background-grey-lighter" style="opacity: 0.95;">
+  <nav class="navbar is-fixed-top is-transparent">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item" exact-active-class="">
@@ -173,7 +173,7 @@ export default {
 
 .navbar {
   background-color: transparent;
-  // background-image: $main-gradient;
+  background-image: $main-gradient-light;
 }
 
 .navbar-item {

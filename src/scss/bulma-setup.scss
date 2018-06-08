@@ -4,7 +4,7 @@
 @import "./custom-vars";
 
 // $primary: #a6caf0;
-$primary: #ed9a6d;
+$primary: $rockstar-light;
 $primary-invert: findColorInvert($primary);
 // $primary-invert: #ffffff;
 
@@ -50,16 +50,16 @@ $button-active-border-color: $button-hover-border-color;
 $button-focus-border-color: $button-border-color;
 
 // navbar
-$navbar-height: 4rem;
-$navbar-item-color: $white;
-$navbar-item-hover-color: $white;
-$navbar-item-hover-background-color: rgba($black, 0.15);
+$navbar-height: 5rem;
+// $navbar-item-color: $white;
+// $navbar-item-hover-color: $white;
+// $navbar-item-hover-background-color: rgba($black, 0.15);
 
-$navbar-dropdown-arrow: $white;
-$navbar-dropdown-border-top: none;
-$navbar-dropdown-background-color: $dark;
+// $navbar-dropdown-arrow: $white;
+// $navbar-dropdown-border-top: none;
+// $navbar-dropdown-background-color: $dark;
 
-$navbar-tab-hover-background-color: rgba($black, 0.15);
+// $navbar-tab-hover-background-color: rgba($black, 0.15);
 
 // tabs
 $tabs-border-bottom-width: 2px; // 1px
