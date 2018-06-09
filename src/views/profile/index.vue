@@ -29,8 +29,8 @@
               </p> -->
               <div>
                 <a
-                  class="button is-outlined"
-                  :href="`http://ru.socialclub.rockstargames.com/member/${username}`"
+                  class="button is-light"
+                  :href="`https://socialclub.rockstargames.com/member/${username}`"
                   target="_blank">
                   Go to RGSC profile
                 </a>

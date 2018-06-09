@@ -29,7 +29,8 @@
               <b-dropdown-item
                 v-for="(value, key) in sortTypes"
                 :key="`sort-${key}`"
-                :value="key">{{ value }}</b-dropdown-item>
+                :value="key"
+                class="is-unselectable">{{ value }}</b-dropdown-item>
             </b-dropdown>
           </h2>
           <p
@@ -89,8 +90,8 @@
 
             <h5>Author</h5>
             <div class="buttons">
-              <router-link to="/" class="button is-dark is-small is-rounded" style="background: #01498E;">Rockstar</router-link>
-              <router-link to="/" class="button is-dark is-small is-rounded" style="background: #01498E;">Rockstar Verified</router-link>
+              <router-link :to="{ query: { rockstar: 1 } }" class="button is-light is-small is-rounded">Rockstar</router-link>
+              <router-link :to="{ query: { rockstarverified: 1 } }" class="button is-light is-small is-rounded">Rockstar Verified</router-link>
             </div>
           </div>
         </div>

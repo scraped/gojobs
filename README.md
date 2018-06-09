@@ -135,10 +135,11 @@ Property | Type | Flags | Description
 Property | Type | Flags | Description
 -------- | ---- | ----- | -----------
 `_id`                    | `MissionId` |     | `MissionId` alias
-`latestVersionContentId` | `MissionId` |     | ID of a latest version `MissionId`
-`latest`                 | `boolean`   |     | `false` is it is not a latest version
+`latestVersionContentId` | `MissionId` |     | ID of the latest version 
+`latest`                 | `boolean`   |     | `false` is it is not the latest version
 `RootContentId`          | `MissionId` |     | **UNIQUE** job ID (persists over time - **use it**, **differs** from `MissionId`!)
 `copiedFrom`             | `MissionId` | `e` | Original job ID (relevant only for rockstar verified jobs)
+`verifiedVersion`        | `MissionId` | `e` | Opposite for `copiedFrom`: ID of the current, but verified version
 `url`                    | `string`    |     | `/games/gtav/jobs/job/<MissionId>`
 `ver`                    | `integer`   |     | Job version
 `cat`                    | `string`    |     | Category: `none`, `rstar`, `verif`

@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="card"
-    :class="{ 'is-bad': job.bad }"
-  >
+  <div class="card" style="height: 100%;">
     <!-- <div style="position: absolute; bottom: 0%; right: 15%; opacity: 0.08; font-size: 100px;">
       <icon-gta
         v-if="job.scModeIcon"
@@ -179,18 +176,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import "src/scss/vars";
+<style lang="scss">
+@import "@/scss/vars.scss";
 
 $card-image-hover-scale: 1.03;
 $card-image-hover-transition-duration: 350ms;
 
 $card-strip-height: 4px;
 $card-strip-opacity: 0.5;
-
-.is-bad {
-  opacity: 0.25;
-}
 
 .card__image {
   position: relative;

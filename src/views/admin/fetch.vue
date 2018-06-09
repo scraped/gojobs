@@ -176,16 +176,32 @@
     </div>
     <div class="column is-one-third">
       <div class="box">
-        <h2 class="subtitle">Processing</h2>
-        <hr>
+        <form @submit.prevent="process">
+          <h2 class="subtitle">Process jobs</h2>
+          <hr>
 
-        <div class="content">
-          <p>You can upload jobs to the site from here.</p>
+          <div class="content">
+            <p>You can upload jobs to the site from here.</p>
 
-          <form @submit.prevent="process">
+            <div class="field">
+              <b-checkbox v-model="processAny">
+                Process any jobs
+              </b-checkbox>
+            </div>
+
+            <b-field label="Limit">
+              <b-input
+                type="number"
+                v-model.number="processLimit"
+                size="is-medium"
+                min="1"
+                max="5000">
+              </b-input>
+            </b-field>
+
             <button class="button is-primary">Process</button>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -201,7 +217,9 @@ export default {
       id: '',
       platform: 'pc',
       period: '',
-      reqLimit: 200
+      reqLimit: 200,
+      processAny: false,
+      processLimit: 5000
     }
   },
 
@@ -233,7 +251,15 @@ export default {
     },
 
     async process() {
-      await this.$http.post('/api/job/upload');
+      const {
+        processAny: any,
+        processLimit: limit
+      } = this;
+
+      await this.$http.post('/api/job/upload', {
+        any,
+        limit
+      });
     }
   },
 

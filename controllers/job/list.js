@@ -33,7 +33,7 @@ async function jobListPost(req, res) {
       break;
 
     default:
-      sort = { 'stats.growth': -1 };
+      sort = { 'stats.trend': -1 };
   }
 
   if (user) {

@@ -9,11 +9,18 @@ async function jobUploadPost(req, res) {
     message: 'Jobs are being processed.'
   });
 
-  const result = await processJobs();
+  const { any, limit } = req.body;
 
-  console.log(`Job(s) processed, results:`);
+  const result = await processJobs({
+    any: Boolean(any),
+    limit: Number(limit)
+  });
+
+  if (!result.length) {
+    console.log('No jobs to process');
+  }
 
   result.forEach((res, i) => {
-    console.log(`${i + 1}) ${res.jobId}: ${res.success ? 'processed' : 'not processed'}`);
+    console.log(`${i + 1}) ${res.jobId} ${res.success ? 'processed' : 'not processed'}`);
   });
 }

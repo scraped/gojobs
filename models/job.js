@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const { platforms, modes } = require('../config/static');
+require('./job-details');
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -78,9 +79,14 @@ let schema = new Schema({
   },
 
   stats: {
-    points: {
+    trend: {
       type: Number,
-      required: true
+      default: 1
+    },
+
+    growth: {
+      type: Number,
+      default: 1
     },
 
     playTot: {
@@ -89,16 +95,6 @@ let schema = new Schema({
     },
 
     playUnq: {
-      type: Number,
-      required: true
-    },
-
-    quitTot: {
-      type: Number,
-      required: true
-    },
-
-    quitUnq: {
       type: Number,
       required: true
     },
@@ -126,11 +122,6 @@ let schema = new Schema({
     ratingQuit: {
       type: Number,
       required: true
-    },
-
-    growth: {
-      type: Number,
-      default: 1
     }
   },
 
@@ -199,6 +190,7 @@ schema.virtual('platformName')
       platforms,
       plat => plat.short === scPlatformName.toLowerCase()
     );
+
     if (platformId) {
       this.platform = platformId;
     }
