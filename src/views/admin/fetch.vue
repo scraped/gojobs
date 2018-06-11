@@ -195,7 +195,7 @@
                 v-model.number="processLimit"
                 size="is-medium"
                 min="1"
-                max="5000">
+                max="3000">
               </b-input>
             </b-field>
 
@@ -219,7 +219,7 @@ export default {
       period: '',
       reqLimit: 200,
       processAny: false,
-      processLimit: 5000
+      processLimit: 3000
     }
   },
 

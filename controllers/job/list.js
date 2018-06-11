@@ -2,7 +2,9 @@ const _ = require('lodash');
 const platforms = require('../../config/static/platforms');
 const Job = require('../../models/job');
 
-exports.jobListPost = jobListPost;
+module.exports = {
+  jobListPost
+};
 
 async function jobListPost(req, res) {
   const { body, cookies } = req;
@@ -17,7 +19,7 @@ async function jobListPost(req, res) {
 
   switch (by) {
     case 'rating':
-      sort = { 'stats.points': -1 };
+      sort = { 'stats.likes': -1 };
       break;
 
     case 'updated':
@@ -30,6 +32,10 @@ async function jobListPost(req, res) {
 
     case 'newest':
       sort = { scAdded: -1 };
+      break;
+
+    case 'growth':
+      sort = { 'stats.growth': -1 };
       break;
 
     default:
@@ -74,48 +80,8 @@ async function jobListPost(req, res) {
 
   } catch (error) {
     console.log(error);
-    res.json('ашыпка111!');
+    res.json({
+      message: 'Error occured'
+    });
   }
-
-  // options.platform = platformId;
-  // if (gameType) options['job.gameType'] = gameType;
-  // if (maxpl) options['job.maxpl'] = { $lte: maxpl };
-
-  // let number = 0;
-  // let empty = false;
-  // let sort = { 'stats.points': -1 };
-
-  // if (by === 'featured') {
-  //   options.starred = true;
-  // } else if (by === 'updated') {
-  //   sort = { 'dates.updated': -1 };
-  // } else if (by === 'added') {
-  //   sort = { 'dates.added': -1 };
-  // } else if (by === 'user') {
-  //   let info = await User.findOne({ username: byId });
-  //   if (!info) empty = true;
-  //   if (info) options.author = byId;
-  // } else if (by === 'crew') {
-  //   let info = await Crew.findOne({ crewUrl: byId });
-  //   if (!info) empty = true;
-  //   if (info) options.crew = mongoose.Types.ObjectId(info._id);
-  // }
-
-  // if (!empty) {
-  //   number = await Job.count(options);
-  //   if (!number) empty = true;
-  // }
-
-  // if (empty) {
-  //   return res.json({ number: 0 });
-  // }
-
-  // let jobs = await Job.find(options)
-  //   .skip(Math.abs((page - 1) * perPage))
-  //   .limit(perPage)
-  //   .sort(sort);
-
-  // jobs = jobs.map(job => job.toObject());
-
-  // res.json({ number, jobs });
 }

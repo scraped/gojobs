@@ -126,11 +126,12 @@ export default {
     return {
       modes,
       sortTypes: {
-        '': 'Trending',
-        rating: 'Likes',
-        featured: 'Featured',
-        updated: 'Updated',
-        newest: '🔥 Newest'
+        '': 'Most relevant',
+        growth: 'Trending',
+        updated: 'By update date',
+        newest: '🔥 Newest',
+        rating: 'By likes',
+        featured: 'Featured'
       }
     };
   },
