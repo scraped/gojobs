@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-fixed-top is-transparent">
+  <nav class="navbar is-transparent">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item" exact-active-class="">
