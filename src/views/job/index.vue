@@ -1,8 +1,14 @@
 <template>
   <div>
+    <div class="is-overlay" :style="`background: linear-gradient(to bottom, transparent${gradient}, transparent);`"></div>
+    <section class="section">
+      <div class="container">
+        <h1 class="title">Job</h1>
+      </div>
+    </section>
     <div
-      class="hero is-dark"
-      :style="`background: linear-gradient(to right${gradient});`">
+      class="hero"
+      >
       <div class="hero-body">
         <div class="container">
           <div class="content">
@@ -21,9 +27,10 @@
                   <icon-gta :icon="scInfo.scTypeIcon" ></icon-gta>
                 </span>
               </div>
+
               <h1
-                class="title is-uppercase is-size-1"
-                style="font-family: 'Oswald', sans-serif; font-weight: normal;"
+                class="title is-uppercase is-size-1 has-text-weight-normal has-text-dark"
+                style="font-family: 'Oswald', sans-serif;"
                 v-html="job.name">
                 {{ job.name }}
               </h1>
@@ -102,25 +109,25 @@
                 <div class="field is-grouped is-grouped-multiline">
                   <div
                     v-if="job.details.specific.teams"
-                    class="control">
-                    <span
-                      class="tag">
-                      <template v-if="job.details.specific.teams > 2">2-</template>{{ job.details.specific.teams }} teams required
+                    class="control"
+                  >
+                    <span class="tag is-dark">
+                      <template v-if="job.details.specific.teams > 2">2-</template>{{ job.details.specific.teams }} teams
                     </span>
                   </div>
 
                   <template v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
                     <div class="control">
                       <div class="tags has-addons">
-                        <span class="tag is-dark">Lap length</span>
-                        <span class="tag is-info">{{ job.details.specific.race.dist | mToKm }} km</span>
+                        <span class="tag is-light is-medium">Lap length</span>
+                        <span class="tag is-light is-medium has-text-primary">{{ job.details.specific.race.dist | mToKm }} km</span>
                       </div>
                     </div>
 
                     <div class="control">
                       <div class="tags has-addons">
-                        <span class="tag is-dark">Number of checkpoints</span>
-                        <span class="tag is-info">{{ job.details.specific.race.chp }}</span>
+                        <span class="tag is-light is-medium">Number of checkpoints</span>
+                        <span class="tag is-light is-medium has-text-primary">{{ job.details.specific.race.chp }}</span>
                       </div>
                     </div>
 
@@ -128,8 +135,8 @@
                       v-if="job.details.specific.race.laps"
                       class="control">
                       <div class="tags has-addons">
-                        <span class="tag is-dark">Default number of laps</span>
-                        <span class="tag is-info">{{ job.details.specific.race.laps }}</span>
+                        <span class="tag is-light is-medium">Default number of laps</span>
+                        <span class="tag is-light is-medium has-text-primary">{{ job.details.specific.race.laps }}</span>
                       </div>
                     </div>
 
@@ -146,23 +153,23 @@
                 <div v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
                   <div class="buttons">
                     <a
-                      class="is-block button"
+                      class="button is-small is-primary"
+                      @click="mapShowed = !mapShowed">
+                      <template v-if="mapShowed">Hide Route</template>
+                      <template v-else> Show Route</template>
+                    </a>
+                    <a
+                      class="button is-small is-light"
                       :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/${job.jobCurrId}`"
                       target="_blank">
                       Go to RGSC Job Page
                     </a>
-                    <div
-                      class="is-block button"
-                      @click="mapShowed = !mapShowed">
-                      <template v-if="mapShowed">Hide Route</template>
-                      <template v-else> Show Route</template>
-                    </div>
                   </div>
 
                   <p v-if="mapShowed">
-                    <b-notification type="is-info" :closable="false">
+                    <!-- <b-notification type="is-info" :closable="false">
                       The first checkpoint (start/finish line for lap races) is a green checkpoint, and the last checkpoint (finish for point to point races) is a red one. Knowing these two checkpoints you can figure out the race direction.
-                    </b-notification>
+                    </b-notification> -->
                     <race-map
                       :point-to-point="job.details.specific.race.p2p"
                       :locations="job.details.specific.race.chpLocs"
@@ -217,8 +224,9 @@
               </nav>
 
               <p class="has-text-grey-light">
+                Information updated {{ job.fetchDate | formatDate }}
                 <template v-if="job.ver > 1">
-                  Updated {{ job.scUpdated | formatDate }}
+                  · Updated {{ job.scUpdated | formatDate }}
                   (version {{ job.ver }})
                 </template>
                 <template v-if="job.scAdded">
@@ -355,7 +363,7 @@ export default {
       const { background } = this.job.details;
       if (background && background.length) {
         return background.reduce((prev, curr) => {
-          return prev + `, rgba(${curr})`;
+          return prev + `, rgba(${curr}, 0.3)`;
         }, '');
       }
     }

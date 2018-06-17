@@ -48,18 +48,23 @@ function scPlatformName(job) {
 }
 
 const state = {
-  job: {}
+  job: null
 };
 
 const getters = {
   jobFormatted: state => (job = state.job) => {
-    const { scUpdated } = job;
+    const {
+      platform,
+      scUpdated,
+      ver
+    } = job;
+    const dateFromNow = moment(scUpdated).fromNow();
 
     return {
       ...job,
-      ...scUpdatedRel(job),
-      ...scTypeModeIcon(job),
-      ...scPlatformName(job)
+      ext: {
+
+      }
     };
   }
 }
