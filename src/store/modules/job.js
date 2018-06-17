@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { http } from '@/utils';
 
 import {
@@ -8,62 +7,43 @@ import {
   vehicles
 } from '@/../config/static';
 
-function scUpdatedRel(job) {
-  const { scUpdated, ver } = job;
-  const dateFromNow = moment(scUpdated).fromNow();
-
-  const text = ver === 1
-    ? `added ${dateFromNow}`
-    : `${dateFromNow} (version ${ver})`;
-
-  return {
-    scUpdatedRel: text
-  };
-}
-
-function scTypeModeIcon(job) {
-  const { scType, scMode } = job;
-  const { name, icon } = modes[scType - 1];
-
-  let fields = {
-    scTypeName: name,
-    scTypeIcon: icon
-  };
-
-  if (scMode) {
-    fields.scModeName = modes[scType - 1].modes[scMode - 1];
-  }
-
-  return fields;
-}
-
-function scPlatformName(job) {
-  const { platform } = job;
-
-  return {
-    platformName: platform
-      ? platforms[platform - 1].name
-      : ''
-  };
-}
-
 const state = {
   job: null
 };
 
 const getters = {
-  jobFormatted: state => (job = state.job) => {
+  jobExt: state => (job = state.job) => {
     const {
       platform,
-      scUpdated,
-      ver
+      scType,
+      scMode,
+      scAdded
     } = job;
-    const dateFromNow = moment(scUpdated).fromNow();
+
+    const platformName = platform
+      ? platforms[platform - 1].name
+      : '';
+
+    const recentlyAdded = new Date() - scAdded <= 1000 * 60 * 60 * 24 * 14;
+
+    const { name: scTypeName, icon: scTypeIcon } = modes[scType - 1];
+
+    let typeAndModeNameAndIcon = {
+      scTypeName,
+      scTypeIcon,
+    };
+
+    if (scMode) {
+      typeAndModeNameAndIcon.scModeName = modes[scType - 1].modes[scMode - 1];
+      typeAndModeNameAndIcon.scModeIcon = modes[scType - 1].icons[scMode - 1];
+    }
 
     return {
       ...job,
       ext: {
-
+        platformName,
+        recentlyAdded,
+        ...typeAndModeNameAndIcon
       }
     };
   }

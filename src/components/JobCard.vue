@@ -83,7 +83,8 @@
           <!-- <br>Points: {{ job.stats.points }} -->
         </div>
         <div>
-          In-game category: {{ scInfo.scModeName || scInfo.scTypeName }}
+          In-game category:
+          {{ jobExt.ext.scModeName || jobExt.ext.scTypeName }}
         </div>
       </div>
       <br>
@@ -124,6 +125,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import {
   userAvatars,
   rgscRatingCssClass,
@@ -146,6 +148,10 @@ export default {
   },
 
   computed: {
+    ...mapGetters('job', [
+      'jobExt'
+    ]),
+
     recentlyAdded() {
       return new Date() - new Date(this.job.scAdded)
         <= 1000 * 60 * 60 * 24 * 14;
