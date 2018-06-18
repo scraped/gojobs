@@ -99,8 +99,9 @@
       <div
         class="column is-one-third-widescreen is-half-tablet"
         v-for="job in jobs"
-        :key="job.jobId">
-        <job-card :job="job"></job-card>
+        :key="job.jobId"
+      >
+        <job-card :initial-job="job"></job-card>
       </div>
     </div>
   </div>

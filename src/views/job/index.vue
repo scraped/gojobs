@@ -117,20 +117,6 @@
                   </div>
 
                   <template v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
-                    <div class="control">
-                      <div class="tags has-addons">
-                        <span class="tag is-light is-medium">Lap length</span>
-                        <span class="tag is-light is-medium has-text-primary">{{ job.details.specific.race.dist | mToKm }} km</span>
-                      </div>
-                    </div>
-
-                    <div class="control">
-                      <div class="tags has-addons">
-                        <span class="tag is-light is-medium">Number of checkpoints</span>
-                        <span class="tag is-light is-medium has-text-primary">{{ job.details.specific.race.chp }}</span>
-                      </div>
-                    </div>
-
                     <div
                       v-if="job.details.specific.race.laps"
                       class="control">
@@ -240,11 +226,26 @@
           </div>
 
           <div class="column is-one-third-widescreen is-two-fifths-desktop is-12-tablet">
-            <div class="box">
-              <h2 class="subtitle">Ratings</h2>
-              <hr>
-
-              <div class="content">
+            <div class="tabs">
+              <ul>
+                <li class="is-active">
+                  <a href="">Ratings & Info</a>
+                </li>
+                <li>
+                  <a>Race Map</a>
+                </li>
+              </ul>
+            </div>
+            <div class="box is-paddingless">
+              <div class="section has-background-white-bis">
+                Lap length
+                <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.dist | mToKm }} km</span>
+              </div>
+              <div class="section has-background-white-bis">
+                Number of checkpoints
+                <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.chp }}</span>
+              </div>
+              <div class="section content">
                 <p><span class="has-text-weight-bold">RGSC Rating:</span> {{ job.stats.ratingQuit }}%</p>
                 <progress
                   class="progress"

@@ -84,7 +84,7 @@
         </div>
         <div>
           In-game category:
-          {{ jobExt.ext.scModeName || jobExt.ext.scTypeName }}
+          {{ job.ext.scModeName || job.ext.scTypeName }}
         </div>
       </div>
       <br>
@@ -138,7 +138,7 @@ import IconGta from '@/components/IconGta.vue';
 
 export default {
   props: {
-    job: {
+    initialJob: {
       type: Object
     }
   },
@@ -148,9 +148,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters('job', [
-      'jobExt'
-    ]),
+    ...mapGetters('job', {
+      jobExtGetter: 'jobExt'
+    }),
+
+    job() {
+      return this.jobExtGetter(this.initialJob);
+    },
 
     recentlyAdded() {
       return new Date() - new Date(this.job.scAdded)
