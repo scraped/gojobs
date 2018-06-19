@@ -12,7 +12,7 @@
       <div class="hero-body">
         <div class="container">
           <div class="content">
-            <img :src="job.imageUrl">
+            <img :src="job.imageUrl" width="480" height="268">
           </div>
         </div>
       </div>
@@ -91,9 +91,9 @@
                   v-html="job.details.desc">
                 </p>
 
-                <p v-if="defaultVehicle" class="has-text-grey">
-                   Tested in Creator with <b>{{ defaultVehicle }}</b>.
-                </p>
+                <div v-if="defaultVehicle" class="button is-disabled is-light">
+                   Tested in Creator with {{ defaultVehicle }}
+                </div>
 
                 <p v-if="transformVehicles" class="has-text-grey">
                   Feautures <b>{{ transformVehicles }}</b>.
@@ -115,43 +115,9 @@
                       <template v-if="job.details.specific.teams > 2">2-</template>{{ job.details.specific.teams }} teams
                     </span>
                   </div>
-
-                  <template v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
-                    <div
-                      v-if="job.details.specific.race.laps"
-                      class="control">
-                      <div class="tags has-addons">
-                        <span class="tag is-light is-medium">Default number of laps</span>
-                        <span class="tag is-light is-medium has-text-primary">{{ job.details.specific.race.laps }}</span>
-                      </div>
-                    </div>
-
-                    <div class="control">
-                      <span
-                        v-if="job.details.specific.race.p2p"
-                        class="tag">
-                        Point To Point
-                      </span>
-                    </div>
-                  </template>
                 </div>
 
                 <div v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
-                  <div class="buttons">
-                    <a
-                      class="button is-small is-primary"
-                      @click="mapShowed = !mapShowed">
-                      <template v-if="mapShowed">Hide Route</template>
-                      <template v-else> Show Route</template>
-                    </a>
-                    <a
-                      class="button is-small is-light"
-                      :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/${job.jobCurrId}`"
-                      target="_blank">
-                      Go to RGSC Job Page
-                    </a>
-                  </div>
-
                   <p v-if="mapShowed">
                     <!-- <b-notification type="is-info" :closable="false">
                       The first checkpoint (start/finish line for lap races) is a green checkpoint, and the last checkpoint (finish for point to point races) is a red one. Knowing these two checkpoints you can figure out the race direction.
@@ -223,29 +189,49 @@
                 </template>
               </p>
             </div>
+
+            <div class="box">
+              <h2 class="subtitle">
+                You might also like
+              </h2>
+              <hr>
+
+              <p class="is-italic">
+                Nothing to show.
+              </p>
+            </div>
+
+            <div class="box">
+              <h2 class="subtitle">
+                Reviews
+              </h2>
+              <hr>
+
+              <div class="buttons">
+                <a class="button is-primary">
+                  Review the job
+                </a>
+                <a class="button is-light">
+                  Suggest a screenshot
+                </a>
+                <a class="button is-light">
+                  Suggest a video
+                </a>
+              </div>
+              <p class="is-italic">
+                No reviews to show.
+              </p>
+            </div>
           </div>
 
           <div class="column is-one-third-widescreen is-two-fifths-desktop is-12-tablet">
-            <div class="tabs">
-              <ul>
-                <li class="is-active">
-                  <a href="">Ratings & Info</a>
-                </li>
-                <li>
-                  <a>Race Map</a>
-                </li>
-              </ul>
-            </div>
-            <div class="box is-paddingless">
-              <div class="section has-background-white-bis">
-                Lap length
-                <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.dist | mToKm }} km</span>
-              </div>
-              <div class="section has-background-white-bis">
-                Number of checkpoints
-                <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.chp }}</span>
-              </div>
-              <div class="section content">
+            <div class="box">
+              <h2 class="subtitle">
+                Ratings
+              </h2>
+              <hr>
+
+              <div class="content">
                 <p><span class="has-text-weight-bold">RGSC Rating:</span> {{ job.stats.ratingQuit }}%</p>
                 <progress
                   class="progress"
@@ -266,6 +252,44 @@
                   <router-link to="/">What is the difference?</router-link>
                 </p>
               </div>
+            </div>
+
+            <div class="box is-paddingless">
+              <div class="section has-background-white-bis">
+                Lap length
+                <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.dist | mToKm }} km</span>
+              </div>
+              <div class="section has-background-white-bis">
+                Number of checkpoints
+                <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.chp }}</span>
+              </div>
+              <div
+                v-if="job.details.specific.race.laps"
+                class="section has-background-white-bis"
+              >
+                Default number of laps
+                <span class="is-pulled-right has-text-weight-bold">
+                  <template v-if="job.details.specific.race.p2p">
+                    Point to point
+                  </template>
+                  <template v-else>
+                    {{ job.details.specific.race.laps }}
+                  </template>
+                </span>
+              </div>
+              <a
+                class="button is-block is-medium is-primary is-radiusless"
+                :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/${job.jobCurrId}`"
+                target="_blank">
+                <span>Go to RGSC Job Page</span>
+                <b-icon pack="fa" icon="angle-right" size="is-small"></b-icon>
+              </a>
+              <a
+                class="button is-block is-medium is-text is-radiusless"
+                @click="mapShowed = !mapShowed">
+                <template v-if="mapShowed">Hide Route</template>
+                <template v-else> Show Route</template>
+              </a>
             </div>
           </div>
         </div>

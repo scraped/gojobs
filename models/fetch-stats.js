@@ -21,11 +21,6 @@ let schema = new Schema({
     required: isPlatformRequired
   },
 
-  period: {
-    type: String,
-    enum: ['today', 'last7', 'lastMonth']
-  },
-
   firstFetch: {
     type: Date,
     required: true

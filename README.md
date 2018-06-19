@@ -89,7 +89,7 @@ Type | Description
 `Liked`       | Sort by number of likes
 `Name`        | Sort by name
 `Played`      | Sort by plays
-`Relevance`   | Sort by relevance (questionable option)
+`Relevance`   | Sort by relevance (debatable option, better don't use it)
 
 # RGSC jobs list JSON structure ([1] along with [2])
 
