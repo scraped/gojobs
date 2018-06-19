@@ -154,10 +154,6 @@ export default {
     })
   },
 
-  beforeMount() {
-    console.log(this.$route.query)
-  },
-
   methods: {
     sortChanged(value) {
       this.$router.push({

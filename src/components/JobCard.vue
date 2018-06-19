@@ -27,7 +27,7 @@
               <icon-gta :icon="scInfo.scTypeIcon"></icon-gta>
             </span><span class="has-text-weight-bold" v-html="job.name"></span>
             <span
-              v-if="recentlyAdded"
+              v-if="job.ext.recentlyAdded"
               class="tooltip"
               data-tooltip="Added less than 2 weeks ago">
               🔥

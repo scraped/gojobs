@@ -1,14 +1,8 @@
-import { http } from '@/utils';
+import {http} from '@/utils';
 
 const state = {
   jobs: [],
   number: 0
-};
-
-const getters = {
-  jobsFormatted({ jobs }, getters) {
-    return jobs.map(job => getters.job.jobFormatted(job));
-  }
 };
 
 const mutations = {
@@ -35,7 +29,6 @@ const actions = {
 export default {
   namespaced: true,
   state,
-  getters,
   mutations,
   actions
 };
