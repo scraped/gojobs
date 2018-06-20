@@ -12,16 +12,13 @@
             You can fetch either job bunches (up to 20 jobs per request, but this won't give you complete information about the job) or "extended" jobs (this will take you one request per job).
           </b-notification>
 
-          <b-field label="Type">
-            <b-checkbox v-model="bunches" @input="bunchesCheckboxEvent">Fetch bunches - convinient to retrieve info for new jobs</b-checkbox>
-          </b-field>
-
-          <b-field label="Strict">
-            <b-checkbox v-model="strict">Enable strict mode</b-checkbox>
-          </b-field>
-
           <div class="columns">
             <div class="column is-half">
+              <b-field label="Type">
+                <b-checkbox v-model="bunches" @input="bunchesCheckboxEvent">
+                  Fetch bunches
+                </b-checkbox>
+              </b-field>
 
               <b-field label="Author(s)"></b-field>
               <b-field>
@@ -60,7 +57,16 @@
                 </b-radio>
               </b-field>
             </div>
+
             <div class="column">
+              <b-field label="Strict mode">
+                <b-checkbox
+                  v-model="strict"
+                  :disabled="bunches">
+                  Enable strict mode
+                </b-checkbox>
+              </b-field>
+
               <b-field label="Platform"></b-field>
 
               <div
@@ -128,7 +134,7 @@
             </div>
           </div>
 
-          <template v-if="bunches">
+          <!-- <template v-if="bunches">
             <b-field label="Period"></b-field>
             <b-field>
               <b-radio-button v-model="period" native-value="">
@@ -147,7 +153,7 @@
                 Today
               </b-radio-button>
             </b-field>
-          </template>
+          </template> -->
 
           <b-field
             v-if="category !== 'job'"
@@ -272,7 +278,7 @@ export default {
     categoryAllName() {
       return this.bunches
         ? 'RGSC Members'
-        : 'All Jobs';
+        : 'Any jobs';
     }
   }
 };

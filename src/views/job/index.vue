@@ -182,10 +182,7 @@
                   (version {{ job.ver }})
                 </template>
                 <template v-if="job.scAdded">
-                  <template v-if="job.ver > 1">
-                    ·
-                  </template>
-                  Added {{ job.scAdded | formatDate }}
+                  · Added {{ job.scAdded | formatDate }}
                 </template>
               </p>
             </div>
@@ -254,18 +251,18 @@
               </div>
             </div>
 
-            <div class="box is-paddingless">
-              <div class="section has-background-white-bis">
+            <div class="box">
+              <div class="section">
                 Lap length
                 <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.dist | mToKm }} km</span>
               </div>
-              <div class="section has-background-white-bis">
+              <div class="section">
                 Number of checkpoints
                 <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.chp }}</span>
               </div>
               <div
                 v-if="job.details.specific.race.laps"
-                class="section has-background-white-bis"
+                class="section"
               >
                 Default number of laps
                 <span class="is-pulled-right has-text-weight-bold">

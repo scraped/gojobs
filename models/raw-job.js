@@ -39,14 +39,22 @@ let schema = new Schema({
     default: false
   },
 
+  processDate: {
+    type: Date,
+    required: isProcessed
+  },
+
   uploaded: {
     type: Boolean,
     default: false
   },
 
-  processDate: {
-    type: Date,
-    required: isProcessed
+  lastCoeffs: {
+    type: [Number]
+  },
+
+  firstUploadDate: {
+    type: Date
   }
 });
 
