@@ -6,6 +6,8 @@ module.exports = {
   jobListPost
 };
 
+const PER_PAGE_DEFAULT = 35;
+
 async function jobListPost(req, res) {
   const { body, cookies } = req;
 
@@ -69,8 +71,8 @@ async function jobListPost(req, res) {
     const jobs = await Job
       .find(conditions)
       .select('-_id -details')
-      .skip((page - 1) * 30)
-      .limit(30)
+      .skip((page - 1) * PER_PAGE_DEFAULT)
+      .limit(PER_PAGE_DEFAULT)
       .sort(sort);
 
     res.json({

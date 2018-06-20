@@ -12,6 +12,7 @@
             :curr-page="page"
             :total-items="number"
             :load-more-button="true"
+            :per-page="35"
             :loading="loading">
           </custom-pagination>
         </div>

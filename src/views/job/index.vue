@@ -6,17 +6,11 @@
         <h1 class="title">Job</h1>
       </div>
     </section>
-    <div
-      class="hero"
-      >
-      <div class="hero-body">
-        <div class="container">
-          <div class="content">
-            <img :src="job.imageUrl" width="480" height="268">
-          </div>
-        </div>
+    <section class="section">
+      <div class="container">
+        <img :src="job.imageUrl" width="480" height="268">
       </div>
-    </div>
+    </section>
     <section class="section">
       <div class="container">
         <div class="columns is-multiline">
