@@ -9,51 +9,21 @@
           jobs
         </span>
 
-          <a class="navbar-item is-unselectable" slot="trigger">
-            {{ platformName }}
-            <span class="icon">
-              <i class="fa fa-angle-down"></i>
-            </span>
+        <b-dropdown
+          v-model="platform"
+          @change="platformChanged"
+        >
+          <a
+            slot="trigger"
+            class="navbar-item is-unselectable"
+          >
+            <span>Platform: {{ platformName }}</span>
+            <b-icon pack="fa" icon="angle-down"></b-icon>
           </a>
-        <b-dropdown ref="platformDropdown">
 
-          <b-dropdown-item custom>
-            <div class="subtitle is-6">Default platform</div>
-            <b-field>
-              <b-radio
-                v-model="platform"
-                @input="setPlatform"
-                size="is-medium"
-                native-value="pc">
-                <span>PC</span>
-              </b-radio>
-            </b-field>
-
-            <b-field>
-              <b-radio
-                v-model="platform"
-                @input="setPlatform"
-                size="is-medium"
-                native-value="ps4">
-                <span>PS4</span>
-              </b-radio>
-            </b-field>
-
-            <b-field>
-              <b-radio
-                v-model="platform"
-                @input="setPlatform"
-                size="is-medium"
-                native-value="xboxone">
-                <span>Xbox One</span>
-              </b-radio>
-            </b-field>
-
-            <div class="is-clearfix">
-            <div class="button is-primary is-outlined is-hidden-desktop is-pulled-right is-clearfix" @click="closePlatformDropdown">Close</div>
-
-            </div>
-          </b-dropdown-item>
+          <b-dropdown-item value="pc">PC</b-dropdown-item>
+          <b-dropdown-item value="ps4">PS4</b-dropdown-item>
+          <b-dropdown-item value="xboxone">Xbox One</b-dropdown-item>
         </b-dropdown>
 
         <router-link
@@ -150,19 +120,14 @@ export default {
       this.menuOpened = !this.menuOpened;
     },
 
-    setPlatform(platform) {
+    platformChanged(platform) {
       this.$cookie.set('platform', platform, { expires: '1Y' });
       this.platform = platform;
       this.$toast.open({
         message: `Platform set to ${this.platformName}`,
         type: 'is-info'
       });
-      this.closePlatformDropdown();
       this.$router.push({ path: this.$route.path, query: { platform } });
-    },
-
-    closePlatformDropdown() {
-      this.$refs.platformDropdown.toggle();
     }
   }
 };

@@ -271,8 +271,8 @@ export default {
 
   computed: {
     platformDisabled() {
-      const { category, bunches } = this;
-      return category === 'rockstar' || category === 'rockstarverified' || !bunches;
+      const { category } = this;
+      return category === 'rockstar' || category === 'rockstarverified';
     },
 
     categoryAllName() {
