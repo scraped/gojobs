@@ -8,9 +8,9 @@ const {
 } = require('../../config/static');
 
 export function rgscRatingCssClass(rating) {
-  if (rating >= 67) return 'is-success';
-  if (rating >= 34) return 'is-warning';
-  return 'is-danger';
+  if (rating >= 67) return 'success';
+  if (rating >= 34) return 'warning';
+  return 'danger';
 }
 
 export function updatedDate({ date, ver }) {

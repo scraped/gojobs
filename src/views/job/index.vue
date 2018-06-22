@@ -23,10 +23,8 @@
               </div>
 
               <h1
-                class="title is-uppercase is-size-1 has-text-weight-normal has-text-dark"
-                style="font-family: 'Oswald', sans-serif;"
+                class="title title__special is-uppercase is-size-1 has-text-weight-normal has-text-dark"
                 v-html="job.name">
-                {{ job.name }}
               </h1>
 
               <div class="media">
@@ -34,7 +32,13 @@
                   <router-link
                     :to="{ name: 'profile', params: { username: job.author }}">
                     <figure class="image image-avatar is-48x48">
-                      <img class="is-rounded" :src="avatars.small">
+                      <img
+                        v-if="job.author"
+                        class="is-rounded"
+                        :src="avatars.small">
+                      <img
+                        v-else
+                        class="is-rounded" src="@/images/rockstar-avatar-48.png">
                     </figure>
                   </router-link>
                 </div>
@@ -47,21 +51,18 @@
                       @{{ job.author }}
                     </router-link>
                     <span
-                      v-if="!job.author && job.rockstar"
-                      class="tag is-white is-uppercase"
-                      style="border: 1px solid #01498E; color: #01498E;">
+                      v-if="job.rockstar"
+                      class="tag is-warning"
+                    >
                       <span class="icon is-small">
                         <i class="fa fa-check"></i>
                       </span>
-                      <span>Rockstar Job</span>
-                    </span>
-                    <span
-                      v-if="job.author && job.rockstar"
-                      class="tag is-white is-uppercase" style="border: 1px solid #FCAF17; color: #01498E;">
-                      <span class="icon is-small">
-                        <i class="fa fa-check"></i>
+                      <span v-if="job.author">
+                        Rockstar Verified Job
                       </span>
-                      <span>Rockstar Verified Job</span>
+                      <span v-else>
+                        Official Rockstar Job
+                      </span>
                     </span>
                   </p>
                   <p class="has-text-grey">
@@ -85,13 +86,19 @@
                   v-html="job.details.desc">
                 </p>
 
-                <div v-if="defaultVehicle" class="button is-disabled is-light">
+                <div class="tags">
+                  <span v-if="transformVehicles" class="tag is-grey is-medium tag__info">
+                    Transformations: {{ transformVehicles }}
+                  </span>
+
+                  <span v-if="defaultVehicle" class="tag is-white is-medium tag__info is-radiusless">
                    Tested in Creator with {{ defaultVehicle }}
+                </span>
                 </div>
 
-                <p v-if="transformVehicles" class="has-text-grey">
-                  Feautures <b>{{ transformVehicles }}</b>.
-                </p>
+
+
+
 
                 <p v-if="job.tags && job.tags.length">
                   <router-link
@@ -126,8 +133,21 @@
 
               </div>
 
+              <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
+                <ul>
+                  <li>
+                    <span class="tag is-medium" :class="`is-${ratingCssClass(job.stats.rating)}`"><span class="icon is-hidden-mobile is-small">
+                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                      </span><span>{{ job.stats.likes | formatNumber }}</span></span>
+                  </li>
+                  <li><a href="#">Documentation</a></li>
+                  <li><a href="#">Components</a></li>
+                  <li class="is-active"><a href="#" aria-current="page">Breadcrumb</a></li>
+                </ul>
+              </nav>
+
               <nav class="level is-mobile">
-                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em 0;">
+                <div class="level-item has-text-centered" style="border-radius: 4px; padding: 1em 0;" :class="`has-background-${ratingCssClass(job.stats.rating)}`">
                   <div>
                     <p class="heading">Likes</p>
                     <p class="is-size-6">
@@ -386,3 +406,16 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/scss/vars.scss";
+
+.title__special {
+  font-family: 'Oswald', sans-serif;
+}
+
+.tag__info {
+  border: 1px solid $primary;
+}
+</style>
+
