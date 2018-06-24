@@ -8,7 +8,6 @@ function getTitle(vm) {
   // которая может быть как строкой, так и функцией
   let { title } = vm.$options;
 
-  console.log('here');
   let genTitle = (typeof title === 'function' ? title.call(vm) : title) || '';
 
   if (genTitle) {
@@ -23,8 +22,8 @@ function getTitle(vm) {
 // created
 export function serverTitleMixin() {
   const title = getTitle(this);
-  if (title) {
-    this.$ssrContext.title = title;
+  if (this.ssrContext && title) {
+    this.ssrContext.title = title;
   }
 };
 

@@ -6,11 +6,11 @@ import { serverTitleMixin } from './mixins';
 import axios from 'axios';
 import Vue from 'vue';
 
-Vue.mixin({
-  created: serverTitleMixin
-});
-
 export default context => {
+  Vue.mixin({
+    created: serverTitleMixin
+  });
+
   const { req } = context;
 
   return new Promise((resolve, reject) => {
@@ -31,7 +31,7 @@ export default context => {
       const matchedComponents = router.getMatchedComponents();
 
       if (!matchedComponents.length) {
-        return reject(new Error("404"));
+        return reject(new Error('404'));
       }
 
       const asyncDataPromises = findAsyncComponents({
