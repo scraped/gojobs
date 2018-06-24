@@ -2,7 +2,13 @@ import config from '../config';
 import { createApp } from './app'
 import { findAsyncComponents } from './helpers';
 import { setupHttp, serializeCookies } from './utils';
+import { serverTitleMixin } from './mixins';
 import axios from 'axios';
+import Vue from 'vue';
+
+Vue.mixin({
+  created: serverTitleMixin
+});
 
 export default context => {
   const { req } = context;
@@ -25,8 +31,7 @@ export default context => {
       const matchedComponents = router.getMatchedComponents();
 
       if (!matchedComponents.length) {
-        // stringify because new error accepts only strings
-        return reject(new Error(JSON.stringify({ code: 404 })));
+        return reject(new Error("404"));
       }
 
       const asyncDataPromises = findAsyncComponents({

@@ -77,14 +77,10 @@ let webpackConfig = {
     new VueLoaderPlugin(),
 
     new FriendlyErrorsPlugin({
-      onErrors(severity, errors) {
+      onErrors(severity) {
         if (severity !== 'error') return;
-        errors.forEach(error => {
-          notifier.notify({
-            title: error.name,
-            message: error.message,
-            subtitle: error.file || ''
-          });
+        notifier.notify({
+          title: 'Error during the bundling occured'
         });
       }
     })
