@@ -8,7 +8,6 @@ import { setupHttpClient } from './utils'
 
 Vue.mixin({
   mounted: clientTitleMixin,
-  // See docs to understand why this is necessary
   beforeRouteUpdate
 });
 

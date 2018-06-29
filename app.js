@@ -27,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(cookieParser());
+
 app.use(
   '/assets',
   express.static(path.resolve(__dirname, 'dist/assets'))
