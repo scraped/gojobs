@@ -3,7 +3,11 @@
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item" exact-active-class="">
-          <img src="@/images/gtaonline-logo-mini.png" alt="" title="">
+          <img
+            src="@/images/gtaonline-logo-mini.png"
+            alt="Go to the main page"
+            title="Go to the main page"
+          >
         </router-link>
         <span class="navbar-item is-size-3" style="font-family: 'SignPainter-HouseScript';">
           jobs
@@ -17,8 +21,8 @@
             slot="trigger"
             class="navbar-item is-unselectable"
           >
-            <span>Platform: {{ platformName }}</span>
-            <b-icon pack="fa" icon="angle-down"></b-icon>
+            <span>{{ platformName }}</span>
+            <b-icon pack="fa" icon="angle-down" size="is-small"></b-icon>
           </a>
 
           <b-dropdown-item value="pc">PC</b-dropdown-item>

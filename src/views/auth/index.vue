@@ -2,6 +2,7 @@
   <div>
     <section class="section">
       <div class="container">
+        <h1 class="title">Sign Up or Log In</h1>
         <div class="columns is-centered">
           <div class="column is-half">
             <div class="tabs is-large">
@@ -18,8 +19,7 @@
                 </li>
               </ul>
             </div>
-            <div class="box">
-              <template v-if="signup">
+              <div class="box" v-if="signup">
                 <div class="content">
                 <div class="subtitle">Welcome to GTA Online Jobs site</div>
                 <hr>
@@ -30,12 +30,13 @@
                   <li>Вы будете иметь возможность <b>зайти и опубликовать дело в GTA Online в течение следующих 60 минут.</b></li>
                 </ul>
                 </div>
-              <b-notification type="is-warning">
-                Note that the registration is not open for everybody as of now and most likely you won't be able to sign up (unless you don't have an invite).<br>
-                But your chances are higher if you have previously published some relatively popular jobs.
-              </b-notification>
-            </template>
+                <b-message type="is-info" :closable="false">
+                  Note that the registration is not open for everybody as of now and most likely you won't be able to sign up (unless you don't have an invite).<br>
+                  But your chances are higher if you have previously published some relatively popular jobs.
+                </b-message>
+              </div>
 
+              <div class="box">
               <form method="post" @submit.prevent="auth">
                 <b-field
                   v-if="!recovery"

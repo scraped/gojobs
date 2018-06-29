@@ -1,21 +1,20 @@
 <template>
   <div>
-    <section class="hero is-large is-dark hero__welcome" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6)), url('https://media.rockstargames.com/rockstargames-newsite/uploads/25d22aa4973a9a13d94c5df860eb6ecc1ba86021.jpg') 50% 50%;">
+    <!-- <section class="hero is-fullheight is-dark hero__welcome" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6)), url('https://media.rockstargames.com/rockstargames-newsite/uploads/25d22aa4973a9a13d94c5df860eb6ecc1ba86021.jpg') 50% 50%;">
       <div class="hero-body">
         <div class="container has-text-centered">
-          <h1 class="is-size-1 has-text-weight-bold">
-            <span style="border-bottom: 5px solid #eb0000;">GTA Online</span> Jobs, Events & Playlists
+          <h1 class="title">
+            GTA Online Jobs, Events & Playlists
           </h1>
           <p class="is-size-4">
             Constantly updated list of 10k+ GTA Online Jobs.<br>
             Easily find the best ones, create playlists, organize & participate online events.
-          </p>
-          <p>
+            <br><br>
             <a class="button is-large is-primary">Sign Up or Log In</a>
           </p>
         </div>
       </div>
-    </section>
+    </section> -->
     <section class="section">
       <div class="container">
         <jobs-list></jobs-list>
