@@ -1,5 +1,17 @@
 <template>
   <div>
+    <section class="hero is-medium">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Medium title
+          </h1>
+          <h2 class="subtitle">
+            Medium subtitle
+          </h2>
+        </div>
+      </div>
+    </section>
     <section class="section">
       <div class="container">
         <jobs-list></jobs-list>
