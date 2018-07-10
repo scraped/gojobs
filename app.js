@@ -38,6 +38,10 @@ app.use('/api', apiRouter);
 
 ssrMiddleware(app);
 
+app.use((err, req, res, next) => {
+  return res.status(500).send('500 Error');
+});
+
 connectDb(() => {
   app.listen(app.get('port'), () => {
     const port = app.get('port');
@@ -46,6 +50,6 @@ connectDb(() => {
 });
 
 process.on('unhandledRejection', (err) => {
-  console.log('here:', err.stack);
+  console.log('Unhandled rejection occured:', err.stack);
   process.exit(1);
 });
