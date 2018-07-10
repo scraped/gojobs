@@ -10,8 +10,9 @@ const compression = require('compression');
 const prettyError = require('pretty-error');
 const cookieParser = require('cookie-parser');
 
-const { apiRouter } = require('./routers');
-const serverSideRendering = require('./lib/ssr');
+const {apiRouter} = require('./routers');
+const {ssrMiddleware} = require('./lib/ssr');
+const {connectDb} = require('./lib/db');
 
 // better error messages
 prettyError.start();
@@ -35,16 +36,16 @@ app.use(
 
 app.use('/api', apiRouter);
 
-// Should be after all the routes
-serverSideRendering(app);
+ssrMiddleware(app);
 
-app.listen(app.get('port'), () => {
-  const port = app.get('port');
-  console.log(chalk.blue(`Server is running on http://localhost:${port}`));
+connectDb(() => {
+  app.listen(app.get('port'), () => {
+    const port = app.get('port');
+    console.log(chalk.blue(`Server is running on http://localhost:${port}`));
+  });
 });
 
 process.on('unhandledRejection', (err) => {
-
   console.log('here:', err.stack);
   process.exit(1);
 });
