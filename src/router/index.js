@@ -13,6 +13,12 @@ const routes = [
   },
 
   {
+    path: '/error/:code',
+    name: 'error',
+    component: resolve('Error')
+  },
+
+  {
     path: '/crews',
     name: 'crews',
     component: resolve('crews/index')
