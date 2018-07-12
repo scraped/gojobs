@@ -86,19 +86,23 @@
                   v-html="job.details.desc">
                 </p>
 
-                <div class="tags">
-                  <span v-if="transformVehicles" class="tag is-grey is-medium tag__info">
-                    Transformations: {{ transformVehicles }}
+                <p>
+                  <span class="has-text-weight-bold">
+                    Tested in Creator with:
                   </span>
+                  <span class="tag is-medium">
+                  {{ defaultVehicle }}
+                  </span>
+                </p>
 
-                  <span v-if="defaultVehicle" class="tag is-white is-medium tag__info is-radiusless">
-                   Tested in Creator with {{ defaultVehicle }}
-                </span>
-                </div>
-
-
-
-
+                <p>
+                  <span class="has-text-weight-bold">
+                    Transformations:
+                  </span>
+                  <span class="tag is-medium">
+                  {{ transformVehicles }}
+                  </span>
+                </p>
 
                 <p v-if="job.tags && job.tags.length">
                   <router-link
@@ -133,7 +137,7 @@
               </div>
 
               <nav class="level is-mobile">
-                <div class="level-item has-text-centered" style="border-radius: 4px; padding: 1em 0;" :class="`has-background-${ratingCssClass(job.stats.rating)}`">
+                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em 0;">
                   <div>
                     <p class="heading">Likes</p>
                     <p class="is-size-6">

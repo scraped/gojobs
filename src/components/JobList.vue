@@ -2,7 +2,7 @@
   <div>
     <h1
       v-if="!minInfo"
-      class="title">
+      class="is-size-1 title__special has-font-weight-normal is-uppercase">
       GTA Online Jobs
     </h1>
 
@@ -167,6 +167,10 @@ export default {
 <style lang="scss">
 @import "@/scss/vars.scss";
 
+.title__special {
+  font-family: 'Oswald', sans-serif;
+}
+
 .dropdown__trigger {
   cursor: pointer;
 
@@ -175,4 +179,3 @@ export default {
   }
 }
 </style>
-
