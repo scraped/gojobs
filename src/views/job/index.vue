@@ -130,21 +130,7 @@
                     </race-map>
                   </p>
                 </div>
-
               </div>
-
-              <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
-                <ul>
-                  <li>
-                    <span class="tag is-medium" :class="`is-${ratingCssClass(job.stats.rating)}`"><span class="icon is-hidden-mobile is-small">
-                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                      </span><span>{{ job.stats.likes | formatNumber }}</span></span>
-                  </li>
-                  <li><a href="#">Documentation</a></li>
-                  <li><a href="#">Components</a></li>
-                  <li class="is-active"><a href="#" aria-current="page">Breadcrumb</a></li>
-                </ul>
-              </nav>
 
               <nav class="level is-mobile">
                 <div class="level-item has-text-centered" style="border-radius: 4px; padding: 1em 0;" :class="`has-background-${ratingCssClass(job.stats.rating)}`">
@@ -310,7 +296,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import {mapState} from 'vuex';
 
 import {
   userAvatars,
@@ -323,11 +309,13 @@ import {
 import IconGta from '@/components/IconGta.vue';
 import RaceMap from './RaceMap.vue';
 import vehicles from '@/../config/static/vehicles';
-import { findIndex } from 'lodash';
+import findIndex from 'lodash/findIndex';
 
 export default {
-  title() {
-    return this.job.name;
+  metaInfo() {
+    return {
+      title: this.job.name
+    }
   },
 
   fetchData({ store, route }) {

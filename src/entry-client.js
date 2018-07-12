@@ -1,13 +1,12 @@
 import './scss/main.scss';
 
 import Vue from 'vue';
-import { createApp } from './app';
-import { findAsyncComponents } from './helpers';
-import { beforeRouteUpdate, clientTitleMixin } from './mixins';
-import { setupHttpClient } from './utils'
+import {createApp} from './app';
+import {findAsyncComponents} from './helpers';
+import {beforeRouteUpdate} from './mixins';
+import {setupHttpClient} from './utils'
 
 Vue.mixin({
-  mounted: clientTitleMixin,
   beforeRouteUpdate
 });
 

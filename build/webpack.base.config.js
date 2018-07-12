@@ -18,7 +18,7 @@ const jsChunkName = 'assets/js/[name].[chunkhash:6].js';
 const imagesName = 'assets/images/[name].[hash:6].[ext]';
 const cssName = 'assets/css/[name].[contenthash:6].css';
 
-const { production } = config;
+const {production} = config;
 
 // Why no clean-webpack-plugin? Two bundles utilize dist dir so no one
 // can delete it. You should delete it manually before bundling

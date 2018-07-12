@@ -1,16 +1,10 @@
 import config from '../config';
-import { createApp } from './app'
-import { findAsyncComponents } from './helpers';
-import { setupHttp, serializeCookies } from './utils';
-import { serverTitleMixin } from './mixins';
+import {createApp} from './app'
+import {findAsyncComponents} from './helpers';
+import {setupHttp, serializeCookies} from './utils';
 import axios from 'axios';
-import Vue from 'vue';
 
 export default context => {
-  Vue.mixin({
-    created: serverTitleMixin
-  });
-
   const { req } = context;
 
   return new Promise((resolve, reject) => {
