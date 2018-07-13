@@ -7,11 +7,6 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const {
-  sassLoadersDevelopment,
-  sassLoadersProduction
-} = require('./sass-setup');
-
 // hash instead of chunkhash due to HMR
 const jsName = 'assets/js/[name].[hash:6].js';
 const jsChunkName = 'assets/js/[name].[chunkhash:6].js';
@@ -52,16 +47,27 @@ let webpackConfig = {
         test: /\.scss/,
         use: [
           production
-            ?
+            ? MiniCssExtractPlugin.loader
+            : {
+                loader: 'vue-style-loader',
+                options: { sourceMap: true }
+              },
+
+          {
+            loader: 'css-loader',
+            options: { sourceMap: true }
+          },
+
+          {
+            loader: 'resolve-url-loader',
+            options: { sourceMap: true }
+          },
+
+          {
+            loader: 'sass-loader',
+            options: { sourceMap: true }
+          }
         ]
-          production
-          ?
-            [
-              MiniCssExtractPlugin.loader,
-              ...sassLoadersProduction
-            ]
-          :
-            sassLoadersDevelopment
       },
 
       {
