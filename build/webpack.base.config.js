@@ -5,7 +5,7 @@ const notifier = require('node-notifier');
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const {
   sassLoadersDevelopment,
@@ -50,7 +50,10 @@ let webpackConfig = {
 
       {
         test: /\.scss/,
-        use:
+        use: [
+          production
+            ?
+        ]
           production
           ?
             [

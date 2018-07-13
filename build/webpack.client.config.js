@@ -2,12 +2,12 @@ const baseWebpackConfig = require('./webpack.base.config');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 
-const { production, development } = require('../config');
+const {production, development} = require('../config');
 
 let webpackConfig = {
   // Why we don't use a separate entry for styles? They'll be extracted
@@ -59,6 +59,9 @@ let webpackConfig = {
   },
 
   plugins: [
+    // https://github.com/webpack/webpack/issues/3128#issuecomment-311418452
+    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en/),
+
     new VueSSRClientPlugin(),
 
     new BundleAnalyzerPlugin({
