@@ -8,10 +8,10 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 // hash instead of chunkhash due to HMR
-const jsName = 'assets/js/[name].[hash:6].js';
-const jsChunkName = 'assets/js/[name].[chunkhash:6].js';
-const imagesName = 'assets/images/[name].[hash:6].[ext]';
-const cssName = 'assets/css/[name].[contenthash:6].css';
+const jsName = 'assets/js/[name].[hash].js';
+const jsChunkName = 'assets/js/[name].[chunkhash].js';
+const imagesName = 'assets/images/[name].[hash].[ext]';
+const cssName = 'assets/css/[name].[contenthash].css';
 
 const {production} = config;
 
@@ -27,7 +27,8 @@ let webpackConfig = {
     filename: jsName,
     chunkFilename: jsChunkName,
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/'
+    publicPath: '/',
+    hashDigestLength: 6
   },
 
   resolve: {

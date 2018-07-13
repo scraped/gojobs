@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-const resolve = name => () => import(`@/views/${name}.vue`);
+const resolve = name => () => import(/* webpackChunkName: "views" */`@/views/${name}.vue`);
 
 Vue.use(VueRouter);
 

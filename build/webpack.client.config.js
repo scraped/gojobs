@@ -14,7 +14,7 @@ let webpackConfig = {
   // from generated chunk and it will be empty
   entry: {
     app: './src/entry-client.js',
-    polyfill: 'babel-polyfill'
+    // polyfill: 'babel-polyfill'
   },
 
   optimization: {
