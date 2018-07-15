@@ -84,6 +84,7 @@ let webpackConfig = {
   },
 
   plugins: [
+    // For SFC
     new VueLoaderPlugin(),
 
     new FriendlyErrorsPlugin({
@@ -97,7 +98,9 @@ let webpackConfig = {
   ],
 
   performance: {
-    hints: production ? 'warning' : false
+    hints: production
+      ? 'warning'
+      : false
   }
 };
 
@@ -112,10 +115,6 @@ if (production) {
       'process.env': {
         NODE_ENV: '"production"'
       }
-    }),
-
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
     })
   );
 }

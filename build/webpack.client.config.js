@@ -19,7 +19,7 @@ let webpackConfig = {
 
   optimization: {
     minimizer: [
-      new OptimizeCssAssetsPlugin(),
+      // new OptimizeCssAssetsPlugin(),
 
       new UglifyjsWebpackPlugin({
         sourceMap: true,

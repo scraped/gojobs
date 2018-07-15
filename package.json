@@ -9,7 +9,7 @@
     "dev:nodemon": "rimraf dist && nodemon app",
     "start": "cross-env NODE_ENV=production node app",
     "start:nodemon": "cross-env NODE_ENV=production nodemon app",
-    "build:client": "cross-env NODE_ENV=production webpack-cli --config build/webpack.client.config.js --progress --hide-modules",
+    "build:client": "cross-env NODE_ENV=production webpack-cli --config build/webpack.client.config.js --progress",
     "build:server": "cross-env NODE_ENV=production webpack-cli --config build/webpack.server.config.js --progress --hide-modules",
     "build": "rimraf dist && npm run build:server && npm run build:client",
     "build:node": "npm run build && npm run start",
