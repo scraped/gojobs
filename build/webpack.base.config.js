@@ -44,32 +44,7 @@ let webpackConfig = {
         loader: 'vue-loader'
       },
 
-      {
-        test: /\.scss/,
-        use: [
-          production
-            ? MiniCssExtractPlugin.loader
-            : {
-                loader: 'vue-style-loader',
-                options: { sourceMap: true }
-              },
 
-          {
-            loader: 'css-loader',
-            options: { sourceMap: true }
-          },
-
-          {
-            loader: 'resolve-url-loader',
-            options: { sourceMap: true }
-          },
-
-          {
-            loader: 'sass-loader',
-            options: { sourceMap: true }
-          }
-        ]
-      },
 
       {
         test: /\.(png|jpe?g|gif|svg)$/,
@@ -107,9 +82,7 @@ let webpackConfig = {
 if (production) {
   webpackConfig.plugins.push(
     // We use it only in production because this plugin doesn't support HMR
-    // new MiniCssExtractPlugin({
-    //   filename: cssName
-    // }),
+
 
     new webpack.DefinePlugin({
       'process.env': {

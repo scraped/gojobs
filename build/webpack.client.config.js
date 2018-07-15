@@ -3,7 +3,7 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
-// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 
@@ -54,7 +54,34 @@ let webpackConfig = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
-      }
+      },
+
+      {
+        test: /\.scss/,
+        use: [
+          production
+            ? MiniCssExtractPlugin.loader
+            : {
+                loader: 'vue-style-loader',
+                options: { sourceMap: true }
+              },
+
+          {
+            loader: 'css-loader',
+            options: { sourceMap: true }
+          },
+
+          {
+            loader: 'resolve-url-loader',
+            options: { sourceMap: true }
+          },
+
+          {
+            loader: 'sass-loader',
+            options: { sourceMap: true }
+          }
+        ]
+      },
     ]
   },
 
@@ -71,6 +98,8 @@ let webpackConfig = {
   ]
 };
 
+const cssName = 'assets/css/[name].[contenthash].css';
+
 if (development) {
   webpackConfig.entry.app = [
     'webpack-hot-middleware/client?reload=true',
@@ -79,6 +108,12 @@ if (development) {
 
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin()
+  );
+} else {
+  webpackConfig.plugins.push(
+    new MiniCssExtractPlugin({
+      filename: cssName
+    }),
   );
 }
 
