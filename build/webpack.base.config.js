@@ -107,9 +107,9 @@ let webpackConfig = {
 if (production) {
   webpackConfig.plugins.push(
     // We use it only in production because this plugin doesn't support HMR
-    new MiniCssExtractPlugin({
-      filename: cssName
-    }),
+    // new MiniCssExtractPlugin({
+    //   filename: cssName
+    // }),
 
     new webpack.DefinePlugin({
       'process.env': {
