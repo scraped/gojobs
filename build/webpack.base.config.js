@@ -5,15 +5,13 @@ const notifier = require('node-notifier');
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const {production} = config;
 
 // hash instead of chunkhash due to HMR
 const jsName = 'assets/js/[name].[hash].js';
 const jsChunkName = 'assets/js/[name].[chunkhash].js';
 const imagesName = 'assets/images/[name].[hash].[ext]';
-const cssName = 'assets/css/[name].[contenthash].css';
-
-const {production} = config;
 
 // Why no clean-webpack-plugin? Two bundles utilize dist dir so no one
 // can delete it. You should delete it manually before bundling
@@ -43,8 +41,6 @@ let webpackConfig = {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
-
-
 
       {
         test: /\.(png|jpe?g|gif|svg)$/,
@@ -81,9 +77,6 @@ let webpackConfig = {
 
 if (production) {
   webpackConfig.plugins.push(
-    // We use it only in production because this plugin doesn't support HMR
-
-
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'

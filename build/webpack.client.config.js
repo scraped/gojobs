@@ -9,17 +9,19 @@ const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 
 const {production, development} = require('../config');
 
+const cssName = 'assets/css/[name].[contenthash].css';
+
 let webpackConfig = {
   // Why we don't use a separate entry for styles? They'll be extracted
   // from generated chunk and it will be empty
   entry: {
-    app: './src/entry-client.js',
-    // polyfill: 'babel-polyfill'
+    app: ['./src/entry-client.js'],
+    polyfill: 'babel-polyfill'
   },
 
   optimization: {
     minimizer: [
-      // new OptimizeCssAssetsPlugin(),
+      new OptimizeCssAssetsPlugin(),
 
       new UglifyjsWebpackPlugin({
         sourceMap: true,
@@ -38,7 +40,7 @@ let webpackConfig = {
         commons: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          chunks: 'all'
+          chunks: chunk => chunk.name !== 'polyfill'
         }
       }
     }
@@ -57,7 +59,7 @@ let webpackConfig = {
       },
 
       {
-        test: /\.scss/,
+        test: /\.scss$/,
         use: [
           production
             ? MiniCssExtractPlugin.loader
@@ -98,13 +100,10 @@ let webpackConfig = {
   ]
 };
 
-const cssName = 'assets/css/[name].[contenthash].css';
-
 if (development) {
-  webpackConfig.entry.app = [
-    'webpack-hot-middleware/client?reload=true',
-    webpackConfig.entry.app
-  ];
+  webpackConfig.entry.app.push(
+    'webpack-hot-middleware/client?reload=true'
+  );
 
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin()
