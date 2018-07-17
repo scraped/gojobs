@@ -36,6 +36,7 @@ app.use(
 
 app.use('/api', apiRouter);
 
+// Server-side rendering middleware. Must follow after all the routes
 ssrMiddleware(app);
 
 connectDb(() => {
@@ -45,7 +46,7 @@ connectDb(() => {
   });
 });
 
-process.on('unhandledRejection', (err) => {
+process.on('unhandledRejection', err => {
   console.log('Unhandled rejection occured:', err.stack);
   process.exit(1);
 });
