@@ -3,7 +3,7 @@
     <div class="columns is-multiline">
       <div
         class="column is-one-third-widescreen is-half-tablet">
-        <div class="box" style="height: 100%; background: hsla(0, 100%, 26%, 10%)">
+        <div class="box is-shadowless" style="height: 100%; background: linear-gradient(to bottom, hsla(0, 100%, 26%, 10%), transparent)">
           <h2 class="is-size-4">
             <b-dropdown
               v-model="sort"
@@ -70,7 +70,7 @@
                   slot="trigger"
                   class="dropdown__trigger is-unselectable"
                 >
-                  <span class="is-size-5 has-text-weight-bold">Type</span>
+                  <span class="has-text-weight-bold">Type</span>
                   <div class="is-pulled-right">
                     {{ currTypeName }}
                     <b-icon
@@ -106,7 +106,7 @@
                   slot="trigger"
                   class="dropdown__trigger is-unselectable"
                 >
-                  <span class="is-size-5 has-text-weight-bold">Game Mode</span>
+                  <span class="has-text-weight-bold">Game Mode</span>
                   <div class="is-pulled-right">
                     {{ currModeName }}
                     <b-icon
@@ -116,8 +116,6 @@
                     ></b-icon>
                   </div>
                 </div>
-
-                <div class="is-pulled-right">us</div>
 
                 <b-dropdown-item
                   v-for="(mode, i) in currModeInfo"
@@ -129,13 +127,6 @@
                   <span>{{ mode }}</span>
                 </b-dropdown-item>
               </b-dropdown>
-            </div>
-          </div>
-
-          <div class="content">
-            <div class="buttons">
-              <router-link :to="{ query: { rockstar: 1 } }" class="button is-light is-small is-rounded">Rockstar</router-link>
-              <router-link :to="{ query: { rockstarverified: 1 } }" class="button is-light is-small is-rounded">Rockstar Verified</router-link>
             </div>
           </div>
         </div>
@@ -242,7 +233,7 @@ export default {
         query: {
           ...this.$route.query,
           type: value,
-          mode: 0,
+          mode: '',
           page: 1
         }
       })

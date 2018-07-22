@@ -12,8 +12,7 @@
     }">
       <div class="card__image">
         <figure class="image is-2by1 is-clipped">
-          <!-- <img :src="job.imageUrl" :alt="job.name"> -->
-          <img src="https://prod.cloud.rockstargames.com/ugc/gta5mission/0383/_5LMWNvrJUWG7oCVTiMKhw/2_0.jpg" :alt="job.name">
+          <img :src="job.imageUrl" :alt="job.name">
         </figure>
         <div
           class="card__strip"
@@ -44,7 +43,7 @@
           <figure class="image is-48x48">
             <router-link
               :to="{ name: 'profile', params: { username: job.author }}">
-              <!-- <img class="is-rounded" :src="avatars.small"> -->
+              <img class="is-rounded" :src="avatars.small">
             </router-link>
           </figure>
         </div>
@@ -58,9 +57,9 @@
               </router-link>
             </template>
             <template v-if="job.rockstar">
-              <span class="tag">
+              <span class="tag is-primary">
                 <template v-if="job.author">
-                  Rockstar Verified Job
+                  Rockstar Verified
                 </template>
                 <template v-else>
                   Rockstar Job
