@@ -1,10 +1,8 @@
-import { http } from '@/utils';
+import {http} from '@/utils';
 
 import {
   modes,
-  platforms,
-  vehClasses,
-  vehicles
+  platforms
 } from '@/../config/static';
 
 const state = {
@@ -12,6 +10,8 @@ const state = {
 };
 
 const getters = {
+  job: state => state.job,
+
   jobExt: state => (job = state.job) => {
     const {
       platform,
@@ -26,7 +26,10 @@ const getters = {
 
     const recentlyAdded = new Date() - scAdded <= 1000 * 60 * 60 * 24 * 14;
 
-    const { name: scTypeName, icon: scTypeIcon } = modes[scType - 1];
+    const {
+      name: scTypeName,
+      icon: scTypeIcon
+    } = modes[scType - 1];
 
     let typeAndModeNameAndIcon = {
       scTypeName,
@@ -39,12 +42,9 @@ const getters = {
     }
 
     return {
-      ...job,
-      ext: {
-        platformName,
-        recentlyAdded,
-        ...typeAndModeNameAndIcon
-      }
+      platformName,
+      recentlyAdded,
+      ...typeAndModeNameAndIcon
     };
   }
 }

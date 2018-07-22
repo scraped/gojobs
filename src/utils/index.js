@@ -1,9 +1,2 @@
-import { http, setupHttp, setupHttpClient } from './http';
-import { serializeCookies } from './cookie';
-
-export {
-  http,
-  setupHttp,
-  setupHttpClient,
-  serializeCookies
-};
+export { http, setupHttp, setupHttpClient } from './http';
+export { serializeCookies } from './cookie';

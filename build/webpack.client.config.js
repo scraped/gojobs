@@ -5,11 +5,22 @@ const webpack = require('webpack');
 
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
-const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const {production, development} = require('../config');
+
+let jsLoaders = [
+  'babel-loader'
+];
+
+if (production) {
+  jsLoaders.push({
+    loader: 'eslint-loader',
+    options: { failOnError: true }
+  });
+}
 
 let webpackConfig = {
   // Why we don't use a separate entry for styles? They'll be extracted
@@ -56,8 +67,8 @@ let webpackConfig = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: jsLoaders
       }
     ]
   },

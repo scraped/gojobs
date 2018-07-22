@@ -1,0 +1,63 @@
+[
+  {
+    "path": "/",
+    "name": "main",
+    "component": "main/index"
+  },
+
+  {
+    "path": "/error/:code",
+    "name": "error",
+    "component": "Error"
+  },
+
+  {
+    "path": "/crews",
+    "name": "crews",
+    "component": "crews/index"
+  },
+
+  {
+    "path": "/admin",
+    "component": "Admin",
+    "children": [
+      {
+        "path": "",
+        "component": "admin/index"
+      },
+
+      {
+        "path": "raw",
+        "component": "admin/raw-jobs"
+      },
+
+      {
+        "path": "fetch",
+        "component": "admin/fetch"
+      },
+
+      {
+        "path": "process",
+        "component": "admin/process"
+      }
+    ]
+  },
+
+  {
+    "path": "/auth",
+    "name": "auth",
+    "component": "auth/index"
+  },
+
+  {
+    "path": "/job/:id/:slug",
+    "name": "job",
+    "component": "job/index"
+  },
+
+  {
+    "path": "/profile/:username",
+    "name": "profile",
+    "component": "profile/index"
+  }
+]

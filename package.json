@@ -8,17 +8,11 @@
     "dev": "rimraf dist && node app",
     "dev:nodemon": "rimraf dist && nodemon app",
     "start": "cross-env NODE_ENV=production node app",
-    "start:nodemon": "cross-env NODE_ENV=production nodemon app",
     "build:client": "cross-env NODE_ENV=production webpack-cli --config build/webpack.client.config.js --progress --hide-modules",
     "build:server": "cross-env NODE_ENV=production webpack-cli --config build/webpack.server.config.js --progress --hide-modules",
     "build": "rimraf dist && npm run build:server && npm run build:client",
-    "build:node": "npm run build && npm run start",
-    "build:nodemon": "npm run build && npm run start:nodemon"
+    "build:start": "npm run build && npm run start"
   },
-  "sideEffects": [
-    "*.css",
-    "*.scss"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/andreww2012/gojobs.git"
@@ -80,7 +74,6 @@
     "redis": "^2.8.0",
     "sharp": "^0.20.5",
     "slug": "^0.9.1",
-    "tunnel": "0.0.5",
     "validator": "^10.4.0",
     "vue": "^2.5.16",
     "vue-cookie": "^1.1.4",
@@ -94,7 +87,9 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
     "babel-loader": "^7.1.5",
+    "babel-plugin-dynamic-import-node": "^2.0.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
     "chokidar": "^2.0.4",
@@ -102,15 +97,17 @@
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "eslint": "^5.1.0",
-    "eslint-config-google": "^0.9.1",
+    "eslint-loader": "^2.0.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "memory-fs": "^0.4.1",
     "mini-css-extract-plugin": "^0.4.1",
     "node-notifier": "^5.2.1",
     "node-sass": "^4.9.2",
     "nodemon": "^1.18.2",
+    "null-loader": "^0.1.1",
     "optimize-css-assets-webpack-plugin": "^5.0.0",
     "resolve-url-loader": "^2.3.0",
+    "rimraf": "^2.6.2",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.7",

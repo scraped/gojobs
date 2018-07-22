@@ -304,11 +304,13 @@ import {mapState} from 'vuex';
 
 import {
   userAvatars,
-  rgscRatingCssClass,
+  ratingCssClass,
   updatedDate,
   scTypeModeIcon,
   scPlatformName
 } from '@/helpers';
+
+import {ratingMixin} from '@/mixins';
 
 import IconGta from '@/components/IconGta.vue';
 import RaceMap from './RaceMap.vue';
@@ -316,6 +318,10 @@ import vehicles from '@/../config/static/vehicles';
 import findIndex from 'lodash/findIndex';
 
 export default {
+  mixins: [
+    ratingMixin
+  ],
+
   metaInfo() {
     return {
       title: this.job.name
@@ -336,12 +342,6 @@ export default {
     return {
       mapShowed: false
     };
-  },
-
-  methods: {
-    ratingCssClass(value) {
-      return rgscRatingCssClass(value);
-    }
   },
 
   computed: {

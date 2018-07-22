@@ -32,8 +32,8 @@ const buefyOptions = {
 
 Vue.use(VueProgressBar, progressBarOptions);
 Vue.use(VueCookie);
-Vue.use(VueMeta);
 Vue.use(Buefy, buefyOptions);
+Vue.use(VueMeta);
 
 /**
  * Creates app, store, router and synchronizes the last two

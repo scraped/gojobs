@@ -2,15 +2,21 @@ const moment = require('moment');
 
 const {
   modes,
-  platforms,
-  vehClasses,
-  vehicles
+  platforms
 } = require('../../config/static');
 
-export function rgscRatingCssClass(rating) {
-  if (rating >= 67) return 'success';
-  if (rating >= 34) return 'warning';
-  return 'danger';
+/**
+ * @param {number} rating rating
+ * @param {boolean} is prepend 'is-'?
+ * @return {string} 'success', 'warning', or 'danger'
+ */
+export function ratingCssClass(rating = 0, is = true) {
+  let ratingClass = 'danger';
+  if (rating >= 34) ratingClass = 'warning';
+  if (rating >= 67) ratingClass = 'success';
+
+  return is ? 'is-' : ''
+    + ratingClass;
 }
 
 export function updatedDate({ date, ver }) {
@@ -20,7 +26,7 @@ export function updatedDate({ date, ver }) {
     return `added ${dateFromNow}`;
   }
   return `${dateFromNow} (version ${ver})`;
-};
+}
 
 export function scTypeModeIcon({ scType, scMode }) {
   const { name, icon } = modes[scType - 1];

@@ -1,18 +1,9 @@
-import { findAsyncComponents } from './find-async-components';
-import { userAvatars } from './user';
+export {findAsyncComponents} from './find-async-components';
+export {userAvatars} from './user';
 
-import {
-  rgscRatingCssClass,
+export {
+  ratingCssClass,
   updatedDate,
   scTypeModeIcon,
   scPlatformName
 } from './job';
-
-export {
-  findAsyncComponents,
-  userAvatars,
-  rgscRatingCssClass,
-  updatedDate,
-  scTypeModeIcon,
-  scPlatformName
-};

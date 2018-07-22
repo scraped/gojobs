@@ -7,13 +7,21 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const {production} = config;
+const {production, development} = config;
 
 // hash instead of chunkhash due to HMR
 const jsName = 'assets/js/[name].[hash].js';
 const jsChunkName = 'assets/js/[name].[chunkhash].js';
 const imagesName = 'assets/images/[name].[hash:6].[ext]';
 const cssName = 'assets/css/[name].[contenthash].css';
+
+// Getting rid of MCEP plugin nonsense on server side
+// https://github.com/webpack-contrib/mini-css-extract-plugin/issues/90#issuecomment-392968392
+class ServerMiniCssExtractPlugin extends MiniCssExtractPlugin {
+  getCssChunkObject() {
+    return {};
+  }
+}
 
 // Few notes:
 // 1. Why no clean-webpack-plugin? Two bundles utilize dist dir so no one
@@ -53,22 +61,22 @@ let webpackConfig = {
             ? MiniCssExtractPlugin.loader
             : {
                 loader: 'vue-style-loader',
-                options: { sourceMap: true }
+                options: { sourceMap: development }
               },
 
           {
             loader: 'css-loader',
-            options: { sourceMap: true }
+            options: { sourceMap: development }
           },
 
           {
             loader: 'resolve-url-loader',
-            options: { sourceMap: true }
+            options: { sourceMap: development }
           },
 
           {
             loader: 'sass-loader',
-            options: { sourceMap: true }
+            options: { sourceMap: development }
           }
         ]
       },
@@ -111,14 +119,13 @@ let webpackConfig = {
 
 if (production) {
   webpackConfig.plugins.push(
-    new MiniCssExtractPlugin({
-      filename: cssName
-    }),
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV',
+      'DEBUG'
+    ]),
 
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
+    new ServerMiniCssExtractPlugin({
+      filename: cssName
     })
   );
 }

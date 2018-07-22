@@ -36,12 +36,13 @@ app.use(
 
 app.use('/api', apiRouter);
 
-// Server-side rendering middleware. Must follow after all the routes
-ssrMiddleware(app);
-
 connectDb(() => {
-  app.listen(app.get('port'), () => {
-    const port = app.get('port');
+  // Server-side rendering middleware. Must follow after all the routes
+  ssrMiddleware(app);
+
+  const port = app.get('port');
+
+  app.listen(port, () => {
     console.log(chalk.blue(`Server is running on http://localhost:${port}`));
   });
 });

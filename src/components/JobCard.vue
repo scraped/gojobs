@@ -12,11 +12,12 @@
     }">
       <div class="card__image">
         <figure class="image is-2by1 is-clipped">
-          <img :src="job.imageUrl" :alt="job.name">
+          <!-- <img :src="job.imageUrl" :alt="job.name"> -->
+          <img src="https://prod.cloud.rockstargames.com/ugc/gta5mission/0383/_5LMWNvrJUWG7oCVTiMKhw/2_0.jpg" :alt="job.name">
         </figure>
         <div
           class="card__strip"
-          :class="ratingCssClass"
+          :class="ratingCssClass(job.stats.ratingQuit)"
           :style="`width: ${job.stats.rating}%;`">
         </div>
         <div class="card__title">
@@ -27,7 +28,7 @@
               <icon-gta :icon="scInfo.scTypeIcon"></icon-gta>
             </span><span class="has-text-weight-bold" v-html="job.name"></span>
             <span
-              v-if="job.ext.recentlyAdded"
+              v-if="jobExt.recentlyAdded"
               class="tooltip"
               data-tooltip="Added less than 2 weeks ago">
               🔥
@@ -43,7 +44,7 @@
           <figure class="image is-48x48">
             <router-link
               :to="{ name: 'profile', params: { username: job.author }}">
-              <img class="is-rounded" :src="avatars.small">
+              <!-- <img class="is-rounded" :src="avatars.small"> -->
             </router-link>
           </figure>
         </div>
@@ -84,40 +85,55 @@
         </div>
         <div>
           In-game category:
-          {{ job.ext.scModeName || job.ext.scTypeName }}
+          {{ jobExt.scModeName || jobExt.scTypeName }}
         </div>
       </div>
       <br>
 
-      <div class="field is-grouped is-grouped-multiline">
+      <div
+        class="card__footer field is-grouped is-grouped-multiline"
+        title="Click here to see different stats"
+        @click="primaryInfo = !primaryInfo"
+      >
         <div class="control">
           <div
-            class="tags has-addons tooltip"
-            :data-tooltip="`Real rating: ${job.stats.rating}%, RGSC rating: ${job.stats.ratingQuit}%`">
+            class="tags has-addons"
+            :class="{ tooltip: !primaryInfo }"
+            data-tooltip="R* also takes into account unfinished jobs">
             <span
               class="tag is-rounded is-medium"
-              :class="ratingCssClass">
+              :class="ratingCssClass(job.stats.ratingQuit)">
               <span class="icon">
                 <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
               </span>
-              <span>{{ job.stats.likes | formatNumber }}</span></span>
-            <span
-              class="tag is-light is-rounded is-medium has-text-grey-light">
-              <span class="icon">
+              <span v-if="primaryInfo">{{ job.stats.likes | formatNumber }}</span>
+              <span v-else>{{ job.stats.rating + '%' }}</span>
+            </span>
+            <span class="tag is-light is-rounded is-medium has-text-grey-light">
+              <span
+                v-if="primaryInfo"
+                class="icon"
+              >
                 <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
               </span>
-              <span>{{ job.stats.dislikes | formatNumber }}</span></span>
+              <span v-if="primaryInfo">{{ job.stats.dislikes | formatNumber }}</span>
+              <span v-else>R*: {{ job.stats.ratingQuit + '%' }}</span>
+            </span>
           </div>
         </div>
 
         <div class="control">
-          <span
-            class="tag is-light is-rounded is-medium tooltip"
-            :data-tooltip="job.stats.playUnq  | formatNumber('People played this')">
+          <span class="tag is-light is-rounded is-medium">
             <span class="icon">
-              <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
+              <i
+                class="fa fa-gamepad fa-lg"
+                :class="primaryInfo ? 'fa-gamepad' : 'fa-users'"
+                aria-hidden="true"
+              ></i>
             </span>
-            <span>{{ job.stats.playTot | formatNumber }}</span></span>
+            <span v-if="primaryInfo">{{ job.stats.playTot | formatNumber }}</span>
+            <span v-else>{{ job.stats.playUnq | formatNumber }}</span>
+          </span>
         </div>
       </div>
     </div>
@@ -128,17 +144,23 @@
 import {mapGetters} from 'vuex';
 import {
   userAvatars,
-  rgscRatingCssClass,
+  ratingCssClass,
   updatedDate,
   scTypeModeIcon,
-  scPlatformName
+  scPlatformName,
 } from '@/helpers';
+
+import {ratingMixin} from '@/mixins';
 
 import IconGta from '@/components/IconGta.vue';
 
 export default {
+  mixins: [
+    ratingMixin
+  ],
+
   props: {
-    initialJob: {
+    job: {
       type: Object
     }
   },
@@ -147,13 +169,19 @@ export default {
     IconGta
   },
 
+  data() {
+    return {
+      primaryInfo: true
+    };
+  },
+
   computed: {
     ...mapGetters('job', {
       jobExtGetter: 'jobExt'
     }),
 
-    job() {
-      return this.jobExtGetter(this.initialJob);
+    jobExt() {
+      return this.jobExtGetter(this.job);
     },
 
     recentlyAdded() {
@@ -163,10 +191,6 @@ export default {
 
     avatars() {
       return userAvatars(this.job.author);
-    },
-
-    ratingCssClass() {
-      return rgscRatingCssClass(this.job.stats.ratingQuit);
     },
 
     updatedDate() {
@@ -233,5 +257,9 @@ $card-strip-opacity: 0.5;
   &.is-danger {
     background: $danger;
   }
+}
+
+.card__footer {
+  cursor: pointer;
 }
 </style>

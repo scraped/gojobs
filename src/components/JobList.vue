@@ -1,23 +1,22 @@
 <template>
   <div>
-    <h1
-      v-if="!minInfo"
-      class="is-size-1 title__special has-font-weight-normal is-uppercase">
-      GTA Online Jobs
-    </h1>
-
     <div class="columns is-multiline">
       <div
         class="column is-one-third-widescreen is-half-tablet">
         <div class="box" style="height: 100%; background: hsla(0, 100%, 26%, 10%)">
           <h2 class="is-size-4">
-            <b-dropdown v-model="sort" @change="sortChanged">
+            <b-dropdown
+              v-model="sort"
+              @change="sortChanged"
+            >
               <span
                 slot="trigger"
                 class="dropdown__trigger is-unselectable"
               >
                 {{ sortTypes[sort] }}
-                <span class="has-text-primary">{{ number }} jobs</span>
+                <span class="has-text-primary">
+                  {{ number | formatNumber }} jobs
+                </span>
                 <b-icon
                   pack="fa"
                   icon="angle-down"
@@ -38,57 +37,102 @@
             Page {{ page }}
           </p>
 
-          <div class="content">
-            <h5>
-              Type
-              <router-link
-                v-if="$route.query.type"
-                :to="{ query: Object.assign({}, $route.query, { type: '' }) }"
-              >
-                <b-icon pack="fa" icon="remove" size="is-small"></b-icon>
-              </router-link>
-            </h5>
-            <div class="buttons">
-              <router-link
-                v-for="(type, i) in modes"
-                :key="i"
-                :to="{ query: Object.assign({}, $route.query, { type: i + 1 }) }"
-                class="button is-small is-rounded is-dark"
-                exact-active-class="is-primary">
-                <icon-gta :icon="type.icon" class="is-hidden-touch"></icon-gta>
-                <span>{{ type.name }}</span>
-                <!-- <b-icon v-if="$route.query.type === i + 1" pack="fa" icon="close" size="is-small"></b-icon> -->
-              </router-link>
+          <div
+            class="content"
+            :class="{ 'is-hidden-tablet': filtersShown }"
+          >
+            <div
+              class="button is-block is-primary is-outlined"
+              @click="showFilters"
+            >
+              <b-icon
+                pack="fa"
+                size="is-small"
+                icon="filter"
+              ></b-icon>
+              <span>Toggle filters</span>
             </div>
 
-            <template v-if="$route.query.type && modes[$route.query.type - 1].modes">
-              <h5>
-                Game Mode
-                <router-link
-                  v-if="$route.query.mode"
-                  :to="{ query: Object.assign({}, $route.query, { mode: '' }) }"
-                >
-                  <b-icon pack="fa" icon="remove" size="is-small"></b-icon>
-                </router-link>
-              </h5>
-              <div class="buttons">
-                <router-link
-                  v-for="(mode, j) in modes[$route.query.type - 1].modes"
-                  :key="mode"
-                  :to="{ query: Object.assign({}, $route.query, { mode: j + 1 }) }"
-                  class="button is-small is-rounded is-light"
-                  exact-active-class="has-text-primary"
-                  active-class="">
-                  <icon-gta
-                    :icon="modes[$route.query.type - 1].icons[j]"
-                    class="is-hidden-touch">
-                  </icon-gta>
-                  <span>{{ mode }}</span>
-                </router-link>
-              </div>
-            </template>
+          </div>
 
-            <h5>Author</h5>
+          <div
+            v-show="filtersShown"
+            ref="filters"
+            class="is-hidden-mobile"
+          >
+            <div class="content is-size-5">
+              <b-dropdown
+                v-model="currType"
+                @change="typeChanged"
+                class="is-block"
+              >
+                <div
+                  slot="trigger"
+                  class="dropdown__trigger is-unselectable"
+                >
+                  <span class="is-size-5 has-text-weight-bold">Type</span>
+                  <div class="is-pulled-right">
+                    {{ currTypeName }}
+                    <b-icon
+                      pack="fa"
+                      icon="angle-down"
+                      custom-class="is-size-5"
+                    ></b-icon>
+                  </div>
+                </div>
+
+                <b-dropdown-item
+                  v-for="(type, i) in modes"
+                  :key="`type-${i}`"
+                  :value="i + 1"
+                  class="is-unselectable"
+                >
+                  <icon-gta :icon="type.icon"></icon-gta>
+                  <span>{{ type.name }}</span>
+                </b-dropdown-item>
+              </b-dropdown>
+            </div>
+
+            <div
+              class="content is-size-5"
+              v-if="currTypeInfo && currModeInfo"
+            >
+              <b-dropdown
+                v-model="currMode"
+                @change="modeChanged"
+                class="is-block"
+              >
+                <div
+                  slot="trigger"
+                  class="dropdown__trigger is-unselectable"
+                >
+                  <span class="is-size-5 has-text-weight-bold">Game Mode</span>
+                  <div class="is-pulled-right">
+                    {{ currModeName }}
+                    <b-icon
+                      pack="fa"
+                      icon="angle-down"
+                      custom-class="is-size-5"
+                    ></b-icon>
+                  </div>
+                </div>
+
+                <div class="is-pulled-right">us</div>
+
+                <b-dropdown-item
+                  v-for="(mode, i) in currModeInfo"
+                  :key="`mode-${i}`"
+                  :value="i + 1"
+                  class="is-unselectable"
+                >
+                  <icon-gta :icon="currTypeInfo.icons[i]"></icon-gta>
+                  <span>{{ mode }}</span>
+                </b-dropdown-item>
+              </b-dropdown>
+            </div>
+          </div>
+
+          <div class="content">
             <div class="buttons">
               <router-link :to="{ query: { rockstar: 1 } }" class="button is-light is-small is-rounded">Rockstar</router-link>
               <router-link :to="{ query: { rockstarverified: 1 } }" class="button is-light is-small is-rounded">Rockstar Verified</router-link>
@@ -101,7 +145,7 @@
         v-for="job in jobs"
         :key="job.jobId"
       >
-        <job-card :initial-job="job"></job-card>
+        <job-card :job="job"></job-card>
       </div>
     </div>
   </div>
@@ -109,7 +153,7 @@
 
 <script>
 import Vue from 'vue';
-import { mapState } from 'vuex';
+import {mapState} from 'vuex';
 import modes from '@/../config/static/modes';
 
 import JobCard from '@/components/JobCard.vue';
@@ -125,6 +169,7 @@ export default {
 
   data() {
     return {
+      filtersShown: true,
       modes,
       sortTypes: {
         '': 'Most relevant',
@@ -150,14 +195,66 @@ export default {
 
     ...mapState('route', {
       sort: state => state.query.by || '',
-      page: state => Number(state.query.page) || 1
-    })
+      page: state => Number(state.query.page) || 1,
+      currType: state => Number(state.query.type) || 0,
+      currMode: state => Number(state.query.mode) || 0
+    }),
+
+    currTypeInfo() {
+      return modes[this.currType - 1];
+    },
+
+    currModeInfo() {
+      if (this.currTypeInfo) {
+        return this.currTypeInfo.modes;
+      }
+    },
+
+    currTypeName() {
+      const typeInfo = this.currTypeInfo;
+      return typeInfo
+        ? typeInfo.name
+        : 'Any';
+    },
+
+    currModeName() {
+      const modeInfo = this.currModeInfo[this.currMode - 1];
+      return modeInfo
+        ? modeInfo
+        : 'Any'
+    }
   },
 
   methods: {
     sortChanged(value) {
       this.$router.push({
         query: { ...this.$route.query, by: value, page: 1 }
+      });
+    },
+
+    showFilters() {
+      this.$refs.filters.classList.remove('is-hidden-mobile');
+      this.filtersShown = !this.filtersShown;
+    },
+
+    typeChanged(value) {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          type: value,
+          mode: 0,
+          page: 1
+        }
+      })
+    },
+
+    modeChanged(value) {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          mode: value,
+          page: 1
+        }
       });
     }
   }
@@ -167,9 +264,9 @@ export default {
 <style lang="scss">
 @import "@/scss/vars.scss";
 
-.title__special {
-  font-family: 'Oswald', sans-serif;
-}
+// .title__special {
+//   font-family: 'Oswald', sans-serif;
+// }
 
 .dropdown__trigger {
   cursor: pointer;
