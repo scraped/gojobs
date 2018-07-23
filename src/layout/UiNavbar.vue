@@ -78,9 +78,9 @@
 
 <script>
 import platforms from '../../config/static/platforms'
-import { mapState } from 'vuex';
-import { userAvatars } from '@/helpers';
-import { findIndex } from 'lodash';
+import {mapState} from 'vuex';
+import {userAvatars} from '@/helpers';
+import {findIndex} from 'lodash';
 
 export default {
   data() {
@@ -98,12 +98,6 @@ export default {
         return platforms[index].name;
       }
       return '';
-
-      // return {
-      //   pc: 'PC',
-      //   ps4: 'PS4',
-      //   xboxone: 'Xbox One'
-      // }[platform];
     },
 
     ...mapState('user', [
@@ -137,12 +131,13 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/scss/vars.scss";
 
 .navbar {
   background-color: transparent;
-  background-image: $main-gradient-light;
+  // background-image: $main-gradient-light;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
 }
 
 .navbar-item {

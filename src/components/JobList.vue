@@ -6,14 +6,14 @@
         <div class="box is-shadowless" style="height: 100%; background: linear-gradient(to bottom, hsla(0, 100%, 26%, 10%), transparent)">
           <h2 class="is-size-4">
             <b-dropdown
-              v-model="sort"
+              v-model="sortModel"
               @change="sortChanged"
             >
               <span
                 slot="trigger"
                 class="dropdown__trigger is-unselectable"
               >
-                {{ sortTypes[sort] }}
+                {{ sortTypes[sortModel] }}
                 <span class="has-text-primary">
                   {{ number | formatNumber }} jobs
                 </span>
@@ -62,7 +62,7 @@
           >
             <div class="content is-size-5">
               <b-dropdown
-                v-model="currType"
+                v-model="typeModel"
                 @change="typeChanged"
                 class="is-block"
               >
@@ -82,8 +82,13 @@
                 </div>
 
                 <b-dropdown-item
+                  value="0"
+                  class="is-unselectable">
+                  Any
+                </b-dropdown-item>
+                <b-dropdown-item
                   v-for="(type, i) in modes"
-                  :key="`type-${i}`"
+                  :key="type.name"
                   :value="i + 1"
                   class="is-unselectable"
                 >
@@ -98,7 +103,7 @@
               v-if="currTypeInfo && currModeInfo"
             >
               <b-dropdown
-                v-model="currMode"
+                v-model="modeModel"
                 @change="modeChanged"
                 class="is-block"
               >
@@ -117,6 +122,11 @@
                   </div>
                 </div>
 
+                <b-dropdown-item
+                  value="0"
+                  class="is-unselectable">
+                  Any
+                </b-dropdown-item>
                 <b-dropdown-item
                   v-for="(mode, i) in currModeInfo"
                   :key="`mode-${i}`"
@@ -138,6 +148,13 @@
       >
         <job-card :job="job"></job-card>
       </div>
+      <div
+        v-if="!number"
+        class="column is-two-thirds-widescreen is-half-tablet">
+        <b-message type="is-warning">
+          No jobs found.
+        </b-message>
+      </div>
     </div>
   </div>
 </template>
@@ -158,24 +175,23 @@ export default {
     }
   },
 
-  data() {
-    return {
-      filtersShown: true,
-      modes,
-      sortTypes: {
-        '': 'Most relevant',
-        growth: 'Trending',
-        updated: 'By update date',
-        newest: '🔥 Newest',
-        rating: 'By likes',
-        featured: 'Featured'
-      }
-    };
-  },
-
   components: {
     JobCard,
     IconGta
+  },
+
+  watch: {
+    sort(value) {
+      this.sortModel = value;
+    },
+
+    type(value) {
+      this.typeModel = value;
+    },
+
+    mode(value) {
+      this.modeModel = value;
+    }
   },
 
   computed: {
@@ -185,14 +201,17 @@ export default {
     ]),
 
     ...mapState('route', {
-      sort: state => state.query.by || '',
-      page: state => Number(state.query.page) || 1,
-      currType: state => Number(state.query.type) || 0,
-      currMode: state => Number(state.query.mode) || 0
+      page: state => Number(state.query.page) || 1
     }),
 
+    ...mapState('route', [
+      'by',
+      'type',
+      'mode'
+    ]),
+
     currTypeInfo() {
-      return modes[this.currType - 1];
+      return modes[this.typeModel - 1];
     },
 
     currModeInfo() {
@@ -209,11 +228,29 @@ export default {
     },
 
     currModeName() {
-      const modeInfo = this.currModeInfo[this.currMode - 1];
+      const modeInfo = this.currModeInfo[this.modeModel - 1];
       return modeInfo
         ? modeInfo
         : 'Any'
     }
+  },
+
+  data() {
+    return {
+      filtersShown: true,
+      modes,
+      sortTypes: {
+        relevance: 'Most relevant',
+        growth: 'Trending',
+        updated: 'By update date',
+        newest: '🔥 Newest',
+        rating: 'By likes',
+        featured: 'Featured'
+      },
+      sortModel: this.by || 'relevance',
+      typeModel: this.type || '0',
+      modeModel: this.mode || '0'
+    };
   },
 
   methods: {

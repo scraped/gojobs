@@ -21,6 +21,7 @@
         <jobs-list></jobs-list>
       </div>
     </section>
+
     <section class="section">
       <div class="container">
         <div class="box">
@@ -39,7 +40,7 @@
 
 <script>
 import Vue from 'vue';
-import { mapState } from 'vuex';
+import {mapState} from 'vuex';
 
 import JobsList from '@/components/JobList.vue';
 import CustomPagination from '@/components/CustomPagination.vue';

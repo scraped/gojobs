@@ -1,21 +1,23 @@
 <template>
   <div>
-    <!-- <template v-if="showLoadMoreButton">
+    <template v-if="showLoadMoreButton()">
       <div
         class="button is-large is-fullwidth"
         :class="{ 'is-loading': loading }"
-        @click="loadMore()">
+        @click="loadMore()"
+      >
         <span>Load more</span>
       </div>
       <br>
-    </template> -->
+    </template>
 
     <div class="buttons has-addons is-pulled-right">
       <router-link
         class="button"
         v-if="hasPrev()"
-        :to="{ name: routeName, query: genQuery({ page: prevPage }) }"
-        :aria-label="`Go to page ${prevPage}`">
+        :to="{ name: routeName, query: Object.assign({}, $route.query, { page: prevPage }) }"
+        :aria-label="`Go to page ${prevPage}`"
+      >
         <i class="icon fa fa-angle-left"></i>
         <span class="is-hidden-mobile">Previous page</span>
       </router-link>
@@ -23,8 +25,9 @@
       <router-link
         class="button"
         v-if="hasNext()"
-        :to="{ name: routeName, query: genQuery({ page: nextPage }) }"
-        :aria-label="`Go to page ${nextPage}`">
+        :to="{ name: routeName, query: Object.assign({}, $route.query, { page: nextPage }) }"
+        :aria-label="`Go to page ${nextPage}`"
+      >
         <span class="is-hidden-mobile">Next page</span>
         <i class="icon fa fa-angle-right"></i>
       </router-link>
@@ -33,42 +36,47 @@
     <div
       class="buttons has-addons"
       role="navigation"
-      aria-label="pagination">
-
+      aria-label="pagination"
+    >
       <router-link
-        class="button"
         v-if="hasFirst()"
-        :to="{ name: routeName, query: genQuery({ page: 1 }) }"
-        :aria-label="'Go to page 1'">
+        :to="{ name: routeName, query: Object.assign({}, $route.query, { page: 1 }) }"
+        class="button"
+        aria-label="Go to page 1"
+      >
         1
       </router-link>
 
       <span
         class="button"
-        v-if="hasFirst() & leftBound > 2">
+        v-if="hasFirst() & leftBound > 2"
+      >
         &hellip;
       </span>
 
       <router-link
-        class="button"
         v-for="page in pages" :key="page"
-        :to="{ name: routeName, query: genQuery({ page }) }"
+        :to="{ name: routeName, query: Object.assign({}, $route.query, { page }) }"
+        class="button"
         :class="{ 'is-primary': currPage === page }"
-        :aria-label="`Go to page ${page}`">
+        :aria-label="`Go to page ${page}`"
+      >
         {{ page }}
       </router-link>
 
       <span
         class="button"
-        v-if="hasLast() & totalPages - rightBound > 1">
+        v-if="hasLast() & totalPages - rightBound > 1"
+      >
         &hellip;
       </span>
 
       <router-link
-        class="button"
         v-if="hasLast()"
-        :to="{ name: routeName, query: genQuery({ page: totalPages }) }"
-        :aria-label="`Go to page ${totalPages}`">
+        :to="{ name: routeName, query: Object.assign({}, $route.query, { page: totalPages }) }"
+        class="button"
+        :aria-label="`Go to page ${totalPages}`"
+      >
         {{ totalPages }}
       </router-link>
     </div>
@@ -106,7 +114,7 @@ export default {
     },
 
     totalPages() {
-      return Math.ceil(this.totalItems / this.perPage);
+      return Math.ceil(this.totalItems / this.perPage) || 1;
     },
 
     leftBound() {
