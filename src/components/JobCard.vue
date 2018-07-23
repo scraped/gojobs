@@ -17,7 +17,13 @@
         <div
           class="card__strip"
           :class="ratingCssClass(job.stats.ratingQuit)"
-          :style="`width: ${job.stats.rating}%;`">
+          :style="`width: ${job.stats.rating}%;`"
+        ></div>
+        <div class="card__tags">
+          <div class="tags">
+            <span class="tag is-dark is-rounded">Rallycross</span>
+            <span class="tag is-dark is-rounded">Pitlane</span>
+          </div>
         </div>
         <div class="card__title">
           <div class="is-size-5 has-text-white">
@@ -226,6 +232,9 @@ $card-strip-opacity: 0.5;
   &:hover img {
     transform: scale($card-image-hover-scale);
   }
+  &:hover .card__tags {
+    opacity: 1.0;
+  }
 }
 
 .card__title {
@@ -256,6 +265,14 @@ $card-strip-opacity: 0.5;
   &.is-danger {
     background: $danger;
   }
+}
+
+.card__tags {
+  position: absolute;
+  top: $card-strip-height;
+  opacity: 0.6;
+  padding: 1rem 1.5rem;
+  transition-duration: $card-image-hover-transition-duration;
 }
 
 .card__footer {

@@ -21,6 +21,15 @@
       "f123",
       "e600",
       "e600"
+    ],
+    "tags": [
+      "Regular Race",
+      "Stunt",
+      "Rally",
+      "Rallycross",
+      "Off-Road",
+      "Parkour",
+      ""
     ]
   },
 
@@ -50,6 +59,7 @@
   {
     "name": "Mission",
     "icon": "f12f",
+    "rockstar": true,
     "modes": [
       "Adversary Mode",
       "Versus Mission",
@@ -66,6 +76,7 @@
 
   {
     "name": "Parachuting",
-    "icon": "f107"
+    "icon": "f107",
+    "rockstar": true
   }
 ]
