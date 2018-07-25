@@ -50,7 +50,7 @@
                 size="is-small"
                 icon="filter"
               ></b-icon>
-              <span>Toggle filters</span>
+              <span>{{ filtersText }}</span>
             </div>
 
           </div>
@@ -180,6 +180,24 @@ export default {
     IconGta
   },
 
+  data() {
+    return {
+      filtersShown: true,
+      modes,
+      sortTypes: {
+        relevance: 'Most relevant',
+        growth: 'Trending',
+        updated: 'By update date',
+        newest: '🔥 Newest',
+        rating: 'By likes',
+        featured: 'Featured'
+      },
+      sortModel: this.by || 'relevance',
+      typeModel: this.type || '0',
+      modeModel: this.mode || '0'
+    };
+  },
+
   watch: {
     sort(value) {
       this.sortModel = value;
@@ -210,6 +228,12 @@ export default {
       'mode'
     ]),
 
+    filtersText() {
+      return this.filtersShown
+        ? 'Hide filters'
+        : 'Show filters';
+    },
+
     currTypeInfo() {
       return modes[this.typeModel - 1];
     },
@@ -233,24 +257,6 @@ export default {
         ? modeInfo
         : 'Any'
     }
-  },
-
-  data() {
-    return {
-      filtersShown: true,
-      modes,
-      sortTypes: {
-        relevance: 'Most relevant',
-        growth: 'Trending',
-        updated: 'By update date',
-        newest: '🔥 Newest',
-        rating: 'By likes',
-        featured: 'Featured'
-      },
-      sortModel: this.by || 'relevance',
-      typeModel: this.type || '0',
-      modeModel: this.mode || '0'
-    };
   },
 
   methods: {
