@@ -26,12 +26,13 @@
       <div class="container">
         <div class="box">
           <custom-pagination
-            :curr-page="page"
-            :total-items="number"
+            :curr-page="actualPage"
+            :total-items="count"
             :load-more-button="true"
-            :per-page="35"
-            :loading="loading">
-          </custom-pagination>
+            :per-page="perPage"
+            :loading="loading"
+            @load-more="loadMore"
+          ></custom-pagination>
         </div>
       </div>
     </section>
@@ -45,15 +46,11 @@ import {mapState} from 'vuex';
 import JobsList from '@/components/JobList.vue';
 import CustomPagination from '@/components/CustomPagination.vue';
 
+const JOBS_PER_PAGE_DEFAULT = 35;
+
 export default {
   fetchData({ store, route }) {
     return store.dispatch('jobs/fetch', route.query);
-  },
-
-  data() {
-    return {
-      loading: false
-    };
   },
 
   components: {
@@ -61,14 +58,43 @@ export default {
     CustomPagination
   },
 
+  watch: {
+    $route(to, from) {
+      this.actualPage = Number(to.query.page) || 1;
+    }
+  },
+
+  data() {
+    return {
+      perPage: JOBS_PER_PAGE_DEFAULT,
+      loading: false,
+      actualPage: Number(this.$route.query.page) || 1
+    };
+  },
+
   computed: {
     ...mapState('jobs', [
-      'number'
-    ]),
+      'count'
+    ])
+  },
 
-    ...mapState('route', {
-      page: state => Number(state.query.page) || 1,
-    })
+  methods: {
+    async loadMore() {
+      const newQuery = {
+        ...this.$route.query,
+        page: this.actualPage + 1
+      };
+
+      this.loading = true;
+
+      await this.$store.dispatch('jobs/fetch', {
+        ...newQuery,
+        append: true
+      });
+
+      this.loading = false;
+      this.actualPage++;
+    }
   }
 };
 </script>

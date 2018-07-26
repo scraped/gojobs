@@ -2,16 +2,20 @@ import {http} from '@/utils';
 
 const state = {
   jobs: [],
-  number: 0
+  count: 0
 };
 
 const mutations = {
-  setJobs(state, { jobs }) {
-    state.jobs = jobs;
+  setJobs(state, { jobs, append }) {
+    if (append) {
+      state.jobs.push(...jobs);
+    } else {
+      state.jobs = jobs;
+    }
   },
 
-  setNumber(state, { number }) {
-    state.number = number;
+  setJobsCount(state, { count }) {
+    state.count = count;
   }
 };
 
@@ -19,10 +23,11 @@ const actions = {
   async fetch({ commit }, query = {}) {
     const response = await http.post('/api/jobs', query);
 
-    const { jobs, number } = response.data;
+    const { jobs, count } = response.data;
+    const { append } = query;
 
-    commit('setJobs', { jobs });
-    commit('setNumber', { number });
+    commit('setJobs', { jobs, append });
+    commit('setJobsCount', { count });
   }
 };
 

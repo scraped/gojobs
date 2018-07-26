@@ -15,7 +15,7 @@
               >
                 {{ sortTypes[sortModel] }}
                 <span class="has-text-primary">
-                  {{ number | formatNumber }} jobs
+                  {{ count | formatNumber }} jobs
                 </span>
                 <b-icon
                   pack="fa"
@@ -149,8 +149,9 @@
         <job-card :job="job"></job-card>
       </div>
       <div
-        v-if="!number"
-        class="column is-two-thirds-widescreen is-half-tablet">
+        v-if="!count"
+        class="column is-two-thirds-widescreen is-half-tablet"
+      >
         <b-message type="is-warning">
           No jobs found.
         </b-message>
@@ -215,7 +216,7 @@ export default {
   computed: {
     ...mapState('jobs', [
       'jobs',
-      'number'
+      'count'
     ]),
 
     ...mapState('route', {

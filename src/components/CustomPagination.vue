@@ -84,13 +84,7 @@
 </template>
 
 <script>
-import genQuery from '@/utils/gen-query.js';
-
 export default {
-  mixins: [
-    genQuery
-  ],
-
   props: {
     currPage: { type: Number, default: 1 },
     totalItems: { type: Number, default: 0 },

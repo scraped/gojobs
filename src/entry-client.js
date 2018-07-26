@@ -29,9 +29,6 @@ if (window.__INITIAL_STATE__) {
 // *********************
 
 router.onReady(() => {
-  store.dispatch('user/fetchUserInfo');
-  // store.commit('user/setPreferences', { cookies: document.cookie })
-
   router.beforeResolve(async (to, from, next) => {
     const matchedPrev = router.getMatchedComponents(from);
     const matchedCurr = router.getMatchedComponents(to);

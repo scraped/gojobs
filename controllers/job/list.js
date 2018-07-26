@@ -11,9 +11,12 @@ const PER_PAGE_DEFAULT = 35;
 async function jobListPost(req, res) {
   const { body, cookies } = req;
 
-  const { by, rockstar, rockstarverified, user, type, mode } = body;
+  const { by, rockstar, rockstarverified, user, type, mode, append } = body;
 
   const page = Number(body.page) || 1;
+  const perPage = append
+    ? PER_PAGE_DEFAULT - PER_PAGE_DEFAULT % 3
+    : PER_PAGE_DEFAULT;
   const platform = body.platform || cookies.platform || 'pc';
 
   let conditions = {};
@@ -71,12 +74,12 @@ async function jobListPost(req, res) {
     const jobs = await Job
       .find(conditions)
       .select('-_id -details')
-      .skip((page - 1) * PER_PAGE_DEFAULT)
-      .limit(PER_PAGE_DEFAULT)
+      .skip((page - 1) * perPage)
+      .limit(perPage)
       .sort(sort);
 
     res.json({
-      number: jobsNumber,
+      count: jobsNumber,
       jobs
     });
 

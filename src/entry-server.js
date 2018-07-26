@@ -8,14 +8,12 @@ export default context => {
   const { req } = context;
 
   return new Promise((resolve, reject) => {
-    const axiosInstance = axios.create({
+    setupHttp(axios.create({
       baseURL: `http://${req.hostname}:${config.port}/`,
       headers: {
         Cookie: serializeCookies(req.cookies)
       }
-    });
-
-    setupHttp(axiosInstance);
+    }));
 
     const { app, router, store } = createApp();
 
@@ -38,10 +36,11 @@ export default context => {
         await Promise.all(asyncDataPromises);
 
         context.state = store.state;
-        context.meta = app.$meta(); // vue-meta
+        context.meta = app.$meta(); // see vue-meta
 
         resolve(app);
       },
+
       reject
     );
   });
