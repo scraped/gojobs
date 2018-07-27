@@ -93,7 +93,10 @@
           <!-- <br>Points: {{ job.stats.points }} -->
         </div>
         <div>
-          {{ jobExt.scModeName || jobExt.scTypeName }} within the game
+          <router-link :to="{ query: Object.assign({}, $route.query, { type: job.scType, mode: job.scMode }) }">
+            {{ jobExt.scModeName || jobExt.scTypeName }}
+          </router-link>
+          within the game
         </div>
       </div>
       <br>

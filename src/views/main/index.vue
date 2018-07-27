@@ -90,13 +90,16 @@ export default {
 
       this.loading = true;
 
-      await this.$store.dispatch('jobs/fetch', {
-        ...newQuery,
-        append: true
-      });
+      try {
+        await this.$store.dispatch('jobs/fetch', {
+          ...newQuery,
+          append: true
+        });
+
+        this.actualPage++;
+      } catch (e) {}
 
       this.loading = false;
-      this.actualPage++;
     }
   }
 };
