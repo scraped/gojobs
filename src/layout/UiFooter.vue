@@ -2,9 +2,47 @@
   <footer class="footer">
     <div class="container">
       <div class="content">
-        <div class="subtitle has-text-white-ter">GTA Online Jobs</div>
-        <!-- <div><router-link :to="{ path: '/' }">Main page</router-link></div> -->
+        <div class="columns">
+          <div class="column">
+            <div class="content">
+              <div class="subtitle subtitle__special">GTA Online Jobs</div>
+              <router-link :to="{ path: '/' }">Go to the main page</router-link>
+            </div>
+          </div>
+          <div class="column">
+            <div class="subtitle">Cookies</div>
+            <div class="content">
+              Using this site you understand that we collect some information in cookies for better experience.
+              <a>Learn more.</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </footer>
 </template>
+
+<style lang="scss" scoped>
+@import "@/scss/vars.scss";
+
+.subtitle {
+  font-family: 'Oswald';
+  color: $grey;
+}
+
+.subtitle__special {
+  color: $gtaonline;
+}
+
+.footer {
+  margin-top: $size-normal;
+  color: $grey-lighter;
+}
+
+a {
+  color: $grey-light;
+  &:hover {
+    color: $grey-lighter;
+  }
+}
+</style>
