@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="columns is-multiline">
-      <div
-        class="column is-one-third-widescreen is-half-tablet">
+      <div class="column is-one-third-widescreen is-half-tablet">
         <div class="box is-shadowless" style="height: 100%; background: linear-gradient(to bottom, hsla(0, 100%, 26%, 10%), transparent)">
           <h2 class="is-size-4">
             <b-dropdown
@@ -82,8 +81,9 @@
                 </div>
 
                 <b-dropdown-item
-                  value="0"
-                  class="is-unselectable">
+                  :value="0"
+                  class="is-unselectable"
+                >
                   Any
                 </b-dropdown-item>
                 <b-dropdown-item
@@ -99,8 +99,8 @@
             </div>
 
             <div
-              class="content is-size-5"
               v-if="currTypeInfo && currModeInfo"
+              class="content is-size-5"
             >
               <b-dropdown
                 v-model="modeModel"
@@ -123,8 +123,9 @@
                 </div>
 
                 <b-dropdown-item
-                  value="0"
-                  class="is-unselectable">
+                  :value="0"
+                  class="is-unselectable"
+                >
                   Any
                 </b-dropdown-item>
                 <b-dropdown-item
@@ -152,9 +153,16 @@
         v-if="!count"
         class="column is-two-thirds-widescreen is-half-tablet"
       >
-        <b-message type="is-warning">
-          No jobs found.
-        </b-message>
+        <b-notification
+          type="is-info"
+          has-icon
+          :closable="false"
+        >
+          <div class="is-size-4 is-uppercase" style="font-family: 'Oswald';">
+            Nothing found
+          </div>
+          <p>Azaza</p>
+        </b-notification>
       </div>
     </div>
   </div>
@@ -181,6 +189,10 @@ export default {
     IconGta
   },
 
+  beforeMount() {
+    this.defineModels(this.$route);
+  },
+
   data() {
     return {
       filtersShown: true,
@@ -193,23 +205,15 @@ export default {
         rating: 'By likes',
         featured: 'Featured'
       },
-      sortModel: this.by || 'relevance',
-      typeModel: this.type || '0',
-      modeModel: this.mode || '0'
+      sortModel: null,
+      typeModel: null,
+      modeModel: null
     };
   },
 
   watch: {
-    sort(value) {
-      this.sortModel = value;
-    },
-
-    type(value) {
-      this.typeModel = value;
-    },
-
-    mode(value) {
-      this.modeModel = value;
+    $route(to) {
+      this.defineModels(to);
     }
   },
 
@@ -222,12 +226,6 @@ export default {
     ...mapState('route', {
       page: state => Number(state.query.page) || 1
     }),
-
-    ...mapState('route', [
-      'by',
-      'type',
-      'mode'
-    ]),
 
     filtersText() {
       return this.filtersShown
@@ -261,6 +259,12 @@ export default {
   },
 
   methods: {
+    defineModels(route) {
+      this.sortModel = route.query.by || 'relevance';
+      this.typeModel = Number(route.query.type) || 0;
+      this.modeModel = Number(route.query.mode) || 0;
+    },
+
     sortChanged(value) {
       this.$router.push({
         query: { ...this.$route.query, by: value, page: 1 }

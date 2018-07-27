@@ -22,7 +22,10 @@
       </div>
     </section>
 
-    <section class="section">
+    <section
+      v-if="count"
+      class="section"
+    >
       <div class="container">
         <div class="box">
           <custom-pagination

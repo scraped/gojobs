@@ -11,12 +11,12 @@ const PER_PAGE_DEFAULT = 35;
 async function jobListPost(req, res) {
   const { body, cookies } = req;
 
-  const { by, rockstar, rockstarverified, user, type, mode, append } = body;
+  const { by, rockstar, rockstarverified, user } = body;
 
+  const type = Number(body.type);
+  const mode = Number(body.mode);
   const page = Number(body.page) || 1;
-  const perPage = append
-    ? PER_PAGE_DEFAULT - PER_PAGE_DEFAULT % 3
-    : PER_PAGE_DEFAULT;
+  const perPage = PER_PAGE_DEFAULT;
   const platform = body.platform || cookies.platform || 'pc';
 
   let conditions = {};
@@ -68,7 +68,9 @@ async function jobListPost(req, res) {
     });
   }
 
-  const jobsNumber = await Job.count(conditions);
+  const jobsNumber = Object.keys(conditions).length
+    ? await Job.countDocuments(conditions)
+    : await Job.esestimatedDocumentCount();
 
   try {
     const jobs = await Job
