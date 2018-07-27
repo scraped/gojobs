@@ -161,7 +161,6 @@
           <div class="is-size-4 is-uppercase" style="font-family: 'Oswald';">
             Nothing found
           </div>
-          <p>Azaza</p>
         </b-notification>
       </div>
     </div>
