@@ -21,8 +21,9 @@
         ></div>
         <div class="card__tags">
           <div class="tags">
-            <span class="tag is-dark is-rounded">Rallycross</span>
-            <span class="tag is-dark is-rounded">Pitlane</span>
+            <!-- <span class="tag is-dark is-rounded">{{ jobExt.scModeName || jobExt.scTypeName }}</span> -->
+            <!-- <span class="tag is-dark is-rounded">Rallycross</span> -->
+            <!-- <span class="tag is-dark is-rounded">Pitlane</span> -->
           </div>
         </div>
         <div class="card__title">
@@ -35,7 +36,8 @@
             <span
               v-if="jobExt.recentlyAdded"
               class="tooltip"
-              data-tooltip="Added less than 2 weeks ago">
+              data-tooltip="Added less than 2 weeks ago"
+            >
               🔥
             </span>
           </div>
@@ -75,7 +77,9 @@
           </div>
         </div>
 
-        <!-- <div class="media-right"></div> -->
+        <div class="media-right">
+          <b-icon pack="fa" icon="bookmark" type="is-dark"></b-icon>
+        </div>
       </div>
 
       <div class="is-size-7 has-text-grey">
@@ -89,8 +93,7 @@
           <!-- <br>Points: {{ job.stats.points }} -->
         </div>
         <div>
-          In-game category:
-          {{ jobExt.scModeName || jobExt.scTypeName }}
+          {{ jobExt.scModeName || jobExt.scTypeName }} within the game
         </div>
       </div>
       <br>

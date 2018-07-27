@@ -1,6 +1,9 @@
 <template>
   <div>
-    <template v-if="showLoadMoreButton()">
+    <div
+      v-if="showLoadMoreButton()"
+      class="content"
+    >
       <div
         class="button is-large is-fullwidth"
         :class="{ 'is-loading': loading }"
@@ -8,8 +11,7 @@
       >
         <span>Load more</span>
       </div>
-      <br>
-    </template>
+    </div>
 
     <div class="buttons has-addons is-pulled-right">
       <router-link
@@ -49,13 +51,14 @@
 
       <span
         class="button"
-        v-if="hasFirst() & leftBound > 2"
+        v-if="hasFirst() & leftBound > 3"
       >
         &hellip;
       </span>
 
       <router-link
-        v-for="page in pages" :key="page"
+        v-for="page in pages"
+        :key="page"
         :to="{ name: routeName, query: Object.assign({}, $route.query, { page }) }"
         class="button"
         :class="{ 'is-primary': currPage === page }"
@@ -66,7 +69,7 @@
 
       <span
         class="button"
-        v-if="hasLast() & totalPages - rightBound > 1"
+        v-if="hasLast() & totalPages - rightBound > 2"
       >
         &hellip;
       </span>
@@ -112,12 +115,18 @@ export default {
     },
 
     leftBound() {
-      const bound = this.currPage - this.offset;
+      let bound = this.currPage - this.offset;
+      if (bound === 3) {
+        bound = 2;
+      }
       return Math.max(bound, 1);
     },
 
     rightBound() {
-      const bound = this.currPage + this.offset;
+      let bound = this.currPage + this.offset;
+      if (bound === this.totalPages - 2) {
+        bound = this.totalPages - 1;
+      }
       return Math.min(bound, this.totalPages);
     },
 

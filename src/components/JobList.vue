@@ -63,6 +63,7 @@
               <b-dropdown
                 v-model="typeModel"
                 @change="typeChanged"
+                position="is-bottom-left"
                 class="is-block"
               >
                 <div
@@ -105,6 +106,7 @@
               <b-dropdown
                 v-model="modeModel"
                 @change="modeChanged"
+                position="is-bottom-left"
                 class="is-block"
               >
                 <div
@@ -158,9 +160,7 @@
           has-icon
           :closable="false"
         >
-          <div class="is-size-4 is-uppercase" style="font-family: 'Oswald';">
-            Nothing found
-          </div>
+          <div class="notification__header">Nothing found</div>
         </b-notification>
       </div>
     </div>
@@ -174,6 +174,7 @@ import modes from '@/../config/static/modes';
 
 import JobCard from '@/components/JobCard.vue';
 import IconGta from '@/components/IconGta.vue';
+import BDropdown from '@/components/buefy-overrided/Dropdown.vue';
 
 export default {
   props: {
@@ -185,7 +186,8 @@ export default {
 
   components: {
     JobCard,
-    IconGta
+    IconGta,
+    BDropdown
   },
 
   beforeMount() {
