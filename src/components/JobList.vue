@@ -6,6 +6,7 @@
           <h2 class="is-size-4">
             <b-dropdown
               v-model="sortModel"
+              position="is-bottom-left"
               @change="sortChanged"
             >
               <span
@@ -28,7 +29,10 @@
                 v-for="(value, key) in sortTypes"
                 :key="`sort-${key}`"
                 :value="key"
-                class="is-unselectable">{{ value }}</b-dropdown-item>
+                class="is-unselectable"
+              >
+                {{ value }}
+              </b-dropdown-item>
             </b-dropdown>
           </h2>
           <p
@@ -41,7 +45,8 @@
             :class="{ 'is-hidden-tablet': filtersShown }"
           >
             <div
-              class="button is-block is-primary is-outlined"
+              class="button is-block is-primary"
+              :class="{ 'is-outlined': filtersShown }"
               @click="showFilters"
             >
               <b-icon
