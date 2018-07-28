@@ -49,14 +49,19 @@
           <div class="column is-half">
             <div class="box">
               <h2 class="title is-4">Verification</h2>
-              <b-message type="is-info" :closable="false">
+              <b-notification
+                type="is-info"
+                has-icon
+                :closable="false"
+              >
+                <div class="notification__header">Verification code</div>
                 In order to verify your account you need to publish <b>GTA Online Job</b> named
                 <div class="mono is-size-1 is-uppercase">{{ jobname }}</div>
                 (case doesn't matter)
-              </b-message>
+              </b-notification>
 
               <div class="tags">
-                <span class="tag is-info is-medium">Time left: {{ timeLeft }}</span>
+                <span class="tag is-light is-medium">Time left: {{ timeLeft }}</span>
               </div>
 
               <form method="post" @submit.prevent="verify">
@@ -92,6 +97,12 @@
                     class="button is-primary"
                     :disabled="!confirm">
                     Continue
+                  </button>
+
+                  <button
+                    class="button is-danger is-outlined"
+                  >
+                    Cancel registration
                   </button>
                 </div>
               </form>

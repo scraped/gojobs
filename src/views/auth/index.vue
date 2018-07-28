@@ -9,17 +9,22 @@
               <ul>
                 <li
                   :class="{ 'is-active': signup }"
-                  @click="signup = true; recovery = false">
+                  @click="signup = true; recovery = false"
+                >
                   <a>Sign Up</a>
                 </li>
                 <li
                   :class="{ 'is-active': !signup }"
-                  @click="signup = false">
+                  @click="signup = false"
+                >
                   <a>Log In</a>
                 </li>
               </ul>
             </div>
-              <div class="box" v-if="signup">
+              <div
+                v-if="signup"
+                class="box"
+              >
                 <div class="content">
                 <div class="subtitle">Welcome to GTA Online Jobs site</div>
                 <hr>
@@ -30,17 +35,22 @@
                   <li>Вы будете иметь возможность <b>зайти и опубликовать дело в GTA Online в течение следующих 60 минут.</b></li>
                 </ul>
                 </div>
-                <b-message type="is-info" :closable="false">
-                  Note that the registration is not open for everybody as of now and most likely you won't be able to sign up (unless you don't have an invite).<br>
-                  But your chances are higher if you have previously published some relatively popular jobs.
-                </b-message>
-              </div>
-
-              <div class="box">
-              <form method="post" @submit.prevent="auth">
+                <b-notification
+                  type="is-warning"
+                  has-icon
+                  :closable="false"
+                >
+                  <div class="notification__header">Registration is limited</div>
+                  Note that the registration is not open for everybody as of now and most likely you won't be able to sign up (unless you don't have an invite). Nevertheless your chances are higher if you have previously published some relatively popular jobs.
+                </b-notification>
+              <form
+                method="post"
+                @submit.prevent="auth"
+              >
                 <b-field
                   v-if="!recovery"
-                  :label="signup ? 'Your valid Rockstar Games Social Club Username *' : 'Username *'">
+                  :label="signup ? 'Your valid Rockstar Games Social Club Username *' : 'Username *'"
+                >
                   <b-input
                     size="is-large"
                     v-model="username"
@@ -49,25 +59,27 @@
                     maxlength="16"
                     key="username"
                     autocomplete="off"
-                    required>
-                  </b-input>
+                    required
+                  ></b-input>
                 </b-field>
 
                 <b-field
                   v-if="signup || recovery"
-                  :label="signup ? 'E-mail (optional, but recommended)' : 'E-mail *'">
+                  :label="signup ? 'E-mail (optional, but recommended)' : 'E-mail *'"
+                >
                   <b-input
                     type="email"
                     size="is-large"
                     v-model="email"
                     key="email"
-                    :required="recovery">
-                  </b-input>
+                    :required="recovery"
+                  ></b-input>
                 </b-field>
 
                 <b-field
                   v-if="!recovery"
-                  label="Password *">
+                  label="Password *"
+                >
                   <b-input
                     type="password"
                     size="is-large"
@@ -75,8 +87,8 @@
                     minlength="6"
                     maxlength="30"
                     key="password"
-                    required>
-                  </b-input>
+                    required
+                  ></b-input>
                 </b-field>
 
                 <!-- <b-field
@@ -95,19 +107,23 @@
 
                 <b-field
                   v-if="signup"
-                  label="An invitation code (if you have it)">
+                  label="An invitation code (if you have it)"
+                >
                   <b-input
                     size="is-large"
                     v-model="invCode"
                     minlength="16"
                     maxlength="16"
                     placeholder="Currenlty unavailable"
-                    disabled>
-                  </b-input>
+                    disabled
+                  ></b-input>
                 </b-field>
 
                 <b-field v-if="signup">
-                  <b-checkbox v-if="username" v-model="confirm">
+                  <b-checkbox
+                    v-if="username"
+                    v-model="confirm"
+                  >
                     I confirm that <b>@{{ username }}</b> is my GTA Online account I can use right now.
                   </b-checkbox>
                 </b-field>
@@ -115,29 +131,34 @@
                 <div class="buttons">
                   <button
                     class="button is-primary"
-                    :disabled="signup && !confirm">
+                    :disabled="signup && !confirm"
+                  >
                     Continue
                   </button>
 
                   <a
-                    class="button"
                     v-if="signup && username"
+                    class="button"
                     :href="`https://socialclub.rockstargames.com/member/${username}`"
-                    target="_blank">
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Go to your RGSC profile
                   </a>
 
                   <a
-                    class="button"
                     v-if="!signup && !recovery"
-                    @click="recovery = true">
-                    Forget your password?
+                    @click="recovery = true"
+                    class="button"
+                  >
+                    Forgot your password?
                   </a>
 
                   <a
-                    class="button"
                     v-if="!signup && recovery"
-                    @click="recovery = false">
+                    @click="recovery = false"
+                    class="button"
+                  >
                     Log In
                   </a>
                 </div>
@@ -152,6 +173,12 @@
 
 <script>
 export default {
+  watch: {
+    username() {
+      this.confirm = false;
+    }
+  },
+
   data() {
     return {
       signup: true,
@@ -179,22 +206,24 @@ export default {
         url = '/api/auth/login';
       }
 
-      const res = await this.$http.post(
-        url,
-        { username, password, email }
-      );
+      try {
+        const res = await this.$http.post(
+          url,
+          { username, password, email }
+        );
 
-      const { jobname, date } = res.data;
+        const { jobname, date } = res.data;
 
-      if (!recovery) {
-        this.$store.commit('user/setUsername', { username });
-        this.$store.commit('user/setJobname', { jobname });
-        this.$store.commit('user/setDate', { date });
-        if (email) {
-          this.$store.commit('user/setEmail', { email });
+        if (!recovery) {
+          this.$store.commit('user/setUsername', { username });
+          this.$store.commit('user/setJobname', { jobname });
+          this.$store.commit('user/setDate', { date });
+          if (email) {
+            this.$store.commit('user/setEmail', { email });
+          }
+          this.$router.push({ name: 'profile', params: { username } });
         }
-        this.$router.push({ name: 'profile', params: { username } });
-      }
+      } catch (e) {}
     }
   }
 };

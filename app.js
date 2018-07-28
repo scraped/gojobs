@@ -10,7 +10,7 @@ const compression = require('compression');
 const prettyError = require('pretty-error');
 const cookieParser = require('cookie-parser');
 
-const {apiRouter} = require('./routers');
+const {apiRouter, errorHandler} = require('./routers');
 const {ssrMiddleware} = require('./lib/ssr');
 const {connectDb} = require('./lib/db');
 
@@ -35,6 +35,7 @@ app.use(
 );
 
 app.use('/api', apiRouter);
+app.use(errorHandler);
 
 connectDb(() => {
   // Server-side rendering middleware. Must follow after all the routes

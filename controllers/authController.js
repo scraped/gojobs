@@ -3,6 +3,8 @@ const _ = require('lodash');
 const validator = require('validator');
 const cookie = require('cookie');
 const jwt = require('jsonwebtoken');
+const Boom = require('boom');
+
 const User = require('../models/user');
 
 exports.verify = (req, res) => {
@@ -29,7 +31,7 @@ exports.recoveryPass = (req, res) => {
   });
 };
 
-exports.signUp = async (req, res) => {
+exports.signUp = async (req, res, next) => {
   const NO_USERNAME_MESSAGE = 'Please enter your login and password',
     USER_NOT_FOUND_MESSAGE = 'User not found: registration is not open for everybody as of now',
     USER_EXISTS_MESSAGE = 'This user has already registred',
@@ -56,7 +58,8 @@ exports.signUp = async (req, res) => {
   const user = await User.findOne({ username });
 
   if (!user) {
-    return res.status(403).json({ message: USER_NOT_FOUND_MESSAGE });
+    return next(Boom.forbidden(USER_NOT_FOUND_MESSAGE));
+    // return res.status(403).json({ message: USER_NOT_FOUND_MESSAGE });
   }
 
   if (user.verified) {

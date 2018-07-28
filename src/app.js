@@ -25,8 +25,8 @@ const progressBarOptions = {
 
 const buefyOptions = {
   defaultNoticeQueue: false,
-  defaultSnackbarDuration: 7000,
-  defaultToastDuration: 7000,
+  defaultSnackbarDuration: 10000,
+  defaultToastDuration: 10000,
   defaultIconPack: 'fa'
 };
 

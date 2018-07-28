@@ -1,27 +1,25 @@
-const chalk = require('chalk');
 const Boom = require('boom');
 
-module.exports = app => {
+const SERVER_ERROR_CODE = 500;
 
-  // 404
-  app.use((req, res) => {
-    let errMessage = req.xhr ? Boom.notFound().output.payload : '404 Not Found';
+// eslint-disable-next-line
+module.exports = (err, req, res, next) => {
+  if (!err.isBoom) {
+    err = Boom.boomify(err, {
+      statusCode: SERVER_ERROR_CODE
+    });
+  }
 
-    res.status(404).send(errMessage);
-  });
+  const { payload } = err.output;
+  const { statusCode, error, message } = payload;
 
-  // Everything else
-  app.use((err, req, res, next) => {
-    console.log(chalk.bgRed(' ERROR '), chalk.reset(err.stack));
+  if (statusCode >= SERVER_ERROR_CODE) {
+    console.log(err.stack);
+  }
 
-    err = err.isBoom ? err : Boom.boomify(err, { statusCode: 500 });
+  const errMessage = req.xhr
+    ? payload
+    : `${statusCode} ${error}: ${message}`;
 
-    let { payload } = err.output;
-    let { statusCode, error, message } = payload;
-
-    let errMessage = req.xhr ? payload : `${statusCode} ${error}: ${message}`;
-
-    res.status(statusCode).send(errMessage);
-  });
-
+  res.status(statusCode).send(errMessage);
 };

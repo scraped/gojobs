@@ -1,2 +1,2 @@
-export {http, setupHttp, setupHttpClient} from './http';
+export {http, setupHttpServer, setupHttpClient} from './http';
 export {serializeCookies} from './cookie';

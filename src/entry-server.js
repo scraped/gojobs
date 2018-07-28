@@ -1,19 +1,12 @@
-import config from '../config';
 import {createApp} from './app'
-import {findAsyncComponents} from './helpers';
-import {setupHttp, serializeCookies} from './utils';
-import axios from 'axios';
+import {findAsyncComponents} from '@/helpers';
+import {setupHttpServer} from '@/utils';
 
 export default context => {
   const { req } = context;
 
   return new Promise((resolve, reject) => {
-    setupHttp(axios.create({
-      baseURL: `http://${req.hostname}:${config.port}/`,
-      headers: {
-        Cookie: serializeCookies(req.cookies)
-      }
-    }));
+    setupHttpServer(req);
 
     const { app, router, store } = createApp();
 
