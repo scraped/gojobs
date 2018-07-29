@@ -1,4 +1,4 @@
-import { http } from '@/utils';
+import {http} from '@/utils';
 import queryString from 'query-string';
 
 const state = {

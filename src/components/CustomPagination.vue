@@ -166,5 +166,5 @@ export default {
       return this.currPage < this.totalPages;
     }
   }
-}
+};
 </script>

@@ -12,8 +12,7 @@
           <div class="column">
             <div class="subtitle">Cookies</div>
             <div class="content">
-              Using this site you understand that we collect some information in cookies for better experience.
-              <a>Learn more.</a>
+              Bla bla bla :P
             </div>
           </div>
         </div>
@@ -31,7 +30,7 @@
 }
 
 .subtitle__special {
-  color: $gtaonline;
+  // color: $gtaonline;
 }
 
 .footer {

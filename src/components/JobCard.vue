@@ -1,5 +1,8 @@
 <template>
-  <div class="card" style="height: 100%;">
+  <div
+    class="card"
+    style="height: 100%;"
+  >
     <!-- <div style="position: absolute; bottom: 0%; right: 15%; opacity: 0.08; font-size: 100px;">
       <icon-gta
         v-if="job.scModeIcon"
@@ -12,7 +15,10 @@
     }">
       <div class="card__image">
         <figure class="image is-2by1 is-clipped">
-          <img :src="job.imageUrl" :alt="job.name">
+          <img
+            :src="job.imageUrl"
+            :alt="job.name"
+          >
         </figure>
         <div
           class="card__strip"
@@ -21,8 +27,6 @@
         ></div>
         <div class="card__tags">
           <div class="tags">
-            <!-- <span class="tag is-dark is-rounded">{{ jobExt.scModeName || jobExt.scTypeName }}</span> -->
-            <!-- <span class="tag is-dark is-rounded">Rallycross</span> -->
             <!-- <span class="tag is-dark is-rounded">Pitlane</span> -->
           </div>
         </div>
@@ -30,7 +34,8 @@
           <div class="is-size-5 has-text-white">
             <span
               class="tooltip"
-              :data-tooltip="`Game mode: ${scInfo.scTypeName}`">
+              :data-tooltip="`Game mode: ${scInfo.scTypeName}`"
+            >
               <icon-gta :icon="scInfo.scTypeIcon"></icon-gta>
             </span><span class="has-text-weight-bold" v-html="job.name"></span>
             <span
@@ -50,8 +55,12 @@
         <div class="media-left">
           <figure class="image is-48x48">
             <router-link
-              :to="{ name: 'profile', params: { username: job.author }}">
-              <img class="is-rounded" :src="avatars.small">
+              :to="{ name: 'profile', params: { username: job.author }}"
+            >
+              <img
+                class="is-rounded"
+                :src="avatars.small"
+              >
             </router-link>
           </figure>
         </div>
@@ -60,7 +69,8 @@
           <div class="is-size-6">
             <template v-if="job.author">
               <router-link
-                :to="{ name: 'profile', params: { username: job.author }}">
+                :to="{ name: 'profile', params: { username: job.author }}"
+              >
                 @{{ job.author }}
               </router-link>
             </template>
@@ -78,7 +88,11 @@
         </div>
 
         <div class="media-right">
-          <b-icon pack="fa" icon="bookmark" type="is-dark"></b-icon>
+          <b-icon
+            pack="fa"
+            icon="bookmark"
+            type="is-dark"
+          ></b-icon>
         </div>
       </div>
 
@@ -110,10 +124,12 @@
           <div
             class="tags has-addons"
             :class="{ tooltip: !primaryInfo }"
-            data-tooltip="R* also takes into account unfinished jobs">
+            data-tooltip="R* also takes into account unfinished jobs"
+          >
             <span
               class="tag is-rounded is-medium"
-              :class="ratingCssClass(job.stats.ratingQuit)">
+              :class="ratingCssClass(job.stats.ratingQuit)"
+            >
               <span class="icon">
                 <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
               </span>

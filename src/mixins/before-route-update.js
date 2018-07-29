@@ -4,10 +4,12 @@ export async function beforeRouteUpdate(to, from, next) {
   if (fetchData) {
     this.$Progress.start();
 
-    await fetchData({
-      store: this.$store,
-      route: to
-    });
+    try {
+      await fetchData({
+        store: this.$store,
+        route: to
+      });
+    } catch (e) {}
 
     this.$Progress.finish();
   }

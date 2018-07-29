@@ -1,7 +1,8 @@
 <template>
   <span
     class="icon icon__gta is-unselectable"
-    v-html="`&#x${icon};`"></span>
+    v-html="`&#x${icon};`"
+  ></span>
 </template>
 
 <script>
