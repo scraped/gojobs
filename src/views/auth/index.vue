@@ -2,38 +2,33 @@
   <div>
     <section class="section">
       <div class="container">
-        <h1 class="title">Sign Up or Log In</h1>
         <div class="columns is-centered">
           <div class="column is-half">
-            <div class="tabs is-large">
-              <ul>
-                <li
-                  :class="{ 'is-active': signup }"
-                  @click="signup = true; recovery = false"
-                >
-                  <a>Sign Up</a>
-                </li>
-                <li
-                  :class="{ 'is-active': !signup }"
-                  @click="signup = false"
-                >
-                  <a>Log In</a>
-                </li>
-              </ul>
-            </div>
+              <h1 class="title">
+                <template v-if="signup">
+                  <span class="tag is-rounded has-background-grey-lighter is-large">Sign Up</span> or <a @click="signup = false">Login</a>
+                </template>
+                <template v-else>
+                  <a @click="signup = true">Sign Up</a> or <span class="tag is-rounded has-background-grey-lighter is-large">Login</span>
+                </template>
+              </h1>
               <div
                 v-if="signup"
                 class="box"
               >
                 <div class="content">
-                <div class="subtitle">Welcome to GTA Online Jobs site</div>
-                <hr>
-                <p>Процесс регистрации может быть пройден игроками, имеющими действующую учётную запись Rockstar Games Social Club, использующуюся для игры в GTA Online.</p>
-                <p>Для завершения регистрации вам будет предложено  опубликовать дело GTA Online с определённым названием в течение 60 минут после начала процесса регистрации, поэтому убедитесь, что:</p>
-                <ul>
-                  <li>Вы введёте имя пользователя, совпадающее с вашим именем пользователя на сайте Rockstar Games Social Club;</li>
-                  <li>Вы будете иметь возможность <b>зайти и опубликовать дело в GTA Online в течение следующих 60 минут.</b></li>
-                </ul>
+                  <div class="subtitle">Welcome to GTA Online Jobs site</div>
+
+                  <p>You can only register if you have a valid Rockstar Games Social Club account that you're using to play GTA Online.</p>
+
+                  <p>Follow this instruction to complete the registration:</p>
+
+                  <ol>
+                    <li>Fill the form down below;</li>
+                    <li>Go to GTA Online > Pause > Online > Creator;</li>
+                    <li>Create any job, fullfill the requirements, give the specific name (that will be given to you after completing the step <span class="tag is-rounded">1</span>), test and <b>publish</b> it;</li>
+                    <li>When you will be ready, follow the further instructions.</li>
+                  </ol>
                 </div>
                 <b-notification
                   type="is-warning"
