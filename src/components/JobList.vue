@@ -66,6 +66,39 @@
           >
             <div class="content is-size-5">
               <b-dropdown
+                v-model="platformModel"
+                @change="platformChanged"
+                position="is-bottom-left"
+                class="is-block"
+              >
+                <div
+                  slot="trigger"
+                  class="dropdown__trigger is-unselectable"
+                >
+                  <span class="has-text-weight-bold">Platform</span>
+                  <div class="is-pulled-right">
+                    {{ currPlatformName }}
+                    <b-icon
+                      pack="fa"
+                      icon="angle-down"
+                      custom-class="is-size-5"
+                    ></b-icon>
+                  </div>
+                </div>
+
+                <b-dropdown-item
+                  value="pc"
+                  class="is-unselectable"
+                >
+                  PC
+                </b-dropdown-item>
+                <b-dropdown-item value="ps4">PS4</b-dropdown-item>
+                <b-dropdown-item value="xboxone">Xbox One</b-dropdown-item>
+              </b-dropdown>
+            </div>
+
+            <div class="content is-size-5">
+              <b-dropdown
                 v-model="typeModel"
                 @change="typeChanged"
                 position="is-bottom-left"
@@ -175,6 +208,8 @@
 <script>
 import Vue from 'vue';
 import {mapState} from 'vuex';
+import findIndex from 'lodash/findIndex';
+import platforms from '../../config/static/platforms'
 import modes from '@/../config/static/modes';
 
 import JobCard from '@/components/JobCard.vue';
@@ -213,7 +248,8 @@ export default {
       },
       sortModel: null,
       typeModel: null,
-      modeModel: null
+      modeModel: null,
+      platformModel: null,
     };
   },
 
@@ -237,6 +273,15 @@ export default {
       return this.filtersShown
         ? 'Hide filters'
         : 'Show filters';
+    },
+
+    currPlatformName() {
+      const { platformModel: platform } = this;
+      const index = findIndex(platforms, pl => pl.short === platform);
+      if (platforms[index]){
+        return platforms[index].name;
+      }
+      return '';
     },
 
     currTypeInfo() {
@@ -269,6 +314,12 @@ export default {
       this.sortModel = route.query.by || 'relevance';
       this.typeModel = Number(route.query.type) || 0;
       this.modeModel = Number(route.query.mode) || 0;
+      this.platformModel = this.$cookie.get('platform') || 'pc'
+    },
+
+    platformChanged(platform) {
+      this.$cookie.set('platform', platform, { expires: '1Y' });
+      this.$router.push({ query: { ...this.$route.query, platform } });
     },
 
     sortChanged(value) {

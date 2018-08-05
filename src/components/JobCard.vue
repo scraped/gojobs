@@ -33,10 +33,10 @@
         <div class="card__title">
           <div class="is-size-5 has-text-white">
             <span
-              class="tooltip"
-              :data-tooltip="`Game mode: ${scInfo.scTypeName}`"
+              class="tooltip is-tooltip-light"
+              :data-tooltip="`Game mode: ${jobExt.scTypeName}`"
             >
-              <icon-gta :icon="scInfo.scTypeIcon"></icon-gta>
+              <icon-gta :icon="jobExt.scTypeIcon"></icon-gta>
             </span><span class="has-text-weight-bold" v-html="job.name"></span>
             <span
               v-if="jobExt.recentlyAdded"
@@ -99,7 +99,7 @@
       <div class="is-size-7 has-text-grey">
         <div>
           <template v-if="!job.rockstar">
-            {{ scInfo.platformName }} ·
+            {{ jobExt.platformName }} ·
           </template>
           <template v-if="job.minPl === job.maxPl">Only for</template>
           <template v-else>{{ job.minPl || 1 }}-</template>{{ job.maxPl }} players ·
@@ -211,11 +211,6 @@ export default {
       return this.jobExtGetter(this.job);
     },
 
-    recentlyAdded() {
-      return new Date() - new Date(this.job.scAdded)
-        <= 1000 * 60 * 60 * 24 * 14;
-    },
-
     avatars() {
       return userAvatars(this.job.author);
     },
@@ -223,15 +218,6 @@ export default {
     updatedDate() {
       const { ver } = this.job;
       return updatedDate({ date: this.job.scUpdated, ver });
-    },
-
-    scInfo() {
-      const { scType, scMode, platform } = this.job;
-      // { scTypeName, scTypeIcon, scModeName, platformName }
-      return {
-        ...scTypeModeIcon({ scType, scMode }),
-        ...scPlatformName({ platform })
-      };
     }
   }
 };

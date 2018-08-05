@@ -86,21 +86,25 @@
                   v-html="job.details.desc">
                 </p>
 
-                <p>
+                <p v-if="defaultVehicle">
                   <span class="has-text-weight-bold">
-                    Tested in Creator with:
+                    Tested in Creator with
                   </span>
-                  <span class="tag is-medium">
-                  {{ defaultVehicle }}
+                  <span class="tag is-medium is-uppercase" style="font-family: 'Courier New';">
+                    {{ defaultVehicle }}
                   </span>
                 </p>
 
-                <p>
+                <p v-if="job.details.specific.race.trfVeh.length">
                   <span class="has-text-weight-bold">
                     Transformations:
                   </span>
-                  <span class="tag is-medium">
-                  {{ transformVehicles }}
+                  <span
+                    v-for="veh in job.details.specific.race.trfVeh"
+                    :key="veh"
+                    class="tag is-medium is-uppercase" style="font-family: 'Courier New';"
+                  >
+                    {{ vehicles[veh] }}
                   </span>
                 </p>
 
@@ -340,7 +344,8 @@ export default {
 
   data() {
     return {
-      mapShowed: false
+      mapShowed: false,
+      vehicles
     };
   },
 

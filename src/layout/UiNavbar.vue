@@ -21,7 +21,7 @@
             slot="trigger"
             class="navbar-item is-unselectable"
           >
-            <span>{{ platformName }}</span>
+            <!-- <span>{{ platformName }}</span> -->
             <b-icon pack="fa" icon="angle-down" size="is-small"></b-icon>
           </a>
 
@@ -80,7 +80,7 @@
 import platforms from '../../config/static/platforms'
 import {mapState} from 'vuex';
 import {userAvatars} from '@/helpers';
-import {findIndex} from 'lodash';
+// import {findIndex} from 'lodash';
 
 export default {
   data() {
@@ -91,14 +91,14 @@ export default {
   },
 
   computed: {
-    platformName() {
-      const { platform } = this;
-      const index = findIndex(platforms, pl => pl.short === platform);
-      if (platforms[index]){
-        return platforms[index].name;
-      }
-      return '';
-    },
+    // platformName() {
+    //   const { platform } = this;
+    //   const index = findIndex(platforms, pl => pl.short === platform);
+    //   if (platforms[index]){
+    //     return platforms[index].name;
+    //   }
+    //   return '';
+    // },
 
     ...mapState('user', [
       'username'
