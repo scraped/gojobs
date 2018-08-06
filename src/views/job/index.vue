@@ -23,7 +23,7 @@
               </div>
 
               <h1
-                class="title title__special is-uppercase is-size-1 has-text-weight-normal has-text-dark"
+                class="title title__special has-text-weight-normal has-text-dark"
                 v-html="job.name">
               </h1>
 
@@ -77,8 +77,7 @@
                   </p>
                 </div>
               </div>
-
-              <hr>
+              <br>
 
               <div class="content">
                 <p
@@ -87,43 +86,32 @@
                 </p>
 
                 <p v-if="defaultVehicle">
-                  <span class="has-text-weight-bold">
-                    Tested in Creator with
-                  </span>
-                  <span class="tag is-medium is-uppercase" style="font-family: 'Courier New';">
-                    {{ defaultVehicle }}
-                  </span>
+                  Tested in Creator with
+                  {{ defaultVehicle }}
                 </p>
 
-                <p v-if="job.details.specific.race.trfVeh.length">
-                  <span class="has-text-weight-bold">
-                    Transformations:
-                  </span>
-                  <span
-                    v-for="veh in job.details.specific.race.trfVeh"
-                    :key="veh"
-                    class="tag is-medium is-uppercase" style="font-family: 'Courier New';"
-                  >
-                    {{ vehicles[veh] }}
-                  </span>
-                </p>
+                <div v-if="job.details.specific.race.trfVeh.length" class="tags">
+                  Transformations:
+                  {{ transformVehicles }}
+                </div>
 
-                <p v-if="job.tags && job.tags.length">
+                <div
+                  v-if="job.tags && job.tags.length"
+                  class="tags"
+                >
                   <router-link
+                    v-if="job.tags"
                     to="/"
                     v-for="(tag, i) in job.tags"
-                    :key="tag">#{{ tag }}<template v-if="i !== job.tags.length - 1">, </template></router-link>
-                </p>
+                    :key="tag"
+                    class="tag is-capitalized">{{ tag }}</router-link>
 
-                <div class="field is-grouped is-grouped-multiline">
-                  <div
+                  <!-- <span
                     v-if="job.details.specific.teams"
-                    class="control"
+                    class="tag"
                   >
-                    <span class="tag is-dark">
-                      <template v-if="job.details.specific.teams > 2">2-</template>{{ job.details.specific.teams }} teams
-                    </span>
-                  </div>
+                    <template v-if="job.details.specific.teams > 2">2-</template>{{ job.details.specific.teams }} teams
+                  </span> -->
                 </div>
 
                 <div v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
@@ -140,48 +128,52 @@
                 </div>
               </div>
 
-              <nav class="level is-mobile">
-                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em 0;">
-                  <div>
-                    <p class="heading">Likes</p>
-                    <p class="is-size-6">
-                      <span class="icon is-hidden-mobile">
-                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                      </span><span>{{ job.stats.likes | formatNumber }}</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em 0;">
-                  <div>
-                    <p class="heading">Dislikes</p>
-                    <p>
-                      <span class="icon is-hidden-mobile">
-                        <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
-                      </span><span>{{ job.stats.dislikes | formatNumber }}</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em 0;">
-                  <div>
-                    <p class="heading">Launches</p>
-                    <p>
-                      <span class="icon is-hidden-mobile">
-                        <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
-                      </span><span>{{ job.stats.playTot | formatNumber }}</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="level-item has-text-centered has-background-white-ter" style="border-radius: 4px; padding: 1em 0;">
-                  <div>
-                    <p class="heading">Players</p>
-                    <p>
-                      <span class="icon is-hidden-mobile">
-                        <i class="fa fa-users fa-lg" aria-hidden="true"></i>
-                      </span><span>{{ job.stats.playUnq | formatNumber }}</span>
-                    </p>
-                  </div>
-                </div>
-              </nav>
+              <div class="tags">
+                <span class="tag is-rounded is-large">
+                  <span class="icon">
+                    <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                  </span>
+                  <span>{{ job.stats.likes | formatNumber }}</span>
+                </span>
+
+                <span class="tag is-rounded is-large has-text-grey-light">
+                  <span class="icon" >
+                    <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
+                  </span>
+                  <span>{{ job.stats.dislikes | formatNumber }}</span>
+                </span>
+
+                <span class="tag is-rounded is-large">
+                  <span class="icon is-hidden-mobile">
+                    <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
+                  </span><span>{{ job.stats.playTot | formatNumber }}</span>
+                </span>
+
+                <span class="tag is-rounded is-large">
+                  <span class="icon is-hidden-mobile">
+                      <i class="fa fa-users fa-lg" aria-hidden="true"></i>
+                    </span><span>{{ job.stats.playUnq | formatNumber }}</span>
+                </span>
+
+                <span class="tag is-rounded is-large has-text-danger">
+                  <span class="icon is-hidden-mobile">
+                      <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
+                    </span><span>{{ job.stats.dislikesQuit - job.stats.dislikes | formatNumber }}</span>
+                </span>
+              </div>
+
+              <div class="content">
+                <p>
+                  <b>Actual rating:</b>
+                  <span :class="`has-text-${ratingCssClass(job.stats.rating, false)}`">{{ job.stats.rating }}%</span>
+                </p>
+                <p>
+                  <b>RGSC rating (quits during the job considered dislikes):</b>
+                  <span :class="`has-text-${ratingCssClass(job.stats.ratingQuit, false)}`">{{ job.stats.ratingQuit }}%</span>
+                </p>
+              </div>
+
+
 
               <p class="has-text-grey-light">
                 Information updated {{ job.fetchDate | formatDate }}
@@ -230,36 +222,8 @@
           </div>
 
           <div class="column is-one-third-widescreen is-two-fifths-desktop is-12-tablet">
-            <div class="box">
-              <h2 class="subtitle">
-                Ratings
-              </h2>
-              <hr>
 
-              <div class="content">
-                <p><span class="has-text-weight-bold">RGSC Rating:</span> {{ job.stats.ratingQuit }}%</p>
-                <progress
-                  class="progress"
-                  :class="ratingCssClass(job.stats.ratingQuit)"
-                  :value="job.stats.ratingQuit" max="100">
-                  {{ job.stats.ratingQuit }}%
-                </progress>
-
-                <p><span class="has-text-weight-bold">Actual Rating:</span> {{ job.stats.rating }}%</p>
-                <progress
-                  class="progress"
-                  :class="ratingCssClass(job.stats.rating)"
-                  :value="job.stats.rating" max="100">
-                  {{ job.stats.rating }}%
-                </progress>
-
-                <p class="is-size-7">
-                  <router-link to="/">What is the difference?</router-link>
-                </p>
-              </div>
-            </div>
-
-            <div class="box">
+            <div class="box is-paddingless">
               <div class="section">
                 Lap length
                 <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.dist | mToKm }} km</span>
@@ -334,7 +298,9 @@ export default {
 
   fetchData({ store, route }) {
     const { id } = route.params;
-    return store.dispatch('job/fetchJob', { id });
+    return Promise.all([
+      store.dispatch('job/fetchJob', { id })
+    ]);
   },
 
   components: {
@@ -345,6 +311,7 @@ export default {
   data() {
     return {
       mapShowed: false,
+      transformations: false,
       vehicles
     };
   },
