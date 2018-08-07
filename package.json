@@ -40,6 +40,7 @@
     "body-parser": "^1.18.3",
     "boom": "^7.2.0",
     "buefy": "^0.6.6",
+    "bull": "^3.4.4",
     "bulma": "^0.7.1",
     "bulma-tooltip": "^2.0.1",
     "canvas": "^1.6.11",
