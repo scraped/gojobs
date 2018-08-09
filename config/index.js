@@ -1,25 +1,25 @@
+const { env } = process;
+
 let config = {
-  port: process.env.PORT || 3000,
+  port: env.PORT || 3000,
   kuePort: 4000,
-  production: process.env.NODE_ENV === 'production',
+  production: env.NODE_ENV === 'production',
   jwtSecret: 'rggsgsehh5hhgerggeegdfssdbsdbsdbd',
 
-
-
   mongo: {
-    connectUri: 'mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs',
+    connectUri: env.MONGODB_URI || 'mongodb://127.0.0.1:27017/goj-jobs',
 
     options: {
-      keepAlive: true,
+      keepAlive: true
     },
 
-    standardUpdateOptions: {
-      new: true,
-      runSettersOnQuery: true,
-      runValidators: true,
-      setDefaultsOnInsert: true,
-      upsert: true
-    },
+    // standardUpdateOptions: {
+    //   new: true,
+    //   runSettersOnQuery: true,
+    //   runValidators: true,
+    //   setDefaultsOnInsert: true,
+    //   upsert: true
+    // },
   }
 };
 

@@ -198,7 +198,7 @@
           has-icon
           :closable="false"
         >
-          <div class="notification__header">Nothing found</div>
+          <div class="notification__header">No jobs found</div>
         </b-notification>
       </div>
     </div>

@@ -13,23 +13,6 @@
           jobs
         </span>
 
-        <b-dropdown
-          v-model="platform"
-          @change="platformChanged"
-        >
-          <a
-            slot="trigger"
-            class="navbar-item is-unselectable"
-          >
-            <!-- <span>{{ platformName }}</span> -->
-            <b-icon pack="fa" icon="angle-down" size="is-small"></b-icon>
-          </a>
-
-          <b-dropdown-item value="pc">PC</b-dropdown-item>
-          <b-dropdown-item value="ps4">PS4</b-dropdown-item>
-          <b-dropdown-item value="xboxone">Xbox One</b-dropdown-item>
-        </b-dropdown>
-
         <router-link
           v-if="username"
           class="navbar-item is-hidden-desktop"
@@ -85,21 +68,11 @@ import {userAvatars} from '@/helpers';
 export default {
   data() {
     return {
-      menuOpened: false,
-      platform: ''
+      menuOpened: false
     };
   },
 
   computed: {
-    // platformName() {
-    //   const { platform } = this;
-    //   const index = findIndex(platforms, pl => pl.short === platform);
-    //   if (platforms[index]){
-    //     return platforms[index].name;
-    //   }
-    //   return '';
-    // },
-
     ...mapState('user', [
       'username'
     ]),
@@ -109,23 +82,9 @@ export default {
     }
   },
 
-  beforeMount() {
-    this.platform = this.$cookie.get('platform') || 'pc';
-  },
-
   methods: {
     toggleMenu() {
       this.menuOpened = !this.menuOpened;
-    },
-
-    platformChanged(platform) {
-      this.$cookie.set('platform', platform, { expires: '1Y' });
-      this.platform = platform;
-      this.$toast.open({
-        message: `Platform set to ${this.platformName}`,
-        type: 'is-info'
-      });
-      this.$router.push({ path: this.$route.path, query: { platform } });
     }
   }
 };
