@@ -1,18 +1,17 @@
-import config from '@/../config'
 import axios from 'axios';
 import Vue from 'vue';
 import {serializeCookies} from '@/utils';
 
-export let http = null;
+export let http;
 
 function setupHttp(axiosInstance) {
-  Vue.prototype.$http = axiosInstance;
   http = axiosInstance;
+  Vue.prototype.$http = http;
 }
 
 export function setupHttpServer(req) {
   const axiosInstance = axios.create({
-    baseURL: `http://${req.hostname}:${config.port}/`,
+    baseURL: `http://${req.hostname}:${req.app.get('port')}/`,
     headers: {
       Cookie: serializeCookies(req.cookies),
       'X-Requested-With': 'XMLHttpRequest'

@@ -193,13 +193,15 @@
         v-if="!count"
         class="column is-two-thirds-widescreen is-half-tablet"
       >
-        <b-notification
-          type="is-info"
-          has-icon
-          :closable="false"
-        >
-          <div class="notification__header">No jobs found</div>
-        </b-notification>
+
+        <div class="box">
+          <b-message
+            type="is-warning"
+            :closable="false"
+          >
+            <div class="notification__header">No jobs found</div>
+          </b-message>
+        </div>
       </div>
     </div>
   </div>
