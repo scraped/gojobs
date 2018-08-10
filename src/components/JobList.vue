@@ -194,14 +194,14 @@
         class="column is-two-thirds-widescreen is-half-tablet"
       >
 
-        <div class="box">
-          <b-message
-            type="is-warning"
+          <b-notification
+            type="is-info"
             :closable="false"
+            has-icon
           >
             <div class="notification__header">No jobs found</div>
-          </b-message>
-        </div>
+            <p>Try to change a platform or a game mode.</p>
+          </b-notification>
       </div>
     </div>
   </div>
