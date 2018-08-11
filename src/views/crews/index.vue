@@ -7,7 +7,8 @@
           <div
             v-for="crew in crews"
             :key="crew.crewId"
-            class="column is-one-third-widescreen is-half-tablet">
+            class="column is-one-third-widescreen is-half-tablet"
+          >
             <div class="box">
               <img :src="crew.avatarUrl">
               {{ crew.name }}<br>

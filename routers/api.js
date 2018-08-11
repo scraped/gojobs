@@ -24,7 +24,8 @@ const {
 } = require('../controllers/userController');
 
 const {
-  crewList
+  crewListPost,
+  fetchCrewPost
 } = require('../controllers/crewController');
 
 module.exports = router;
@@ -56,4 +57,5 @@ router.post('/job/upload', jobUploadPost);
 router.post('/job/:id', jobDetailsPost);
 
 // Crew
-router.post('/crews', crewList);
+router.post('/crews', crewListPost);
+router.post('/crews/fetch', fetchCrewPost);

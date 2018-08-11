@@ -4,13 +4,9 @@
       <div class="box">
         <form
           method="post"
-          @submit.prevent="fetch">
+          @submit.prevent="fetch"
+        >
           <h2 class="subtitle">Fetch jobs</h2>
-          <hr>
-
-          <b-notification :closable="false">
-            You can fetch either job bunches (up to 20 jobs per request, but this won't give you complete information about the job) or "extended" jobs (this will take you one request per job).
-          </b-notification>
 
           <div class="columns">
             <div class="column is-half">
@@ -184,7 +180,6 @@
       <div class="box">
         <form @submit.prevent="process">
           <h2 class="subtitle">Process jobs</h2>
-          <hr>
 
           <div class="content">
             <p>You can upload jobs to the site from here.</p>

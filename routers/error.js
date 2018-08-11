@@ -13,6 +13,7 @@ module.exports = (err, req, res, next) => {
   const { payload } = err.output;
   const { statusCode, error, message } = payload;
 
+  // Only show an error stack for actual server errors
   if (statusCode >= SERVER_ERROR_CODE) {
     console.log(err.stack);
   }

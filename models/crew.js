@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const {Schema} = mongoose;
 
 let schema = new Schema({
   crewId: {
@@ -48,13 +48,11 @@ let schema = new Schema({
   color: {
     type: String,
     set: setColor,
-    get: getColor,
     required: notRockstar
   },
 
   avatar: {
     type: String,
-    select: false,
     required: notRockstar
   },
 
@@ -82,10 +80,6 @@ function notRockstar() {
 
 function setColor(color) {
   return color.substr(0, 6).toLowerCase();
-}
-
-function getColor(color) {
-  return '#' + color;
 }
 
 module.exports = mongoose.model('Crew', schema);

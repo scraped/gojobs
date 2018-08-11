@@ -6,8 +6,8 @@ Vue.use(VueRouter);
 
 const resolve = name =>
   () => import(
-    /* webpackChunkName: "views" */
-    /* webpackMode: "lazy-once" */
+    /* webpackChunkName: 'views' */
+    /* webpackMode: 'lazy-once' */
     `@/views/${name}.vue`
   );
 
@@ -25,65 +25,60 @@ const resolve = name =>
 
 const routes = [
   {
-    "path": "/",
-    "name": "main",
-    "component": resolve("main/index")
+    'path': '/',
+    'name': 'main',
+    'component': resolve('main/index')
   },
 
   {
-    "path": "/error/:code",
-    "name": "error",
-    "component": resolve("Error")
+    'path': '/error/:code',
+    'name': 'error',
+    'component': resolve('Error')
   },
 
   {
-    "path": "/crews",
-    "name": "crews",
-    "component": resolve("crews/index")
+    'path': '/crews',
+    'name': 'crews',
+    'component': resolve('crews/index')
   },
 
   {
-    "path": "/admin",
-    "component": resolve("Admin"),
-    "children": [
+    'path': '/admin',
+    'component': resolve('Admin'),
+    'children': [
       {
-        "path": "",
-        "component": resolve("admin/index")
+        'path': '',
+        'component': resolve('admin/index')
       },
 
       {
-        "path": "raw",
-        "component": resolve("admin/raw-jobs")
+        'path': 'jobs',
+        'component': resolve('admin/jobs')
       },
 
       {
-        "path": "fetch",
-        "component": resolve("admin/fetch")
-      },
-
-      {
-        "path": "process",
-        "component": resolve("admin/process")
+        'path': 'crews',
+        'component': resolve('admin/crews')
       }
     ]
   },
 
   {
-    "path": "/auth",
-    "name": "auth",
-    "component": resolve("auth/index")
+    'path': '/auth',
+    'name': 'auth',
+    'component': resolve('auth/index')
   },
 
   {
-    "path": "/job/:id/:slug",
-    "name": "job",
-    "component": resolve("job/index")
+    'path': '/job/:id/:slug',
+    'name': 'job',
+    'component': resolve('job/index')
   },
 
   {
-    "path": "/profile/:username",
-    "name": "profile",
-    "component": resolve("profile/index")
+    'path': '/profile/:username',
+    'name': 'profile',
+    'component': resolve('profile/index')
   }
 ];
 
