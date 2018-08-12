@@ -1,6 +1,6 @@
+const {mongoose} = require('../lib/db');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
-const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 let schema = new Schema({

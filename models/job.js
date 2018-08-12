@@ -1,8 +1,8 @@
+const {mongoose} = require('../lib/db');
 const _ = require('lodash');
 const {platforms, modes} = require('../config/static');
 require('./job-details');
 
-const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 let schema = new Schema({

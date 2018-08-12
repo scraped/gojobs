@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const {mongoose} = require('../lib/db');
 const {Schema} = mongoose;
 
 let schema = new Schema({
@@ -51,7 +51,7 @@ let schema = new Schema({
     required: notRockstar
   },
 
-  avatar: {
+  avatarId: {
     type: String,
     required: notRockstar
   },
@@ -70,8 +70,8 @@ let schema = new Schema({
 
 schema.virtual('avatarUrl')
   .get(function() {
-    const {avatar, crewId} = this;
-    return `https://prod.cloud.rockstargames.com/crews/sc/${avatar}/${crewId}/publish/emblem/emblem_128.png`;
+    const {avatarId, crewId} = this;
+    return `https://prod.cloud.rockstargames.com/crews/sc/${avatarId}/${crewId}/publish/emblem/emblem_128.png`;
   });
 
 function notRockstar() {

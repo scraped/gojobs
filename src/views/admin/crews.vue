@@ -10,12 +10,14 @@
           >
             <figure class="media-left">
               <p class="image is-64x64">
-                <img src="https://bulma.io/images/placeholders/128x128.png">
+                <img :src="crew.avatarUrl">
               </p>
             </figure>
 
             <div class="media-content">
-              Test
+              <p class="has-text-weight-bold">{{crew.name}}</p>
+              <p><a :href="`https://socialclub.rockstargames.com/crew/${crew.slug}`" target="_blank">Go to RGSC page</a></p>
+              <p class="has-text-grey">Information updated {{crew.lastInfoFetch}}</p>
             </div>
           </article>
           <div
@@ -33,7 +35,7 @@
             <b-field label="Crew slug">
               <b-input
                 v-model.trim="crewSlug"
-                maxlength=""
+                maxlength="30"
                 required
               ></b-input>
             </b-field>
@@ -49,6 +51,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import {mapState} from 'vuex';
 
 export default {

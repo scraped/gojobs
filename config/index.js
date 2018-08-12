@@ -11,8 +11,8 @@ let config = {
 
     options: {
       useNewUrlParser: true,
-      bufferCommands: false,
-      connectTimeoutMS: 2 ** 31 - 1
+      connectTimeoutMS: 2 ** 31 - 1,
+      reconnectTries: Number.MAX_VALUE,
     }
   }
 };

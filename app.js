@@ -12,7 +12,7 @@ const cookieParser = require('cookie-parser');
 
 const {apiRouter, errorHandler} = require('./routers');
 const {ssrMiddleware} = require('./lib/ssr');
-const {connectDb} = require('./lib/db');
+// const {connectDb} = require('./lib/db');
 
 // better error messages
 prettyError.start();
@@ -37,15 +37,12 @@ app.use(
 app.use('/api', apiRouter);
 app.use(errorHandler);
 
-connectDb(() => {
-  // Server-side rendering middleware. Must follow after all the routes
-  ssrMiddleware(app);
+ssrMiddleware(app);
 
-  const port = app.get('port');
+const port = app.get('port');
 
-  app.listen(port, () => {
-    console.log(chalk.blue(`Server is running on http://localhost:${port}`));
-  });
+app.listen(port, () => {
+  console.log(chalk.blue(`Server is running on http://localhost:${port}`));
 });
 
 process.on('unhandledRejection', err => {
