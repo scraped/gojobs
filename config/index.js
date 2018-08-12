@@ -1,4 +1,4 @@
-const { env } = process;
+const {env} = process;
 
 let config = {
   port: env.PORT || 3000,
@@ -11,16 +11,9 @@ let config = {
 
     options: {
       useNewUrlParser: true,
-      bufferCommands: false
-    },
-
-    // standardUpdateOptions: {
-    //   new: true,
-    //   runSettersOnQuery: true,
-    //   runValidators: true,
-    //   setDefaultsOnInsert: true,
-    //   upsert: true
-    // },
+      bufferCommands: false,
+      connectTimeoutMS: 2 ** 31 - 1
+    }
   }
 };
 
