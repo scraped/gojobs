@@ -1,9 +1,9 @@
 const _ = require('lodash');
-const { platforms, modes } = require('../config/static');
+const {platforms, modes} = require('../config/static');
 require('./job-details');
 
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const {Schema} = mongoose;
 
 let schema = new Schema({
   jobId: {

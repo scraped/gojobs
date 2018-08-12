@@ -28,8 +28,6 @@ const {
   fetchCrewPost
 } = require('../controllers/crewController');
 
-module.exports = router;
-
 function todoController(req, res) {
   res.json({
     message: `TODO: ${req.method} ${req.path}`
@@ -59,3 +57,5 @@ router.post('/job/:id', jobDetailsPost);
 // Crew
 router.post('/crews', crewListPost);
 router.post('/crews/fetch', fetchCrewPost);
+
+module.exports = router;

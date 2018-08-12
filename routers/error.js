@@ -15,6 +15,7 @@ module.exports = (err, req, res, next) => {
 
   // Only show an error stack for actual server errors
   if (statusCode >= SERVER_ERROR_CODE) {
+    // eslint-disable-next-line
     console.log(err.stack);
   }
 

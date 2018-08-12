@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const {Schema} = mongoose;
 
 let schema = new Schema({
   username: { type: String, required: true, unique: true },

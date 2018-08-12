@@ -70,7 +70,7 @@ let schema = new Schema({
 
 schema.virtual('avatarUrl')
   .get(function() {
-    const { avatar, crewId } = this;
+    const {avatar, crewId} = this;
     return `https://prod.cloud.rockstargames.com/crews/sc/${avatar}/${crewId}/publish/emblem/emblem_128.png`;
   });
 

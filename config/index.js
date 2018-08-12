@@ -7,10 +7,11 @@ let config = {
   jwtSecret: 'rggsgsehh5hhgerggeegdfssdbsdbsdbd',
 
   mongo: {
-    connectUri: env.MONGODB_URI || 'mongodb://127.0.0.1:27017/goj-jobs',
+    uri: env.MONGODB_URI || 'mongodb://127.0.0.1:27017/goj-jobs',
 
     options: {
-      keepAlive: true
+      useNewUrlParser: true,
+      bufferCommands: false
     },
 
     // standardUpdateOptions: {
