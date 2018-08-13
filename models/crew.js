@@ -51,6 +51,11 @@ let schema = new Schema({
     required: notRockstar
   },
 
+  count: {
+    type: Number,
+    required: true
+  },
+
   avatarId: {
     type: String,
     required: notRockstar

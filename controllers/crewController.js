@@ -10,7 +10,10 @@ exports.crewListPost = async (req, res) => {
 
   const crews = await Crew.find()
     .skip((page - 1) * CREWS_PER_PAGE)
-    .limit(CREWS_PER_PAGE);
+    .limit(CREWS_PER_PAGE)
+    .sort({
+      lastInfoFetch: 'desc'
+    });
 
   res.json({crews});
 };
