@@ -19,7 +19,7 @@ let schema = new Schema({
       validator(job) {
         return Object.keys(job).length;
       },
-      message: 'Job cannot be empty object'
+      message: 'Job object must be not empty'
     },
     required: true
   },
