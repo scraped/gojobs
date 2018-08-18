@@ -4,6 +4,8 @@ let config = {
   production: process.env.NODE_ENV === 'production',
   jwtSecret: 'rggsgsehh5hhgerggeegdfssdbsdbsdbd',
 
+
+
   mongo: {
     connectUri: 'mongodb://andrew:qwerty@ds157521.mlab.com:57521/goj-jobs',
 

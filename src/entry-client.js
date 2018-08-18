@@ -19,7 +19,7 @@ const { app, store, router } = createApp();
 // Replace store
 // *********************
 
-// Server filled the store - don't need to do it again
+// Server has filled the store - don't need to do it again
 // on the client side
 if (window.__INITIAL_STATE__) {
   store.replaceState(window.__INITIAL_STATE__);
@@ -38,6 +38,7 @@ router.onReady(() => {
     const matchedCurr = router.getMatchedComponents(to);
 
     let diffed = false;
+
     const activated = matchedCurr.filter((component, i) => {
       return diffed || (diffed = (matchedPrev[i] !== component));
     });

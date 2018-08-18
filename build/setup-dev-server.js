@@ -11,6 +11,8 @@ const serverConfig = require('./webpack.server.config');
 
 module.exports = setupDevServer;
 
+const templatePath = './src/index.html';
+
 /**
  * Calls updateCallback({ bundle, clientManifest, template })
  * when something changes
@@ -29,24 +31,23 @@ function setupDevServer(app, updateCallback) {
   let clientManifest;
   let template;
 
-  const templatePath = './src/index.html';
-
   // ***************************
   // Utilities
   // ***************************
-  function update() {
+  const update = () => {
     if (bundle && clientManifest) {
       resolveReadyPromise();
       updateCallback({ bundle, clientManifest, template });
     }
   }
 
-  function readFileSync(fs, filename) {
+  // Reads file from fs filesystem
+  const readFileSync = (fs, filename) => {
     const pathToFile = path.join(clientConfig.output.path, filename);
     return JSON.parse(fs.readFileSync(pathToFile, 'utf-8'));
   }
 
-  function updateTemplate() {
+  const updateTemplate = () => {
     template = fs.readFileSync(templatePath, 'utf-8');
   }
 
@@ -55,11 +56,13 @@ function setupDevServer(app, updateCallback) {
   // ***************************
   updateTemplate();
 
-  chokidar.watch(templatePath).on('change', () => {
-    updateTemplate();
-    update();
-    console.log(chalk.blue('Template updated'));
-  });
+  chokidar
+    .watch(templatePath)
+    .on('change', () => {
+      updateTemplate();
+      update();
+      console.log(chalk.blue('Template updated'));
+    });
 
   // ***************************
   // 1. Watch client files
@@ -100,16 +103,17 @@ function setupDevServer(app, updateCallback) {
   // ***************************
   // 2. Watch server bundle
   // ***************************
-  const MFS = new MemoryFileSystem();
-  serverCompiler.outputFileSystem = MFS;
+  const mfsInstance = new MemoryFileSystem();
+  serverCompiler.outputFileSystem = mfsInstance;
 
   serverCompiler.watch({}, (err, stats) => {
     if (err) throw err;
+
     stats = stats.toJson();
     stats.errors.forEach(console.error);
     stats.warnings.forEach(console.warn);
 
-    bundle = readFileSync(MFS, 'vue-ssr-server-bundle.json');
+    bundle = readFileSync(mfsInstance, 'vue-ssr-server-bundle.json');
 
     update();
   });

@@ -25,26 +25,30 @@ export default context => {
 
     const { app, router, store } = createApp();
 
-    router.push(context.url);
+    router.push(req.url);
 
-    router.onReady(async () => {
-      const matchedComponents = router.getMatchedComponents();
+    router.onReady(
+      async () => {
+        const matchedComponents = router.getMatchedComponents();
 
-      if (!matchedComponents.length) {
-        return reject(new Error('404'));
-      }
+        if (!matchedComponents.length) {
+          return reject(new Error('404'));
+        }
 
-      const asyncDataPromises = findAsyncComponents({
-        components: matchedComponents,
-        store,
-        route: router.currentRoute
-      });
+        const asyncDataPromises = findAsyncComponents({
+          components: matchedComponents,
+          store,
+          route: router.currentRoute
+        });
 
-      await Promise.all(asyncDataPromises);
+        await Promise.all(asyncDataPromises);
 
-      context.state = store.state;
+        context.state = store.state;
+        context.meta = app.$meta(); // vue-meta
 
-      resolve(app);
-    }, reject); // router.onReady
+        resolve(app);
+      },
+      reject
+    );
   });
 }

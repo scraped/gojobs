@@ -42,3 +42,9 @@ app.listen(app.get('port'), () => {
   const port = app.get('port');
   console.log(chalk.blue(`Server is running on http://localhost:${port}`));
 });
+
+process.on('unhandledRejection', (err) => {
+
+  console.log('here:', err.stack);
+  process.exit(1);
+});

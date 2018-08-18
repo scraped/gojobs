@@ -7,6 +7,7 @@ import * as filters from './filters';
 
 import VueProgressBar from 'vue-progressbar';
 import VueCookie from 'vue-cookie';
+import VueMeta from 'vue-meta';
 
 import Buefy from 'buefy';
 
@@ -22,6 +23,7 @@ const progressBarOptions = {
 
 Vue.use(VueProgressBar, progressBarOptions);
 Vue.use(VueCookie);
+Vue.use(VueMeta);
 
 Vue.use(Buefy, {
   defaultNoticeQueue: false,
