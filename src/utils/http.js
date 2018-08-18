@@ -49,7 +49,8 @@ export function setupHttpClient() {
         openToast({
           message,
           duration: 10000,
-          type: 'is-success'
+          type: 'is-success',
+          position: 'is-top-right'
         });
       }
       return response;
@@ -77,7 +78,7 @@ export function setupHttpClient() {
         openToast({
           message: 'Error: could not complete HTTP request',
           type: 'is-danger',
-          position: 'is-bottom'
+          position: 'is-top-right'
         });
       }
       return Promise.reject(error);
