@@ -29,9 +29,23 @@ exports.fetchCrewPost = async (req, res, next) => {
     return next(Boom.badRequest('Incorrect slug'));
   }
 
-  fetchQueue.add('fetchCrewInfo', {slug});
+  const sameJob = await fetchQueue.getJob(slug);
+
+  if (sameJob !== null) {
+    return next(Boom.badRequest('Whoops, this crew is being fetched still.'))
+  }
+
+  fetchQueue.add(
+    'fetchCrewInfo',
+    {
+      slug
+    },
+    {
+      jobId: slug
+    }
+  );
 
   res.json({
-    message: 'Job has been added to the queue.'
-  })
+    message: 'Crew info will be fetched very shortly.'
+  });
 };
