@@ -15,18 +15,21 @@ let schema = new Schema({
 
   job: {
     type: Schema.Types.Mixed,
-    validate: {
-      validator(job) {
-        return Object.keys(job).length;
-      },
-      message: 'Job object must be not empty'
-    },
     required: true
+  },
+
+  blocked: {
+    type: Boolean
   },
 
   extended: {
     type: Boolean,
     default: false
+  },
+
+  firstFetchDate: {
+    type: Date,
+    required: true
   },
 
   fetchDate: {
@@ -49,12 +52,12 @@ let schema = new Schema({
     default: false
   },
 
-  lastCoeffs: {
-    type: [Number]
-  },
-
   firstUploadDate: {
     type: Date
+  },
+
+  lastCoeffs: {
+    type: [Number]
   }
 });
 
