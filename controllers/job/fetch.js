@@ -1,6 +1,3 @@
-const {
-  fetchJobsAndSave
-} = require('../../lib/jobs');
 const {fetchQueue} = require('../../lib/queue');
 
 module.exports = {

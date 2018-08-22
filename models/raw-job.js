@@ -13,18 +13,17 @@ let schema = new Schema({
     required: true
   },
 
+  blocked: {
+    type: Boolean
+  },
+
   job: {
     type: Schema.Types.Mixed,
     required: true
   },
 
-  blocked: {
-    type: Boolean
-  },
-
-  extended: {
-    type: Boolean,
-    default: false
+  firstAddedToRgsc: {
+    type: Date
   },
 
   firstFetchDate: {
@@ -34,7 +33,12 @@ let schema = new Schema({
 
   fetchDate: {
     type: Date,
-    required: isFetchDateRequired
+    required: true
+  },
+
+  fetchNewVerDate: {
+    type: Date,
+    required: true
   },
 
   processed: {
@@ -63,10 +67,6 @@ let schema = new Schema({
 
 function isProcessed() {
   return this.processed;
-}
-
-function isFetchDateRequired() {
-  return this.extended;
 }
 
 module.exports = mongoose.model('RawJob', schema);
