@@ -22,6 +22,14 @@ let schema = new Schema({
     required: true
   },
 
+  versions: [
+    {
+      v: Number,
+      id: String,
+      chg: Boolean
+    }
+  ],
+
   firstAddedToRgsc: {
     type: Date
   },
