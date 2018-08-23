@@ -31,7 +31,12 @@ let schema = new Schema({
   ],
 
   firstAddedToRgsc: {
-    type: Date
+    type: Date,
+    required: function() { return !this.firstVerNotAvail; }
+  },
+
+  firstVerNotAvail: {
+    type: Boolean
   },
 
   firstFetchDate: {
@@ -56,7 +61,7 @@ let schema = new Schema({
 
   processDate: {
     type: Date,
-    required: isProcessed
+    required: function() { return this.processed; }
   },
 
   uploaded: {
@@ -72,9 +77,5 @@ let schema = new Schema({
     type: [Number]
   }
 });
-
-function isProcessed() {
-  return this.processed;
-}
 
 module.exports = mongoose.model('RawJob', schema);

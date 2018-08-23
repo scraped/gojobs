@@ -161,8 +161,8 @@ Property | Type | Flags | Description
 `thumbnail`              | `string`    |     | `https://prod.cloud.rockstargames.com/ugc/gta5mission/<unique number>/<MissionId>/<1, 2 or 3>_0.jpg`
 `plat`                   | `string`    |     | `Ps3`, `Ps4`, `XBox`, `XBoxOne`, `PC` (NOTE: even rockstar jobs have this property!)
 `tags`                   | `Array<string>` | `e` | Array of tags
-`originalCreatorId`      | `integer`   | `x` | (only for R* verified) `rockstarId`
-`originalCreatorName`    | `string`    | `x` | (only for R* verified) `nickname`
+`originalCreatorId`      | `integer`   | `x!` | (only for R* verified) `rockstarId`
+`originalCreatorName`    | `string`    | `x!` | (only for R* verified) `nickname`
 `isOwner`                | `boolean`   | `?` | Always `false`
 `bkmr`                   | `boolean`   | `?` | Always `false`
 `subscribed`             | `boolean`   | `?` | Always `false`
