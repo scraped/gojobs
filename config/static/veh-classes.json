@@ -1,28 +1,28 @@
 {
-  "land": [
-    "Compacts",
-    "Coupes",
-    "Cycles",
-    "Industrial",
-    "Motorcycles",
-    "Muscle",
-    "Off-Road",
-    "Sedans",
-    "Special",
-    "Sports",
-    "Sports Classics",
-    "Super",
-    "SUVs",
-    "Utility",
-    "Vans"
-  ],
+  "land": {
+    "com": "Compacts",
+    "cou": "Coupes",
+    "cyc": "Cycles",
+    "ind": "Industrial",
+    "mot": "Motorcycles",
+    "mus": "Muscle",
+    "ofr": "Off-Road",
+    "sed": "Sedans",
+    "spe": "Special",
+    "spo": "Sports",
+    "spc": "Sports Classics",
+    "sup": "Super",
+    "suv": "SUVs",
+    "uti": "Utility",
+    "van": "Vans"
+  },
 
-  "air": [
-    "Heli",
-    "Plane"
-  ],
+  "air": {
+    "hel": "Helicopters",
+    "pln": "Planes"
+  },
 
-  "water": [
-    "Boats"
-  ]
+  "water": {
+    "boa": "Boats"
+  }
 }

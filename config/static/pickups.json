@@ -1,254 +1,86 @@
-[
-  {
-    "-1296747938": "Advanced Rifle"
-  },
-  {
-    "-1074893765": "Antique Cavalry Dagger"
-  },
-  {
-    "996550793": "AP Pistol"
-  },
-  {
-    "1274757841": "Armor"
-  },
-  {
-    "-214137936": "Assault Rifle"
-  },
-  {
-    "-195771451": "Assault Rifle MK II"
-  },
-  {
-    "-1835415205": "Assault Shotgun"
-  },
-  {
-    "1948018762": "Assault SMG"
-  },
-  {
-    "-2115084258": "Baseball Bat"
-  },
-  {
-    "158843122": "Battle Axe"
-  },
-  {
-    "-95310859": "Bottle"
-  },
-  {
-    "-2124585240": "Bullpup Rifle"
-  },
-  {
-    "1850631618": "Bullpup Shotgun"
-  },
-  {
-    "-546236071": "Carbine Rifle"
-  },
-  {
-    "-429298576": "Carbine Rifle MK II"
-  },
-  {
-    "-1298986476": "Combat MG"
-  },
-  {
-    "1881581899": "Combat MG MK II"
-  },
-  {
-    "2023061218": "Combat PDW"
-  },
-  {
-    "-1989692173": "Combat Pistol"
-  },
-  {
-    "-253098439": "Compact Grenade Launcher"
-  },
-  {
-    "266812085": "Compact Rifle"
-  },
-  {
-    "-2027042680": "Crowbar"
-  },
-  {
-    "-102572257": "Double Barrel Shotgun"
-  },
-  {
-    "-1118969278": "Flare Gun"
-  },
-  {
-    "-1112080475": "Flashlight"
-  },
-  {
-    "-1997886297": "Golf Club"
-  },
-  {
-    "1577485217": "Grenade"
-  },
-  {
-    "779501861": "Grenade Launcher"
-  },
-  {
-    "1393009900": "Gusenberg Sweeper"
-  },
-  {
-    "693539241": "Hammer"
-  },
-  {
-    "1311775952": "Hatchet"
-  },
-  {
-    "-1888453608": "Health"
-  },
-  {
-    "-1661912808": "Heavy Pistol"
-  },
-  {
-    "1632369836": "Heavy Revolver"
-  },
-  {
-    "-1093374267": "Heavy Shotgun"
-  },
-  {
-    "1765114797": "Heavy Sniper"
-  },
-  {
-    "-367537415": "Heavy Sniper MK II"
-  },
-  {
-    "-1071729032": "Homing Launcher"
-  },
-  {
-    "-962731009": "Jerry Can"
-  },
-  {
-    "663586612": "Knife"
-  },
-  {
-    "-40063266": "Knuckle Dusters"
-  },
-  {
-    "-668632385": "Machete"
-  },
-  {
-    "-171582756": "Machine Pistol"
-  },
-  {
-    "-1965167499": "Marksman Pistol"
-  },
-  {
-    "127042729": "Marksman Rifle"
-  },
-  {
-    "-2050315855": "MG"
-  },
-  {
-    "496339155": "Micro SMG"
-  },
-  {
-    "-747492773": "Mini SMG"
-  },
-  {
-    "792114228": "Minigun"
-  },
-  {
-    "768803961": "Molotov"
-  },
-  {
-    "1587637620": "Nightstick"
-  },
-  {
-    "1735599485": "Parachute"
-  },
-  {
-    "-1352061783": "Pipe Bomb"
-  },
-  {
-    "-451800215": "Pipe Wrench"
-  },
-  {
-    "-105925489": "Pistol"
-  },
-  {
-    "1817941018": "Pistol .50"
-  },
-  {
-    "1478060172": "Pistol MK II"
-  },
-  {
-    "155106086": "Pool Cue"
-  },
-  {
-    "1649373715": "Proximity Mine"
-  },
-  {
-    "-1456120371": "Pump Shotgun"
-  },
-  {
-    "-462548556": "Railgun"
-  },
-  {
-    "1295434569": "RPG"
-  },
-  {
-    "-1766583645": "Sawed-Off Shotgun"
-  },
-  {
-    "978070226": "SMG"
-  },
-  {
-    "-936813188": "SMG MK II"
-  },
-  {
-    "-30788308": "Sniper Rifle"
-  },
-  {
-    "-977852653": "SNS Pistol"
-  },
-  {
-    "157823901": "Special Carbine"
-  },
-  {
-    "2081529176": "Sticky Bomb"
-  },
-  {
-    "-1127890446": "Sweeper Shotgun"
-  },
-  {
-    "-572254182": "Switchblade"
-  },
-  {
-    "483787975": "Tear Gas"
-  },
-  {
-    "-863291131": "Vehicle - AP Pistol"
-  },
-  {
-    "-794112265": "Vehicle - Combat Pistol"
-  },
-  {
-    "-1491601256": "Vehicle - Grenade"
-  },
-  {
-    "160266735": "Vehicle - Health"
-  },
-  {
-    "-1200951717": "Vehicle - Micro SMG"
-  },
-  {
-    "-2066319660": "Vehicle - Molotov"
-  },
-  {
-    "-1521817673": "Vehicle - Pistol"
-  },
-  {
-    "-1514616151": "Vehicle - Powerups"
-  },
-  {
-    "772217690": "Vehicle - Sawed-Off Shotgun"
-  },
-  {
-    "746606563": "Vehicle - Sticky Bomb"
-  },
-  {
-    "1705498857": "Vehicle - Tear Gas"
-  },
-  {
-    "-336028321": "Vintage Pistol"
-  },
-]
+{
+  "-1296747938": "Advanced Rifle",
+  "-1074893765": "Antique Cavalry Dagger",
+  "996550793": "AP Pistol",
+  "1274757841": "Armor",
+  "-214137936": "Assault Rifle",
+  "-195771451": "Assault Rifle MK II",
+  "-1835415205": "Assault Shotgun",
+  "1948018762": "Assault SMG",
+  "-2115084258": "Baseball Bat",
+  "158843122": "Battle Axe",
+  "-95310859": "Bottle",
+  "-2124585240": "Bullpup Rifle",
+  "1850631618": "Bullpup Shotgun",
+  "-546236071": "Carbine Rifle",
+  "-429298576": "Carbine Rifle MK II",
+  "-1298986476": "Combat MG",
+  "1881581899": "Combat MG MK II",
+  "2023061218": "Combat PDW",
+  "-1989692173": "Combat Pistol",
+  "-253098439": "Compact Grenade Launcher",
+  "266812085": "Compact Rifle",
+  "-2027042680": "Crowbar",
+  "-102572257": "Double Barrel Shotgun",
+  "-1118969278": "Flare Gun",
+  "-1112080475": "Flashlight",
+  "-1997886297": "Golf Club",
+  "1577485217": "Grenade",
+  "779501861": "Grenade Launcher",
+  "1393009900": "Gusenberg Sweeper",
+  "693539241": "Hammer",
+  "1311775952": "Hatchet",
+  "-1888453608": "Health",
+  "-1661912808": "Heavy Pistol",
+  "1632369836": "Heavy Revolver",
+  "-1093374267": "Heavy Shotgun",
+  "1765114797": "Heavy Sniper",
+  "-367537415": "Heavy Sniper MK II",
+  "-1071729032": "Homing Launcher",
+  "-962731009": "Jerry Can",
+  "663586612": "Knife",
+  "-40063266": "Knuckle Dusters",
+  "-668632385": "Machete",
+  "-171582756": "Machine Pistol",
+  "-1965167499": "Marksman Pistol",
+  "127042729": "Marksman Rifle",
+  "-2050315855": "MG",
+  "496339155": "Micro SMG",
+  "-747492773": "Mini SMG",
+  "792114228": "Minigun",
+  "768803961": "Molotov",
+  "1587637620": "Nightstick",
+  "1735599485": "Parachute",
+  "-1352061783": "Pipe Bomb",
+  "-451800215": "Pipe Wrench",
+  "-105925489": "Pistol",
+  "1817941018": "Pistol .50",
+  "1478060172": "Pistol MK II",
+  "155106086": "Pool Cue",
+  "1649373715": "Proximity Mine",
+  "-1456120371": "Pump Shotgun",
+  "-462548556": "Railgun",
+  "1295434569": "RPG",
+  "-1766583645": "Sawed-Off Shotgun",
+  "978070226": "SMG",
+  "-936813188": "SMG MK II",
+  "-30788308": "Sniper Rifle",
+  "-977852653": "SNS Pistol",
+  "157823901": "Special Carbine",
+  "2081529176": "Sticky Bomb",
+  "-1127890446": "Sweeper Shotgun",
+  "-572254182": "Switchblade",
+  "483787975": "Tear Gas",
+  "-863291131": "Vehicle - AP Pistol",
+  "-794112265": "Vehicle - Combat Pistol",
+  "-1491601256": "Vehicle - Grenade",
+  "160266735": "Vehicle - Health",
+  "-1200951717": "Vehicle - Micro SMG",
+  "-2066319660": "Vehicle - Molotov",
+  "-1521817673": "Vehicle - Pistol",
+  "-1514616151": "Vehicle - Powerups",
+  "772217690": "Vehicle - Sawed-Off Shotgun",
+  "746606563": "Vehicle - Sticky Bomb",
+  "1705498857": "Vehicle - Tear Gas",
+  "-336028321": "Vintage Pistol"
+}

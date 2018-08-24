@@ -1,16 +1,13 @@
-[
-  {
-    "name": "PC",
-    "short": "pc"
+{
+  "pc": {
+    "name": "PC"
   },
 
-  {
-    "name": "PS4",
-    "short": "ps4"
+  "ps4": {
+    "name": "PS4"
   },
 
-  {
-    "name": "Xbox One",
-    "short": "xboxone"
+  "xboxone": {
+    "name": "Xbox One"
   }
-]
+}

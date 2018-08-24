@@ -1,6 +1,5 @@
 const {mongoose} = require('../lib/db');
-const _ = require('lodash');
-const {platforms, modes} = require('../config/static');
+const {platforms, jobsTypes} = require('../config/static');
 require('./job-details');
 
 const {Schema} = mongoose;
@@ -45,23 +44,32 @@ let schema = new Schema({
     required: true
   },
 
-  minPl: {
-    type: Number
-  },
-
-  maxPl: {
-    type: Number,
-    required: true
+  players: {
+    type: [{
+      type: Number,
+      min: 1,
+      max: 30
+    }],
+    validate: pl => {
+      return (pl.length === 1)
+        || (pl.length === 2 && pl[0] <= pl[1]);
+    }
   },
 
   platform: {
     type: Number,
-    required: notRockstar
+    required: notRockstar,
+    validate: plat => {
+      return Object.keys(platforms).some(platName => platName === plat);
+    }
   },
 
   scType: {
     type: Number,
-    required: true
+    required: true,
+    validate: type => {
+      return Object.keys(jobsTypes).some(typeName => typeName === type);
+    }
   },
 
   scMode: {
@@ -156,45 +164,38 @@ schema.virtual('imageUrl')
     const str = url.split('/');
     this.image = `${str[5]}.${str[7]}`;
   })
-  .get(function() {
-    const img = this.image.split('.');
-    const { jobCurrId } = this;
-    return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${jobCurrId}/${img[1]}.jpg`;
-  });
+  // .get(function() {
+  //   const img = this.image.split('.');
+  //   const { jobCurrId } = this;
+  //   return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${jobCurrId}/${img[1]}.jpg`;
+  // });
 
-schema.virtual('scTypeAndModeId')
-  .set(function({ scTypeName, scModeName }) {
-    const typeId = 1 + _.findIndex(
-      modes,
-      type => type.name === scTypeName
-    );
+schema.pre('save', function(next) {
+  const {scType, scMode} = this;
 
-    this.scType = typeId;
+  // Type validation
+  const typeInfo = jobsTypes[scType];
 
-    const typeModes = modes[typeId - 1].modes;
+  if (!!this.rockstar !== !!typeInfo.rockstar) {
+    throw new Error('Non-rockstar jobs cannot be added with a type that only appers for rockstar jobs or vice versa');
+  }
 
-    if (typeModes) {
-      const modeId = 1 + _.findIndex(
-        typeModes,
-        mode => mode === scModeName
-      );
-      if (modeId) {
-        this.scMode = modeId;
-      }
-    }
-  });
+  // Mode validation
+  const possibleModes = typeInfo.modes;
 
-schema.virtual('platformName')
-  .set(function(scPlatformName) {
-    const platformId = 1 + _.findIndex(
-      platforms,
-      plat => plat.short === scPlatformName.toLowerCase()
-    );
+  if (!!this.scMode !== !!possibleModes) {
+    throw new Error('This job type does not have any modes or vice versa');
+  }
 
-    if (platformId) {
-      this.platform = platformId;
-    }
-  });
+  if (!Object.keys(possibleModes).some(modeName => modeName === scMode)) {
+    throw new Error('Mode does not exist');
+  }
+
+  // Tags validation
+
+  next();
+});
+
 
 function notRockstar() {
   return !this.rockstar;
