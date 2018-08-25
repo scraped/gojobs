@@ -1,28 +1,86 @@
 {
   "land": {
-    "com": "Compacts",
-    "cou": "Coupes",
-    "cyc": "Cycles",
-    "ind": "Industrial",
-    "mot": "Motorcycles",
-    "mus": "Muscle",
-    "ofr": "Off-Road",
-    "sed": "Sedans",
-    "spe": "Special",
-    "spo": "Sports",
-    "spc": "Sports Classics",
-    "sup": "Super",
-    "suv": "SUVs",
-    "uti": "Utility",
-    "van": "Vans"
+    "com": {
+      "name": "Compacts"
+    },
+
+    "cou": {
+      "name": "Coupes"
+    },
+
+    "cyc": {
+      "name": "Cycles"
+    },
+
+    "ind": {
+      "name": "Industrial"
+    },
+
+    "mot": {
+      "name": "Motorcycles",
+      "r": "Bikes"
+    },
+
+    "mus": {
+      "name": "Muscle",
+      "r": "Mucle"
+    },
+
+    "ofr": {
+      "name": "Off-Road",
+      "r": "OffRoad"
+    },
+
+    "sed": {
+      "name": "Sedans"
+    },
+
+    "spe": {
+      "name": "Special"
+    },
+
+    "spo": {
+      "name": "Sports"
+    },
+
+    "spc": {
+      "name": "Sports Classics",
+      "r": "Classics"
+    },
+
+    "sup": {
+      "name": "Super"
+    },
+
+    "suv": {
+      "name": "SUVs",
+      "r": "SUV"
+    },
+
+    "uti": {
+      "name": "Utility"
+    },
+
+    "van": {
+      "name": "Vans"
+    }
   },
 
   "air": {
-    "hel": "Helicopters",
-    "pln": "Planes"
+    "hel": {
+      "name": "Helicopters",
+      "r": "Heli"
+    },
+
+    "pln": {
+      "name": "Planes",
+      "r": "Plane"
+    }
   },
 
   "water": {
-    "boa": "Boats"
+    "boa": {
+      "name": "Boats"
+    }
   }
 }
