@@ -19,7 +19,7 @@ let schema = new Schema({
     type: Boolean
   },
 
-  star: {
+  featured: {
     type: Boolean
   },
 
@@ -39,6 +39,10 @@ let schema = new Schema({
     required: true
   },
 
+  background: {
+    type: [String]
+  },
+
   image: {
     type: String,
     required: true
@@ -50,16 +54,23 @@ let schema = new Schema({
       min: 1,
       max: 30
     }],
-    validate: pl => {
+    validate(pl) {
       return (pl.length === 1)
         || (pl.length === 2 && pl[0] <= pl[1]);
+    }
+  },
+
+  teams: {
+    type: Number,
+    validate(value) {
+      return value >= 2 && value <= 4;
     }
   },
 
   platform: {
     type: Number,
     required: notRockstar,
-    validate: plat => {
+    validate(plat) {
       return Object.keys(platforms).some(platName => platName === plat);
     }
   },
@@ -67,7 +78,7 @@ let schema = new Schema({
   scType: {
     type: Number,
     required: true,
-    validate: type => {
+    validate(type) {
       return Object.keys(jobsTypes).some(typeName => typeName === type);
     }
   },
@@ -136,6 +147,12 @@ let schema = new Schema({
   ver: {
     type: Number,
     required: true
+  },
+
+  race: {
+    p2p: { type: Boolean },
+    defVeh: { type: String },
+    trfVeh: { type: [String] }
   },
 
   scAdded: {

@@ -13,28 +13,15 @@ const schema = new Schema({
     required: true
   },
 
-  background: [{
-    type: String,
-  }],
-
-  specific: {
-    teams: {
-      type: Number
+  race: {
+    laps: { type: Number },
+    chp: { type: Number },
+    dist: { type: Number },
+    chpLocs: {
+      type: [[Number]]
     },
-
-    race: {
-      laps: { type: Number },
-      p2p: { type: Boolean },
-      chp: { type: Number },
-      chpLocs: {
-        type: [[Number]]
-      },
-      chpSecLocs: {
-        type: [[Number]]
-      },
-      dist: { type: Number },
-      defVeh: { type: Number },
-      trfVeh: [{ type: Number }]
+    secChpLocs: {
+      type: [[Number]]
     }
   }
 }, {
