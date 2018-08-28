@@ -4,15 +4,25 @@ const {Schema} = mongoose;
 let schema = new Schema({
   category: {
     type: String,
-    enum: ['all', 'rockstar', 'rockstarverified']
+    enum: [
+      'members',
+      'rockstar',
+      'rockstarverified',
+      'crew',
+      'user'
+    ],
+    required: true
   },
 
   username: {
-    type: String
+    type: String,
+    required() {
+      return this.category === 'user';
+    }
   },
 
-  crewId: {
-    type: String
+  crew: {
+    type: Schema.Types.m
   },
 
   platform: {

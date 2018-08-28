@@ -34,6 +34,12 @@ let schema = new Schema({
     required: true
   },
 
+  desc: {
+    type: String,
+    trim: true,
+    required: true
+  },
+
   slug: {
     type: String,
     required: true
@@ -75,6 +81,15 @@ let schema = new Schema({
     }
   },
 
+  ver: {
+    type: Number,
+    min: 1,
+    required: true,
+    validate(value) {
+      return Math.ceil(value) === value;
+    }
+  },
+
   scType: {
     type: Number,
     required: true,
@@ -83,6 +98,7 @@ let schema = new Schema({
     }
   },
 
+  // Validated before saving
   scMode: {
     type: Number
   },
@@ -91,65 +107,29 @@ let schema = new Schema({
     type: [String]
   },
 
-  details: {
-    type: Schema.Types.Mixed,
-    ref: 'JobDetails',
-    required: true
-  },
-
   stats: {
-    trend: {
-      type: Number,
-      default: 1
-    },
+    trend: { type: Number, default: 1 },
+    growth: { type: Number, default: 1 },
 
-    growth: {
-      type: Number,
-      default: 1
-    },
+    plTot: { type: Number, required: true },
+    plUnq: { type: Number, required: true },
 
-    playTot: {
-      type: Number,
-      required: true
-    },
+    like: { type: Number, required: true },
+    dislike: { type: Number, required: true },
+    quit: { type: Number, required: true },
 
-    playUnq: {
-      type: Number,
-      required: true
-    },
-
-    likes: {
-      type: Number,
-      required: true
-    },
-
-    dislikes: {
-      type: Number,
-      required: true
-    },
-
-    dislikesQuit: {
-      type: Number,
-      required: true
-    },
-
-    rating: {
-      type: Number,
-      required: true
-    },
-
-    ratingQuit: {
-      type: Number,
-      required: true
-    }
+    rating: { type: Number, required: true },
+    rstRating: { type: Number, required: true },
   },
 
-  ver: {
-    type: Number,
-    required: true
-  },
+  specific: {
+    laps: {
+      type: Number,
+      validate(laps) {
+        return laps >= 1 && laps <= 99;
+      }
+    },
 
-  race: {
     p2p: { type: Boolean },
     defVeh: { type: String },
     trfVeh: { type: [String] }
