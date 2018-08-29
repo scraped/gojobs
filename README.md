@@ -200,20 +200,20 @@ Property | Type | Flags | Description
 `chp`      | `integer`          |      | Number of checkpoints
 `lap`      | `integer`          |      | Default number of laps (`0` if point to point race)
 `rdis`     | `float`            |      | Distance in metres
-`aveh`     | `array<string>`    | `xe` | Available vehicle classes (`undefined` if target assault race)
+`aveh`     | `array<string>`    | `xe` | Available vehicle classes (unavailable for target assault races)
 `chl`      | `array<Location2>` | `x`  | Checkpoint locations
 `sndchk`   | `array<Location2>` | `xe` | Sec. checkpoint locations (`(0, 0)` if no corresponding secondary checkpoint) (can be `undefined`)
 `trfmvm`   | `array<Vehicle>`   | `x`  | List of vehicles available for transformation in. Not all of them can be used in the race, check `cptfrm` property
 `trfmvmn`  | `array<string>`    | `x`  | Corresponding vehicle names
 `cptfrm`   | `array<integer>`   | `x`  | `-1` if no transformation on current CP, else `trfmvm` (`trfmvmn`) array indexes
-`cpbs1`    | `array<integer>`   | `x`  | A bit mask for each checkpoint (lengths of arrays are the same). 27th bit from the right means warp checkpoint 
+`cpbs1`    | `array<integer>`   | `x`  | A bit field for each checkpoint (lengths of arrays are the same). 27th bit from the right means warp checkpoint 
 `cptfrms`  | `array<integer>`   | `x`  | exactly the same, but for secondary checkpoints
 `ivm`      | `integer`          | `?`  | Always 0?
 `isLapsRace` | `boolean`        | `?`  | Always `false` - probably error
 `subtype`  | `integer`          | `?`  | `20` - tr. race, `21` - special vehicle race
 `dist`     | `string`           | `?`  | Formatted distance like `10.01 miles` (DON'T use it)
 `gw`       | `integer`          | `?`  | Sometimes values like `4.5`, `6.75`, otherwise `0`
-`clbs`     | `integer`          | `?`  | Always `2^n` or `-2147482625` (bit mask?)
+`clbs`     | `integer`          | `?`  | Some bit field
 
 ## `Content.Metadata.data.mission.rule`
 

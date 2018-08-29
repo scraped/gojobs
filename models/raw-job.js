@@ -1,7 +1,8 @@
 const {mongoose} = require('../lib/db');
+
 const {Schema} = mongoose;
 
-let schema = new Schema({
+const schema = new Schema({
   jobId: {
     type: String,
     unique: true,
@@ -13,7 +14,15 @@ let schema = new Schema({
     required: true
   },
 
+  star: {
+    type: Boolean
+  },
+
   blocked: {
+    type: Boolean
+  },
+
+  badName: {
     type: Boolean
   },
 
@@ -32,24 +41,26 @@ let schema = new Schema({
 
   firstAddedToRgsc: {
     type: Date,
-    required: function() { return !this.firstVerNotAvail; }
+    required() {
+      return !this.firstVerNotAvail;
+    }
   },
 
   firstVerNotAvail: {
     type: Boolean
   },
 
-  firstFetchDate: {
+  firstFetch: {
     type: Date,
     required: true
   },
 
-  fetchDate: {
+  lastFetch: {
     type: Date,
     required: true
   },
 
-  fetchNewVerDate: {
+  lastNewVerFetch: {
     type: Date,
     required: true
   },
@@ -61,7 +72,9 @@ let schema = new Schema({
 
   processDate: {
     type: Date,
-    required: function() { return this.processed; }
+    required() {
+      return this.processed;
+    }
   },
 
   uploaded: {
@@ -69,7 +82,14 @@ let schema = new Schema({
     default: false
   },
 
-  firstUploadDate: {
+  firstUploaded: {
+    type: Date,
+    required() {
+      return this.uploaded;
+    }
+  },
+
+  lastManualUpd: {
     type: Date
   },
 

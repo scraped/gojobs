@@ -1,15 +1,16 @@
 const _get = require('lodash/get');
 const {mongoose} = require('../lib/db');
+const {jobTypes} = require('../config/static');
+
 const {Schema} = mongoose;
-const modes = require('../config/static/modes');
 
 const schema = new Schema({
-  path: {
+  mode: {
     type: String,
-    validate: path => {
-      return !!_get(modes, path);
+    validate(mode) {
+      return Object.keys(jobTypes).includes(mode);
     },
-    // Just to point out that a tag without "path" field considered as global
+    // Just to point out that a tag without a "mode" field considered as global
     required: false
   },
 

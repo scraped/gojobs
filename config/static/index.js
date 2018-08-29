@@ -1,5 +1,5 @@
 module.exports = {
-  jobsTypes: require('./jobs-types'),
+  jobTypes: require('./job-types'),
   pickups: require('./pickups'),
   platforms: require('./platforms'),
   stuntProps: require('./stunt-props'),

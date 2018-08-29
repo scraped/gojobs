@@ -1,5 +1,6 @@
 const {mongoose} = require('../lib/db');
-const {platforms, jobsTypes} = require('../config/static');
+const {platforms, jobTypes, vehicles} = require('../config/static');
+const {JobTag} = require('./');
 require('./job-details');
 
 const {Schema} = mongoose;
@@ -19,7 +20,7 @@ let schema = new Schema({
     type: Boolean
   },
 
-  featured: {
+  star: {
     type: Boolean
   },
 
@@ -51,6 +52,10 @@ let schema = new Schema({
 
   image: {
     type: String,
+    set(imageUrl) {
+      const str = imageUrl.split('/');
+      return `${str[5]}.${str[7]}`;
+    },
     required: true
   },
 
@@ -68,16 +73,15 @@ let schema = new Schema({
 
   teams: {
     type: Number,
-    validate(value) {
-      return value >= 2 && value <= 4;
-    }
+    min: 2,
+    max: 4
   },
 
   platform: {
-    type: Number,
+    type: String,
     required: notRockstar,
     validate(plat) {
-      return Object.keys(platforms).some(platName => platName === plat);
+      return Object.keys(platforms).includes(plat);
     }
   },
 
@@ -91,20 +95,35 @@ let schema = new Schema({
   },
 
   scType: {
-    type: Number,
+    type: String,
     required: true,
     validate(type) {
-      return Object.keys(jobsTypes).some(typeName => typeName === type);
+      return Object.keys(jobTypes).includes(type);
     }
   },
 
   // Validated before saving
   scMode: {
-    type: Number
+    type: String
   },
 
   tags: {
-    type: [String]
+    type: [String],
+    validate(tags) {
+      return JobTag.find()
+        .then(allTags => {
+          return tags.every(tag => {
+            return allTags.some(currTag => {
+              const {mode, shortName} = currTag;
+              return shortName === tag
+                && (!mode || mode === this.scMode);
+            });
+          });
+        })
+        .catch(err => {
+          throw err;
+        });
+    }
   },
 
   stats: {
@@ -123,16 +142,40 @@ let schema = new Schema({
   },
 
   specific: {
+    default: {},
+
     laps: {
       type: Number,
-      validate(laps) {
-        return laps >= 1 && laps <= 99;
-      }
+      min: 1,
+      max: 99,
+      required: isRace
     },
 
-    p2p: { type: Boolean },
-    defVeh: { type: String },
-    trfVeh: { type: [String] }
+    dist: {
+      type: Number,
+      required: isRace
+    },
+
+    p2p: {
+      type: Boolean,
+      required: isRace
+    },
+
+    defVeh: {
+      type: String,
+      validate(vehId) {
+        return Object.keys(vehicles).includes(vehId);
+      },
+      required: isRace
+    },
+
+    trfVeh: {
+      type: [String],
+      validate(vehIds) {
+        return vehIds.every(vehId => Object.keys(vehicles).includes(vehId))
+      },
+      required: isRace
+    }
   },
 
   scAdded: {
@@ -151,16 +194,11 @@ let schema = new Schema({
 }, {
   id: false,
   toObject: {
-    virtuals: true,
     versionKey: false
   }
 });
 
-schema.virtual('imageUrl')
-  .set(function(url) {
-    const str = url.split('/');
-    this.image = `${str[5]}.${str[7]}`;
-  })
+// schema.virtual('imageUrl')
   // .get(function() {
   //   const img = this.image.split('.');
   //   const { jobCurrId } = this;
@@ -171,7 +209,7 @@ schema.pre('save', function(next) {
   const {scType, scMode} = this;
 
   // Type validation
-  const typeInfo = jobsTypes[scType];
+  const typeInfo = jobTypes[scType];
 
   if (!!this.rockstar !== !!typeInfo.rockstar) {
     throw new Error('Non-rockstar jobs cannot be added with a type that only appers for rockstar jobs or vice versa');
@@ -184,15 +222,16 @@ schema.pre('save', function(next) {
     throw new Error('This job type does not have any modes or vice versa');
   }
 
-  if (!Object.keys(possibleModes).some(modeName => modeName === scMode)) {
+  if (!Object.keys(possibleModes).includes(scMode)) {
     throw new Error('Mode does not exist');
   }
-
-  // Tags validation
 
   next();
 });
 
+function isRace() {
+  return this.scType === 'race';
+}
 
 function notRockstar() {
   return !this.rockstar;
