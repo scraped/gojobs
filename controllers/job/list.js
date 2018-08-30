@@ -1,10 +1,6 @@
-const _ = require('lodash');
-const platforms = require('../../config/static/platforms');
-const Job = require('../../models/job');
-
-module.exports = {
-  jobListPost
-};
+// const _ = require('lodash');
+// const {platforms} = require('../../config/static');
+const {Job} = require('../../models');
 
 const PER_PAGE_DEFAULT = 35;
 
@@ -24,7 +20,7 @@ async function jobListPost(req, res) {
 
   switch (by) {
     case 'rating':
-      sort = { 'stats.likes': -1 };
+      sort = { 'stats.like': -1 };
       break;
 
     case 'updated':
@@ -63,25 +59,24 @@ async function jobListPost(req, res) {
     conditions.rockstar = true;
     conditions.author = { $exists: Boolean(rockstarverified) };
   } else {
-    conditions.platform = 1 + _.findIndex(platforms, plat => {
-      return plat.short === platform;
-    });
+    // conditions.platform = 1 + _.findIndex(platforms, plat => {
+    //   return plat.short === platform;
+    // });
   }
 
-  const jobsNumber = Object.keys(conditions).length
+  const count = Object.keys(conditions).length
     ? await Job.countDocuments(conditions)
-    : await Job.esestimatedDocumentCount();
+    : await Job.estimatedDocumentCount();
 
   try {
-    const jobs = await Job
-      .find(conditions)
-      .select('-_id -details')
+    const jobs = await Job.find(conditions)
+      // .select('-_id')
       .skip((page - 1) * perPage)
       .limit(perPage)
       .sort(sort);
 
     res.json({
-      count: jobsNumber,
+      count,
       jobs
     });
 
@@ -92,3 +87,7 @@ async function jobListPost(req, res) {
     });
   }
 }
+
+module.exports = {
+  jobListPost
+};

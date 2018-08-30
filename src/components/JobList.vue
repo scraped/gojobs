@@ -125,7 +125,7 @@
                 >
                   Any
                 </b-dropdown-item>
-                <b-dropdown-item
+                <!-- <b-dropdown-item
                   v-for="(type, i) in modes"
                   :key="type.name"
                   :value="i + 1"
@@ -133,7 +133,7 @@
                 >
                   <icon-gta :icon="type.icon"></icon-gta>
                   <span>{{ type.name }}</span>
-                </b-dropdown-item>
+                </b-dropdown-item> -->
               </b-dropdown>
             </div>
 
@@ -211,8 +211,7 @@
 import Vue from 'vue';
 import {mapState} from 'vuex';
 import findIndex from 'lodash/findIndex';
-import platforms from '../../config/static/platforms'
-import modes from '@/../config/static/modes';
+import {platforms, modes} from '@/../config/static';
 
 import JobCard from '@/components/JobCard.vue';
 import IconGta from '@/components/IconGta.vue';
@@ -278,36 +277,41 @@ export default {
     },
 
     currPlatformName() {
-      const { platformModel: platform } = this;
-      const index = findIndex(platforms, pl => pl.short === platform);
-      if (platforms[index]){
-        return platforms[index].name;
-      }
       return '';
+      // const { platformModel: platform } = this;
+      // const index = findIndex(platforms, pl => pl.short === platform);
+      // if (platforms[index]){
+      //   return platforms[index].name;
+      // }
+      // return '';
     },
 
     currTypeInfo() {
-      return modes[this.typeModel - 1];
+      return {};
+      // return modes[this.typeModel - 1];
     },
 
     currModeInfo() {
-      if (this.currTypeInfo) {
-        return this.currTypeInfo.modes;
-      }
+      return {};
+      // if (this.currTypeInfo) {
+      //   return this.currTypeInfo.modes;
+      // }
     },
 
     currTypeName() {
-      const typeInfo = this.currTypeInfo;
-      return typeInfo
-        ? typeInfo.name
-        : 'Any';
+      return '';
+      // const typeInfo = this.currTypeInfo;
+      // return typeInfo
+      //   ? typeInfo.name
+      //   : 'Any';
     },
 
     currModeName() {
-      const modeInfo = this.currModeInfo[this.modeModel - 1];
-      return modeInfo
-        ? modeInfo
-        : 'Any'
+      return '';
+      // const modeInfo = this.currModeInfo[this.modeModel - 1];
+      // return modeInfo
+      //   ? modeInfo
+      //   : 'Any'
     }
   },
 

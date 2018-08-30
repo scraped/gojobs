@@ -4,5 +4,6 @@ module.exports = {
   platforms: require('./platforms'),
   stuntProps: require('./stunt-props'),
   vehClasses: require('./veh-classes'),
-  vehicles: require('./vehicles')
-}
+  vehicles: require('./vehicles'),
+  locations: require('./locations')
+};

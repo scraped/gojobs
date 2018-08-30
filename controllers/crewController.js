@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const Boom = require('boom');
-const Crew = require('../models/crew');
+const {Crew} = require('../models');
 const {fetchQueue} = require('../lib/queue');
 
 exports.crewListPost = async (req, res) => {
@@ -36,9 +36,12 @@ exports.fetchCrewPost = async (req, res, next) => {
   }
 
   fetchQueue.add(
-    'fetchCrewInfo',
+    'fetch',
     {
-      slug
+      type: 'crew',
+      data: {
+        slug
+      }
     },
     {
       jobId: slug

@@ -2,7 +2,7 @@ const config = require('../config');
 const passport = require('passport');
 const passportJwt = require('passport-jwt');
 const JwtStrategy = passportJwt.Strategy;
-const User = require('../models/user');
+const {User} = require('../models');
 
 function cookieExtractor(req) {
   let token = null;

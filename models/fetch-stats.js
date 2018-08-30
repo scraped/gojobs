@@ -21,9 +21,9 @@ let schema = new Schema({
     }
   },
 
-  crew: {
-    type: Schema.Types.m
-  },
+  // crew: {
+  //   type: Schema.Types.m
+  // },
 
   platform: {
     type: String,

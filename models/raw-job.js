@@ -22,13 +22,13 @@ const schema = new Schema({
     type: Boolean
   },
 
-  badName: {
-    type: Boolean
-  },
-
   job: {
     type: Schema.Types.Mixed,
     required: true
+  },
+
+  tags: {
+    type: [String]
   },
 
   versions: [

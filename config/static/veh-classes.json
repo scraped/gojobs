@@ -1,86 +1,77 @@
 {
-  "land": {
-    "com": {
-      "name": "Compacts"
-    },
-
-    "cou": {
-      "name": "Coupes"
-    },
-
-    "cyc": {
-      "name": "Cycles"
-    },
-
-    "ind": {
-      "name": "Industrial"
-    },
-
-    "mot": {
-      "name": "Motorcycles",
-      "r": "Bikes"
-    },
-
-    "mus": {
-      "name": "Muscle",
-      "r": "Mucle"
-    },
-
-    "ofr": {
-      "name": "Off-Road",
-      "r": "OffRoad"
-    },
-
-    "sed": {
-      "name": "Sedans"
-    },
-
-    "spe": {
-      "name": "Special"
-    },
-
-    "spo": {
-      "name": "Sports"
-    },
-
-    "spc": {
-      "name": "Sports Classics",
-      "r": "Classics"
-    },
-
-    "sup": {
-      "name": "Super"
-    },
-
-    "suv": {
-      "name": "SUVs",
-      "r": "SUV"
-    },
-
-    "uti": {
-      "name": "Utility"
-    },
-
-    "van": {
-      "name": "Vans"
-    }
+  "com": {
+    "name": "Compacts"
   },
 
-  "air": {
-    "hel": {
-      "name": "Helicopters",
-      "r": "Heli"
-    },
-
-    "pln": {
-      "name": "Planes",
-      "r": "Plane"
-    }
+  "cou": {
+    "name": "Coupes"
   },
 
-  "water": {
-    "boa": {
-      "name": "Boats"
-    }
+  "cyc": {
+    "name": "Cycles"
+  },
+
+  "ind": {
+    "name": "Industrial"
+  },
+
+  "mot": {
+    "name": "Motorcycles"
+  },
+
+  "mus": {
+    "name": "Muscle"
+  },
+
+  "ofr": {
+    "name": "Off-Road",
+    "r": "OffRoad"
+  },
+
+  "sed": {
+    "name": "Sedans"
+  },
+
+  "spe": {
+    "name": "Special"
+  },
+
+  "spo": {
+    "name": "Sports"
+  },
+
+  "spc": {
+    "name": "Sports Classics"
+  },
+
+  "sup": {
+    "name": "Super"
+  },
+
+  "suv": {
+    "name": "SUVs"
+  },
+
+  "uti": {
+    "name": "Utility"
+  },
+
+  "van": {
+    "name": "Vans"
+  },
+
+  "hel": {
+    "name": "Helicopters",
+    "type": "air"
+  },
+
+  "pln": {
+    "name": "Planes",
+    "type": "air"
+  },
+
+  "boa": {
+    "name": "Boats",
+    "type": "water"
   }
 }

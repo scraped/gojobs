@@ -1,18 +1,17 @@
 const {fetchQueue} = require('../../lib/queue');
 
-module.exports = {
-  jobsFetchPost
-};
-
 async function jobsFetchPost(req, res) {
   const {
     bunches, strict, category, id, platform, period, reqLimit
   } = req.body;
 
   fetchQueue.add(
-    'fetchJob',
+    'fetch',
     {
-      jobId: id
+      type: 'job',
+      data: {
+        jobId: id
+      }
     },
     {
       jobId: id
@@ -37,3 +36,7 @@ async function jobsFetchPost(req, res) {
   //   console.log('jobsFetchPost error:', error);
   // }
 }
+
+module.exports = {
+  jobsFetchPost
+};

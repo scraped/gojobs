@@ -62,8 +62,7 @@ let schema = new Schema({
   },
 
   lastInfoFetch: {
-    type: Date,
-    default: new Date()
+    type: Date
   }
 }, {
   id: false,

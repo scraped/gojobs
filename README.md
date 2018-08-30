@@ -200,7 +200,7 @@ Property | Type | Flags | Description
 `chp`      | `integer`          |      | Number of checkpoints
 `lap`      | `integer`          |      | Default number of laps (`0` if point to point race)
 `rdis`     | `float`            |      | Distance in metres
-`aveh`     | `array<string>`    | `xe` | Available vehicle classes (unavailable for target assault races)
+`aveh`     | `array<string>`    | `xe` | Available vehicle classes (empty array for target assault races, special vehicle races)
 `chl`      | `array<Location2>` | `x`  | Checkpoint locations
 `sndchk`   | `array<Location2>` | `xe` | Sec. checkpoint locations (`(0, 0)` if no corresponding secondary checkpoint) (can be `undefined`)
 `trfmvm`   | `array<Vehicle>`   | `x`  | List of vehicles available for transformation in. Not all of them can be used in the race, check `cptfrm` property

@@ -1,7 +1,11 @@
 const {mongoose} = require('../lib/db');
-const {platforms, jobTypes, vehicles} = require('../config/static');
+const {
+  platforms,
+  jobTypes,
+  vehicles,
+  locations
+} = require('../config/static');
 const {JobTag} = require('./');
-require('./job-details');
 
 const {Schema} = mongoose;
 
@@ -77,7 +81,7 @@ let schema = new Schema({
     max: 4
   },
 
-  platform: {
+  plat: {
     type: String,
     required: notRockstar,
     validate(plat) {
@@ -109,21 +113,27 @@ let schema = new Schema({
 
   tags: {
     type: [String],
-    validate(tags) {
-      return JobTag.find()
-        .then(allTags => {
-          return tags.every(tag => {
-            return allTags.some(currTag => {
-              const {mode, shortName} = currTag;
-              return shortName === tag
-                && (!mode || mode === this.scMode);
-            });
-          });
-        })
-        .catch(err => {
-          throw err;
-        });
-    }
+    // async validate(tags) {
+    //   const allTags = await JobTag.find();
+
+    //   return tags.every(tag => {
+    //     return allTags.some(currTag => {
+    //       const {mode, shortName} = currTag;
+    //       return shortName === tag
+    //         && (!mode || mode === this.scMode);
+    //     });
+    //   });
+    // }
+  },
+
+  locs: {
+    type: [String],
+    validate(locs) {
+      return locs.every(locName => Object.keys(locations).some(currLocName => {
+        return currLocName.toLowerCase() === locName.toLowerCase();
+      }));
+    },
+    required: true
   },
 
   stats: {
@@ -144,11 +154,14 @@ let schema = new Schema({
   specific: {
     default: {},
 
+    classes: {
+      type: [String]
+    },
+
     laps: {
       type: Number,
       min: 1,
-      max: 99,
-      required: isRace
+      max: 99
     },
 
     dist: {
@@ -157,24 +170,30 @@ let schema = new Schema({
     },
 
     p2p: {
-      type: Boolean,
-      required: isRace
+      type: Boolean
     },
 
     defVeh: {
       type: String,
       validate(vehId) {
         return Object.keys(vehicles).includes(vehId);
-      },
+      }
+    },
+
+    chpLocs: {
+      type: [[Number]],
       required: isRace
+    },
+
+    chpSecLocs: {
+      type: [[Number]]
     },
 
     trfVeh: {
       type: [String],
       validate(vehIds) {
         return vehIds.every(vehId => Object.keys(vehicles).includes(vehId))
-      },
-      required: isRace
+      }
     }
   },
 
