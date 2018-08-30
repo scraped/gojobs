@@ -29,7 +29,7 @@ let webpackConfig = {
     app: [
       './src/entry-client.js'
     ],
-    polyfill: 'babel-polyfill'
+    polyfill: '@babel/polyfill'
   },
 
   optimization: {
