@@ -1,40 +1,34 @@
+const Joi = require('joi');
+const Boom = require('boom');
 const {fetchQueue} = require('../../lib/queue');
 
-async function jobsFetchPost(req, res) {
-  const {
-    bunches, strict, category, id, platform, period, reqLimit
-  } = req.body;
+async function jobsFetchPost(req, res, next) {
+  const {jobId} = req.body;
+
+  const schema = Joi.string().required().length(22).token();
+
+  const {error} = Joi.validate(jobId, schema);
+
+  if (error) {
+    return next(Boom.badRequest(`Incorrect job ID: ${jobId}`));
+  }
 
   fetchQueue.add(
     'fetch',
     {
       type: 'job',
       data: {
-        jobId: id
+        jobId
       }
     },
     {
-      jobId: id
+      jobId: jobId
     }
   );
 
   res.json({
-    message: 'Jobs are being fetched.'
+    message: `Job ${jobId} had beed added to the queue.`
   });
-
-  // try {
-  //   await fetchJobsAndSave({
-  //     bunches,
-  //     strict: Boolean(strict),
-  //     category,
-  //     id,
-  //     platform,
-  //     period,
-  //     reqLimit
-  //   });
-  // } catch (error) {
-  //   console.log('jobsFetchPost error:', error);
-  // }
 }
 
 module.exports = {

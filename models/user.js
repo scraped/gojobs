@@ -1,5 +1,5 @@
 const {mongoose} = require('../lib/db');
-const _ = require('lodash');
+const random = require('lodash/random');
 const bcrypt = require('bcrypt');
 require('./crew');
 
@@ -58,15 +58,14 @@ schema.methods.checkPassword = function(password) {
 
 // static methods
 schema.statics.generateTestJobName = function() {
-
-  const values = 'abcdefghijklmnopqrstuvwxyz',
-    VALUES_NUMBER = values.length,
-    NAME_LENGTH = 18;
+  const values = 'abcdefghijklmnopqrstuvwxyz';
+  const VALUES_NUMBER = values.length;
+  const NAME_LENGTH = 18;
 
   let jobNameArray = [];
 
   for (let i = 0; i < NAME_LENGTH; i++) {
-    jobNameArray[i] = values[_.random(0, VALUES_NUMBER - 1)];
+    jobNameArray[i] = values[random(0, VALUES_NUMBER - 1)];
   }
 
   return jobNameArray.join('');

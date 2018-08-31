@@ -3,9 +3,10 @@ const {
   platforms,
   jobTypes,
   vehicles,
-  locations
+  locations,
+  vehClasses
 } = require('../config/static');
-const {JobTag} = require('./');
+// const {JobTag} = require('./');
 
 const {Schema} = mongoose;
 
@@ -83,10 +84,8 @@ let schema = new Schema({
 
   plat: {
     type: String,
-    required: notRockstar,
-    validate(plat) {
-      return Object.keys(platforms).includes(plat);
-    }
+    enum: Object.keys(platforms),
+    required: notRockstar
   },
 
   ver: {
@@ -100,13 +99,10 @@ let schema = new Schema({
 
   scType: {
     type: String,
-    required: true,
-    validate(type) {
-      return Object.keys(jobTypes).includes(type);
-    }
+    enum: Object.keys(jobTypes),
+    required: true
   },
 
-  // Validated before saving
   scMode: {
     type: String
   },
@@ -154,9 +150,10 @@ let schema = new Schema({
   specific: {
     default: {},
 
-    classes: {
-      type: [String]
-    },
+    classes: [{
+      type: String,
+      enum: Object.keys(vehClasses)
+    }],
 
     laps: {
       type: Number,
@@ -175,9 +172,7 @@ let schema = new Schema({
 
     defVeh: {
       type: String,
-      validate(vehId) {
-        return Object.keys(vehicles).includes(vehId);
-      }
+      enum: Object.keys(vehicles)
     },
 
     chpLocs: {
@@ -189,12 +184,10 @@ let schema = new Schema({
       type: [[Number]]
     },
 
-    trfVeh: {
-      type: [String],
-      validate(vehIds) {
-        return vehIds.every(vehId => Object.keys(vehicles).includes(vehId))
-      }
-    }
+    trfVeh: [{
+      type: String,
+      enum: Object.keys(vehicles)
+    }]
   },
 
   scAdded: {

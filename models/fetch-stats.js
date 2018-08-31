@@ -1,11 +1,12 @@
 const {mongoose} = require('../lib/db');
+const {platforms} = require('../config/static');
+
 const {Schema} = mongoose;
 
 let schema = new Schema({
   category: {
     type: String,
     enum: [
-      'members',
       'rockstar',
       'rockstarverified',
       'crew',
@@ -21,40 +22,39 @@ let schema = new Schema({
     }
   },
 
-  // crew: {
-  //   type: Schema.Types.m
-  // },
+  crewId: {
+    type: String,
+    required() {
+      return this.category === 'crew';
+    }
+  },
 
   platform: {
     type: String,
-    enum: ['pc', 'ps4', 'xboxone'],
-    required: isPlatformRequired
+    enum: Object.keys(platforms),
+    required() {
+      const {category} = this;
+      return category === 'user' || category === 'crew';
+    }
+  },
+
+  count: {
+    type: Number,
+    default: -1,
+    required: true
   },
 
   firstFetch: {
-    type: Date,
-    required: true
+    type: Date
   },
 
   lastFetch: {
-    type: Date,
-    required: true
+    type: Date
   },
 
-  total: {
-    type: Number,
-    default: 0
-  },
-
-  skip: {
-    type: Number,
-    default: 0
+  lastFetchMaxJobUpdateDate: {
+    type: Date
   }
 });
-
-function isPlatformRequired() {
-  const { category } = this;
-  return category !== 'rockstar' && category !== 'rstarverified';
-}
 
 module.exports = mongoose.model('FetchStats', schema);
