@@ -6,14 +6,35 @@ require('./crew');
 const {Schema} = mongoose;
 
 let schema = new Schema({
-  username: { type: String, required: true, unique: true },
-  crew: { type: Schema.Types.ObjectId, ref: 'Crew' },
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
 
-  verified: { type: Boolean },
-  verifyDate: { type: Date, required: isVerified },
+  crew: {
+    type: Schema.Types.ObjectId,
+    ref: 'Crew'
+  },
 
-  password: { type: String, set: setPassword, required: isVerified },
-  email: { type: String }
+  verified: {
+    type: Boolean
+  },
+
+  verifyDate: {
+    type: Date,
+    required: isVerified
+  },
+
+  password: {
+    type: String,
+    set: setPassword,
+    required: isVerified
+  },
+
+  email: {
+    type: String
+  }
 }, {
   id: false,
   toObject: {
@@ -37,6 +58,7 @@ schema.methods.checkPassword = function(password) {
 
 // static methods
 schema.statics.generateTestJobName = function() {
+
   const values = 'abcdefghijklmnopqrstuvwxyz',
     VALUES_NUMBER = values.length,
     NAME_LENGTH = 18;

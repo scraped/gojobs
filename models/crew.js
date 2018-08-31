@@ -57,8 +57,7 @@ let schema = new Schema({
   },
 
   avatarId: {
-    type: String,
-    required: notRockstar
+    type: String
   },
 
   lastInfoFetch: {
