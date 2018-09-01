@@ -128,8 +128,7 @@ let schema = new Schema({
       return locs.every(locName => Object.keys(locations).some(currLocName => {
         return currLocName.toLowerCase() === locName.toLowerCase();
       }));
-    },
-    required: true
+    }
   },
 
   stats: {
@@ -209,13 +208,6 @@ let schema = new Schema({
     versionKey: false
   }
 });
-
-// schema.virtual('imageUrl')
-  // .get(function() {
-  //   const img = this.image.split('.');
-  //   const { jobCurrId } = this;
-  //   return `https://prod.cloud.rockstargames.com/ugc/gta5mission/${img[0]}/${jobCurrId}/${img[1]}.jpg`;
-  // });
 
 schema.pre('save', function(next) {
   const {scType, scMode} = this;

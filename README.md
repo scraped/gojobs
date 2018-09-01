@@ -269,7 +269,7 @@ Property | Type | Flags | Description
 `vehcl` | `array<string>`    | `!`  | [only for races] excluded vehicle classes for races **(use this!)**
 `veh`   | `array<Vehicle>`   | `e`  | Vehicles used in a job
 `wp`    | `array<Weapon>`    | `e`  | Weapons used in a job if applicable
-`loc`   | `array<Location2>` | `e`  | Locations (short names) (see below)
+`loc`   | `array<Location2>` | `e`  | Locations (short names). **Some array elements can be empty!** (see below)
 `locn`  | `array<Location2>` | `x`  | Locations (full names) (see below)
 `ems`   | `boolean`          | `?`  | (?) `true` for some LTS, Capture, Versus, ADM
 `mrule` | `array<integer>`   | `?e` | (?) Array like `0,2,11` only for Capture, LTS, Versus

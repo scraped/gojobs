@@ -82,7 +82,7 @@
               <div class="content">
                 <p
                   class="is-size-5 is-italic"
-                  v-html="job.details.desc">
+                  v-html="job.desc">
                 </p>
 
                 <p v-if="defaultVehicle">
@@ -90,10 +90,10 @@
                   {{ defaultVehicle }}
                 </p>
 
-                <div v-if="job.details.specific.race.trfVeh.length" class="tags">
+                <!-- <div v-if="job.details.specific.race.trfVeh.length" class="tags">
                   Transformations:
                   {{ transformVehicles }}
-                </div>
+                </div> -->
 
                 <div
                   v-if="job.tags && job.tags.length"

@@ -1,7 +1,7 @@
 import {http} from '@/utils';
 
 import {
-  modes,
+  jobTypes,
   platforms
 } from '@/../config/static';
 
@@ -14,14 +14,19 @@ const getters = {
 
   jobExt: state => (job = state.job) => {
     const {
-      platform,
+      jobCurrId,
+      image,
+      plat,
       scType,
       scMode,
       scAdded
     } = job;
 
-    const platformName = platform
-      ? platforms[platform - 1].name
+    const imageParts = image.split('.');
+    const imageUrl = `https://prod.cloud.rockstargames.com/ugc/gta5mission/${imageParts[0]}/${jobCurrId}/${imageParts[1]}.jpg`;
+
+    const platformName = plat
+      ? platforms[plat].name
       : '';
 
     const recentlyAdded = new Date() - scAdded <= 1000 * 60 * 60 * 24 * 14;
@@ -29,7 +34,7 @@ const getters = {
     const {
       name: scTypeName,
       icon: scTypeIcon
-    } = modes[scType - 1];
+    } = jobTypes[scType];
 
     let typeAndModeNameAndIcon = {
       scTypeName,
@@ -37,11 +42,12 @@ const getters = {
     };
 
     if (scMode) {
-      typeAndModeNameAndIcon.scModeName = modes[scType - 1].modes[scMode - 1];
-      typeAndModeNameAndIcon.scModeIcon = modes[scType - 1].icons[scMode - 1];
+      typeAndModeNameAndIcon.scModeName = jobTypes[scType].modes[scMode].name;
+      typeAndModeNameAndIcon.scModeIcon = jobTypes[scType].modes[scMode].icon;
     }
 
     return {
+      imageUrl,
       platformName,
       recentlyAdded,
       ...typeAndModeNameAndIcon

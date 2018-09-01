@@ -38,9 +38,15 @@ let schema = new Schema({
     }
   },
 
-  count: {
+  total: {
     type: Number,
     default: -1,
+    required: true
+  },
+
+  offset: {
+    type: Number,
+    default: 0,
     required: true
   },
 
@@ -52,7 +58,12 @@ let schema = new Schema({
     type: Date
   },
 
-  lastFetchMaxJobUpdateDate: {
+  since: {
+    type: Date
+  },
+
+  // Needed for pretty complicated fetching manipulations
+  futureSinceDate: {
     type: Date
   }
 });

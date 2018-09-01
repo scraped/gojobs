@@ -16,13 +16,13 @@
       <div class="card__image">
         <figure class="image is-2by1 is-clipped">
           <img
-            :src="job.imageUrl"
+            :src="jobExt.imageUrl"
             :alt="job.name"
           >
         </figure>
         <div
           class="card__strip"
-          :class="ratingCssClass(job.stats.ratingQuit)"
+          :class="ratingCssClass(job.stats.rstRating)"
           :style="`width: ${job.stats.rating}%;`"
         ></div>
         <div class="card__tags">
@@ -128,12 +128,12 @@
           >
             <span
               class="tag is-rounded is-medium"
-              :class="ratingCssClass(job.stats.ratingQuit)"
+              :class="ratingCssClass(job.stats.rstRating)"
             >
               <span class="icon">
                 <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
               </span>
-              <span v-if="primaryInfo">{{ job.stats.likes | formatNumber }}</span>
+              <span v-if="primaryInfo">{{ job.stats.like | formatNumber }}</span>
               <span v-else>{{ job.stats.rating + '%' }}</span>
             </span>
             <span class="tag is-light is-rounded is-medium has-text-grey-light">
@@ -143,8 +143,8 @@
               >
                 <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
               </span>
-              <span v-if="primaryInfo">{{ job.stats.dislikes | formatNumber }}</span>
-              <span v-else>R*: {{ job.stats.ratingQuit + '%' }}</span>
+              <span v-if="primaryInfo">{{ job.stats.dislike | formatNumber }}</span>
+              <span v-else>R*: {{ job.stats.rstRating + '%' }}</span>
             </span>
           </div>
         </div>
@@ -158,8 +158,8 @@
                 aria-hidden="true"
               ></i>
             </span>
-            <span v-if="primaryInfo">{{ job.stats.playTot | formatNumber }}</span>
-            <span v-else>{{ job.stats.playUnq | formatNumber }}</span>
+            <span v-if="primaryInfo">{{ job.stats.plTot | formatNumber }}</span>
+            <span v-else>{{ job.stats.plUnq | formatNumber }}</span>
           </span>
         </div>
       </div>
