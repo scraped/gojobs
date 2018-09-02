@@ -37,7 +37,7 @@
           </h2>
           <p
             class="subtitle is-size-6 has-text-grey">
-            Page {{ page }}
+            Page {{page}}
           </p>
 
           <div
@@ -87,13 +87,13 @@
                 </div>
 
                 <b-dropdown-item
-                  value="pc"
+                  v-for="(platform, key) in platforms"
+                  :key="key"
+                  :value="key"
                   class="is-unselectable"
                 >
-                  PC
+                  {{platform.name}}
                 </b-dropdown-item>
-                <b-dropdown-item value="ps4">PS4</b-dropdown-item>
-                <b-dropdown-item value="xboxone">Xbox One</b-dropdown-item>
               </b-dropdown>
             </div>
 
@@ -211,7 +211,7 @@
 import Vue from 'vue';
 import {mapState} from 'vuex';
 import findIndex from 'lodash/findIndex';
-import {platforms, modes} from '@/../config/static';
+import {platforms, jobTypes} from '@/../config/static';
 
 import JobCard from '@/components/JobCard.vue';
 import IconGta from '@/components/IconGta.vue';
@@ -237,8 +237,9 @@ export default {
 
   data() {
     return {
+      platforms,
+      jobTypes,
       filtersShown: true,
-      modes,
       sortTypes: {
         relevance: 'Most relevant',
         growth: 'Trending',
@@ -277,13 +278,7 @@ export default {
     },
 
     currPlatformName() {
-      return '';
-      // const { platformModel: platform } = this;
-      // const index = findIndex(platforms, pl => pl.short === platform);
-      // if (platforms[index]){
-      //   return platforms[index].name;
-      // }
-      // return '';
+      return platforms[this.platformModel].name;
     },
 
     currTypeInfo() {
@@ -320,12 +315,18 @@ export default {
       this.sortModel = route.query.by || 'relevance';
       this.typeModel = Number(route.query.type) || 0;
       this.modeModel = Number(route.query.mode) || 0;
-      this.platformModel = this.$cookie.get('platform') || 'pc'
+
+      const cookiePlatform = this.$cookie.get('platform');
+      if (cookiePlatform && Object.keys(platforms).includes(cookiePlatform)) {
+        this.platformModel = cookiePlatform;
+      } else {
+        this.platformModel = 'pc';
+      }
     },
 
     platformChanged(platform) {
-      this.$cookie.set('platform', platform, { expires: '1Y' });
-      this.$router.push({ query: { ...this.$route.query, platform } });
+      this.$cookie.set('platform', platform, {expires: '1Y'});
+      this.$router.push({query: { ...this.$route.query, platform }});
     },
 
     sortChanged(value) {

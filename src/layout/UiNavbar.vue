@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-transparent">
+  <nav class="navbar is-transparent is-dark">
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item" exact-active-class="">
@@ -94,9 +94,9 @@ export default {
 @import "@/scss/vars.scss";
 
 .navbar {
-  background-color: transparent;
+  // background-color: transparent;
   // background-image: $main-gradient-light;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
+  // background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
 }
 
 .navbar-item {
