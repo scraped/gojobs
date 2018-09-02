@@ -27,13 +27,16 @@
         ></div>
         <div class="card__tags">
           <div class="tags">
-            <!-- <span class="tag is-dark is-rounded">Pitlane</span> -->
+            <span
+              v-for="tag in job.tags"
+              :key="tag"
+              class="tag is-dark is-rounded is-capitalized">{{tag}}</span>
           </div>
         </div>
         <div class="card__title">
           <div class="is-size-5 has-text-white">
             <span
-              class="tooltip is-tooltip-light"
+              class="tooltip"
               :data-tooltip="`Game mode: ${jobExt.scTypeName}`"
             >
               <icon-gta :icon="jobExt.scTypeIcon"></icon-gta>
