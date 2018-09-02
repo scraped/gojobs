@@ -101,8 +101,9 @@
           <template v-if="!job.rockstar">
             {{ jobExt.platformName }} ·
           </template>
-          <template v-if="job.minPl === job.maxPl">Only for</template>
-          <template v-else>{{ job.minPl || 1 }}-</template>{{ job.maxPl }} players ·
+          <template v-if="jobExt.playersNumberText">
+            {{jobExt.playersNumberText}} ·
+          </template>
           {{ updatedDate }}
           <!-- <br>Points: {{ job.stats.points }} -->
         </div>
@@ -115,11 +116,7 @@
       </div>
       <br>
 
-      <div
-        class="card__footer field is-grouped is-grouped-multiline"
-        title="Click here to see different stats"
-        @click="primaryInfo = !primaryInfo"
-      >
+      <div class="field is-grouped is-grouped-multiline">
         <div class="control">
           <div
             class="tags has-addons"
@@ -144,7 +141,7 @@
                 <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
               </span>
               <span v-if="primaryInfo">{{ job.stats.dislike | formatNumber }}</span>
-              <span v-else>R*: {{ job.stats.rstRating + '%' }}</span>
+              <span v-else>{{job.stats.rstRating}}% (rockstar)</span>
             </span>
           </div>
         </div>
@@ -160,6 +157,16 @@
             </span>
             <span v-if="primaryInfo">{{ job.stats.plTot | formatNumber }}</span>
             <span v-else>{{ job.stats.plUnq | formatNumber }}</span>
+          </span>
+        </div>
+
+        <div class="control is-expanded">
+          <span
+            class="button is-rounded is-white has-text-grey-light is-pulled-right tooltip"
+            data-tooltip="Click here to see different stats"
+            @click="primaryInfo = !primaryInfo"
+          >
+            <b-icon icon="ellipsis-h"></b-icon>
           </span>
         </div>
       </div>
@@ -285,5 +292,10 @@ $card-strip-opacity: 0.5;
 
 .card__footer {
   cursor: pointer;
+  opacity: 0.9;
+  transition-duration: 100ms;
+  &:hover {
+    opacity: 1;
+  }
 }
 </style>

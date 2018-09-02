@@ -14,9 +14,7 @@ $body-background-color: $white-ter;
 
 $family-primary: "Lato", sans-serif;
 
-//
 // Bulma derived variables
-//
 
 @import "~bulma/sass/utilities/derived-variables";
 
@@ -98,3 +96,10 @@ $message-body-radius: 0;
 $menu-item-radius: 0;
 $menu-item-hover-background-color: $grey-lighter;
 $menu-item-active-background-color: $primary;
+
+// title
+$title-weight: 400;
+
+.title {
+  font-family: 'Oswald', sans-serif;
+}

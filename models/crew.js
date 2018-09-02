@@ -1,4 +1,5 @@
 const {mongoose} = require('../lib/db');
+
 const {Schema} = mongoose;
 
 let schema = new Schema({
@@ -20,7 +21,7 @@ let schema = new Schema({
 
   leader: {
     type: String,
-    required: notRockstar
+    required: nonRockstar
   },
 
   name: {
@@ -47,8 +48,10 @@ let schema = new Schema({
 
   color: {
     type: String,
-    set: setColor,
-    required: notRockstar
+    set(color) {
+      return color.substr(0, 6).toLowerCase();
+    },
+    required: nonRockstar
   },
 
   count: {
@@ -71,18 +74,14 @@ let schema = new Schema({
   }
 });
 
-schema.virtual('avatarUrl')
-  .get(function() {
-    const {avatarId, crewId} = this;
-    return `https://prod.cloud.rockstargames.com/crews/sc/${avatarId}/${crewId}/publish/emblem/emblem_128.png`;
-  });
+// schema.virtual('avatarUrl')
+//   .get(function() {
+//     const {avatarId, crewId} = this;
+//     return `https://prod.cloud.rockstargames.com/crews/sc/${avatarId}/${crewId}/publish/emblem/emblem_128.png`;
+//   });
 
-function notRockstar() {
+function nonRockstar() {
   return !this.rockstar;
-}
-
-function setColor(color) {
-  return color.substr(0, 6).toLowerCase();
 }
 
 module.exports = mongoose.model('Crew', schema);

@@ -19,7 +19,8 @@ const getters = {
       plat,
       scType,
       scMode,
-      scAdded
+      scAdded,
+      players
     } = job;
 
     const imageParts = image.split('.');
@@ -30,6 +31,20 @@ const getters = {
       : '';
 
     const recentlyAdded = new Date() - scAdded <= 1000 * 60 * 60 * 24 * 14;
+
+    let playersNumberText = '';
+
+    if (players) {
+      if (players.length === 1) {
+        players.unshift(1);
+      }
+
+      if (players[0] === players[1]) {
+        playersNumberText = `Only for ${players[0]} players`;
+      } else {
+        playersNumberText = `${players[0]}-${players[1]} players`;
+      }
+    }
 
     const {
       name: scTypeName,
@@ -50,6 +65,7 @@ const getters = {
       imageUrl,
       platformName,
       recentlyAdded,
+      playersNumberText,
       ...typeAndModeNameAndIcon
     };
   }
@@ -64,7 +80,7 @@ const mutations = {
 const actions = {
   async fetchJob({ commit }, { id }) {
 
-    const response = await http.post(`/api/job/${id}`);
+    const response = await http.post(`/api/jobs/${id}`);
 
     const { job } = response.data;
 

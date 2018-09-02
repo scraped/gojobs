@@ -3,12 +3,12 @@
     <div class="is-overlay" :style="`background: linear-gradient(to bottom, transparent${gradient}, transparent);`"></div>
     <section class="section">
       <div class="container">
-        <h1 class="title">Job</h1>
+        <h1 class="title" v-html="job.name">Job</h1>
       </div>
     </section>
     <section class="section">
       <div class="container">
-        <img :src="job.imageUrl" width="480" height="268">
+        <img :src="jobExt.imageUrl" width="480" height="268">
       </div>
     </section>
     <section class="section">
@@ -18,14 +18,11 @@
             <div class="box" style="position: relative;">
               <div class="has-text-grey-lighter" style="position: absolute; top: 0.5em; right: 0.5em; font-size: 7em; line-height: 0;">
                 <span>
-                  <icon-gta :icon="scInfo.scTypeIcon" ></icon-gta>
+                  <icon-gta :icon="jobExt.scTypeIcon" ></icon-gta>
                 </span>
               </div>
 
-              <h1
-                class="title title__special has-text-weight-normal has-text-dark"
-                v-html="job.name">
-              </h1>
+               <h2 class="subtitle">Information</h2>
 
               <div class="media">
                 <div class="media-left">
@@ -66,14 +63,15 @@
                     </span>
                   </p>
                   <p class="has-text-grey">
-                    {{ scInfo.scTypeName }}
-                    <template v-if="scInfo.scModeName">
-                      — {{ scInfo.scModeName }}
+                    {{ jobExt.scTypeName }}
+                    <template v-if="jobExt.scModeName">
+                      — {{ jobExt.scModeName }}
                     </template>
                     ·
-                    {{ scInfo.platformName || 'All platforms' }}
-                    ·
-                    <template v-if="job.minPl">{{ job.minPl }}-</template>{{ job.maxPl }} players
+                    {{ jobExt.platformName || 'All platforms' }}
+                    <template v-if="jobExt.playersNumberText">
+                      · {{jobExt.playersNumberText}}
+                    </template>
                   </p>
                 </div>
               </div>
@@ -114,16 +112,16 @@
                   </span> -->
                 </div>
 
-                <div v-if="scInfo.scTypeName === 'Race' || scInfo.scTypeName === 'Parachuting'">
+                <div v-if="jobExt.scTypeName === 'Race' || jobExt.scTypeName === 'Parachuting'">
                   <p v-if="mapShowed">
                     <!-- <b-notification type="is-info" :closable="false">
                       The first checkpoint (start/finish line for lap races) is a green checkpoint, and the last checkpoint (finish for point to point races) is a red one. Knowing these two checkpoints you can figure out the race direction.
                     </b-notification> -->
-                    <race-map
+                    <!-- <race-map
                       :point-to-point="job.details.specific.race.p2p"
                       :locations="job.details.specific.race.chpLocs"
                       :slocations="job.details.specific.race.chpSecLocs">
-                    </race-map>
+                    </race-map> -->
                   </p>
                 </div>
               </div>
@@ -133,32 +131,32 @@
                   <span class="icon">
                     <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
                   </span>
-                  <span>{{ job.stats.likes | formatNumber }}</span>
+                  <span>{{ job.stats.like | formatNumber }}</span>
                 </span>
 
                 <span class="tag is-rounded is-large has-text-grey-light">
                   <span class="icon" >
                     <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
                   </span>
-                  <span>{{ job.stats.dislikes | formatNumber }}</span>
+                  <span>{{ job.stats.dislike | formatNumber }}</span>
                 </span>
 
                 <span class="tag is-rounded is-large">
                   <span class="icon is-hidden-mobile">
                     <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
-                  </span><span>{{ job.stats.playTot | formatNumber }}</span>
+                  </span><span>{{ job.stats.plTot | formatNumber }}</span>
                 </span>
 
                 <span class="tag is-rounded is-large">
                   <span class="icon is-hidden-mobile">
                       <i class="fa fa-users fa-lg" aria-hidden="true"></i>
-                    </span><span>{{ job.stats.playUnq | formatNumber }}</span>
+                    </span><span>{{ job.stats.plUnq | formatNumber }}</span>
                 </span>
 
                 <span class="tag is-rounded is-large has-text-danger">
                   <span class="icon is-hidden-mobile">
                       <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
-                    </span><span>{{ job.stats.dislikesQuit - job.stats.dislikes | formatNumber }}</span>
+                    </span><span>{{ job.stats.quit | formatNumber }}</span>
                 </span>
               </div>
 
@@ -169,7 +167,7 @@
                 </p>
                 <p>
                   <b>RGSC rating (quits during the job considered dislikes):</b>
-                  <span :class="`has-text-${ratingCssClass(job.stats.ratingQuit, false)}`">{{ job.stats.ratingQuit }}%</span>
+                  <span :class="`has-text-${ratingCssClass(job.stats.rstRating, false)}`">{{ job.stats.rstRating }}%</span>
                 </p>
               </div>
 
@@ -188,10 +186,7 @@
             </div>
 
             <div class="box">
-              <h2 class="subtitle">
-                You might also like
-              </h2>
-              <hr>
+              <h2 class="subtitle">You might also like</h2>
 
               <p class="is-italic">
                 Nothing to show.
@@ -226,13 +221,13 @@
             <div class="box is-paddingless">
               <div class="section">
                 Lap length
-                <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.dist | mToKm }} km</span>
+                <!-- <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.dist | mToKm }} km</span> -->
               </div>
               <div class="section">
                 Number of checkpoints
-                <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.chp }}</span>
+                <!-- <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.chp }}</span> -->
               </div>
-              <div
+              <!-- <div
                 v-if="job.details.specific.race.laps"
                 class="section"
               >
@@ -245,7 +240,7 @@
                     {{ job.details.specific.race.laps }}
                   </template>
                 </span>
-              </div>
+              </div> -->
               <a
                 class="button is-block is-medium is-primary is-radiusless"
                 :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/${job.jobCurrId}`"
@@ -268,7 +263,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import {mapState, mapGetters} from 'vuex';
 
 import {
   userAvatars,
@@ -321,12 +316,22 @@ export default {
       'job'
     ]),
 
+    ...mapGetters('job', {
+      jobExtGetter: 'jobExt'
+    }),
+
+    jobExt() {
+      return this.jobExtGetter(this.job);
+    },
+
     defaultVehicle() {
-      const defVeh = String(this.job.details.specific.race.defVeh);
+      const defVeh = String(this.job.specific.defVeh);
       return vehicles[defVeh];
     },
 
     transformVehicles() {
+      return '';
+
       const { trfVeh } = this.job.details.specific.race;
 
       let vehiclesString = '';
@@ -350,17 +355,8 @@ export default {
       return updatedDate({ date: this.job.scUpdated, ver });
     },
 
-    scInfo() {
-      const { scType, scMode, platform } = this.job;
-      // { scTypeName, scTypeIcon, scModeName, platformName }
-      return {
-        ...scTypeModeIcon({ scType, scMode }),
-        ...scPlatformName({ platform })
-      };
-    },
-
     gradient() {
-      const { background } = this.job.details;
+      const {background} = this.job;
       if (background && background.length) {
         return background.reduce((prev, curr) => {
           return prev + `, rgba(${curr}, 0.3)`;

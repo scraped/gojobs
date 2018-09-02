@@ -222,12 +222,14 @@ schema.pre('save', function(next) {
   // Mode validation
   const possibleModes = typeInfo.modes;
 
-  if (!!this.scMode !== !!possibleModes) {
-    throw new Error('This job type does not have any modes or vice versa');
-  }
+  if (this.scMode) {
+    if (!!this.scMode !== !!possibleModes) {
+      throw new Error('This job type does not have any modes or vice versa');
+    }
 
-  if (!Object.keys(possibleModes).includes(scMode)) {
-    throw new Error('Mode does not exist');
+    if (!Object.keys(possibleModes).includes(scMode)) {
+      throw new Error('Mode does not exist');
+    }
   }
 
   next();

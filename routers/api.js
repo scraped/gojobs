@@ -14,6 +14,7 @@ const {
 
 const {
   jobListPost,
+  rawJobsListPost,
   jobDetailsPost,
   jobUploadPost,
   jobsFetchPost,
@@ -49,10 +50,10 @@ router.post('/user/basicinfo', basicInfo);
 
 // Job
 router.post('/jobs', jobListPost);
-router.post('/job/fetch', jobsFetchPost);
-router.post('/job/fetched', todoController);
-router.post('/job/upload', jobUploadPost);
-router.post('/job/:id', jobDetailsPost);
+router.post('/jobs/raw', rawJobsListPost);
+router.post('/jobs/fetch', jobsFetchPost);
+router.post('/jobs/upload', jobUploadPost);
+router.post('/jobs/:id', jobDetailsPost);
 
 // Crew
 router.post('/crews', crewListPost);

@@ -1,10 +1,29 @@
 // const _ = require('lodash');
 // const {platforms} = require('../../config/static');
-const {Job} = require('../../models');
+const {Job, RawJob} = require('../../models');
 
 const PER_PAGE_DEFAULT = 35;
 
-async function jobListPost(req, res) {
+exports.rawJobsListPost = async function rawJobsListPost(req, res) {
+  const {body} = req;
+
+  const page = Number(body.page) || 1;
+  // const processed = !!body.processed;
+  // const uploaded = !!body.uploaded;
+
+  const jobs = await RawJob.find()
+    .skip((page - 1) * 50)
+    .limit(50)
+    .sort({
+      'lastFetch': 'desc'
+    });
+
+  return res.send({
+    jobs
+  });
+};
+
+exports.jobListPost = async function jobListPost(req, res) {
   const { body, cookies } = req;
 
   const { by, rockstar, rockstarverified, user } = body;
@@ -87,7 +106,3 @@ async function jobListPost(req, res) {
     });
   }
 }
-
-module.exports = {
-  jobListPost
-};
