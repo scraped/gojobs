@@ -1,207 +1,214 @@
 <template>
   <div>
     <div class="columns is-multiline">
-      <div class="column is-one-third-widescreen is-half-tablet">
-        <div class="box is-shadowless" style="height: 100%; background: linear-gradient(to bottom, hsla(0, 100%, 26%, 10%), transparent)">
-          <h2 class="is-size-4">
-            <b-dropdown
-              v-model="sortModel"
-              position="is-bottom-left"
-              @change="sortChanged"
-            >
-              <span
-                slot="trigger"
-                class="dropdown__trigger is-unselectable"
-              >
-                {{ sortTypes[sortModel] }}
-                <span class="has-text-primary">
-                  {{ count | formatNumber }} jobs
-                </span>
-                <b-icon
-                  pack="fa"
-                  icon="angle-down"
-                  custom-class="is-size-5"
-                >
-                </b-icon>
-              </span>
-
-              <b-dropdown-item
-                v-for="(value, key) in sortTypes"
-                :key="`sort-${key}`"
-                :value="key"
-                class="is-unselectable"
-              >
-                {{ value }}
-              </b-dropdown-item>
-            </b-dropdown>
-          </h2>
-          <p
-            class="subtitle is-size-6 has-text-grey">
-            Page {{page}}
-          </p>
-
-          <div
-            class="content"
-            :class="{ 'is-hidden-tablet': filtersShown }"
-          >
-            <div
-              class="button is-block is-primary"
-              :class="{ 'is-outlined': filtersShown }"
-              @click="showFilters"
-            >
-              <b-icon
-                pack="fa"
-                size="is-small"
-                icon="filter"
-              ></b-icon>
-              <span>{{ filtersText }}</span>
-            </div>
-
-          </div>
-
-          <div
-            v-show="filtersShown"
-            ref="filters"
-            class="is-hidden-mobile"
-          >
-            <div class="content is-size-5">
+      <div class="column is-one-third-widescreen is-two-fifths-desktop is-two-fifths-tablet">
+        <div class="filters">
+          <div class="filters__main box is-shadowless">
+            <h2 class="is-size-4">
               <b-dropdown
-                v-model="platformModel"
-                @change="platformChanged"
+                v-model="sortModel"
                 position="is-bottom-left"
-                class="is-block"
+                @change="sortChanged"
               >
-                <div
+                <span
                   slot="trigger"
                   class="dropdown__trigger is-unselectable"
                 >
-                  <span class="has-text-weight-bold">Platform</span>
-                  <div class="is-pulled-right">
-                    {{ currPlatformName }}
-                    <b-icon
-                      pack="fa"
-                      icon="angle-down"
-                      custom-class="is-size-5"
-                    ></b-icon>
-                  </div>
-                </div>
+                  {{ sortTypes[sortModel] }}
+                  <span class="has-text-primary">
+                    {{ count | formatNumber }} jobs
+                  </span>
+                  <b-icon
+                    pack="fa"
+                    icon="angle-down"
+                    custom-class="is-size-5"
+                  >
+                  </b-icon>
+                </span>
 
                 <b-dropdown-item
-                  v-for="(platform, key) in platforms"
-                  :key="key"
+                  v-for="(value, key) in sortTypes"
+                  :key="`sort-${key}`"
                   :value="key"
                   class="is-unselectable"
                 >
-                  {{platform.name}}
+                  {{ value }}
                 </b-dropdown-item>
               </b-dropdown>
-            </div>
+            </h2>
+            <p
+              class="subtitle is-size-6 has-text-grey">
+              Page {{page}}
+            </p>
 
-            <div class="content is-size-5">
-              <b-dropdown
-                v-model="typeModel"
-                @change="typeChanged"
-                position="is-bottom-left"
-                class="is-block"
+            <div
+              class="content"
+              :class="{ 'is-hidden-tablet': filtersShown }"
+            >
+              <div
+                class="button is-block is-primary"
+                :class="{ 'is-outlined': filtersShown }"
+                @click="showFilters"
               >
-                <div
-                  slot="trigger"
-                  class="dropdown__trigger is-unselectable"
-                >
-                  <span class="has-text-weight-bold">Type</span>
-                  <div class="is-pulled-right">
-                    {{ currTypeName }}
-                    <b-icon
-                      pack="fa"
-                      icon="angle-down"
-                      custom-class="is-size-5"
-                    ></b-icon>
-                  </div>
-                </div>
+                <b-icon
+                  pack="fa"
+                  size="is-small"
+                  icon="filter"
+                ></b-icon>
+                <span>{{ filtersText }}</span>
+              </div>
 
-                <b-dropdown-item
-                  :value="0"
-                  class="is-unselectable"
-                >
-                  Any
-                </b-dropdown-item>
-                <!-- <b-dropdown-item
-                  v-for="(type, i) in modes"
-                  :key="type.name"
-                  :value="i + 1"
-                  class="is-unselectable"
-                >
-                  <icon-gta :icon="type.icon"></icon-gta>
-                  <span>{{ type.name }}</span>
-                </b-dropdown-item> -->
-              </b-dropdown>
             </div>
 
             <div
-              v-if="currTypeInfo && currModeInfo"
-              class="content is-size-5"
+              v-show="filtersShown"
+              ref="filters"
+              class="is-hidden-mobile"
             >
-              <b-dropdown
-                v-model="modeModel"
-                @change="modeChanged"
-                position="is-bottom-left"
-                class="is-block"
-              >
-                <div
-                  slot="trigger"
-                  class="dropdown__trigger is-unselectable"
+              <div class="content is-size-5">
+                <b-dropdown
+                  v-model="platformModel"
+                  @change="platformChanged"
+                  position="is-bottom-left"
+                  class="is-block"
                 >
-                  <span class="has-text-weight-bold">Game Mode</span>
-                  <div class="is-pulled-right">
-                    {{ currModeName }}
-                    <b-icon
-                      pack="fa"
-                      icon="angle-down"
-                      custom-class="is-size-5"
-                    ></b-icon>
+                  <div
+                    slot="trigger"
+                    class="dropdown__trigger is-unselectable"
+                  >
+                    <span class="has-text-weight-bold">Platform</span>
+                    <div class="is-pulled-right">
+                      {{ currPlatformName }}
+                      <b-icon
+                        pack="fa"
+                        icon="angle-down"
+                        custom-class="is-size-5"
+                      ></b-icon>
+                    </div>
                   </div>
-                </div>
 
-                <b-dropdown-item
-                  :value="0"
-                  class="is-unselectable"
+                  <b-dropdown-item
+                    v-for="(platform, key) in platforms"
+                    :key="key"
+                    :value="key"
+                    class="is-unselectable"
+                  >
+                    {{platform.name}}
+                  </b-dropdown-item>
+                </b-dropdown>
+              </div>
+
+              <div class="content is-size-5">
+                <b-dropdown
+                  v-model="typeModel"
+                  @change="typeChanged"
+                  position="is-bottom-left"
+                  class="is-block"
                 >
-                  Any
-                </b-dropdown-item>
-                <b-dropdown-item
-                  v-for="(mode, i) in currModeInfo"
-                  :key="`mode-${i}`"
-                  :value="i + 1"
-                  class="is-unselectable"
+                  <div
+                    slot="trigger"
+                    class="dropdown__trigger is-unselectable"
+                  >
+                    <span class="has-text-weight-bold">Type</span>
+                    <div class="is-pulled-right">
+                      {{ currTypeName }}
+                      <b-icon
+                        pack="fa"
+                        icon="angle-down"
+                        custom-class="is-size-5"
+                      ></b-icon>
+                    </div>
+                  </div>
+
+                  <b-dropdown-item
+                    :value="0"
+                    class="is-unselectable"
+                  >
+                    Any
+                  </b-dropdown-item>
+                  <!-- <b-dropdown-item
+                    v-for="(type, i) in modes"
+                    :key="type.name"
+                    :value="i + 1"
+                    class="is-unselectable"
+                  >
+                    <icon-gta :icon="type.icon"></icon-gta>
+                    <span>{{ type.name }}</span>
+                  </b-dropdown-item> -->
+                </b-dropdown>
+              </div>
+
+              <div
+                v-if="currTypeInfo && currModeInfo"
+                class="content is-size-5"
+              >
+                <b-dropdown
+                  v-model="modeModel"
+                  @change="modeChanged"
+                  position="is-bottom-left"
+                  class="is-block"
                 >
-                  <icon-gta :icon="currTypeInfo.icons[i]"></icon-gta>
-                  <span>{{ mode }}</span>
-                </b-dropdown-item>
-              </b-dropdown>
+                  <div
+                    slot="trigger"
+                    class="dropdown__trigger is-unselectable"
+                  >
+                    <span class="has-text-weight-bold">Game Mode</span>
+                    <div class="is-pulled-right">
+                      {{ currModeName }}
+                      <b-icon
+                        pack="fa"
+                        icon="angle-down"
+                        custom-class="is-size-5"
+                      ></b-icon>
+                    </div>
+                  </div>
+
+                  <b-dropdown-item
+                    :value="0"
+                    class="is-unselectable"
+                  >
+                    Any
+                  </b-dropdown-item>
+                  <b-dropdown-item
+                    v-for="(mode, i) in currModeInfo"
+                    :key="`mode-${i}`"
+                    :value="i + 1"
+                    class="is-unselectable"
+                  >
+                    <icon-gta :icon="currTypeInfo.icons[i]"></icon-gta>
+                    <span>{{ mode }}</span>
+                  </b-dropdown-item>
+                </b-dropdown>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div
-        class="column is-one-third-widescreen is-half-tablet"
-        v-for="job in jobs"
-        :key="job.jobId"
-      >
-        <job-card :job="job"></job-card>
-      </div>
-      <div
-        v-if="!count"
-        class="column is-two-thirds-widescreen is-half-tablet"
-      >
 
-          <b-notification
-            type="is-info"
-            :closable="false"
-            has-icon
+      <div class="column">
+        <div class="columns is-multiline">
+          <div
+            class="column is-half-widescreen is-12-tablet"
+            v-for="job in jobs"
+            :key="job.jobId"
           >
-            <div class="notification__header">No jobs found</div>
-            <p>Try to change a platform or a game mode.</p>
-          </b-notification>
+            <job-card :job="job"></job-card>
+          </div>
+          <div
+            v-if="!count"
+            class="column iis-two-thirds-widescreen is-half-tablet"
+          >
+              <b-notification
+                type="is-info"
+                :closable="false"
+                has-icon
+              >
+                <div class="notification__header">No jobs found</div>
+                <p>Try to change a platform or a game mode.</p>
+              </b-notification>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -278,7 +285,7 @@ export default {
     },
 
     currPlatformName() {
-      return platforms[this.platformModel].name;
+      // return platforms[this.platformModel].name;
     },
 
     currTypeInfo() {
@@ -377,5 +384,13 @@ export default {
   &:hover {
     color: $primary;
   }
+}
+
+.filters {
+
+}
+
+.filters__main {
+  background: linear-gradient(to bottom, hsla(0, 100%, 26%, 10%), transparent);
 }
 </style>
