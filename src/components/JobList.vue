@@ -2,7 +2,7 @@
   <div>
     <div class="columns is-multiline">
       <div class="column is-one-third-widescreen is-two-fifths-desktop is-two-fifths-tablet">
-        <div class="filters">
+        <div class="filters" ref="filters">
           <div class="filters__main box is-shadowless">
             <h2 class="is-size-4">
               <b-dropdown
@@ -242,6 +242,17 @@ export default {
     this.defineModels(this.$route);
   },
 
+  mounted() {
+    const {filters} = this.$refs;
+    this.filtersInitialTopCoord = Math.floor(filters.getBoundingClientRect().top + window.pageYOffset) - 10;
+    filters.style.width = `${filters.clientWidth}px`;
+    addEventListener('scroll', this.filterFixingOnScroll);
+  },
+
+  beforeDestroy() {
+    removeEventListener('scroll', this.filterFixingOnScroll);
+  },
+
   data() {
     return {
       platforms,
@@ -259,6 +270,8 @@ export default {
       typeModel: null,
       modeModel: null,
       platformModel: null,
+
+      filtersInitialTopCoord: 0
     };
   },
 
@@ -318,6 +331,19 @@ export default {
   },
 
   methods: {
+    filterFixingOnScroll() {
+      const fixedClassName = 'filters_fixed';
+      const {filtersInitialTopCoord} = this;
+      const {filters} = this.$refs;
+      const fixed = filters.classList.contains(fixedClassName);
+      const {pageYOffset} = window;
+
+      if (!fixed && pageYOffset > filtersInitialTopCoord
+        || fixed && pageYOffset < filtersInitialTopCoord) {
+        filters.classList.toggle(fixedClassName);
+      }
+    },
+
     defineModels(route) {
       this.sortModel = route.query.by || 'relevance';
       this.typeModel = Number(route.query.type) || 0;
@@ -387,10 +413,14 @@ export default {
 }
 
 .filters {
+}
 
+.filters_fixed {
+  position: fixed;
+  top: 10px;
 }
 
 .filters__main {
-  background: linear-gradient(to bottom, hsla(0, 100%, 26%, 10%), transparent);
+  background: linear-gradient(to bottom, rgba(132, 0, 0, 0.1), transparent);
 }
 </style>
