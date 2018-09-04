@@ -22,8 +22,6 @@
                 </span>
               </div>
 
-               <h2 class="subtitle">Information</h2>
-
               <div class="media">
                 <div class="media-left">
                   <router-link
@@ -83,11 +81,6 @@
                   v-html="job.desc">
                 </p>
 
-                <p v-if="defaultVehicle">
-                  Tested in Creator with
-                  {{ defaultVehicle }}
-                </p>
-
                 <!-- <div v-if="job.details.specific.race.trfVeh.length" class="tags">
                   Transformations:
                   {{ transformVehicles }}
@@ -112,18 +105,21 @@
                   </span> -->
                 </div>
 
-                <div v-if="jobExt.scTypeName === 'Race' || jobExt.scTypeName === 'Parachuting'">
-                  <p v-if="mapShowed">
-                    <!-- <b-notification type="is-info" :closable="false">
-                      The first checkpoint (start/finish line for lap races) is a green checkpoint, and the last checkpoint (finish for point to point races) is a red one. Knowing these two checkpoints you can figure out the race direction.
-                    </b-notification> -->
-                    <!-- <race-map
-                      :point-to-point="job.details.specific.race.p2p"
-                      :locations="job.details.specific.race.chpLocs"
-                      :slocations="job.details.specific.race.chpSecLocs">
-                    </race-map> -->
-                  </p>
-                </div>
+                <b-modal :active.sync="mapShowed">
+                  <div v-if="jobExt.scTypeName === 'Race' || jobExt.scTypeName === 'Parachuting'">
+                    <section class="section has-background-white">
+                      <h2 class="title has-text-weight-normal">{{job.name}} - Race Map</h2>
+                      <div class="content">
+                        The first checkpoint (start/finish line for lap races) is a green checkpoint, and the last checkpoint (finish for point to point races) is a red one. Knowing these two checkpoints you can figure out the race direction.
+                      </div>
+                      <race-map
+                        :point-to-point="job.specific.p2p"
+                        :locations="job.specific.chpLocs"
+                        :slocations="job.specific.chpSecLocs">
+                      </race-map>
+                    </section>
+                  </div>
+                </b-modal>
               </div>
 
               <div class="tags">
@@ -218,42 +214,39 @@
 
           <div class="column is-one-third-widescreen is-two-fifths-desktop is-12-tablet">
 
-            <div class="box is-paddingless">
-              <div class="section">
-                Lap length
-                <!-- <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.dist | mToKm }} km</span> -->
-              </div>
-              <div class="section">
-                Number of checkpoints
-                <!-- <span class="is-pulled-right has-text-weight-bold">{{ job.details.specific.race.chp }}</span> -->
-              </div>
-              <!-- <div
-                v-if="job.details.specific.race.laps"
-                class="section"
-              >
-                Default number of laps
-                <span class="is-pulled-right has-text-weight-bold">
-                  <template v-if="job.details.specific.race.p2p">
-                    Point to point
-                  </template>
-                  <template v-else>
-                    {{ job.details.specific.race.laps }}
-                  </template>
+            <div class="box">
+              <h2 class="subtitle">Race Info</h2>
+              <table class="table is-fullwidth is-striped">
+                <tbody>
+                  <tr>
+                    <td>Lap length</td>
+                    <td><span class="is-pulled-right has-text-weight-bold">{{ job.specific.dist | mToKm }} km</span></td>
+                  </tr>
+                  <tr>
+                    <td>Number of laps</td>
+                    <td><span class="is-pulled-right has-text-weight-bold">{{ job.specific.laps }}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Tested with</td>
+                    <td><span class="is-pulled-right has-text-weight-bold">{{ vehicles[job.specific.defVeh] }}</span></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div>
+                <span
+                  class="button is-fullwidth is-medium"
+                  @click="mapShowed = !mapShowed">
+                  Show route
                 </span>
-              </div> -->
-              <a
+              </div>
+              <!-- <a
                 class="button is-block is-medium is-primary is-radiusless"
                 :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/${job.jobCurrId}`"
                 target="_blank">
                 <span>Go to RGSC Job Page</span>
                 <b-icon pack="fa" icon="angle-right" size="is-small"></b-icon>
-              </a>
-              <a
-                class="button is-block is-medium is-text is-radiusless"
-                @click="mapShowed = !mapShowed">
-                <template v-if="mapShowed">Hide Route</template>
-                <template v-else> Show Route</template>
-              </a>
+              </a> -->
             </div>
           </div>
         </div>
@@ -277,7 +270,7 @@ import {ratingMixin} from '@/mixins';
 
 import IconGta from '@/components/IconGta.vue';
 import RaceMap from './RaceMap.vue';
-import vehicles from '@/../config/static/vehicles';
+import {vehicles} from '@/../config/static';
 import findIndex from 'lodash/findIndex';
 
 export default {
@@ -309,6 +302,14 @@ export default {
       transformations: false,
       vehicles
     };
+  },
+
+  created() {
+    const {background} = this.job;
+    Array.from(document.getElementsByClassName('navbar')).forEach(el => {
+      console.log('here');
+      el.style.backgroundColor = `rgb(${background[2]})`;
+    });
   },
 
   computed: {

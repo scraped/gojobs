@@ -244,15 +244,15 @@ export default {
   },
 
   mounted() {
-    const {filters} = this.$refs;
-    // 12 means 10px + "a little bit"
-    this.filtersInitialTopCoord = Math.floor(filters.getBoundingClientRect().top + window.pageYOffset) - 12;
-    filters.style.width = `${filters.clientWidth}px`;
-    addEventListener('scroll', this.filterFixingOnScroll);
+    // const {filters} = this.$refs;
+    // // 12 means 10px + "a little bit"
+    // this.filtersInitialTopCoord = Math.floor(filters.getBoundingClientRect().top + window.pageYOffset) - 12;
+    // filters.style.width = `${filters.clientWidth}px`;
+    // addEventListener('scroll', this.filterFixingOnScroll);
   },
 
   beforeDestroy() {
-    removeEventListener('scroll', this.filterFixingOnScroll);
+    // removeEventListener('scroll', this.filterFixingOnScroll);
   },
 
   data() {
@@ -415,6 +415,7 @@ export default {
 }
 
 .filters {
+  position: sticky;
   transition-duration: 2s;
 }
 
