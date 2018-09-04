@@ -24,10 +24,10 @@
 
     <section
       v-if="count"
-      class="section"
+      class="hero is-primary is-bold"
     >
-      <div class="container">
-        <div class="box">
+      <div class="hero-body">
+        <div class="container">
           <custom-pagination
             :curr-page="actualPage"
             :total-items="count"

@@ -5,7 +5,7 @@
       class="content"
     >
       <div
-        class="button is-large is-fullwidth"
+        class="button is-primary is-inverted is-large is-fullwidth"
         :class="{ 'is-loading': loading }"
         @click="loadMore()"
       >
@@ -15,7 +15,7 @@
 
     <div class="buttons has-addons is-pulled-right">
       <router-link
-        class="button"
+        class="button is-primary is-inverted"
         v-if="hasPrev()"
         :to="{ name: routeName, query: Object.assign({}, $route.query, { page: prevPage }) }"
         :aria-label="`Go to page ${prevPage}`"
@@ -25,7 +25,7 @@
       </router-link>
 
       <router-link
-        class="button"
+        class="button is-primary is-inverted"
         v-if="hasNext()"
         :to="{ name: routeName, query: Object.assign({}, $route.query, { page: nextPage }) }"
         :aria-label="`Go to page ${nextPage}`"
@@ -43,14 +43,14 @@
       <router-link
         v-if="hasFirst()"
         :to="{ name: routeName, query: Object.assign({}, $route.query, { page: 1 }) }"
-        class="button"
+        class="button is-primary is-inverted"
         aria-label="Go to page 1"
       >
         1
       </router-link>
 
       <span
-        class="button"
+        class="button is-primary is-inverted"
         v-if="hasFirst() & leftBound > 3"
       >
         &hellip;
@@ -60,15 +60,15 @@
         v-for="page in pages"
         :key="page"
         :to="{ name: routeName, query: Object.assign({}, $route.query, { page }) }"
-        class="button"
-        :class="{ 'is-primary': currPage === page }"
+        class="button is-primary is-inverted"
+        :class="{ 'is-dark': currPage === page }"
         :aria-label="`Go to page ${page}`"
       >
         {{ page }}
       </router-link>
 
       <span
-        class="button"
+        class="button is-primary is-inverted"
         v-if="hasLast() & totalPages - rightBound > 2"
       >
         &hellip;
@@ -77,7 +77,7 @@
       <router-link
         v-if="hasLast()"
         :to="{ name: routeName, query: Object.assign({}, $route.query, { page: totalPages }) }"
-        class="button"
+        class="button is-primary is-inverted"
         :aria-label="`Go to page ${totalPages}`"
       >
         {{ totalPages }}

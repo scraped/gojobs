@@ -218,6 +218,7 @@
 import Vue from 'vue';
 import {mapState} from 'vuex';
 import findIndex from 'lodash/findIndex';
+import throttle from 'lodash/throttle';
 import {platforms, jobTypes} from '@/../config/static';
 
 import JobCard from '@/components/JobCard.vue';
@@ -244,7 +245,8 @@ export default {
 
   mounted() {
     const {filters} = this.$refs;
-    this.filtersInitialTopCoord = Math.floor(filters.getBoundingClientRect().top + window.pageYOffset) - 10;
+    // 12 means 10px + "a little bit"
+    this.filtersInitialTopCoord = Math.floor(filters.getBoundingClientRect().top + window.pageYOffset) - 12;
     filters.style.width = `${filters.clientWidth}px`;
     addEventListener('scroll', this.filterFixingOnScroll);
   },
@@ -331,7 +333,7 @@ export default {
   },
 
   methods: {
-    filterFixingOnScroll() {
+    filterFixingOnScroll: throttle(function() {
       const fixedClassName = 'filters_fixed';
       const {filtersInitialTopCoord} = this;
       const {filters} = this.$refs;
@@ -342,7 +344,7 @@ export default {
         || fixed && pageYOffset < filtersInitialTopCoord) {
         filters.classList.toggle(fixedClassName);
       }
-    },
+    }, 10),
 
     defineModels(route) {
       this.sortModel = route.query.by || 'relevance';
@@ -413,6 +415,7 @@ export default {
 }
 
 .filters {
+  transition-duration: 2s;
 }
 
 .filters_fixed {
