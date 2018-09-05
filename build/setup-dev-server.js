@@ -9,8 +9,6 @@ const MemoryFileSystem = require('memory-fs');
 const clientConfig = require('./webpack.client.config');
 const serverConfig = require('./webpack.server.config');
 
-module.exports = setupDevServer;
-
 const templatePath = './src/index.html';
 
 /**
@@ -56,8 +54,7 @@ function setupDevServer(app, updateCallback) {
   // ***************************
   updateTemplate();
 
-  chokidar
-    .watch(templatePath)
+  chokidar.watch(templatePath)
     .on('change', () => {
       updateTemplate();
       update();
@@ -120,3 +117,5 @@ function setupDevServer(app, updateCallback) {
 
   return readyPromise;
 }
+
+module.exports = setupDevServer;

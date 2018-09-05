@@ -61,5 +61,10 @@ export const routes = [
     'path': '/profile/:username',
     'name': 'profile',
     'component': resolve('profile/index')
+  },
+
+  {
+    'path': '*',
+    'component': resolve('Error')
   }
 ];

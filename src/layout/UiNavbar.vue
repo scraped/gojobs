@@ -94,6 +94,7 @@ export default {
 @import "@/scss/vars.scss";
 
 .navbar {
+  text-shadow: 1px 1px 1px rgba($black, 0.2);
   // background-color: transparent;
   // background-image: $main-gradient-light;
   // background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);

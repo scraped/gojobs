@@ -3,12 +3,12 @@ import {findAsyncComponents} from '@/helpers';
 import {setupHttpServer} from '@/utils';
 
 export default context => {
-  const { req } = context;
+  const {req} = context;
 
   return new Promise((resolve, reject) => {
     setupHttpServer(req);
 
-    const { app, router, store } = createApp();
+    const {app, router, store} = createApp();
 
     router.push(req.url);
 
@@ -17,7 +17,8 @@ export default context => {
         const matchedComponents = router.getMatchedComponents();
 
         if (!matchedComponents.length) {
-          return reject(new Error('404'));
+          router.push('/error/404');
+          // return reject(new Error('404'));
         }
 
         const asyncDataPromises = findAsyncComponents({

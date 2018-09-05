@@ -12,7 +12,7 @@ Vue.mixin({
 
 setupHttpClient();
 
-const { app, store, router } = createApp();
+const {app, store, router} = createApp();
 
 // *********************
 // Replace store
@@ -39,13 +39,12 @@ router.onReady(() => {
       return diffed || (diffed = (matchedPrev[i] !== component));
     });
 
-    // 404: message + stay on the current page
     if (!matchedCurr.length) {
-      Vue.prototype.$toast.open({
-        message: 'Error 404: Page Not Found',
-        type: 'is-danger'
-      });
-      return next(false);
+      // Vue.prototype.$toast.open({
+      //   message: 'Error 404: Page Not Found',
+      //   type: 'is-danger'
+      // });
+      return next({name: 'error', params: {code: 404}});
     }
 
     // Don't need to resolve async components if nothing changed

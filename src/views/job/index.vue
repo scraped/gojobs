@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="is-overlay" :style="`background: linear-gradient(to bottom, transparent${gradient}, transparent);`"></div>
+    <div class="is-overlay" :style="`background: linear-gradient(to bottom, transparent${gradient(0.3)}, transparent);`"></div>
     <section class="section">
       <div class="container">
         <h1 class="title" v-html="job.name">Job</h1>
@@ -304,11 +304,12 @@ export default {
     };
   },
 
-  created() {
+  mounted() {
     const {background} = this.job;
     Array.from(document.getElementsByClassName('navbar')).forEach(el => {
       console.log('here');
-      el.style.backgroundColor = `rgb(${background[2]})`;
+      el.style.background = `linear-gradient(to right${this.gradient(0.7)}`;
+      // `rgb(${background[2]})`;
     });
   },
 
@@ -354,13 +355,16 @@ export default {
     updatedDate() {
       const { ver } = this.job;
       return updatedDate({ date: this.job.scUpdated, ver });
-    },
+    }
+  },
 
-    gradient() {
+  methods: {
+    gradient(transparency = 1.0) {
       const {background} = this.job;
       if (background && background.length) {
+        console.log(transparency);
         return background.reduce((prev, curr) => {
-          return prev + `, rgba(${curr}, 0.3)`;
+          return prev + `, rgba(${curr}, transparency)`;
         }, '');
       }
     }
