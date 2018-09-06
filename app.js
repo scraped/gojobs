@@ -33,9 +33,10 @@ app.use(
 );
 
 app.use('/api', apiRouter);
-app.use(errorHandler);
 
 ssrMiddleware(app);
+
+app.use(errorHandler);
 
 const port = app.get('port');
 
@@ -44,6 +45,6 @@ app.listen(port, () => {
 });
 
 process.on('unhandledRejection', err => {
-  console.log('Unhandled rejection occured:', err.stack);
+  console.error('Unhandled rejection occured:', err.stack);
   process.exit(1);
 });
