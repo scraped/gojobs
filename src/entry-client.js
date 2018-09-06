@@ -39,14 +39,6 @@ router.onReady(() => {
       return diffed || (diffed = (matchedPrev[i] !== component));
     });
 
-    if (!matchedCurr.length) {
-      // Vue.prototype.$toast.open({
-      //   message: 'Error 404: Page Not Found',
-      //   type: 'is-danger'
-      // });
-      return next({name: 'error', params: {code: 404}});
-    }
-
     // Don't need to resolve async components if nothing changed
     if (!activated.length) {
       return next();

@@ -1,3 +1,6 @@
+// Better error messages
+require('pretty-error').start();
+
 const config = require('./config');
 const chalk = require('chalk');
 const path = require('path');
@@ -7,15 +10,10 @@ const passport = require('passport');
 const logger = require('morgan');
 const helmet = require('helmet');
 const compression = require('compression');
-const prettyError = require('pretty-error');
 const cookieParser = require('cookie-parser');
 
 const {apiRouter, errorHandler} = require('./routers');
 const {ssrMiddleware} = require('./lib/ssr');
-// const {connectDb} = require('./lib/db');
-
-// better error messages
-prettyError.start();
 
 const app = express();
 

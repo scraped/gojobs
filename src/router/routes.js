@@ -7,64 +7,59 @@ const resolve = name =>
 
 export const routes = [
   {
-    'path': '/',
-    'name': 'main',
-    'component': resolve('main/index')
+    path: '/',
+    name: 'main',
+    component: resolve('main/index')
   },
 
   {
-    'path': '/error/:code',
-    'name': 'error',
-    'component': resolve('Error')
+    path: '/crews',
+    name: 'crews',
+    component: resolve('crews/index')
   },
 
   {
-    'path': '/crews',
-    'name': 'crews',
-    'component': resolve('crews/index')
-  },
-
-  {
-    'path': '/admin',
-    'component': resolve('Admin'),
+    path: '/admin',
+    component: resolve('Admin'),
     'children': [
       {
-        'path': '',
-        'component': resolve('admin/index')
+        path: '',
+        component: resolve('admin/index')
       },
 
       {
-        'path': 'jobs',
-        'component': resolve('admin/jobs')
+        path: 'jobs',
+        component: resolve('admin/jobs')
       },
 
       {
-        'path': 'crews',
-        'component': resolve('admin/crews')
+        path: 'crews',
+        component: resolve('admin/crews')
       }
     ]
   },
 
   {
-    'path': '/auth',
-    'name': 'auth',
-    'component': resolve('auth/index')
+    path: '/auth',
+    name: 'auth',
+    component: resolve('auth/index')
   },
 
   {
-    'path': '/job/:id/:slug',
-    'name': 'job',
-    'component': resolve('job/index')
+    path: '/job/:id/:slug',
+    name: 'job',
+    component: resolve('job/index')
   },
 
   {
-    'path': '/profile/:username',
-    'name': 'profile',
-    'component': resolve('profile/index')
+    path: '/profile/:username',
+    name: 'profile',
+    component: resolve('profile/index')
   },
 
   {
-    'path': '*',
-    'component': resolve('Error')
+    path: '*',
+    name: 'error',
+    component: resolve('Error')
   }
 ];

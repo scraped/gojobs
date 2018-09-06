@@ -16,9 +16,8 @@ export default context => {
       async () => {
         const matchedComponents = router.getMatchedComponents();
 
-        if (!matchedComponents.length) {
-          router.push('/error/404');
-          // return reject(new Error('404'));
+        if (router.currentRoute.name === 'error') {
+          context.errorCode = 404;
         }
 
         const asyncDataPromises = findAsyncComponents({
