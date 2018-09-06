@@ -14,9 +14,9 @@
                   slot="trigger"
                   class="dropdown__trigger is-unselectable"
                 >
-                  {{ sortTypes[sortModel] }}
+                  {{sortTypes[sortModel]}}
                   <span class="has-text-primary">
-                    {{ count | formatNumber }} jobs
+                    {{count | formatNumber}} jobs
                   </span>
                   <b-icon
                     pack="fa"
@@ -41,145 +41,120 @@
               Page {{page}}
             </p>
 
-            <div
-              class="content"
-              :class="{ 'is-hidden-tablet': filtersShown }"
-            >
-              <div
-                class="button is-block is-primary"
-                :class="{ 'is-outlined': filtersShown }"
-                @click="showFilters"
+            <div class="content is-size-5">
+              <b-dropdown
+                v-model="platformModel"
+                @change="platformChanged"
+                position="is-bottom-left"
+                class="is-block"
               >
-                <b-icon
-                  pack="fa"
-                  size="is-small"
-                  icon="filter"
-                ></b-icon>
-                <span>{{ filtersText }}</span>
-              </div>
+                <div
+                  slot="trigger"
+                  class="dropdown__trigger is-unselectable"
+                >
+                  <span class="has-text-weight-bold">Platform</span>
+                  <div class="is-pulled-right">
+                    {{currPlatformName}}
+                    <b-icon
+                      pack="fa"
+                      icon="angle-down"
+                      custom-class="is-size-5"
+                    ></b-icon>
+                  </div>
+                </div>
 
+                <b-dropdown-item
+                  v-for="(platform, key) in platforms"
+                  :key="key"
+                  :value="key"
+                  class="is-unselectable"
+                >
+                  {{platform.name}}
+                </b-dropdown-item>
+              </b-dropdown>
+            </div>
+
+            <div class="content is-size-5">
+              <b-dropdown
+                v-model="typeModel"
+                @change="typeChanged"
+                position="is-bottom-left"
+                class="is-block"
+              >
+                <div
+                  slot="trigger"
+                  class="dropdown__trigger is-unselectable"
+                >
+                  <span class="has-text-weight-bold">Type</span>
+                  <div class="is-pulled-right">
+                    {{currTypeName}}
+                    <b-icon
+                      pack="fa"
+                      icon="angle-down"
+                      custom-class="is-size-5"
+                    ></b-icon>
+                  </div>
+                </div>
+
+                <b-dropdown-item
+                  value="any"
+                  class="is-unselectable"
+                >
+                  Any
+                </b-dropdown-item>
+                <b-dropdown-item
+                  v-for="(type, key) in jobTypes"
+                  :key="key"
+                  :value="key"
+                  class="is-unselectable"
+                >
+                  <icon-gta :icon="type.icon"></icon-gta>
+                  <span>{{type.name}}</span>
+                </b-dropdown-item>
+              </b-dropdown>
             </div>
 
             <div
-              v-show="filtersShown"
-              ref="filters"
-              class="is-hidden-mobile"
+              v-if="currTypeInfo && currTypeInfo.modes"
+              class="content is-size-5"
             >
-              <div class="content is-size-5">
-                <b-dropdown
-                  v-model="platformModel"
-                  @change="platformChanged"
-                  position="is-bottom-left"
-                  class="is-block"
-                >
-                  <div
-                    slot="trigger"
-                    class="dropdown__trigger is-unselectable"
-                  >
-                    <span class="has-text-weight-bold">Platform</span>
-                    <div class="is-pulled-right">
-                      {{ currPlatformName }}
-                      <b-icon
-                        pack="fa"
-                        icon="angle-down"
-                        custom-class="is-size-5"
-                      ></b-icon>
-                    </div>
-                  </div>
-
-                  <b-dropdown-item
-                    v-for="(platform, key) in platforms"
-                    :key="key"
-                    :value="key"
-                    class="is-unselectable"
-                  >
-                    {{platform.name}}
-                  </b-dropdown-item>
-                </b-dropdown>
-              </div>
-
-              <div class="content is-size-5">
-                <b-dropdown
-                  v-model="typeModel"
-                  @change="typeChanged"
-                  position="is-bottom-left"
-                  class="is-block"
-                >
-                  <div
-                    slot="trigger"
-                    class="dropdown__trigger is-unselectable"
-                  >
-                    <span class="has-text-weight-bold">Type</span>
-                    <div class="is-pulled-right">
-                      {{ currTypeName }}
-                      <b-icon
-                        pack="fa"
-                        icon="angle-down"
-                        custom-class="is-size-5"
-                      ></b-icon>
-                    </div>
-                  </div>
-
-                  <b-dropdown-item
-                    :value="0"
-                    class="is-unselectable"
-                  >
-                    Any
-                  </b-dropdown-item>
-                  <!-- <b-dropdown-item
-                    v-for="(type, i) in modes"
-                    :key="type.name"
-                    :value="i + 1"
-                    class="is-unselectable"
-                  >
-                    <icon-gta :icon="type.icon"></icon-gta>
-                    <span>{{ type.name }}</span>
-                  </b-dropdown-item> -->
-                </b-dropdown>
-              </div>
-
-              <div
-                v-if="currTypeInfo && currModeInfo"
-                class="content is-size-5"
+              <b-dropdown
+                v-model="modeModel"
+                @change="modeChanged"
+                position="is-bottom-left"
+                class="is-block"
               >
-                <b-dropdown
-                  v-model="modeModel"
-                  @change="modeChanged"
-                  position="is-bottom-left"
-                  class="is-block"
+                <div
+                  slot="trigger"
+                  class="dropdown__trigger is-unselectable"
                 >
-                  <div
-                    slot="trigger"
-                    class="dropdown__trigger is-unselectable"
-                  >
-                    <span class="has-text-weight-bold">Game Mode</span>
-                    <div class="is-pulled-right">
-                      {{ currModeName }}
-                      <b-icon
-                        pack="fa"
-                        icon="angle-down"
-                        custom-class="is-size-5"
-                      ></b-icon>
-                    </div>
+                  <span class="has-text-weight-bold">Game Mode</span>
+                  <div class="is-pulled-right">
+                    {{currModeName}}
+                    <b-icon
+                      pack="fa"
+                      icon="angle-down"
+                      custom-class="is-size-5"
+                    ></b-icon>
                   </div>
+                </div>
 
-                  <b-dropdown-item
-                    :value="0"
-                    class="is-unselectable"
-                  >
-                    Any
-                  </b-dropdown-item>
-                  <b-dropdown-item
-                    v-for="(mode, i) in currModeInfo"
-                    :key="`mode-${i}`"
-                    :value="i + 1"
-                    class="is-unselectable"
-                  >
-                    <icon-gta :icon="currTypeInfo.icons[i]"></icon-gta>
-                    <span>{{ mode }}</span>
-                  </b-dropdown-item>
-                </b-dropdown>
-              </div>
+                <b-dropdown-item
+                  value="any"
+                  class="is-unselectable"
+                >
+                  Any
+                </b-dropdown-item>
+                <b-dropdown-item
+                  v-for="(mode, key) in currTypeInfo.modes"
+                  :key="key"
+                  :value="key"
+                  class="is-unselectable"
+                >
+                  <icon-gta :icon="currTypeInfo.icon"></icon-gta>
+                  <span>{{mode.name}}</span>
+                </b-dropdown-item>
+              </b-dropdown>
             </div>
           </div>
         </div>
@@ -259,7 +234,6 @@ export default {
     return {
       platforms,
       jobTypes,
-      filtersShown: true,
       sortTypes: {
         relevance: 'Most relevant',
         growth: 'Trending',
@@ -268,10 +242,10 @@ export default {
         rating: 'By likes',
         featured: 'Featured'
       },
-      sortModel: null,
-      typeModel: null,
-      modeModel: null,
-      platformModel: null,
+      sortModel: '',
+      typeModel: '',
+      modeModel: '',
+      platformModel: '',
 
       filtersInitialTopCoord: 0
     };
@@ -293,42 +267,48 @@ export default {
       page: state => Number(state.query.page) || 1
     }),
 
-    filtersText() {
-      return this.filtersShown
-        ? 'Hide filters'
-        : 'Show filters';
-    },
-
     currPlatformName() {
-      // return platforms[this.platformModel].name;
+      const {platformModel} = this;
+
+      return platformModel
+        ? platforms[this.platformModel].name
+        : '';
     },
 
     currTypeInfo() {
-      return {};
-      // return modes[this.typeModel - 1];
+      const {typeModel} = this;
+
+      return typeModel
+        ? jobTypes[this.typeModel]
+        : null;
     },
 
     currModeInfo() {
-      return {};
-      // if (this.currTypeInfo) {
-      //   return this.currTypeInfo.modes;
-      // }
+      const {currTypeInfo, modeModel} = this;
+
+      if (currTypeInfo && modeModel) {
+        return currTypeInfo.modes
+          ? currTypeInfo.modes[modeModel]
+          : null;
+      }
+
+      return null;
     },
 
     currTypeName() {
-      return '';
-      // const typeInfo = this.currTypeInfo;
-      // return typeInfo
-      //   ? typeInfo.name
-      //   : 'Any';
+      const {currTypeInfo} = this;
+
+      return currTypeInfo
+        ? currTypeInfo.name
+        : 'Any';
     },
 
     currModeName() {
-      return '';
-      // const modeInfo = this.currModeInfo[this.modeModel - 1];
-      // return modeInfo
-      //   ? modeInfo
-      //   : 'Any'
+      const {currModeInfo} = this;
+
+      return currModeInfo
+        ? currModeInfo.name
+        : 'Any'
     }
   },
 
@@ -347,11 +327,14 @@ export default {
     }, 10),
 
     defineModels(route) {
-      this.sortModel = route.query.by || 'relevance';
-      this.typeModel = Number(route.query.type) || 0;
-      this.modeModel = Number(route.query.mode) || 0;
+      const {query} = route;
+
+      this.sortModel = query.by || 'relevance';
+      this.typeModel = query.type || 'any';
+      this.modeModel = query.mode || 'any';
 
       const cookiePlatform = this.$cookie.get('platform');
+
       if (cookiePlatform && Object.keys(platforms).includes(cookiePlatform)) {
         this.platformModel = cookiePlatform;
       } else {
@@ -361,18 +344,15 @@ export default {
 
     platformChanged(platform) {
       this.$cookie.set('platform', platform, {expires: '1Y'});
-      this.$router.push({query: { ...this.$route.query, platform }});
+      this.$router.push({
+        query: { ...this.$route.query, platform }
+      });
     },
 
     sortChanged(value) {
       this.$router.push({
         query: { ...this.$route.query, by: value, page: 1 }
       });
-    },
-
-    showFilters() {
-      this.$refs.filters.classList.remove('is-hidden-mobile');
-      this.filtersShown = !this.filtersShown;
     },
 
     typeChanged(value) {
