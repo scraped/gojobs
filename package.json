@@ -38,7 +38,7 @@
     "bluebird": "^3.5.2",
     "body-parser": "^1.18.3",
     "boom": "^7.2.0",
-    "buefy": "^0.6.6",
+    "buefy": "^0.6.7",
     "bull": "^3.4.8",
     "bull-arena": "^2.4.5",
     "bulma": "^0.7.1",
@@ -138,7 +138,7 @@
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-middleware": "^3.2.0",
-    "webpack-dev-server": "^3.1.7",
+    "webpack-dev-server": "^3.1.8",
     "webpack-hot-middleware": "^2.23.1",
     "webpack-merge": "^4.1.4",
     "webpack-node-externals": "^1.7.2"
