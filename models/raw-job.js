@@ -33,7 +33,7 @@ const schema = new Schema({
 
   versions: [
     {
-      v: Number,
+      ver: Number,
       id: String,
       chg: Boolean
     }

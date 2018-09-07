@@ -1,10 +1,8 @@
-// const _ = require('lodash');
-// const {platforms} = require('../../config/static');
+const clamp = require('lodash/clamp');
 const {Job, RawJob} = require('../../models');
+const {platforms} = require('../../config/static');
 
-const PER_PAGE_DEFAULT = 35;
-
-exports.rawJobsListPost = async function rawJobsListPost(req, res) {
+exports.rawJobsListPost = async (req, res) => {
   const {body} = req;
 
   const page = Number(body.page) || 1;
@@ -23,27 +21,47 @@ exports.rawJobsListPost = async function rawJobsListPost(req, res) {
   });
 };
 
-exports.jobListPost = async function jobListPost(req, res) {
-  const { body, cookies } = req;
+exports.jobListPost = async (req, res) => {
+  const MIN_PER_PAGE = 10;
+  const MAX_PER_PAGE = 100;
+  const PER_PAGE_DEFAULT = 30;
+  const DEFAULT_PLATFORM = 'pc';
 
-  const { by, rockstar, rockstarverified, user } = body;
+  const {body, cookies} = req;
 
-  const type = Number(body.type);
-  const mode = Number(body.mode);
-  const page = Number(body.page) || 1;
-  const perPage = PER_PAGE_DEFAULT;
-  const platform = body.platform || cookies.platform || 'pc';
+  // Page
+  const page = Math.abs(Number(body.page)) || 1;
+
+  // Per page
+  const perPage = Number(body.perPage)
+    ? clamp(Number(body.perPage), MIN_PER_PAGE, MAX_PER_PAGE)
+    : PER_PAGE_DEFAULT;
+
+  // Platform
+  let platform = body.platform || cookies.platform || DEFAULT_PLATFORM;
+
+  if (!Object.keys(platforms).includes(platform)) {
+    platform = DEFAULT_PLATFORM;
+  }
+
+  const {
+    type: jobType,
+    mode: jobMode,
+    user,
+    rockstar,
+    by
+  } = body;
 
   let conditions = {};
   let sort = {};
 
   switch (by) {
     case 'rating':
-      sort = { 'stats.like': -1 };
+      sort = {'stats.like': -1};
       break;
 
     case 'updated':
-      sort = { 'scUpdated': -1 };
+      sort = {'scUpdated': -1};
       break;
 
     case 'featured':
@@ -51,58 +69,49 @@ exports.jobListPost = async function jobListPost(req, res) {
       break;
 
     case 'newest':
-      sort = { scAdded: -1 };
+      sort = {scAdded: -1};
       break;
 
     case 'growth':
-      sort = { 'stats.growth': -1 };
+      sort = {'stats.growth': -1};
       break;
 
     default:
-      sort = { 'stats.trend': -1 };
+      sort = {'stats.trend': -1};
   }
 
   if (user) {
     conditions.author = user;
   }
 
-  if (type) {
-    conditions.scType = type;
+  if (jobType && jobType !== 'any') {
+    conditions.scType = jobType;
   }
 
-  if (mode) {
-    conditions.scMode = mode;
+  if (jobMode && jobType !== 'any') {
+    conditions.scMode = jobMode;
   }
 
-  if (rockstar || rockstarverified) {
+  if (rockstar) {
+    if (!user) {
+      conditions.author = {$exists: false};
+    }
     conditions.rockstar = true;
-    conditions.author = { $exists: Boolean(rockstarverified) };
   } else {
-    // conditions.platform = 1 + _.findIndex(platforms, plat => {
-    //   return plat.short === platform;
-    // });
+    conditions.plat = platform;
   }
 
   const count = Object.keys(conditions).length
     ? await Job.countDocuments(conditions)
     : await Job.estimatedDocumentCount();
 
-  try {
-    const jobs = await Job.find(conditions)
-      // .select('-_id')
-      .skip((page - 1) * perPage)
-      .limit(perPage)
-      .sort(sort);
+  const jobs = await Job.find(conditions)
+    .skip((page - 1) * perPage)
+    .limit(perPage)
+    .sort(sort);
 
-    res.json({
-      count,
-      jobs
-    });
-
-  } catch (error) {
-    console.log(error);
-    res.json({
-      message: 'Error occured'
-    });
-  }
+  res.json({
+    count,
+    jobs
+  });
 }
