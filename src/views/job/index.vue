@@ -25,15 +25,17 @@
               <div class="media">
                 <div class="media-left">
                   <router-link
-                    :to="{ name: 'profile', params: { username: job.author }}">
+                    :to="{name: 'profile', params: {username: job.author}}">
                     <figure class="image image-avatar is-48x48">
                       <img
                         v-if="job.author"
                         class="is-rounded"
-                        :src="avatars.small">
+                        :src="avatars.small"
+                      >
                       <img
                         v-else
-                        class="is-rounded" src="@/images/rockstar-avatar-48.png">
+                        class="is-rounded" src="@/images/rockstar-avatar-48.png"
+                      >
                     </figure>
                   </router-link>
                 </div>
@@ -42,8 +44,8 @@
                   <p>
                     <router-link
                       v-if="job.author"
-                      :to="{ name: 'profile', params: { username: job.author }}">
-                      @{{ job.author }}
+                      :to="{name: 'profile', params: {username: job.author}}">
+                      @{{job.author}}
                     </router-link>
                     <span
                       v-if="job.rockstar"
@@ -61,12 +63,12 @@
                     </span>
                   </p>
                   <p class="has-text-grey">
-                    {{ jobExt.scTypeName }}
+                    {{jobExt.scTypeName}}
                     <template v-if="jobExt.scModeName">
-                      — {{ jobExt.scModeName }}
+                      — {{jobExt.scModeName}}
                     </template>
                     ·
-                    {{ jobExt.platformName || 'All platforms' }}
+                    {{jobExt.platformName || 'All platforms'}}
                     <template v-if="jobExt.playersNumberText">
                       · {{jobExt.playersNumberText}}
                     </template>
@@ -83,7 +85,7 @@
 
                 <!-- <div v-if="job.details.specific.race.trfVeh.length" class="tags">
                   Transformations:
-                  {{ transformVehicles }}
+                  {{transformVehicles}}
                 </div> -->
 
                 <div
@@ -95,31 +97,15 @@
                     to="/"
                     v-for="(tag, i) in job.tags"
                     :key="tag"
-                    class="tag is-capitalized">{{ tag }}</router-link>
+                    class="tag is-capitalized">{{tag}}</router-link>
 
                   <!-- <span
                     v-if="job.details.specific.teams"
                     class="tag"
                   >
-                    <template v-if="job.details.specific.teams > 2">2-</template>{{ job.details.specific.teams }} teams
+                    <template v-if="job.details.specific.teams > 2">2-</template>{{job.details.specific.teams}} teams
                   </span> -->
                 </div>
-
-                <b-modal :active.sync="mapShowed">
-                  <div v-if="jobExt.scTypeName === 'Race' || jobExt.scTypeName === 'Parachuting'">
-                    <section class="section has-background-white">
-                      <h2 class="title has-text-weight-normal">{{job.name}} - Race Map</h2>
-                      <div class="content">
-                        The first checkpoint (start/finish line for lap races) is a green checkpoint, and the last checkpoint (finish for point to point races) is a red one. Knowing these two checkpoints you can figure out the race direction.
-                      </div>
-                      <race-map
-                        :point-to-point="job.specific.p2p"
-                        :locations="job.specific.chpLocs"
-                        :slocations="job.specific.chpSecLocs">
-                      </race-map>
-                    </section>
-                  </div>
-                </b-modal>
               </div>
 
               <div class="tags">
@@ -127,56 +113,56 @@
                   <span class="icon">
                     <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
                   </span>
-                  <span>{{ job.stats.like | formatNumber }}</span>
+                  <span>{{job.stats.like | formatNumber}}</span>
                 </span>
 
                 <span class="tag is-rounded is-large has-text-grey-light">
                   <span class="icon" >
                     <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
                   </span>
-                  <span>{{ job.stats.dislike | formatNumber }}</span>
+                  <span>{{job.stats.dislike | formatNumber}}</span>
                 </span>
 
                 <span class="tag is-rounded is-large">
                   <span class="icon is-hidden-mobile">
                     <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
-                  </span><span>{{ job.stats.plTot | formatNumber }}</span>
+                  </span><span>{{job.stats.plTot | formatNumber}}</span>
                 </span>
 
                 <span class="tag is-rounded is-large">
                   <span class="icon is-hidden-mobile">
                       <i class="fa fa-users fa-lg" aria-hidden="true"></i>
-                    </span><span>{{ job.stats.plUnq | formatNumber }}</span>
+                    </span><span>{{job.stats.plUnq | formatNumber}}</span>
                 </span>
 
                 <span class="tag is-rounded is-large has-text-danger">
                   <span class="icon is-hidden-mobile">
                       <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
-                    </span><span>{{ job.stats.quit | formatNumber }}</span>
+                    </span><span>{{job.stats.quit | formatNumber}}</span>
                 </span>
               </div>
 
               <div class="content">
                 <p>
                   <b>Actual rating:</b>
-                  <span :class="`has-text-${ratingCssClass(job.stats.rating, false)}`">{{ job.stats.rating }}%</span>
+                  <span :class="`has-text-${ratingCssClass(job.stats.rating, false)}`">{{job.stats.rating}}%</span>
                 </p>
                 <p>
                   <b>RGSC rating (quits during the job considered dislikes):</b>
-                  <span :class="`has-text-${ratingCssClass(job.stats.rstRating, false)}`">{{ job.stats.rstRating }}%</span>
+                  <span :class="`has-text-${ratingCssClass(job.stats.rstRating, false)}`">{{job.stats.rstRating}}%</span>
                 </p>
               </div>
 
 
 
               <p class="has-text-grey-light">
-                Information updated {{ job.fetchDate | formatDate }}
+                Information updated {{job.fetchDate | formatDate}}
                 <template v-if="job.ver > 1">
-                  · Updated {{ job.scUpdated | formatDate }}
-                  (version {{ job.ver }})
+                  · Updated {{job.scUpdated | formatDate}}
+                  (version {{job.ver}})
                 </template>
                 <template v-if="job.scAdded">
-                  · Added {{ job.scAdded | formatDate }}
+                  · Added {{job.scAdded | formatDate}}
                 </template>
               </p>
             </div>
@@ -213,22 +199,24 @@
           </div>
 
           <div class="column is-one-third-widescreen is-two-fifths-desktop is-12-tablet">
-
-            <div class="box">
+            <div
+              v-if="isRace"
+              class="box"
+            >
               <h2 class="subtitle">Race Info</h2>
               <table class="table is-fullwidth is-striped">
                 <tbody>
                   <tr>
                     <td>Lap length</td>
-                    <td><span class="is-pulled-right has-text-weight-bold">{{ job.specific.dist | mToKm }} km</span></td>
+                    <td><span class="is-pulled-right has-text-weight-bold">{{job.specific.dist | mToKm}} km</span></td>
                   </tr>
-                  <tr>
+                  <tr v-if="job.specific.laps">
                     <td>Number of laps</td>
-                    <td><span class="is-pulled-right has-text-weight-bold">{{ job.specific.laps }}</span></td>
+                    <td><span class="is-pulled-right has-text-weight-bold">{{job.specific.laps}}</span></td>
                   </tr>
-                  <tr>
+                  <tr v-if="job.specific.defVeh">
                     <td>Tested with</td>
-                    <td><span class="is-pulled-right has-text-weight-bold">{{ vehicles[job.specific.defVeh] }}</span></td>
+                    <td><span class="is-pulled-right has-text-weight-bold">{{vehicles[job.specific.defVeh]}}</span></td>
                   </tr>
                 </tbody>
               </table>
@@ -248,6 +236,23 @@
                 <b-icon pack="fa" icon="angle-right" size="is-small"></b-icon>
               </a> -->
             </div>
+
+            <b-modal
+              v-if='isRace'
+              :active.sync="mapShowed"
+            >
+              <section class="section has-background-white">
+                <h2 class="title has-text-weight-normal">{{job.name}} - Race Map</h2>
+                <div class="content">
+                  The first checkpoint (start/finish line for lap races) is a green checkpoint, and the last checkpoint (finish for point to point races) is a red one. Knowing these two checkpoints you can figure out the race direction.
+                </div>
+                <race-map
+                  :point-to-point="job.specific.p2p"
+                  :locations="job.specific.chpLocs"
+                  :slocations="job.specific.chpSecLocs">
+                </race-map>
+              </section>
+            </b-modal>
           </div>
         </div>
       </div>
@@ -262,8 +267,6 @@ import {
   userAvatars,
   ratingCssClass,
   updatedDate,
-  scTypeModeIcon,
-  scPlatformName
 } from '@/helpers';
 
 import {ratingMixin} from '@/mixins';
@@ -284,10 +287,10 @@ export default {
     }
   },
 
-  fetchData({ store, route }) {
-    const { id } = route.params;
+  fetchData({store, route}) {
+    const {id} = route.params;
     return Promise.all([
-      store.dispatch('job/fetchJob', { id })
+      store.dispatch('job/fetchJob', {id})
     ]);
   },
 
@@ -334,7 +337,7 @@ export default {
     transformVehicles() {
       return '';
 
-      const { trfVeh } = this.job.details.specific.race;
+      const {trfVeh} = this.job.details.specific.race;
 
       let vehiclesString = '';
 
@@ -353,8 +356,12 @@ export default {
     },
 
     updatedDate() {
-      const { ver } = this.job;
-      return updatedDate({ date: this.job.scUpdated, ver });
+      const {ver} = this.job;
+      return updatedDate({date: this.job.scUpdated, ver});
+    },
+
+    isRace() {
+      return this.jobExt.scTypeName === 'Race';
     }
   },
 

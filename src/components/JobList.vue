@@ -4,7 +4,7 @@
       <div class="column is-one-third-widescreen is-two-fifths-desktop is-two-fifths-tablet">
         <div class="filters" ref="filters">
           <div class="filters__main box is-shadowless">
-            <h2 class="is-size-4">
+            <h2 class="is-size-4 is-size-5-touch">
               <b-dropdown
                 v-model="sortModel"
                 position="is-bottom-left"
@@ -32,7 +32,7 @@
                   :value="key"
                   class="is-unselectable"
                 >
-                  {{ value }}
+                  {{value}}
                 </b-dropdown-item>
               </b-dropdown>
             </h2>
@@ -41,7 +41,7 @@
               Page {{page}}
             </p>
 
-            <div class="content is-size-5">
+            <div class="content is-size-5 is-size-6-touch">
               <b-dropdown
                 v-model="platformModel"
                 @change="platformChanged"
@@ -74,7 +74,7 @@
               </b-dropdown>
             </div>
 
-            <div class="content is-size-5">
+            <div class="content is-size-5 is-size-6-touch">
               <b-dropdown
                 v-model="typeModel"
                 @change="typeChanged"
@@ -116,7 +116,7 @@
 
             <div
               v-if="currTypeInfo && currTypeInfo.modes"
-              class="content is-size-5"
+              class="content is-size-5 is-size-6-touch"
             >
               <b-dropdown
                 v-model="modeModel"
@@ -128,7 +128,7 @@
                   slot="trigger"
                   class="dropdown__trigger is-unselectable"
                 >
-                  <span class="has-text-weight-bold">Game Mode</span>
+                  <span class="has-text-weight-bold"><span class="is-hidden-touch">Game </span>Mode</span>
                   <div class="is-pulled-right">
                     {{currModeName}}
                     <b-icon
