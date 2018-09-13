@@ -10,8 +10,12 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "extends": "eslint:recommended",
+  "extends": ["airbnb-base"],
   "rules": {
-    "no-console": "off"
+    "array-element-newline": ["error", "always"],
+    "linebreak-style": ["error", "windows"],
+    "object-curly-spacing": ["error", "never"],
+    "no-console": 0,
+    "no-return-await": 0
   }
 }
