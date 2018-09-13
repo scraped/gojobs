@@ -5,12 +5,7 @@
         <div class="columns is-centered">
           <div class="column is-half">
               <h1 class="title">
-                <template v-if="signup">
-                  <span class="tag is-rounded has-background-grey-lighter is-large">Sign Up</span> or <a @click="signup = false">Login</a>
-                </template>
-                <template v-else>
-                  <a @click="signup = true">Sign Up</a> or <span class="tag is-rounded has-background-grey-lighter is-large">Login</span>
-                </template>
+                Sign Up
               </h1>
               <div
                 v-if="signup"

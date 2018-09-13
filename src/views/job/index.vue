@@ -3,7 +3,10 @@
     <div class="is-overlay" :style="`background: linear-gradient(to bottom, transparent${gradient(0.3)}, transparent);`"></div>
     <section class="section">
       <div class="container">
-        <h1 class="title" v-html="job.name">Job</h1>
+        <h1
+          v-html="job.name"
+          class="title"
+        >Job</h1>
       </div>
     </section>
     <section class="section">
@@ -41,7 +44,7 @@
                 </div>
 
                 <div class="media-content">
-                  <p>
+                  <div class="title is-size-5 is-marginless">
                     <router-link
                       v-if="job.author"
                       :to="{name: 'profile', params: {username: job.author}}">
@@ -61,17 +64,23 @@
                         Official Rockstar Job
                       </span>
                     </span>
-                  </p>
+                  </div>
                   <p class="has-text-grey">
-                    {{jobExt.scTypeName}}
+                    <router-link
+                      :to="{name: 'main', query: {type: job.scType}}"
+                    >{{jobExt.scTypeName}}</router-link>
                     <template v-if="jobExt.scModeName">
-                      — {{jobExt.scModeName}}
+                      —
+                      <router-link
+                        :to="{name: 'main', query: {type: job.scType, mode: job.scMode}}"
+                      >{{jobExt.scModeName}}</router-link>
                     </template>
                     ·
-                    {{jobExt.platformName || 'All platforms'}}
-                    <template v-if="jobExt.playersNumberText">
-                      · {{jobExt.playersNumberText}}
-                    </template>
+                    <router-link
+                      v-if="job.plat"
+                      :to="{name: 'main', query: {platform: job.plat}}"
+                    >{{jobExt.platformName}}</router-link>
+                    <span v-else>All platforms</span>
                   </p>
                 </div>
               </div>
@@ -179,7 +188,6 @@
               <h2 class="subtitle">
                 Reviews
               </h2>
-              <hr>
 
               <div class="buttons">
                 <a class="button is-primary">
@@ -199,34 +207,109 @@
           </div>
 
           <div class="column is-one-third-widescreen is-two-fifths-desktop is-12-tablet">
-            <div
-              v-if="isRace"
-              class="box"
-            >
-              <h2 class="subtitle">Race Info</h2>
-              <table class="table is-fullwidth is-striped">
-                <tbody>
-                  <tr>
-                    <td>Lap length</td>
-                    <td><span class="is-pulled-right has-text-weight-bold">{{job.specific.dist | mToKm}} km</span></td>
-                  </tr>
-                  <tr v-if="job.specific.laps">
-                    <td>Number of laps</td>
-                    <td><span class="is-pulled-right has-text-weight-bold">{{job.specific.laps}}</span></td>
-                  </tr>
-                  <tr v-if="job.specific.defVeh">
-                    <td>Tested with</td>
-                    <td><span class="is-pulled-right has-text-weight-bold">{{vehicles[job.specific.defVeh]}}</span></td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="box">
+              <h2 class="subtitle">Job Info</h2>
+              <template v-if="job.locs && job.locs.length">
+                <div class="subtitle is-size-6">Locations</div>
+                <div class="tags">
+                  <span
+                    v-for="locShortName in job.locs"
+                    :key="locShortName"
+                    class="tag is-white is-radiusless is-paddingless"
+                    :style="`border-bottom: 3px solid rgb(${job.background[0]})`"
+                  >{{locations[locShortName.toLowerCase()]}}</span>
+                </div>
+              </template>
 
-              <div>
-                <span
+              <template v-if="job.teams">
+                <div class="subtitle is-size-6">
+                  <span>Required number of teams</span>
+                  <span class="has-text-weight-bold is-pulled-right">{{job.teams === 2 ? '2' : `2-${job.teams}`}}</span>
+                </div>
+              </template>
+
+              <template v-if="job.specific.trfVeh && job.specific.trfVeh.length">
+                <div class="subtitle is-size-6">Vehicles in Transfrom race</div>
+                <div
+                  v-if="trfVehShowed"
+                  class="tags"
+                >
+                  <span
+                    v-for="vehId in job.specific.trfVeh"
+                    :key="vehicles[vehId]"
+                    class="tag is-white is-radiusless is-paddingless"
+                    :style="`border-bottom: 3px solid rgb(${job.background[0]})`"
+                  >{{vehicles[vehId]}}</span>
+                </div>
+                <div
+                  v-else
+                  class="content"
+                >
+                  <a
+                    class="is-size-7"
+                    @click="trfVehShowed = true"
+                  >This is sometimes a spoiler, so to reveal the list click here.</a>
+                </div>
+              </template>
+
+              <template v-if="job.specific.classes && job.specific.classes.length">
+                <div class="subtitle is-size-6">Vehicle classes</div>
+                <div class="tags">
+                  <span
+                    v-for="classShortName in job.specific.classes"
+                    :key="classShortName"
+                    class="tag is-white is-radiusless is-paddingless"
+                    :style="`border-bottom: 3px solid rgb(${job.background[0]})`"
+                  >{{vehClasses[classShortName].name}}</span>
+                </div>
+              </template>
+
+              <template v-if="jobExt.playersNumberText">
+                <div class="subtitle is-size-6">
+                  <span>Number of players</span>
+                  <span class="has-text-weight-bold is-pulled-right">{{jobExt.playersNumberText}}</span>
+                </div>
+              </template>
+
+              <template v-if="job.specific.dist">
+                <div class="subtitle is-size-6">
+                  <span>Lap length</span>
+                  <span class="has-text-weight-bold is-pulled-right">{{job.specific.dist | mToKm}} km</span>
+                </div>
+              </template>
+
+              <template v-if="job.specific.laps">
+                <div class="subtitle is-size-6">
+                  <span>Default number of laps</span>
+                  <span class="has-text-weight-bold is-pulled-right">{{job.specific.laps}}</span>
+                </div>
+              </template>
+
+              <template v-if="job.specific.defVeh">
+                <div class="subtitle is-size-6">
+                  <span>Tested with</span>
+                  <span class="has-text-weight-bold is-pulled-right">{{vehicles[job.specific.defVeh]}}</span>
+                </div>
+              </template>
+
+              <div class="buttons">
+                <div
+                  v-if="isRace"
                   class="button is-fullwidth is-medium"
-                  @click="mapShowed = !mapShowed">
-                  Show route
-                </span>
+                  @click="mapShowed = !mapShowed"
+                >
+                  Show race route
+                </div>
+
+                <a
+                  class="button is-fullwidth is-medium is-primary"
+                  :style="`background: rgb(${job.background[0]})`"
+                  :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/${job.jobCurrId}`"
+                  target="_blank"
+                >
+                  <span>Go to RGSC job page</span>
+                  <b-icon icon="external-link" size="is-small"></b-icon>
+                </a>
               </div>
               <!-- <a
                 class="button is-block is-medium is-primary is-radiusless"
@@ -240,6 +323,7 @@
             <b-modal
               v-if='isRace'
               :active.sync="mapShowed"
+              scroll="keep"
             >
               <section class="section has-background-white">
                 <h2 class="title has-text-weight-normal">{{job.name}} - Race Map</h2>
@@ -273,7 +357,7 @@ import {ratingMixin} from '@/mixins';
 
 import IconGta from '@/components/IconGta.vue';
 import RaceMap from './RaceMap.vue';
-import {vehicles} from '@/../config/static';
+import {vehicles, vehClasses, locations} from '@/../config/static';
 import findIndex from 'lodash/findIndex';
 
 export default {
@@ -302,8 +386,10 @@ export default {
   data() {
     return {
       mapShowed: false,
-      transformations: false,
-      vehicles
+      trfVehShowed: false,
+      vehicles,
+      vehClasses,
+      locations
     };
   },
 

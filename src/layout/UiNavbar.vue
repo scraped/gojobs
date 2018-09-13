@@ -66,29 +66,43 @@
             <span>Sign Up</span>
           </router-link>
 
-          <router-link
-            :to="{name: 'auth'}"
+          <a
             class="navbar-item"
+            @click="isLogInModal = true"
           >
-            <span>Log In</span>
-          </router-link>
+            Log In
+          </a>
           </template>
         </div>
       </div>
     </div>
+
+    <b-modal
+      :active.sync="isLogInModal"
+      scroll="keep"
+      has-modal-card
+    >
+      <log-in></log-in>
+    </b-modal>
   </nav>
 </template>
 
 <script>
-import {platforms} from '../../config/static'
+import {platforms} from '@/../config/static'
 import {mapState} from 'vuex';
 import {userAvatars} from '@/helpers';
-// import {findIndex} from 'lodash';
+
+import LogIn from '@/components/LogIn.vue';
 
 export default {
+  components: {
+    LogIn
+  },
+
   data() {
     return {
-      menuOpened: false
+      menuOpened: false,
+      isLogInModal: false,
     };
   },
 
