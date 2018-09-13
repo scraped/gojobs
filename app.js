@@ -13,7 +13,7 @@ const compression = require('compression');
 const cookieParser = require('cookie-parser');
 
 const {apiRouter, errorHandler} = require('./routers');
-const {ssrMiddleware} = require('./lib/ssr');
+const {ssrMiddleware} = require('./middleware/ssr');
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.set('port', config.port);
 app.use(logger('dev'));
 app.use(helmet());
 app.use(compression());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(cookieParser());
