@@ -1,11 +1,8 @@
 dist/
-.vscode/
 .idea/
 
 #
-#
 # Nodejs gitignore
-#
 #
 
 # Logs
