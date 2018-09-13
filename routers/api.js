@@ -6,6 +6,10 @@ const {
 } = require('../controllers/profileController');
 
 const {
+  signUpPost
+} = require('../controllers/auth');
+
+const {
   signUp,
   logIn,
   logOut,
@@ -29,12 +33,6 @@ const {
   crewListPost,
   fetchCrewPost
 } = require('../controllers/crewController');
-
-// function todoController(req, res) {
-//   res.json({
-//     message: `TODO: ${req.method} ${req.path}`
-//   })
-// }
 
 // Profile
 router.get('/profile/:username', asyncHandler(profileDetails));

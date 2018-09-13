@@ -4,7 +4,7 @@ import Vue from 'vue';
 import {createApp} from './app';
 import {findAsyncComponents} from './helpers';
 import {beforeRouteUpdate} from './mixins';
-import {setupHttpClient} from './utils'
+import {setupHttpClient} from './utils';
 
 Vue.mixin({
   beforeRouteUpdate
