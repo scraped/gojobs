@@ -10,6 +10,14 @@ const {
 
 const {Schema} = mongoose;
 
+function isRace() {
+  return this.scType === 'race';
+}
+
+function notRockstar() {
+  return !this.rockstar;
+}
+
 let schema = new Schema({
   jobId: {
     type: String,
@@ -123,10 +131,13 @@ let schema = new Schema({
   },
 
   locs: {
-    type: [String],
+    type: [{
+      type: String,
+      lowercase: true
+    }],
     validate(locs) {
       return locs.every(locName => Object.keys(locations).some(currLocName => {
-        return currLocName.toLowerCase() === locName.toLowerCase();
+        return currLocName === locName.toLowerCase();
       }));
     }
   },
@@ -234,13 +245,5 @@ schema.pre('save', function(next) {
 
   next();
 });
-
-function isRace() {
-  return this.scType === 'race';
-}
-
-function notRockstar() {
-  return !this.rockstar;
-}
 
 module.exports = mongoose.model('Job', schema);

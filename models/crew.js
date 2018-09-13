@@ -2,7 +2,11 @@ const {mongoose} = require('../lib/db');
 
 const {Schema} = mongoose;
 
-let schema = new Schema({
+function nonRockstar() {
+  return !this.rockstar;
+}
+
+const schema = new Schema({
   crewId: {
     type: Number,
     unique: true,
@@ -79,9 +83,5 @@ let schema = new Schema({
 //     const {avatarId, crewId} = this;
 //     return `https://prod.cloud.rockstargames.com/crews/sc/${avatarId}/${crewId}/publish/emblem/emblem_128.png`;
 //   });
-
-function nonRockstar() {
-  return !this.rockstar;
-}
 
 module.exports = mongoose.model('Crew', schema);
