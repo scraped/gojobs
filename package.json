@@ -80,6 +80,7 @@
     "slug": "^0.9.1",
     "tough-cookie": "^2.4.3",
     "validator": "^10.7.1",
+    "vee-validate": "^2.1.0-beta.9",
     "vue": "^2.5.17",
     "vue-cookie": "^1.1.4",
     "vue-meta": "^1.5.3",
@@ -142,12 +143,12 @@
     "url-loader": "^1.1.1",
     "vue-loader": "^15.4.2",
     "vue-style-loader": "^4.1.2",
-    "webpack": "^4.18.0",
+    "webpack": "^4.18.1",
     "webpack-bundle-analyzer": "^3.0.2",
     "webpack-cli": "^3.1.0",
     "webpack-dev-middleware": "^3.3.0",
     "webpack-dev-server": "^3.1.8",
-    "webpack-hot-middleware": "^2.23.1",
+    "webpack-hot-middleware": "^2.24.0",
     "webpack-merge": "^4.1.4",
     "webpack-node-externals": "^1.7.2"
   }
