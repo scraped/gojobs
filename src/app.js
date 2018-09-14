@@ -11,8 +11,7 @@ import VueMeta from 'vue-meta';
 
 import Buefy from 'buefy';
 
-Object
-  .keys(filters)
+Object.keys(filters)
   .forEach(key => {
     Vue.filter(key, filters[key]);
   });
@@ -35,10 +34,6 @@ Vue.use(VueCookie);
 Vue.use(Buefy, buefyOptions);
 Vue.use(VueMeta);
 
-/**
- * Creates app, store, router and synchronizes the last two
- * @returns {object} { app, store, router }
- */
 export function createApp() {
   const store = createStore();
   const router = createRouter();
@@ -51,5 +46,5 @@ export function createApp() {
     router
   });
 
-  return { app, store, router };
+  return {app, store, router};
 }

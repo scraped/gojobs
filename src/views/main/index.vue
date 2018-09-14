@@ -49,7 +49,7 @@ import {mapState} from 'vuex';
 import JobsList from '@/components/JobList.vue';
 import CustomPagination from '@/components/CustomPagination.vue';
 
-const JOBS_PER_PAGE_DEFAULT = 35;
+const JOBS_PER_PAGE_DEFAULT = 30;
 
 export default {
   fetchData({ store, route }) {

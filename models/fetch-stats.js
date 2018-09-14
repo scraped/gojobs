@@ -3,7 +3,7 @@ const {platforms} = require('../config/static');
 
 const {Schema} = mongoose;
 
-let schema = new Schema({
+const schema = new Schema({
   category: {
     type: String,
     enum: [
@@ -29,7 +29,7 @@ let schema = new Schema({
     }
   },
 
-  platform: {
+  mainPlatform: {
     type: String,
     enum: Object.keys(platforms),
     required() {

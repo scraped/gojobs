@@ -13,7 +13,7 @@ const compression = require('compression');
 const cookieParser = require('cookie-parser');
 
 const {apiRouter, errorHandler} = require('./routers');
-const {ssrMiddleware} = require('./middleware/ssr');
+const {ssrMiddleware, httpMiddleware} = require('./middleware');
 
 const app = express();
 
@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(cookieParser());
+app.use(httpMiddleware);
 
 app.use(
   '/assets',

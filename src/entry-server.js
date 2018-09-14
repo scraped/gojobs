@@ -1,13 +1,16 @@
+import Vue from 'vue';
 import {createApp} from './app'
 import {findAsyncComponents} from '@/helpers';
-import {setupHttpServer} from '@/utils';
+import {setupHttpService} from '@/services/http';
 
 export default context => {
   const {req} = context;
 
-  return new Promise((resolve, reject) => {
-    setupHttpServer(req);
+  setupHttpService({
+    http: req.http
+  });
 
+  return new Promise((resolve, reject) => {
     const {app, router, store} = createApp();
 
     router.push(req.url);
@@ -37,4 +40,4 @@ export default context => {
       reject
     );
   });
-}
+};

@@ -8,13 +8,3 @@
     Welcome to admin panel. Please choose a category.
   </b-notification>
 </template>
-
-<script>
-export default {
-
-}
-</script>
-
-<style>
-
-</style>
