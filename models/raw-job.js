@@ -33,9 +33,10 @@ const schema = new Schema({
 
   versions: [
     {
-      ver: Number,
-      id: String,
-      chg: Boolean
+      v: Number,
+      jobId: String,
+      diff: Boolean,
+      _id: false,
     }
   ],
 
@@ -70,16 +71,16 @@ const schema = new Schema({
     default: false
   },
 
+  uploaded: {
+    type: Boolean,
+    default: false
+  },
+
   processDate: {
     type: Date,
     required() {
       return this.processed;
     }
-  },
-
-  uploaded: {
-    type: Boolean,
-    default: false
   },
 
   firstUploaded: {
@@ -89,7 +90,7 @@ const schema = new Schema({
     }
   },
 
-  lastManualUpd: {
+  lastManualUpdate: {
     type: Date
   },
 
