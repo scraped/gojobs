@@ -3,69 +3,68 @@ const {platforms} = require('../config/static');
 
 const {Schema} = mongoose;
 
+function nonRockstar() {
+  const {category} = this;
+  return category !== 'rockstar' && category !== 'rockstarverified';
+}
+
 const schema = new Schema({
-  category: {
+  type: {
     type: String,
-    enum: [
-      'rockstar',
+    enum: ['rockstar',
       'rockstarverified',
       'crew',
-      'user'
-    ],
-    required: true
+      'user'],
+    required: true,
   },
 
-  username: {
+  id: {
     type: String,
-    required() {
-      return this.category === 'user';
-    }
-  },
-
-  crewId: {
-    type: String,
-    required() {
-      return this.category === 'crew';
-    }
+    required: nonRockstar,
   },
 
   mainPlatform: {
     type: String,
     enum: Object.keys(platforms),
-    required() {
-      const {category} = this;
-      return category === 'user' || category === 'crew';
-    }
+    required: nonRockstar,
   },
 
   total: {
     type: Number,
     default: -1,
-    required: true
+    required: true,
   },
 
   offset: {
     type: Number,
     default: 0,
-    required: true
+    required: true,
   },
 
   firstFetch: {
-    type: Date
+    type: Date,
   },
 
   lastFetch: {
-    type: Date
+    type: Date,
   },
 
   since: {
-    type: Date
+    type: Date,
   },
 
   // Needed for pretty complicated fetching manipulations
   futureSinceDate: {
-    type: Date
-  }
+    type: Date,
+  },
 });
+
+schema.index(
+  {
+    type: 1,
+    id: 2,
+  },
+  {unique: true},
+);
 
 module.exports = mongoose.model('FetchStats', schema);
