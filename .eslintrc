@@ -12,6 +12,7 @@
   },
   "extends": ["airbnb-base"],
   "rules": {
+    "arrow-parens": ["error", "as-needed"],
     "array-element-newline": ["error", "always"],
     "linebreak-style": ["error", "windows"],
     "object-curly-spacing": ["error", "never"],
