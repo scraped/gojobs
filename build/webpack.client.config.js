@@ -1,5 +1,4 @@
 const path = require('path');
-const baseWebpackConfig = require('./webpack.base.config');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 
@@ -7,29 +6,26 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const baseWebpackConfig = require('./webpack.base.config');
 
 const {production, development} = require('../config');
 
-let jsLoaders = [
-  'babel-loader'
-];
+const jsLoaders = ['babel-loader'];
 
 if (production) {
   jsLoaders.push({
     loader: 'eslint-loader',
-    options: { failOnError: true }
+    options: {failOnError: true},
   });
 }
 
-let webpackConfig = {
+const webpackConfig = {
   // Why we don't use a separate entry for styles? They'll be extracted
   // from generated chunk and it will be empty
   entry: {
-    app: [
-      './src/entry-client.js'
-    ],
-    polyfill: '@babel/polyfill'
+    app: ['./src/entry-client.js'],
+    polyfill: '@babel/polyfill',
   },
 
   optimization: {
@@ -40,10 +36,10 @@ let webpackConfig = {
         sourceMap: true,
         uglifyOptions: {
           compress: {
-            warnings: false
-          }
-        }
-      })
+            warnings: false,
+          },
+        },
+      }),
     ],
 
     splitChunks: {
@@ -53,24 +49,22 @@ let webpackConfig = {
         commons: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          chunks: chunk => chunk.name !== 'polyfill'
-        }
-      }
-    }
+          chunks: chunk => chunk.name !== 'polyfill',
+        },
+      },
+    },
   },
 
-  devtool: production
-    ? 'none'
-    : 'cheap-module-inline-source-map',
+  devtool: production ? 'none' : 'cheap-module-inline-source-map',
 
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: jsLoaders
-      }
-    ]
+        use: jsLoaders,
+      },
+    ],
   },
 
   plugins: [
@@ -81,24 +75,20 @@ let webpackConfig = {
 
     new BundleAnalyzerPlugin({
       analyzerMode: production ? 'static' : 'server',
-      openAnalyzer: false
-    })
-  ]
+      openAnalyzer: false,
+    }),
+  ],
 };
 
 if (development) {
-  webpackConfig.entry.app.push(
-    'webpack-hot-middleware/client?reload=true'
-  );
+  webpackConfig.entry.app.push('webpack-hot-middleware/client?reload=true');
 
-  webpackConfig.plugins.push(
-    new webpack.HotModuleReplacementPlugin()
-  );
+  webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 } else {
   webpackConfig.plugins.push(
     new CleanWebpackPlugin('assets', {
-      root: path.resolve(__dirname, '../dist')
-    })
+      root: path.resolve(__dirname, '../dist'),
+    }),
   );
 }
 
