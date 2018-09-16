@@ -16,7 +16,10 @@
     "array-element-newline": ["error", "always"],
     "linebreak-style": ["error", "windows"],
     "object-curly-spacing": ["error", "never"],
+    "prefer-destructuring": 0,
     "no-console": 0,
-    "no-return-await": 0
+    "no-return-await": 0,
+    "max-len": ["error", 80],
+    "object-curly-newline": 0
   }
 }
