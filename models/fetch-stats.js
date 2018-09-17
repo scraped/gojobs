@@ -62,7 +62,7 @@ const schema = new Schema({
 schema.index(
   {
     type: 1,
-    id: 2,
+    id: 1,
   },
   {unique: true},
 );
