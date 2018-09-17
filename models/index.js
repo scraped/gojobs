@@ -1,6 +1,6 @@
 module.exports = {
   Crew: require('./crew'),
-  FetchStats: require('./fetch-stats'),
+  FetchInfo: require('./fetch-info'),
   JobCollection: require('./job-collection'),
   Job: require('./job'),
   RawJob: require('./raw-job'),

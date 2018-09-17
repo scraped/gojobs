@@ -5,16 +5,19 @@ const {Schema} = mongoose;
 
 function nonRockstar() {
   const {category} = this;
-  return category !== 'rockstar' && category !== 'rockstarverified';
+  return category !== 'rockstar'
+    && category !== 'rockstarverified';
 }
 
 const schema = new Schema({
   type: {
     type: String,
-    enum: ['rockstar',
+    enum: [
+      'rockstar',
       'rockstarverified',
       'crew',
-      'user'],
+      'user',
+    ],
     required: true,
   },
 
@@ -23,10 +26,9 @@ const schema = new Schema({
     required: nonRockstar,
   },
 
-  mainPlatform: {
+  platform: {
     type: String,
     enum: Object.keys(platforms),
-    required: nonRockstar,
   },
 
   total: {
@@ -57,6 +59,8 @@ const schema = new Schema({
   futureSinceDate: {
     type: Date,
   },
+}, {
+  id: false,
 });
 
 schema.index(
@@ -67,4 +71,4 @@ schema.index(
   {unique: true},
 );
 
-module.exports = mongoose.model('FetchStats', schema);
+module.exports = mongoose.model('FetchInfo', schema);

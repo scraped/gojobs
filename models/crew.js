@@ -10,72 +10,74 @@ const schema = new Schema({
   crewId: {
     type: Number,
     unique: true,
-    required: true
+    required: true,
   },
 
   slug: {
     type: String,
     unique: true,
-    required: true
+    required: true,
   },
 
   rockstar: {
-    type: Boolean
+    type: Boolean,
   },
 
   leader: {
     type: String,
-    required: nonRockstar
+    required: nonRockstar,
   },
 
   name: {
     type: String,
     trim: true,
-    required: true
+    required: true,
   },
 
   desc: {
     type: String,
-    trim: true
+    trim: true,
   },
 
   motto: {
     type: String,
-    trim: true
+    trim: true,
   },
 
   tag: {
     type: String,
     uppercase: true,
-    required: true
+    required: true,
   },
 
   color: {
     type: String,
-    set(color) {
-      return color.substr(0, 6).toLowerCase();
+    validate(color) {
+      return color.length === 6;
     },
-    required: nonRockstar
+    set(color) {
+      return color.toLowerCase();
+    },
+    required: nonRockstar,
   },
 
   count: {
     type: Number,
-    required: true
+    validate(count) {
+      return Number.isInteger(count) && count >= 0;
+    },
+    required: true,
   },
 
   avatarId: {
-    type: String
+    type: String,
   },
 
   lastInfoFetch: {
-    type: Date
-  }
+    type: Date,
+  },
 }, {
   id: false,
-  toObject: {
-    virtuals: true,
-    versionKey: false
-  }
 });
 
 // schema.virtual('avatarUrl')
