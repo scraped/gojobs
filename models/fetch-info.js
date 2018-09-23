@@ -24,13 +24,13 @@ const schema = new Schema(
       type: String,
       validate: {
         validator(id) {
-          const rockstarId = [
+          const rockstarIds = [
             'rockstar',
             'verified',
           ];
-          return !(this.type === 'rockstar' && !rockstarId.includes(id));
+          return !(this.type === 'rockstar' && !rockstarIds.includes(id));
         },
-        msg: 'If type is "rockstar", id should be either "rockstar" or "verified"',
+        msg: 'If "type" field is "rockstar", "id" field should be either "rockstar" or "verified"',
       },
       required: nonRockstar,
     },
@@ -41,33 +41,57 @@ const schema = new Schema(
       required: nonRockstar,
     },
 
-    total: {
+    fetches: {
       type: Number,
-      default: -1,
+      min: 0,
+      default: 0,
+      required: true,
+    },
+
+    jobs: {
+      type: Number,
+      default: 0,
       required: true,
     },
 
     offset: {
       type: Number,
       default: 0,
-      required: true,
+      required() {
+        return !this.fetchOnlyNew;
+      },
     },
 
     firstFetch: {
       type: Date,
+      required() {
+        return this.fetches;
+      },
     },
 
     lastFetch: {
       type: Date,
+      required() {
+        return this.firstFetch;
+      },
     },
 
-    since: {
-      type: Date,
+    fetchOnlyNew: {
+      type: Boolean,
+      default: false,
+      required: true,
     },
 
-    // Needed for pretty complicated fetching manipulations
-    futureSinceDate: {
+    maxUpdateDate: {
       type: Date,
+      default: new Date(0),
+      required: true,
+    },
+
+    prevMaxUpdateDate: {
+      type: Date,
+      default: new Date(0),
+      required: true,
     },
   },
   {
@@ -75,7 +99,6 @@ const schema = new Schema(
   },
 );
 
-// Define unique compound index
 schema.index(
   {
     type: 1,
