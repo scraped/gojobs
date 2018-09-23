@@ -17,6 +17,7 @@
     "array-element-newline": ["error", "always"],
     "linebreak-style": ["error", "windows"],
     "object-curly-spacing": ["error", "never"],
+    "prefer-const": 0,
     "prefer-destructuring": 0,
     "no-console": 0,
     "no-return-await": 0,
