@@ -6,97 +6,95 @@ const schema = new Schema({
   jobId: {
     type: String,
     unique: true,
-    required: true
+    required: true,
   },
 
   jobCurrId: {
     type: String,
-    required: true
+    required: true,
   },
 
   star: {
-    type: Boolean
+    type: Boolean,
   },
 
   blocked: {
-    type: Boolean
+    type: Boolean,
   },
 
   job: {
     type: Schema.Types.Mixed,
-    required: true
+    required: true,
   },
 
   tags: {
-    type: [String]
+    type: [String],
   },
 
-  versions: [
-    {
-      v: Number,
-      jobId: String,
-      diff: Boolean,
-      _id: false,
-    }
-  ],
+  versions: [{
+    v: Number,
+    jobId: String,
+    diff: Boolean,
+    _id: false,
+  }],
 
   firstAddedToRgsc: {
     type: Date,
     required() {
       return !this.firstVerNotAvail;
-    }
+    },
   },
 
   firstVerNotAvail: {
-    type: Boolean
+    type: Boolean,
   },
 
   firstFetch: {
     type: Date,
-    required: true
+    required: true,
   },
 
   lastFetch: {
     type: Date,
-    required: true
+    required: true,
   },
 
   lastNewVerFetch: {
     type: Date,
-    required: true
+    required: true,
   },
 
   processed: {
     type: Boolean,
-    default: false
+    default: false,
   },
 
   uploaded: {
     type: Boolean,
-    default: false
+    default: false,
   },
 
   processDate: {
     type: Date,
     required() {
       return this.processed;
-    }
+    },
   },
 
   firstUploaded: {
     type: Date,
     required() {
       return this.uploaded;
-    }
+    },
   },
 
   lastManualUpdate: {
-    type: Date
+    type: Date,
   },
 
   lastCoeffs: {
-    type: [Number]
-  }
+    type: [Number],
+  },
 });
 
 module.exports = mongoose.model('RawJob', schema);
