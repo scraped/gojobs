@@ -7,18 +7,20 @@ const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
+
 const baseWebpackConfig = require('./webpack.base.config');
 
 const {production, development} = require('../config');
 
-const jsLoaders = ['babel-loader'];
-
-if (production) {
-  jsLoaders.push({
+const jsLoadersProduction = production
+  ? [{
+    enforce: 'pre',
+    test: /\.(js|vue)$/,
+    exclude: /node_modules/,
     loader: 'eslint-loader',
-    options: {failOnError: true},
-  });
-}
+  }]
+  : [];
 
 const webpackConfig = {
   // Why we don't use a separate entry for styles? They'll be extracted
@@ -62,8 +64,9 @@ const webpackConfig = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: jsLoaders,
+        loader: 'babel-loader',
       },
+      ...jsLoadersProduction,
     ],
   },
 
@@ -88,6 +91,12 @@ if (development) {
   webpackConfig.plugins.push(
     new CleanWebpackPlugin('assets', {
       root: path.resolve(__dirname, '../dist'),
+    }),
+
+    // From here:
+    // https://vue-loader.vuejs.org/guide/linting.html#stylelint
+    new StyleLintPlugin({
+      files: ['**/*.{vue,htm,html,css,sss,less,scss,sass}'],
     }),
   );
 }

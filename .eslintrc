@@ -5,22 +5,28 @@
     "es6": true,
     "node": true
   },
-  "parser": "babel-eslint",
   "parserOptions": {
+    "parser": "babel-eslint",
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "extends": ["airbnb-base"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "plugin:vue/recommended",
+    "plugin:prettier/recommended"
+  ],
   "rules": {
-    "arrow-parens": ["error", "as-needed"],
-    "array-bracket-newline": ["error", { "minItems": 2 }],
-    "array-element-newline": ["error", "always"],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {"devDependencies": ["build/*.js"]}
+    ],
     "linebreak-style": ["error", "windows"],
-    "object-curly-spacing": ["error", "never"],
     "prefer-const": 0,
     "prefer-destructuring": 0,
     "no-console": 0,
     "no-return-await": 0,
+    "no-plusplus": 0,
     "object-curly-newline": 0
   }
 }
