@@ -1,5 +1,6 @@
 // Better error messages
 require('pretty-error').start();
+require('dotenv').config();
 
 const config = require('./config');
 const chalk = require('chalk');
