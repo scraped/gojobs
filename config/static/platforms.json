@@ -1,13 +1,16 @@
 {
   "pc": {
-    "name": "PC"
+    "name": "PC",
+    "rs": ["pc"]
   },
 
   "ps4": {
-    "name": "PS4"
+    "name": "PS4",
+    "rs": ["ps4", "ps3"]
   },
 
   "xboxone": {
-    "name": "Xbox One"
+    "name": "Xbox One",
+    "rs": ["xboxone", "xbox"]
   }
 }

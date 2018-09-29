@@ -1,4 +1,3 @@
-const config = require('../config');
 const path = require('path');
 const webpack = require('webpack');
 const notifier = require('node-notifier');
@@ -6,6 +5,7 @@ const notifier = require('node-notifier');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const config = require('../config');
 
 const {production, development} = config;
 
@@ -29,29 +29,27 @@ class ServerMiniCssExtractPlugin extends MiniCssExtractPlugin {
 // (using rimraf, for example).
 // 2. Why do we use scss loader in the base config? Vue-loader utilizes it!
 let webpackConfig = {
-  mode: production
-    ? 'production'
-    : 'development',
+  mode: production ? 'production' : 'development',
 
   output: {
     filename: jsName,
     chunkFilename: jsChunkName,
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
-    hashDigestLength: 6
+    hashDigestLength: 6,
   },
 
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, '../src')
-    }
+      '@': path.resolve(__dirname, '../src'),
+    },
   },
 
   module: {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
       },
 
       {
@@ -61,24 +59,24 @@ let webpackConfig = {
             ? MiniCssExtractPlugin.loader
             : {
                 loader: 'vue-style-loader',
-                options: { sourceMap: development }
+                options: {sourceMap: development},
               },
 
           {
             loader: 'css-loader',
-            options: { sourceMap: development }
+            options: {sourceMap: development},
           },
 
           {
             loader: 'resolve-url-loader',
-            options: { sourceMap: development }
+            options: {sourceMap: development},
           },
 
           {
             loader: 'sass-loader',
-            options: { sourceMap: development }
-          }
-        ]
+            options: {sourceMap: development},
+          },
+        ],
       },
 
       // This loader uses file-loader as fallback
@@ -87,10 +85,10 @@ let webpackConfig = {
         loader: 'url-loader',
         options: {
           limit: 2 ** 11,
-          name: imagesName
-        }
-      }
-    ]
+          name: imagesName,
+        },
+      },
+    ],
   },
 
   plugins: [
@@ -101,32 +99,27 @@ let webpackConfig = {
       onErrors(severity) {
         if (severity !== 'error') return;
         notifier.notify({
-          title: 'Error during the bundling occured'
+          title: 'Error during the bundling occured',
         });
-      }
-    })
+      },
+    }),
   ],
 
   performance: {
-    hints: production
-      ? 'warning'
-      : false,
+    hints: production ? 'warning' : false,
 
     maxEntrypointSize: Infinity,
-    maxAssetSize: 500 * 1000
-  }
+    maxAssetSize: 500 * 1000,
+  },
 };
 
 if (production) {
   webpackConfig.plugins.push(
-    new webpack.EnvironmentPlugin([
-      'NODE_ENV',
-      'DEBUG'
-    ]),
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'DEBUG']),
 
     new ServerMiniCssExtractPlugin({
-      filename: cssName
-    })
+      filename: cssName,
+    }),
   );
 }
 

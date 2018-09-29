@@ -12,11 +12,7 @@ const schema = new Schema(
   {
     type: {
       type: String,
-      enum: [
-        'rockstar',
-        'crew',
-        'user',
-      ],
+      enum: ['rockstar', 'crew', 'user'],
       required: true,
     },
 
@@ -24,15 +20,13 @@ const schema = new Schema(
       type: String,
       validate: {
         validator(id) {
-          const rockstarIds = [
-            'rockstar',
-            'verified',
-          ];
+          const rockstarIds = ['rockstar', 'verified'];
           return !(this.type === 'rockstar' && !rockstarIds.includes(id));
         },
-        msg: 'If "type" field is "rockstar", "id" field should be either "rockstar" or "verified"',
+        msg:
+          'If "type" field is "rockstar", "id" field should be either "rockstar" or "verified"',
       },
-      required: nonRockstar,
+      required: true,
     },
 
     plat: {

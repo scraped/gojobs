@@ -14,12 +14,14 @@ const baseWebpackConfig = require('./webpack.base.config');
 const {production, development} = require('../config');
 
 const jsLoadersProduction = production
-  ? [{
-    enforce: 'pre',
-    test: /\.(js|vue)$/,
-    exclude: /node_modules/,
-    loader: 'eslint-loader',
-  }]
+  ? [
+      {
+        enforce: 'pre',
+        test: /\.(js|vue)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+      },
+    ]
   : [];
 
 const webpackConfig = {
