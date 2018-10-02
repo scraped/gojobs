@@ -64,6 +64,11 @@ const schema = new Schema({
     required: true,
   },
 
+  nextFetch: {
+    type: Date,
+    required: true,
+  },
+
   processed: {
     type: Boolean,
     default: false,
