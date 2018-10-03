@@ -11,7 +11,7 @@
 ## Basic request (example)
 
 ```
-curl "https://scapi.rockstargames.com/search/mission" -H "Referer: https://socialclub.rockstargames.com/jobs/?dateRange=any&missiontype&platform=pc&sort=likes&title=gtav" -H "x-requested-with: XMLHttpRequest" -H "x-amc: true"
+curl "https://scapi.rockstargames.com/search/mission" -H "x-requested-with: XMLHttpRequest" -H "x-amc: true"
 ```
 
 ## Auxiliary types
@@ -62,16 +62,20 @@ curl "https://scapi.rockstargames.com/search/mission" -H "Referer: https://socia
 
 ## Request schema
 
-| Name                  | Type             | Possible values                                                        |
-| --------------------- | ---------------- | ---------------------------------------------------------------------- |
-| `dateRange`           | `string`         | `any`, `today`, `last7` (default), `lastmonth`, `lastyear` (default)   |
-| `sort`                | `string`         | `likes`, `date` (default), `plays`                                     |
-| `pageSize`            | `number`         | Default: `15`, can vary from `1` to `30` (doesn't guarantee anything!) |
-| `includeCommentCount` | `boolean`        | Default: `true`                                                        |
+| Name                  | Type             | Possible values                                                                       |
+| --------------------- | ---------------- | ------------------------------------------------------------------------------------- |
+| `dateRange`           | `string`         | `any`, `today`, `last7` (default), `lastmonth`, `lastyear` (default)                  |
+| `sort`                | `string`         | `likes`, `date` (default), `plays`                                                    |
+| `pageSize`            | `number`         | Default: `15`, can vary from `1` to `30` (doesn't guarantee anything!)                |
+| `pageIndex`           | `number`         | Page number (from `0`)                                                                |
+| `includeCommentCount` | `boolean`        | Default: `true`                                                                       |
 | `platform`            | `Platform`       |
 | `missiontype`         | `MissionType`    |
 | `subtype`             | `MissionSubtype` |
-| `searchTerm`          | `?`              | ?                                                                      |
+| `creatorRockstarId`   | `string`         | User ID                                                                               |
+| `crewId`              | `string`         | Crew ID                                                                               |
+| `filter`              | `string`         | `crew`, `scMembers`, `rockstar`, `rockstarVerified`, `myBookmarks`, `myFriends`, `me` |
+| `searchTerm`          | `?`              | ?                                                                                     |
 
 ## Response schema
 
@@ -104,27 +108,28 @@ curl "https://scapi.rockstargames.com/search/mission" -H "Referer: https://socia
 
 ### `JobShort`
 
-| Name           | Type            | Description                                   |
-| -------------- | --------------- | --------------------------------------------- |
-| `id`           | `JobId`         | Job ID                                        |
-| `userId`       | `number`        | User ID if applicable                         |
-| `imgSrc`       | `ImageUrl`      |
-| `category`     | `string`        | `none`, `rstar`, `verif`                      |
-| `createdDate`  | `Date`          |
-| `name`         | `string`        | Job name                                      |
-| `desc`         | `string`        | Job descriotion                               |
-| `userTags`     | `Array<string>` | User's tags                                   |
-| `likeCount`    | `number`        |
-| `dislikeCount` | `number`        |
-| `playedCount`  | `number`        |
-| `type`         | `JobType`       |
-| `platform`     | `JobPlatform`   |
-| `title`        | `string`        | `gtav` for all GTA5 jobs, probably means game |
-| `commentCount` | `number`        | Number of comments                            |
-| `liked`        | `boolean`       | If job was liked by the current user          |
-| `disliked`     | `boolean`       | ^                                             |
-| `bookmarked`   | `boolean`       | ^                                             |
-| `played`       | `boolean`       | ^                                             |
+| Name           | Type             | Description                                   |
+| -------------- | ---------------- | --------------------------------------------- |
+| `id`           | `JobId`          | Job ID                                        |
+| `userId`       | `number`         | User ID if applicable                         |
+| `imgSrc`       | `ImageUrl`       |
+| `category`     | `string`         | `none`, `rstar`, `verif`                      |
+| `createdDate`  | `Date`           |
+| `lastPlayed`   | `Date|undefined` | Doesn't seem to work as of now
+| `name`         | `string`         | Job name                                      |
+| `desc`         | `string`         | Job descriotion                               |
+| `userTags`     | `Array<string>`  | User's tags                                   |
+| `likeCount`    | `number`         |
+| `dislikeCount` | `number`         |
+| `playedCount`  | `number`         |
+| `type`         | `JobType`        |
+| `platform`     | `JobPlatform`    |
+| `title`        | `string`         | `gtav` for all GTA5 jobs, probably means game |
+| `commentCount` | `number`         | Number of comments                            |
+| `liked`        | `boolean`        | If job was liked by the current user          |
+| `disliked`     | `boolean`        | ^                                             |
+| `bookmarked`   | `boolean`        | ^                                             |
+| `played`       | `boolean`        | ^                                             |
 
 ### `UserShort`
 

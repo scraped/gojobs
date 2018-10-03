@@ -11,7 +11,13 @@
 ## Basic request (example)
 
 ```
-curl curl "https://scapi.rockstargames.com/ugc/mission/details?title=gtav&contentId=FlqLBeFx5Eq5eMeGbl4Jxw"  -H "x-requested-with: XMLHttpRequest" -H "x-amc: true"
+curl "https://scapi.rockstargames.com/ugc/mission/details?title=gtav&contentId=FlqLBeFx5Eq5eMeGbl4Jxw" -H "x-requested-with: XMLHttpRequest" -H "x-amc: true"
+```
+
+## OLD basic request (example)
+
+```
+curl "https://socialclub.rockstargames.com/games/gtav/ajax/mission?missionid=BA5CDQZPB0iCsSnqq8lDUA" -H "RequestVerificationToken: ODoD87lxgOBhz9aSB9Bwh2D8y1LZYM0HQBDibToZ20l5-k8O1ggA1wXJ-c8E5OhEXzdn-APZzjZbQcSnkhqSpT0W-041" -H "Cookie: CSRFToken=TSMaJX9uEFf9LW3R5YZQ3QCSl8f7O65anZ3cC_Bk_9y1ygfPcTw06IE2aQDWRtFFOTVU3wFaiRHcvftGTwuCjU6RYbI1; prod=rd101o00000000000000000000ffff0a5a2a77o80; UAGC=1"
 ```
 
 ## Response schema
@@ -29,10 +35,6 @@ curl curl "https://scapi.rockstargames.com/ugc/mission/details?title=gtav&conten
 | --------- | ------------- |
 | `mission` | `MissionInfo` |
 | `meta`    | `JobMetaInfo` |
-
-### `MissionInfo` some fields
-
-Name | Type | Description
 
 ### `MissionInfo.weap`
 
@@ -77,7 +79,7 @@ Name | Type | Description
 | `cptfrm`     | `array<number>`           | `trfmvm` indexes or `-1`                                              |
 | `cptfrms`    | `array<number>|undefined` | For secondary checkpoints ^                                           |
 | `trfmvm`     | `array<VehicleId>`        | Transform vehicles, not all of them are used                          |
-| `trfmvmn`    | `array<VehicleId>`        | Their ^ names                                                         |
+| `trfmvmn`    | `array<VehicleId>`        | **(REMOVED)** Their ^ names                                                         |
 | `cpbs1`      | `BitField`                | warp cp = 27th bit                                                    |
 | `gw`         | `number`                  | (?) Sometimes values like `4.5`, `6.75`                               |
 | `aveh`       | `array<number>`           | (?)                                                                   |
