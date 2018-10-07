@@ -34,11 +34,6 @@ const schema = new Schema({
     required: true,
   },
 
-  desc: {
-    type: String,
-    trim: true,
-  },
-
   motto: {
     type: String,
     trim: true,
@@ -61,7 +56,7 @@ const schema = new Schema({
     required: nonRockstar,
   },
 
-  count: {
+  memberCount: {
     type: Number,
     validate(count) {
       return Number.isInteger(count) && count >= 0;
