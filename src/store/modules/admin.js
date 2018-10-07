@@ -1,30 +1,30 @@
 import {http} from '@/utils';
-import queryString from 'query-string';
 
 const state = {
-  tags: []
+  tags: [],
 };
 
 const mutations = {
-  set(state, { tags }) {
+  set(state, {tags}) {
     state.tags = tags;
-  }
+  },
 };
 
 const actions = {
-  async fetch({ commit }, payload) {
-    const queryStr = queryString.stringify(payload.query),
-      url = `/api/tags?${queryStr}`;
+  async fetch({commit}, payload) {
+    const queryStr = queryString.stringify(payload.query);
 
-    const { tags } = (await http.get(url)).data;
+    const url = `/api/tags?${queryStr}`;
 
-    commit('set', { tags });
-  }
+    const {tags} = (await http.get(url)).data;
+
+    commit('set', {tags});
+  },
 };
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
 };

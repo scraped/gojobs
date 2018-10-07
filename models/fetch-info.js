@@ -72,7 +72,7 @@ const schema = new Schema({
     required() {
       return this.lastFetch;
     },
-  }
+  },
 
   fetchOnlyNew: {
     type: Boolean,

@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const router = require('express').Router();
 
 const {
-  profileDetails
+  profileDetails,
 } = require('../controllers/profileController');
 
 const {
@@ -51,7 +51,6 @@ router.post('/user/basicinfo', asyncHandler(basicInfo));
 router.post('/jobs', asyncHandler(jobListPost));
 router.post('/jobs/raw', asyncHandler(rawJobsListPost));
 router.post('/jobs/fetch', asyncHandler(jobsFetchPost));
-router.post('/jobs/upload', asyncHandler(jobUploadPost));
 router.post('/jobs/:id', asyncHandler(jobDetailsPost));
 
 // Crew

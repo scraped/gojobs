@@ -1,34 +1,23 @@
 import {http} from '@/utils';
 
-import {
-  jobTypes,
-  platforms
-} from '@/../config/static';
+import {jobTypes, platforms} from '@/../config/static';
 
 const state = {
-  job: null
+  job: null,
 };
 
 const getters = {
   job: state => state.job,
 
   jobExt: state => (job = state.job) => {
-    const {
-      jobCurrId,
-      image,
-      plat,
-      scType,
-      scMode,
-      scAdded,
-      players
-    } = job;
+    const {jobCurrId, image, plat, scType, scMode, scAdded, players} = job;
 
     const imageParts = image.split('.');
-    const imageUrl = `https://prod.cloud.rockstargames.com/ugc/gta5mission/${imageParts[0]}/${jobCurrId}/${imageParts[1]}.jpg`;
+    const imageUrl = `https://prod.cloud.rockstargames.com/ugc/gta5mission/${
+      imageParts[0]
+    }/${jobCurrId}/${imageParts[1]}.jpg`;
 
-    const platformName = plat
-      ? platforms[plat].name
-      : '';
+    const platformName = plat ? platforms[plat].name : '';
 
     const recentlyAdded = new Date() - scAdded <= 1000 * 60 * 60 * 24 * 14;
 
@@ -46,10 +35,7 @@ const getters = {
       }
     }
 
-    const {
-      name: scTypeName,
-      icon: scTypeIcon
-    } = jobTypes[scType];
+    const {name: scTypeName, icon: scTypeIcon} = jobTypes[scType];
 
     let typeAndModeNameAndIcon = {
       scTypeName,
@@ -66,26 +52,25 @@ const getters = {
       platformName,
       recentlyAdded,
       playersNumberText,
-      ...typeAndModeNameAndIcon
+      ...typeAndModeNameAndIcon,
     };
-  }
-}
+  },
+};
 
 const mutations = {
-  setJob(state, { job }) {
+  setJob(state, {job}) {
     state.job = job;
-  }
+  },
 };
 
 const actions = {
-  async fetchJob({ commit }, { id }) {
-
+  async fetchJob({commit}, {id}) {
     const response = await http.post(`/api/jobs/${id}`);
 
-    const { job } = response.data;
+    const {job} = response.data;
 
-    commit('setJob', { job });
-  }
+    commit('setJob', {job});
+  },
 };
 
 export default {
@@ -93,5 +78,5 @@ export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
 };

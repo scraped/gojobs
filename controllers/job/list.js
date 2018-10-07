@@ -13,11 +13,11 @@ exports.rawJobsListPost = async (req, res) => {
     .skip((page - 1) * 50)
     .limit(50)
     .sort({
-      'lastFetch': 'desc'
+      lastFetch: 'desc',
     });
 
   return res.send({
-    jobs
+    jobs,
   });
 };
 
@@ -49,7 +49,7 @@ exports.jobListPost = async (req, res) => {
     mode: jobMode,
     user,
     rockstar,
-    by
+    by,
   } = body;
 
   let conditions = {};
@@ -61,7 +61,7 @@ exports.jobListPost = async (req, res) => {
       break;
 
     case 'updated':
-      sort = {'scUpdated': -1};
+      sort = {scUpdated: -1};
       break;
 
     case 'featured':
@@ -112,6 +112,6 @@ exports.jobListPost = async (req, res) => {
 
   res.json({
     count,
-    jobs
+    jobs,
   });
-}
+};

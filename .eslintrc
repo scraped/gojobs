@@ -16,6 +16,7 @@
     "plugin:vue/recommended"
   ],
   "rules": {
+    "arrow-parens": ["error", "as-needed"],
     "import/no-extraneous-dependencies": [
       "error",
       {"devDependencies": ["build/*.js"]}

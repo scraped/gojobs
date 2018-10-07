@@ -6,4 +6,4 @@ exports.jobDetailsPost = async (req, res) => {
   const job = await Job.findOne({jobId});
 
   return res.json({job});
-}
+};

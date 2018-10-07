@@ -1,28 +1,28 @@
 import {http} from '@/utils';
 
 const state = {
-  crews: []
+  crews: [],
 };
 
 const mutations = {
-  set(state, { crews }) {
+  set(state, {crews}) {
     state.crews = crews;
-  }
+  },
 };
 
 const actions = {
-  async fetch({ commit }, { query }) {
+  async fetch({commit}, {query}) {
     const response = await http.post('/api/crews', query);
 
-    const { crews } = response.data;
+    const {crews} = response.data;
 
-    commit('set', { crews });
-  }
+    commit('set', {crews});
+  },
 };
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
 };

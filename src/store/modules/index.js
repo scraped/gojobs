@@ -11,5 +11,5 @@ export {
   user,
   admin,
   crews,
-  profile
+  profile,
 };
