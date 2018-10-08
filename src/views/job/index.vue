@@ -346,6 +346,7 @@
 
 <script>
 import {mapState, mapGetters} from 'vuex';
+import findIndex from 'lodash/findIndex';
 
 import {
   userAvatars,
@@ -358,17 +359,16 @@ import {ratingMixin} from '@/mixins';
 import IconGta from '@/components/IconGta.vue';
 import RaceMap from './RaceMap.vue';
 import {vehicles, vehClasses, locations} from '@/../config/static';
-import findIndex from 'lodash/findIndex';
 
 export default {
   mixins: [
-    ratingMixin
+    ratingMixin,
   ],
 
   metaInfo() {
     return {
-      title: this.job.name
-    }
+      title: this.job.name,
+    };
   },
 
   fetchData({store, route}) {
@@ -380,7 +380,7 @@ export default {
 
   components: {
     IconGta,
-    RaceMap
+    RaceMap,
   },
 
   data() {
@@ -389,26 +389,23 @@ export default {
       trfVehShowed: false,
       vehicles,
       vehClasses,
-      locations
+      locations,
     };
   },
 
   mounted() {
-    const {background} = this.job;
-    Array.from(document.getElementsByClassName('navbar')).forEach(el => {
-      console.log('here');
-      el.style.background = `linear-gradient(to right${this.gradient(0.7)}`;
-      // `rgb(${background[2]})`;
-    });
+    // Array.from(document.getElementsByClassName('navbar')).forEach(el => {
+    //   el.style.background = `linear-gradient(to right${this.gradient(0.7)}`;
+    // });
   },
 
   computed: {
     ...mapState('job', [
-      'job'
+      'job',
     ]),
 
     ...mapGetters('job', {
-      jobExtGetter: 'jobExt'
+      jobExtGetter: 'jobExt',
     }),
 
     jobExt() {
@@ -455,9 +452,8 @@ export default {
     gradient(transparency = 1.0) {
       const {background} = this.job;
       if (background && background.length) {
-        console.log(transparency);
         return background.reduce((prev, curr) => {
-          return prev + `, rgba(${curr}, transparency)`;
+          return prev + `, rgba(${curr}, ${transparency})`;
         }, '');
       }
     }
@@ -466,7 +462,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/vars.scss";
+@import '@/scss/vars.scss';
 
 .title__special {
   font-family: 'Oswald', sans-serif;

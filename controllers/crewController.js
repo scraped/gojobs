@@ -2,6 +2,7 @@ const Joi = require('joi');
 const Boom = require('boom');
 const {Crew} = require('../models');
 const {fetchQueue} = require('../lib/queue');
+const {genJobName} = require('../lib/queue/utils');
 
 exports.crewListPost = async (req, res) => {
   const CREWS_PER_PAGE = 100;
@@ -12,7 +13,7 @@ exports.crewListPost = async (req, res) => {
     .skip((page - 1) * CREWS_PER_PAGE)
     .limit(CREWS_PER_PAGE)
     .sort({
-      lastInfoFetch: 'desc'
+      lastInfoFetch: 'desc',
     });
 
   res.json({crews});
@@ -21,7 +22,11 @@ exports.crewListPost = async (req, res) => {
 exports.fetchCrewPost = async (req, res, next) => {
   const {slug} = req.body;
 
-  const schema = Joi.string().token().min(3).max(30).required();
+  const schema = Joi.string()
+    .token()
+    .min(3)
+    .max(30)
+    .required();
 
   const {error} = Joi.validate(slug, schema);
 
@@ -32,7 +37,7 @@ exports.fetchCrewPost = async (req, res, next) => {
   const sameJob = await fetchQueue.getJob(slug);
 
   if (sameJob !== null) {
-    return next(Boom.badRequest('Whoops, this crew is being fetched still.'))
+    return next(Boom.badRequest('Whoops, this crew is being fetched still.'));
   }
 
   fetchQueue.add(
@@ -40,15 +45,16 @@ exports.fetchCrewPost = async (req, res, next) => {
     {
       type: 'crew',
       data: {
-        slug
-      }
+        slug,
+      },
     },
     {
-      jobId: slug
-    }
+      jobId: genJobName(slug),
+      priority: 10,
+    },
   );
 
   res.json({
-    message: 'Crew info will be fetched very shortly.'
+    message: 'Crew info will be fetched very shortly.',
   });
 };

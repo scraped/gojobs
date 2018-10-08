@@ -1,14 +1,19 @@
-import Vue from 'vue';
-import {createApp} from './app'
+import axios from 'axios';
+import createApp from './app';
 import {findAsyncComponents} from '@/helpers';
 import {setupHttpService} from '@/services/http';
 
 export default context => {
   const {req} = context;
 
-  setupHttpService({
-    http: req.http
+  const http = axios.create({
+    baseURL: `http://${req.hostname}:${req.app.get('port')}/`,
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+    },
   });
+
+  setupHttpService({http});
 
   return new Promise((resolve, reject) => {
     const {app, router, store} = createApp();
@@ -26,7 +31,7 @@ export default context => {
         const asyncDataPromises = findAsyncComponents({
           components: matchedComponents,
           store,
-          route: router.currentRoute
+          route: router.currentRoute,
         });
 
         await Promise.all(asyncDataPromises);
@@ -36,8 +41,7 @@ export default context => {
 
         resolve(app);
       },
-
-      reject
+      reject,
     );
   });
 };

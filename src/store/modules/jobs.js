@@ -1,6 +1,6 @@
-import {http} from '@/utils';
+import Vue from 'vue';
 
-const state = {
+const currState = {
   jobs: [],
   count: 0,
 };
@@ -21,7 +21,7 @@ const mutations = {
 
 const actions = {
   async fetch({commit}, query = {}) {
-    const response = await http.post('/api/jobs', query);
+    const response = await Vue.$http.post('/api/jobs', query);
 
     const {jobs, count} = response.data;
     const {append} = query;
@@ -33,7 +33,7 @@ const actions = {
 
 export default {
   namespaced: true,
-  state,
+  state: currState,
   mutations,
   actions,
 };

@@ -1,6 +1,6 @@
-import {http} from '@/utils';
+import Vue from 'vue';
 
-const state = {
+const currState = {
   cookies: {},
   username: '',
   verified: false,
@@ -37,7 +37,7 @@ const mutations = {
 
 const actions = {
   async fetchUserInfo({commit}) {
-    const {username, jobname, verifStatus, date, email} = (await http.post(
+    const {username, jobname, verifStatus, date, email} = (await Vue.$http.post(
       '/api/user/basicinfo',
     )).data;
 
@@ -51,7 +51,7 @@ const actions = {
 
 export default {
   namespaced: true,
-  state,
+  state: currState,
   mutations,
   actions,
 };

@@ -1,8 +1,7 @@
-import {http} from '@/utils';
-
+import Vue from 'vue';
 import {jobTypes, platforms} from '@/../config/static';
 
-const state = {
+const currState = {
   job: null,
 };
 
@@ -17,7 +16,9 @@ const getters = {
       imageParts[0]
     }/${jobCurrId}/${imageParts[1]}.jpg`;
 
-    const platformName = plat ? platforms[plat].name : '';
+    const platformName = plat
+      ? platforms[plat].name
+      : '';
 
     const recentlyAdded = new Date() - scAdded <= 1000 * 60 * 60 * 24 * 14;
 
@@ -65,7 +66,7 @@ const mutations = {
 
 const actions = {
   async fetchJob({commit}, {id}) {
-    const response = await http.post(`/api/jobs/${id}`);
+    const response = await Vue.$http.post(`/api/jobs/${id}`);
 
     const {job} = response.data;
 
@@ -75,7 +76,7 @@ const actions = {
 
 export default {
   namespaced: true,
-  state,
+  state: currState,
   getters,
   mutations,
   actions,

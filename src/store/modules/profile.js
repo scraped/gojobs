@@ -1,6 +1,6 @@
-import {http} from '@/utils';
+import Vue from 'vue';
 
-const state = {
+const currState = {
   username: '',
   crew: null,
 };
@@ -17,7 +17,7 @@ const mutations = {
 
 const actions = {
   async fetchUserInfo({commit}, {user}) {
-    const response = await http.get(`/api/profile/${user}`);
+    const response = await Vue.$http.get(`/api/profile/${user}`);
 
     const {username, crew} = response.data;
 
@@ -33,7 +33,7 @@ const actions = {
 
 export default {
   namespaced: true,
-  state,
+  state: currState,
   mutations,
   actions,
 };

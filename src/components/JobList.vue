@@ -380,7 +380,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/scss/vars.scss";
+@import '@/scss/vars.scss';
 
 // .title__special {
 //   font-family: 'Oswald', sans-serif;

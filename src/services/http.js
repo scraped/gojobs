@@ -3,16 +3,17 @@ import Vue from 'vue';
 
 export function setupHttpService({http}) {
   Vue.prototype.$http = http;
-  return Vue.prototype.$http;
+  Vue.$http = http;
+  return http;
 }
 
 export function setupHttpClient() {
   const axiosInstance = setupHttpService({
     http: axios.create({
       headers: {
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-    })
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    }),
   });
 
   const openToast = Vue.prototype.$snackbar.open;
@@ -23,10 +24,10 @@ export function setupHttpClient() {
     error => {
       openToast({
         message: 'Error: could not complete HTTP request',
-        type: 'is-danger'
+        type: 'is-danger',
       });
       return Promise.reject(error);
-    }
+    },
   );
 
   axiosInstance.interceptors.response.use(
@@ -37,7 +38,7 @@ export function setupHttpClient() {
           message,
           duration: 10000,
           type: 'is-success',
-          position: 'is-top-right'
+          position: 'is-top-right',
         });
       }
       return response;
@@ -60,16 +61,16 @@ export function setupHttpClient() {
         openToast({
           message,
           type,
-          position: 'is-top-right'
+          position: 'is-top-right',
         });
       } else {
         openToast({
           message: 'Error: could not complete HTTP request',
           type: 'is-danger',
-          position: 'is-top-right'
+          position: 'is-top-right',
         });
       }
       return Promise.reject(error);
-    }
+    },
   );
 }

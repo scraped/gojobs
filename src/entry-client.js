@@ -1,13 +1,13 @@
 import '@/scss/main.scss';
 
 import Vue from 'vue';
-import {createApp} from '@/app';
+import createApp from '@/app';
 import {findAsyncComponents} from '@/helpers';
 import {beforeRouteUpdate} from '@/mixins';
 import {setupHttpClient} from '@/services/http';
 
 Vue.mixin({
-  beforeRouteUpdate
+  beforeRouteUpdate,
 });
 
 setupHttpClient();
@@ -47,7 +47,7 @@ router.onReady(() => {
     const asyncDataPromises = findAsyncComponents({
       components: activated,
       store,
-      route: to
+      route: to,
     });
 
     const progressBar = Vue.prototype.$Progress;

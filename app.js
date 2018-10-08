@@ -2,7 +2,6 @@
 require('pretty-error').start();
 require('dotenv').config();
 
-const config = require('./config');
 const chalk = require('chalk');
 const path = require('path');
 const express = require('express');
@@ -12,9 +11,10 @@ const logger = require('morgan');
 const helmet = require('helmet');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
+const config = require('./config');
 
 const {apiRouter, errorHandler} = require('./routers');
-const {ssrMiddleware, httpMiddleware} = require('./middleware');
+const {ssrMiddleware} = require('./middleware');
 
 const app = express();
 
@@ -27,7 +27,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(cookieParser());
-app.use(httpMiddleware);
 
 app.use(
   '/assets',

@@ -1,6 +1,6 @@
-import {http} from '@/utils';
+import Vue from 'vue';
 
-const state = {
+const currState = {
   tags: [],
 };
 
@@ -12,11 +12,10 @@ const mutations = {
 
 const actions = {
   async fetch({commit}, payload) {
-    const queryStr = queryString.stringify(payload.query);
-
-    const url = `/api/tags?${queryStr}`;
-
-    const {tags} = (await http.get(url)).data;
+    const {tags} = (await Vue.$http({
+      url: '/api/tags',
+      params: payload.query,
+    })).data;
 
     commit('set', {tags});
   },
@@ -24,7 +23,7 @@ const actions = {
 
 export default {
   namespaced: true,
-  state,
+  state: currState,
   mutations,
   actions,
 };
