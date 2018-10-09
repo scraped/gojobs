@@ -31,7 +31,7 @@
               </p>
               <p>{{crew.desc}}</p>
               <p class="has-text-grey is-size-7">
-                {{crew.count || '?'}} members · Information updated {{fromNow(crew.lastInfoFetch)}}
+                {{crew.count || '?'}} members · Information updated {{crew.lastInfoFetch | formatDateRelative}}
               </p>
               <br>
               <div class="buttons">
@@ -78,32 +78,27 @@
 </template>
 
 <script>
-import moment from 'moment';
 import {mapState} from 'vuex';
 
 export default {
-  fetchData({ store, route }) {
-    return store.dispatch('crews/fetch', { query: route.query });
+  fetchData({store, route}) {
+    return store.dispatch('crews/fetch', {query: route.query});
   },
 
   data() {
     return {
       loading: false,
-      crewSlug: ''
+      crewSlug: '',
     };
   },
 
   computed: {
     ...mapState('crews', [
-      'crews'
-    ])
+      'crews',
+    ]),
   },
 
   methods: {
-    fromNow(date) {
-      return moment(date).fromNow();
-    },
-
     async updateList(e) {
       const {target} = e;
 
@@ -158,7 +153,7 @@ export default {
       } catch (error) {}
 
       this.loading = false;
-    }
-  }
+    },
+  },
 };
 </script>

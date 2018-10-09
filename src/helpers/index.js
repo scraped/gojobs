@@ -3,7 +3,6 @@ export {userAvatars} from './user';
 
 export {
   ratingCssClass,
-  updatedDate,
   scTypeModeIcon,
-  scPlatformName
+  scPlatformName,
 } from './job';

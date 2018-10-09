@@ -6,8 +6,8 @@ import VueMeta from 'vue-meta';
 import Buefy from 'buefy';
 
 import App from './App.vue';
-import {createStore} from './store';
-import {createRouter} from './router';
+import createStore from './store';
+import createRouter from './router';
 import * as filters from './filters';
 
 Object.keys(filters)

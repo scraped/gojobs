@@ -190,9 +190,7 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import {mapState} from 'vuex';
-import findIndex from 'lodash/findIndex';
 import throttle from 'lodash/throttle';
 import {platforms, jobTypes} from '@/../config/static';
 
@@ -201,33 +199,17 @@ import IconGta from '@/components/IconGta.vue';
 import BDropdown from '@/components/buefy-overrided/Dropdown.vue';
 
 export default {
-  props: {
-    minInfo: {
-      type: Boolean,
-      default: false
-    }
-  },
-
   components: {
     JobCard,
     IconGta,
-    BDropdown
+    BDropdown,
   },
 
-  beforeMount() {
-    this.defineModels(this.$route);
-  },
-
-  mounted() {
-    // const {filters} = this.$refs;
-    // // 12 means 10px + "a little bit"
-    // this.filtersInitialTopCoord = Math.floor(filters.getBoundingClientRect().top + window.pageYOffset) - 12;
-    // filters.style.width = `${filters.clientWidth}px`;
-    // addEventListener('scroll', this.filterFixingOnScroll);
-  },
-
-  beforeDestroy() {
-    // removeEventListener('scroll', this.filterFixingOnScroll);
+  props: {
+    minInfo: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -251,16 +233,10 @@ export default {
     };
   },
 
-  watch: {
-    $route(to) {
-      this.defineModels(to);
-    }
-  },
-
   computed: {
     ...mapState('jobs', [
       'jobs',
-      'count'
+      'count',
     ]),
 
     ...mapState('route', {
@@ -308,8 +284,30 @@ export default {
 
       return currModeInfo
         ? currModeInfo.name
-        : 'Any'
-    }
+        : 'Any';
+    },
+  },
+
+  watch: {
+    $route(to) {
+      this.defineModels(to);
+    },
+  },
+
+  beforeMount() {
+    this.defineModels(this.$route);
+  },
+
+  mounted() {
+    const {filters} = this.$refs;
+    // 12 means 10px + "a little bit"
+    this.filtersInitialTopCoord = Math.floor(filters.getBoundingClientRect().top + window.pageYOffset) - 12;
+    filters.style.width = `${filters.clientWidth}px`;
+    addEventListener('scroll', this.filterFixingOnScroll);
+  },
+
+  beforeDestroy() {
+    removeEventListener('scroll', this.filterFixingOnScroll);
   },
 
   methods: {
@@ -345,13 +343,13 @@ export default {
     platformChanged(platform) {
       this.$cookie.set('platform', platform, {expires: '1Y'});
       this.$router.push({
-        query: { ...this.$route.query, platform }
+        query: {...this.$route.query, platform},
       });
     },
 
     sortChanged(value) {
       this.$router.push({
-        query: { ...this.$route.query, by: value, page: 1 }
+        query: {...this.$route.query, by: value, page: 1},
       });
     },
 
@@ -361,9 +359,9 @@ export default {
           ...this.$route.query,
           type: value,
           mode: '',
-          page: 1
-        }
-      })
+          page: 1,
+        },
+      });
     },
 
     modeChanged(value) {
@@ -372,11 +370,11 @@ export default {
           ...this.$route.query,
           mode: value,
           page: 1
-        }
+        },
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">

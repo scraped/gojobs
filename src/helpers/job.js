@@ -1,8 +1,6 @@
-const moment = require('moment');
-
 const {
   modes,
-  platforms
+  platforms,
 } = require('../../config/static');
 
 /**
@@ -15,21 +13,11 @@ export function ratingCssClass(rating = 0, is = true) {
   if (rating >= 34) ratingClass = 'warning';
   if (rating >= 67) ratingClass = 'success';
 
-  return is ? 'is-' : ''
-    + ratingClass;
-}
-
-export function updatedDate({ date, ver }) {
-  const dateFromNow = moment(date).fromNow();
-
-  if (ver === 1) {
-    return `added ${dateFromNow}`;
-  }
-  return `${dateFromNow} (version ${ver})`;
+  return (is ? 'is-' : '') + ratingClass;
 }
 
 export function scTypeModeIcon({ scType, scMode }) {
-  const { name, icon } = modes[scType - 1];
+  const {name, icon} = modes[scType - 1];
 
   let scModeName = '';
 
@@ -40,12 +28,12 @@ export function scTypeModeIcon({ scType, scMode }) {
   return {
     scTypeName: name,
     scTypeIcon: icon,
-    scModeName
+    scModeName,
   };
 }
 
 export function scPlatformName({ platform }) {
   return {
-    platformName: platform ? platforms[platform - 1].name : ''
+    platformName: platform ? platforms[platform - 1].name : '',
   };
 }

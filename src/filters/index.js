@@ -1,7 +1,13 @@
-import moment from 'moment';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import format from 'date-fns/format';
+
+export function formatDateRelative(date) {
+  const distance = distanceInWordsToNow(date);
+  return `${distance} ago`;
+}
 
 export function formatDate(date) {
-  return moment(date).fromNow();
+  return format(date, 'MM/DD/YYYY');
 }
 
 export function mToKm(metres) {
@@ -9,8 +15,8 @@ export function mToKm(metres) {
 }
 
 export function formatNumber(num, message = '') {
-  const MILLION = 1000000;
-  const THOUSAND = 1000;
+  const MILLION = 10 ** 6;
+  const THOUSAND = 10 ** 3;
 
   let pre = '';
   let formatted = num;

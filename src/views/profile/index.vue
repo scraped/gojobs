@@ -148,7 +148,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import {mapState, mapGetters} from 'vuex';
 import {userAvatars} from '@/helpers'
 
@@ -160,18 +159,18 @@ export default {
     return `${this.username} Profile`;
   },
 
-  fetchData({ store, route }) {
-    const { username: user } = route.params;
+  fetchData({store, route}) {
+    const {username: user} = route.params;
 
     return Promise.all([
-      store.dispatch('profile/fetchUserInfo', { user }),
-      store.dispatch('jobs/fetch', { user })
+      store.dispatch('profile/fetchUserInfo', {user}),
+      store.dispatch('jobs/fetch', {user}),
     ]);
   },
 
   components: {
     JobList,
-    CustomPagination
+    CustomPagination,
   },
 
   data() {
@@ -185,7 +184,8 @@ export default {
 
   mounted() {
     setInterval(() => {
-      this.timeLeft = moment(this.date).toNow(true);
+      // this.timeLeft = `moment`(this.date).toNow(true);
+      this.timeLeft = '';
     }, 1000);
   },
 
@@ -196,22 +196,22 @@ export default {
   computed: {
     ...mapState('profile', [
       'username',
-      'crew'
+      'crew',
     ]),
 
     ...mapState('user', {
-      authUsername: 'username'
+      authUsername: 'username',
     }),
 
     ...mapState('user', [
       'verified',
       'jobname',
       'email',
-      'date'
+      'date',
     ]),
 
     ...mapState('jobs', [
-      'number'
+      'number',
     ]),
 
     ...mapState('route', {
@@ -220,8 +220,8 @@ export default {
 
     avatars() {
       return userAvatars(this.username);
-    }
-  }
+    },
+  },
 };
 </script>
 

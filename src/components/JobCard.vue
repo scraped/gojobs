@@ -182,7 +182,6 @@ import {mapGetters} from 'vuex';
 import {
   userAvatars,
   ratingCssClass,
-  updatedDate,
   scTypeModeIcon,
   scPlatformName,
 } from '@/helpers';
@@ -226,8 +225,7 @@ export default {
     },
 
     updatedDate() {
-      const { ver } = this.job;
-      return updatedDate({ date: this.job.scUpdated, ver });
+      return '';
     }
   }
 };
