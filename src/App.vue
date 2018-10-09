@@ -38,7 +38,7 @@ export default {
         'https://fonts.googleapis.com/css?family=Oswald:400,700&amp;subset=cyrillic',
         'https://fonts.googleapis.com/css?family=Pavanam',
         'https://unpkg.com/normalize.css@8.0.0',
-        'https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css'
+        'https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css',
       ].map(href => ({
         rel: 'stylesheet',
         href

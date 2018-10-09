@@ -29,6 +29,8 @@
     "no-console": 0,
     "no-return-await": 0,
     "no-plusplus": 0,
-    "object-curly-newline": 0
+    "object-curly-newline": 0,
+
+    "vue/mustache-interpolation-spacing": ["error", "never"]
   }
 }
