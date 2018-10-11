@@ -69,6 +69,12 @@ const schema = new Schema({
     required: true,
   },
 
+  deleted: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
+
   processed: {
     type: Boolean,
     default: false,
