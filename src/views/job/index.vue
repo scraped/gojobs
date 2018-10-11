@@ -19,10 +19,16 @@
 
             <section class="block">
               <div class="content" style="text-align: center;">
-                <h1
-                  class="title has-text-weight-normal"
-                  v-html="job.name"
-                />
+                <h1 class="title has-text-weight-normal">
+                  <span v-html="job.name"/>
+                  <span
+                    v-if="jobExt.recentlyAdded"
+                    class="tooltip"
+                    data-tooltip="Added less than 2 weeks ago"
+                  >
+                    🔥
+                  </span>
+                </h1>
                 <p class="has-text-dark is-size-7">
                    <router-link
                     :to="{name: 'main', query: {type: job.scType}}"

@@ -9,7 +9,7 @@ async function jobsFetchPost(req, res, next) {
   const schema = Joi.string()
     .required()
     .length(22)
-    .token();
+    .regex(/^[\w-]{22}$/);
 
   const {error} = Joi.validate(jobId, schema);
 

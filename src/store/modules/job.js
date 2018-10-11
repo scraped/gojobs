@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import {jobTypes, platforms} from '@/../config/static';
+const differenceInDays = require('date-fns/difference_in_days');
 
 const currState = {
   job: null,
@@ -20,7 +21,7 @@ const getters = {
       ? platforms[plat].name
       : '';
 
-    const recentlyAdded = new Date() - scAdded <= 1000 * 60 * 60 * 24 * 14;
+    const recentlyAdded = differenceInDays(new Date(), scAdded) <= 14;
 
     let playersNumberText = '';
 
