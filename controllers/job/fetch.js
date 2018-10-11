@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const Boom = require('boom');
 const {fetchQueue} = require('../../lib/queue');
+const {genJobName} = require('../../lib/queue/utils');
 
 async function jobsFetchPost(req, res, next) {
   const {jobId} = req.body;
@@ -25,7 +26,8 @@ async function jobsFetchPost(req, res, next) {
       },
     },
     {
-      jobId: `${jobId}_${new Date()}`,
+      jobId: genJobName(jobId),
+      priority: 10,
     },
   );
 
