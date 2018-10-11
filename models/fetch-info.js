@@ -69,9 +69,7 @@ const schema = new Schema({
 
   nextFetch: {
     type: Date,
-    required() {
-      return this.lastFetch;
-    },
+    required: true,
   },
 
   fetchOnlyNew: {
