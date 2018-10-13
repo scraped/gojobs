@@ -1,149 +1,167 @@
 <template>
   <div>
-    <section class="section">
-      <div class="container">
-        <h1 class="title">Profile</h1>
-        <div class="media box">
-          <figure class="media-left">
-            <p class="image is-128x128">
-              <img class="is-rounded" :src="avatars.large">
-            </p>
-          </figure>
-
-          <div class="media-content">
-            <div class="content">
-              <h1 class="title">@{{ username }}
-                <span
-                  v-if="crew"
-                  class="tag is-white is-medium tooltip has-text-weight-normal"
-                  :style="`border: 1px solid #${crew.color};`"
-                  :data-tooltip="crew.name">
-                  {{ crew.tag }}
-                </span>
-              </h1>
-              <!-- <p
-                v-if="crew"
-                class="has-text-grey">
-                Active crew:
-                <a :href="`/crews/${crew.slug}`">{{ crew.name }}</a>
-              </p> -->
-              <div>
-                <a
-                  class="button is-light"
-                  :href="`https://socialclub.rockstargames.com/member/${username}`"
-                  target="_blank">
-                  Go to RGSC profile
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section
-      v-if="authUsername === username && !verified"
-      class="section">
+      v-if="notFound"
+      class="section"
+    >
       <div class="container">
-        <div class="columns">
-          <div class="column is-half">
-            <div class="box">
-              <h2 class="title is-4">Verification</h2>
-              <b-notification
-                type="is-info"
-                has-icon
-                :closable="false"
-              >
-                <div class="notification__header">Verification code</div>
-                In order to verify your account you need to publish <b>GTA Online Job</b> named
-                <div class="mono is-size-1 is-uppercase">{{ jobname }}</div>
-                (case doesn't matter)
-              </b-notification>
+        <b-message
+          v-if="notFound"
+          type="is-danger"
+        >
+          <h2 class="notification__header">Whoops</h2>
+          <p>There is no such a user.</p>
+        </b-message>
+      </div>
+    </section>
 
-              <div class="tags">
-                <span class="tag is-light is-medium">Time left: {{ timeLeft }}</span>
-              </div>
+    <template v-else>
+      <section class="section">
+        <div class="container">
+          <h1 class="title">{{title}}</h1>
 
-              <form method="post" @submit.prevent="verify">
-                <b-field
-                  label="E-mail (optional, but recommended)">
-                  <b-input
-                    type="email"
-                    size="is-large"
-                    v-model="email">
-                  </b-input>
-                </b-field>
+          <div class="media box">
+            <figure class="media-left">
+              <p class="image is-128x128">
+                <img class="is-rounded" :src="avatars.large">
+              </p>
+            </figure>
 
-                <b-field
-                  label="Repeat password *">
-                  <b-input
-                    type="password"
-                    size="is-large"
-                    v-model="password"
-                    minlength="6"
-                    maxlength="30"
-                    required>
-                  </b-input>
-                </b-field>
-
-                <b-field>
-                  <b-checkbox v-model="confirm">
-                    I confirm that I published a job named <b>{{ jobname }}</b>.
-                  </b-checkbox>
-                </b-field>
-
-                <div class="buttons">
-                  <button
-                    class="button is-primary"
-                    :disabled="!confirm">
-                    Continue
-                  </button>
-
-                  <button
-                    class="button is-danger is-outlined"
-                  >
-                    Cancel registration
-                  </button>
+            <div class="media-content">
+              <div class="content">
+                <h1 class="title">@{{ username }}
+                  <span
+                    v-if="crew"
+                    class="tag is-white is-medium tooltip has-text-weight-normal"
+                    :style="`border: 1px solid #${crew.color};`"
+                    :data-tooltip="crew.name">
+                    {{ crew.tag }}
+                  </span>
+                </h1>
+                <!-- <p
+                  v-if="crew"
+                  class="has-text-grey">
+                  Active crew:
+                  <a :href="`/crews/${crew.slug}`">{{ crew.name }}</a>
+                </p> -->
+                <div>
+                  <a
+                    class="button is-light"
+                    :href="`https://socialclub.rockstargames.com/member/${username}`"
+                    target="_blank">
+                    Go to RGSC profile
+                  </a>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="tabs">
-          <ul>
-            <li class="is-active">
-              <router-link :to="{ name: 'main' }">
-                Jobs
-              </router-link>
-            </li>
-            <li>
-              <router-link :to="{ name: 'main' }">
-                Collections
-              </router-link>
-            </li>
-            <li>
-              <router-link :to="{ name: 'main' }">
-                Events
-              </router-link>
-            </li>
-          </ul>
+      <section
+        v-if="authUsername === username && !verified"
+        class="section">
+        <div class="container">
+          <div class="columns">
+            <div class="column is-half">
+              <div class="box">
+                <h2 class="title is-4">Verification</h2>
+                <b-notification
+                  type="is-info"
+                  has-icon
+                  :closable="false"
+                >
+                  <div class="notification__header">Verification code</div>
+                  In order to verify your account you need to publish <b>GTA Online Job</b> named
+                  <div class="mono is-size-1 is-uppercase">{{ jobname }}</div>
+                  (case doesn't matter)
+                </b-notification>
+
+                <div class="tags">
+                  <span class="tag is-light is-medium">Time left: {{ timeLeft }}</span>
+                </div>
+
+                <form method="post" @submit.prevent="verify">
+                  <b-field
+                    label="E-mail (optional, but recommended)">
+                    <b-input
+                      type="email"
+                      size="is-large"
+                      v-model="email">
+                    </b-input>
+                  </b-field>
+
+                  <b-field
+                    label="Repeat password *">
+                    <b-input
+                      type="password"
+                      size="is-large"
+                      v-model="password"
+                      minlength="6"
+                      maxlength="30"
+                      required>
+                    </b-input>
+                  </b-field>
+
+                  <b-field>
+                    <b-checkbox v-model="confirm">
+                      I confirm that I published a job named <b>{{ jobname }}</b>.
+                    </b-checkbox>
+                  </b-field>
+
+                  <div class="buttons">
+                    <button
+                      class="button is-primary"
+                      :disabled="!confirm">
+                      Continue
+                    </button>
+
+                    <button
+                      class="button is-danger is-outlined"
+                    >
+                      Cancel registration
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <job-list :min-info="true"></job-list>
-        <!-- <br> -->
-        <!-- <bulma-pagination
-          :curr-page="page"
-          :total-items="number"
-          :load-more-button="true"
-          :loading="loading">
-        </bulma-pagination> -->
-      </div>
-    </section>
+      <section class="section">
+        <div class="container">
+          <div class="tabs">
+            <ul>
+              <li class="is-active">
+                <router-link :to="{ name: 'main' }">
+                  Jobs
+                </router-link>
+              </li>
+              <li>
+                <router-link :to="{ name: 'main' }">
+                  Collections
+                </router-link>
+              </li>
+              <li>
+                <router-link :to="{ name: 'main' }">
+                  Events
+                </router-link>
+              </li>
+            </ul>
+          </div>
+
+          <job-list :min-info="true"></job-list>
+          <!-- <br> -->
+          <!-- <bulma-pagination
+            :curr-page="page"
+            :total-items="number"
+            :load-more-button="true"
+            :loading="loading">
+          </bulma-pagination> -->
+        </div>
+      </section>
+    </template>
   </div>
 </template>
 
@@ -155,8 +173,10 @@ import JobList from '@/components/JobList.vue';
 import CustomPagination from '@/components/CustomPagination.vue';
 
 export default {
-  title() {
-    return `${this.username} Profile`;
+  metaInfo() {
+    return {
+      title: this.title,
+    };
   },
 
   fetchData({store, route}) {
@@ -182,18 +202,11 @@ export default {
     };
   },
 
-  mounted() {
-    setInterval(() => {
-      // this.timeLeft = `moment`(this.date).toNow(true);
-      this.timeLeft = '';
-    }, 1000);
-  },
-
-  beforeDestroy() {
-    clearInterval(this.interval);
-  },
-
   computed: {
+    notFound() {
+      return !this.username;
+    },
+
     ...mapState('profile', [
       'username',
       'crew',
@@ -216,11 +229,27 @@ export default {
 
     ...mapState('route', {
       page: state => Number(state.query.page) || 1,
+      currUsername: state => state.params.username,
     }),
 
     avatars() {
       return userAvatars(this.username);
     },
+
+    title() {
+      return `${this.currUsername}'s profile`;
+    },
+  },
+
+  mounted() {
+    setInterval(() => {
+      // this.timeLeft = `moment`(this.date).toNow(true);
+      this.timeLeft = '';
+    }, 1000);
+  },
+
+  beforeDestroy() {
+    clearInterval(this.interval);
   },
 };
 </script>
