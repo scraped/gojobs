@@ -31,12 +31,24 @@ const schema = new Schema({
     type: [String],
   },
 
-  versions: [{
-    v: Number,
-    jobId: String,
-    diff: Boolean,
-    _id: false,
-  }],
+  versions: {
+    type: [{
+      v: {
+        type: Number,
+        min: 1,
+        required: true,
+      },
+      jobId: {
+        type: String,
+        required: true,
+      },
+      diff: {
+        type: Boolean,
+        required: true,
+      },
+      _id: false,
+    }],
+  },
 
   firstAddedToRgsc: {
     type: Date,
@@ -80,16 +92,16 @@ const schema = new Schema({
     default: false,
   },
 
-  uploaded: {
-    type: Boolean,
-    default: false,
-  },
-
   processDate: {
     type: Date,
     required() {
       return this.processed;
     },
+  },
+
+  uploaded: {
+    type: Boolean,
+    default: false,
   },
 
   firstUploaded: {
