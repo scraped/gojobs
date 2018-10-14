@@ -20,37 +20,40 @@
             <section class="block">
               <div class="content" style="text-align: center;">
                 <h1 class="title has-text-weight-normal">
-                  <span v-html="job.name" style="padding-right: 4px;"/>
-                  <span
+                  <span v-html="job.name" style="padding-right: 10px;"/><span
                     v-if="jobExt.recentlyAdded"
                     class="tooltip"
                     data-tooltip="Added less than 2 weeks ago"
-                  >
-                    🔥
-                  </span>
-                  <span
+                  >🔥</span><span
                     v-if="job.rockstar"
-                    class="tag is-primary is-medium"
-                  >
-                    <b-icon
-                      icon="check"
-                      size="is-small"
-                    />
-                    <span v-if="job.author">
-                      Rockstar Verified Job
-                    </span>
-                    <span v-else>
-                      Rockstar Job
-                    </span>
+                    class="tag is-primary is-medium is-rounded"
+                    style="font-family: 'Lato', sans-serif; opacity: 0.8;"
+                  ><b-icon
+                    icon="check"
+                    size="is-small"
+                  /><span v-if="job.author">Rockstar Verified Job</span><span v-else>Rockstar Job</span>
                   </span>
                 </h1>
                 <p class="has-text-dark is-size-7">
+                  <template v-if="isRace">
+                    {{job.specific.laps ? 'Lap': 'Point to point'}}
+                  </template>
                   <router-link
                     :to="{name: 'main', query: {type: job.scType}}"
                   >{{jobExt.scTypeName}}</router-link>
                   for {{jobExt.playersNumberText}}
+                  <template v-if="job.teams">
+                    & {{job.teams === 2 ? '2' : `2-${job.teams}`}} teams
+                  </template>
                   <template v-if="isRace">
-                    · <a @click="mapShowed = !mapShowed">Show route</a>
+                    ·
+                    <a
+                      href=""
+                      @click.prevent="mapShowed = !mapShowed"
+                    >Show route</a>
+                    <template v-if="job.specific.dist">
+                      ({{job.specific.dist | mToKm}} km)
+                    </template>
                   </template>
                 </p>
               </div>
@@ -70,12 +73,13 @@
                             <figure class="image image-avatar is-48x48">
                               <img
                                 v-if="job.author"
-                                class="is-rounded"
                                 :src="avatars.small"
+                                class="is-rounded"
                               >
                               <img
                                 v-else
-                                class="is-rounded" src="@/images/rockstar-avatar-48.png"
+                                class="is-rounded"
+                                src="@/images/rockstar-avatar-48.png"
                               >
                             </figure>
                           </router-link>
@@ -141,13 +145,16 @@
                     <h3 class="subtitle is-size-6 has-text-grey">RGSC job page</h3>
 
                     <a
-                      class="button is-fullwidth is-primary"
                       :style="`background: rgb(${job.background[0]})`"
                       :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/${job.jobCurrId}`"
+                      class="button is-fullwidth is-primary"
                       target="_blank"
                     >
                       <span>Go to RGSC job page</span>
-                      <b-icon icon="external-link" size="is-small"></b-icon>
+                      <b-icon
+                        icon="external-link"
+                        size="is-small"
+                      />
                     </a>
                   </section>
                 </div>
@@ -171,23 +178,23 @@
                         <p>
                           Updated
                           <span
+                            :data-tooltip="job.scUpdated | formatDate"
                             class="tooltip"
                             style="border-bottom: 1px dashed currentColor;"
-                            :data-tooltip="job.scUpdated | formatDate"
                           >{{job.scUpdated | formatDateRelative}} (version {{job.ver}})</span>,
                           added
                           <span
+                            :data-tooltip="job.scAdded | formatDate"
                             class="tooltip"
                             style="border-bottom: 1px dashed currentColor;"
-                            :data-tooltip="job.scAdded | formatDate"
                           >{{job.scAdded | formatDateRelative}}</span>
                         </p>
                         <p>
                           Job info retrieved from RGSC
                           <span
+                            :data-tooltip="job.fetchDate | formatDate"
                             class="tooltip"
                             style="border-bottom: 1px dashed currentColor;"
-                            :data-tooltip="job.fetchDate | formatDate"
                           >{{job.fetchDate | formatDateRelative}}</span>
                         </p>
                       </div>
@@ -307,12 +314,11 @@
               <h2 class="subtitle">Job Info</h2>
               <template v-if="job.locs && job.locs.length">
                 <h3 class="subtitle is-size-6 has-text-grey">Locations</h3>
-                <div class="buttons">
+                <div class="tags">
                   <span
                     v-for="locShortName in job.locs"
                     :key="locShortName"
-                    class="button is-small is-rounded"
-                    style="border-width: 2px;"
+                    class="tag is-small is-rounded"
                   >
                     <b-icon
                       pack="fa"
@@ -320,13 +326,6 @@
                     />
                     <span>{{locations[locShortName.toLowerCase()]}}</span>
                   </span>
-                </div>
-              </template>
-
-              <template v-if="job.teams">
-                <div class="subtitle is-size-6">
-                  <span>Required number of teams</span>
-                  <span class="has-text-weight-bold is-pulled-right">{{job.teams === 2 ? '2' : `2-${job.teams}`}}</span>
                 </div>
               </template>
 
@@ -371,21 +370,6 @@
                 </div>
               </template>
 
-              <template v-if="job.specific.dist">
-                <div class="subtitle is-size-6">
-                  <span>Point to point race</span>
-                  <span class="has-text-weight-bold is-pulled-right">{{job.specific.laps ? 'No' : 'Yes'}}</span>
-                </div>
-              </template>
-
-              <template v-if="job.specific.dist">
-                <div class="subtitle is-size-6">
-                  <span v-if="job.specific.laps">Lap length</span>
-                  <span v-else>Route length</span>
-                  <span class="has-text-weight-bold is-pulled-right">{{job.specific.dist | mToKm}} km</span>
-                </div>
-              </template>
-
               <template v-if="job.specific.laps">
                 <div class="subtitle is-size-6">
                   <span>Default number of laps</span>
@@ -418,7 +402,7 @@
             </div>
 
             <b-modal
-              v-if='isRace'
+              v-if="isRace"
               :active.sync="mapShowed"
               scroll="keep"
             >
@@ -430,8 +414,8 @@
                 <race-map
                   :point-to-point="job.specific.p2p"
                   :locations="job.specific.chpLocs"
-                  :slocations="job.specific.chpSecLocs">
-                </race-map>
+                  :slocations="job.specific.chpSecLocs"
+                />
               </section>
             </b-modal>
           </div>
@@ -462,7 +446,7 @@ export default {
   fetchData({store, route}) {
     const {id} = route.params;
     return Promise.all([
-      store.dispatch('job/fetchJob', {id})
+      store.dispatch('job/fetchJob', {id}),
     ]);
   },
 
