@@ -4,7 +4,7 @@ const {platforms} = require('../config/static');
 const {Schema} = mongoose;
 
 function nonRockstar() {
-  return this.category !== 'rockstar';
+  return this.type !== 'rockstar';
 }
 
 const schema = new Schema({
@@ -69,6 +69,7 @@ const schema = new Schema({
 
   nextFetch: {
     type: Date,
+    default: new Date(),
     required: true,
   },
 

@@ -69,7 +69,11 @@ const actions = {
   async fetchJob({commit}, {id}) {
     const response = await Vue.$http.post(`/api/jobs/${id}`);
 
-    const {job} = response.data;
+    let {job} = response.data;
+
+    if (!job.specific) {
+      job.specific = {};
+    }
 
     commit('setJob', {job});
   },

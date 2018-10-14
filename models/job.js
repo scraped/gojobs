@@ -1,5 +1,11 @@
 const {mongoose} = require('../lib/db');
-const {platforms, jobTypes, vehicles, locations, vehClasses} = require('../config/static');
+const {
+  platforms,
+  jobTypes,
+  vehicles,
+  locations,
+  vehClasses,
+} = require('../config/static');
 
 const {Schema} = mongoose;
 
@@ -161,6 +167,7 @@ let schema = new Schema(
     specific: {
       default: {},
       required: true,
+
       type: {
         classes: [
           {
@@ -236,10 +243,8 @@ schema.pre('save', function (next) {
   // Type validation
   const typeInfo = jobTypes[scType];
 
-  if (!!this.rockstar !== !!typeInfo.rockstar) {
-    throw new Error(
-      'Non-rockstar jobs cannot be added with a type that only appers for rockstar jobs or vice versa',
-    );
+  if (!this.rockstar && typeInfo.rockstar) {
+    throw new Error('This type is only available for rockstar jobs');
   }
 
   // Mode validation

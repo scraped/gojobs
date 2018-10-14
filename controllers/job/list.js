@@ -48,7 +48,7 @@ exports.jobListPost = async (req, res) => {
     type: jobType,
     mode: jobMode,
     user,
-    rockstar,
+    cat,
     by,
   } = body;
 
@@ -92,11 +92,12 @@ exports.jobListPost = async (req, res) => {
     conditions.scMode = jobMode;
   }
 
-  if (rockstar) {
-    if (!user) {
-      conditions.author = {$exists: false};
-    }
+  if (cat === 'rockstar') {
     conditions.rockstar = true;
+    conditions.author = {$exists: false};
+  } else if (cat === 'verified') {
+    conditions.rockstar = true;
+    conditions.author = {$exists: true};
   } else {
     conditions.plat = platform;
   }
