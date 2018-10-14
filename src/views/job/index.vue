@@ -20,7 +20,7 @@
             <section class="block">
               <div class="content" style="text-align: center;">
                 <h1 class="title has-text-weight-normal">
-                  <span v-html="job.name"/>
+                  <span v-html="job.name" style="padding-right: 4px;"/>
                   <span
                     v-if="jobExt.recentlyAdded"
                     class="tooltip"
@@ -28,13 +28,27 @@
                   >
                     🔥
                   </span>
+                  <span
+                    v-if="job.rockstar"
+                    class="tag is-primary is-medium"
+                  >
+                    <b-icon
+                      icon="check"
+                      size="is-small"
+                    />
+                    <span v-if="job.author">
+                      Rockstar Verified Job
+                    </span>
+                    <span v-else>
+                      Rockstar Job
+                    </span>
+                  </span>
                 </h1>
                 <p class="has-text-dark is-size-7">
-                   <router-link
+                  <router-link
                     :to="{name: 'main', query: {type: job.scType}}"
                   >{{jobExt.scTypeName}}</router-link>
-                  for
-                  {{jobExt.playersNumberText}}
+                  for {{jobExt.playersNumberText}}
                   <template v-if="isRace">
                     · <a @click="mapShowed = !mapShowed">Show route</a>
                   </template>
@@ -44,7 +58,7 @@
 
             <div class="columns">
               <div class="column is-two-fifths">
-                <div class="box" style="height: 100%;">
+                <div class="box">
                   <section class="block">
                     <h3 class="subtitle is-size-6 has-text-grey">Author</h3>
 
@@ -74,20 +88,6 @@
                               :to="{name: 'profile', params: {username: job.author}}">
                               @{{job.author}}
                             </router-link>
-                            <span
-                              v-if="job.rockstar"
-                              class="tag is-warning"
-                            >
-                              <span class="icon is-small">
-                                <i class="fa fa-check"></i>
-                              </span>
-                              <span v-if="job.author">
-                                Rockstar Verified Job
-                              </span>
-                              <span v-else>
-                                Official Rockstar Job
-                              </span>
-                            </span>
                           </div>
 
                           <p class="has-text-grey is-size-7">Crew name</p>
@@ -98,24 +98,24 @@
 
                   <section class="block">
                     <h3 class="subtitle is-size-6 has-text-grey">Official category & platform</h3>
-
                     <div class="buttons">
                       <router-link
+                        :to="{name: 'main', query: {type: job.scType}}"
                         class="button is-small is-rounded"
                         style="border-width: 2px;"
-                        :to="{name: 'main', query: {type: job.scType}}"
-                      ><icon-gta :icon="jobExt.scTypeIcon" ></icon-gta> <span>{{jobExt.scTypeName}}</span></router-link>
+                      ><icon-gta :icon="jobExt.scTypeIcon"/><span>{{jobExt.scTypeName}}</span></router-link>
                       <template v-if="jobExt.scModeName">
                         <router-link
+                          :to="{name: 'main', query: {type: job.scType, mode: job.scMode}}"
                           class="button is-small is-rounded"
                           style="border-width: 2px;"
-                          :to="{name: 'main', query: {type: job.scType, mode: job.scMode}}"
-                        ><icon-gta :icon="jobExt.scModeIcon" ></icon-gta> <span>{{jobExt.scModeName}}</span></router-link>
+                        ><icon-gta :icon="jobExt.scModeIcon"/><span>{{jobExt.scModeName}}</span></router-link>
                       </template>
                       <router-link
+                        v-if="!job.rockstar"
+                        :to="{name: 'main', query: {platform: job.plat}}"
                         class="button is-small is-rounded"
                         style="border-width: 2px;"
-                        :to="{name: 'main', query: {platform: job.plat}}"
                       >{{jobExt.platformName}}</router-link>
                     </div>
                   </section>
@@ -443,12 +443,8 @@
 
 <script>
 import {mapState, mapGetters} from 'vuex';
-import findIndex from 'lodash/findIndex';
 
-import {
-  userAvatars,
-  ratingCssClass,
-} from '@/helpers';
+import {userAvatars} from '@/helpers';
 
 import {ratingMixin} from '@/mixins';
 
@@ -457,10 +453,6 @@ import RaceMap from './RaceMap.vue';
 import {vehicles, vehClasses, locations} from '@/../config/static';
 
 export default {
-  mixins: [
-    ratingMixin,
-  ],
-
   metaInfo() {
     return {
       title: this.job.name,
@@ -479,6 +471,10 @@ export default {
     RaceMap,
   },
 
+  mixins: [
+    ratingMixin,
+  ],
+
   data() {
     return {
       mapShowed: false,
@@ -487,12 +483,6 @@ export default {
       vehClasses,
       locations,
     };
-  },
-
-  mounted() {
-    // Array.from(document.getElementsByClassName('navbar')).forEach(el => {
-    //   el.style.background = `linear-gradient(to right${this.gradient(0.7)}`;
-    // });
   },
 
   computed: {
@@ -511,23 +501,6 @@ export default {
     defaultVehicle() {
       const defVeh = String(this.job.specific.defVeh);
       return vehicles[defVeh];
-    },
-
-    transformVehicles() {
-      return '';
-
-      const {trfVeh} = this.job.details.specific.race;
-
-      let vehiclesString = '';
-
-      if (trfVeh && trfVeh.length) {
-        vehiclesString += vehicles[trfVeh[0]];
-        for (let i = 1; i < trfVeh.length; i++) {
-          vehiclesString += `, ${vehicles[trfVeh[i]]}`;
-        }
-      }
-
-      return vehiclesString;
     },
 
     avatars() {
@@ -555,7 +528,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/vars.scss';
+@import "@/scss/vars.scss";
 
 .notification {
   height: 100%;
@@ -576,7 +549,7 @@ export default {
 }
 
 .title__special {
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
 }
 
 .tag__info {

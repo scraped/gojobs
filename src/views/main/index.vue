@@ -17,7 +17,7 @@
     </section> -->
     <section class="section">
       <div class="container">
-        <h1 class="title">GTA Online Jobs</h1>
+        <h1 class="title" style="text-align: center;">GTA Online Jobs</h1>
         <jobs-list></jobs-list>
       </div>
     </section>
@@ -46,25 +46,19 @@
 import Vue from 'vue';
 import {mapState} from 'vuex';
 
-import JobsList from '@/components/JobList.vue';
+import JobsList from '@/components/job-list/JobList.vue';
 import CustomPagination from '@/components/CustomPagination.vue';
 
 const JOBS_PER_PAGE_DEFAULT = 30;
 
 export default {
-  fetchData({ store, route }) {
+  fetchData({store, route}) {
     return store.dispatch('jobs/fetch', route.query);
   },
 
   components: {
     JobsList,
-    CustomPagination
-  },
-
-  watch: {
-    $route(to, from) {
-      this.actualPage = Number(to.query.page) || 1;
-    }
+    CustomPagination,
   },
 
   data() {
@@ -77,15 +71,21 @@ export default {
 
   computed: {
     ...mapState('jobs', [
-      'count'
-    ])
+      'count',
+    ]),
+  },
+
+  watch: {
+    $route(to) {
+      this.actualPage = Number(to.query.page) || 1;
+    },
   },
 
   methods: {
     async loadMore() {
       const newQuery = {
         ...this.$route.query,
-        page: this.actualPage + 1
+        page: this.actualPage + 1,
       };
 
       this.loading = true;
@@ -93,21 +93,21 @@ export default {
       try {
         await this.$store.dispatch('jobs/fetch', {
           ...newQuery,
-          append: true
+          append: true,
         });
 
         this.actualPage++;
       } catch (e) {}
 
       this.loading = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .hero__welcome {
-  font-family: 'Pavanam';
+  font-family: "Pavanam", sans-serif;
 }
 </style>
 

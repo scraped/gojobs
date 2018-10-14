@@ -26,7 +26,9 @@
       "props": false
     }],
     "object-curly-spacing": ["error", "never"],
+
     "class-methods-use-this": 0,
+    "func-names": 0,
     "prefer-const": 0,
     "prefer-destructuring": 0,
     "no-console": 0,

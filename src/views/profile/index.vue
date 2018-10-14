@@ -169,7 +169,7 @@
 import {mapState, mapGetters} from 'vuex';
 import {userAvatars} from '@/helpers'
 
-import JobList from '@/components/JobList.vue';
+import JobList from '@/components/job-list/JobList.vue';
 import CustomPagination from '@/components/CustomPagination.vue';
 
 export default {

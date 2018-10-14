@@ -4,35 +4,35 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-half">
-              <h1 class="title">
-                Sign Up
-              </h1>
-              <div
-                v-if="signup"
-                class="box"
+            <h1 class="title" style="text-align: center;">
+              Sign Up
+            </h1>
+            <div
+              v-if="signup"
+              class=""
+            >
+              <div class="content">
+                <div class="subtitle">Welcome to GTA Online Jobs site</div>
+
+                <p>You can only register if you have a valid Rockstar Games Social Club account that you're using to play GTA Online.</p>
+
+                <p>Follow this instruction to complete the registration:</p>
+
+                <ol>
+                  <li>Fill the form down below;</li>
+                  <li>Go to GTA Online > Pause > Online > Creator;</li>
+                  <li>Create any job, fullfill the requirements, give the specific name (that will be given to you after completing the step <span class="tag is-rounded">1</span>), test and <b>publish</b> it;</li>
+                  <li>When you will be ready, follow the further instructions.</li>
+                </ol>
+              </div>
+              <b-notification
+                type="is-warning"
+                has-icon
+                :closable="false"
               >
-                <div class="content">
-                  <div class="subtitle">Welcome to GTA Online Jobs site</div>
-
-                  <p>You can only register if you have a valid Rockstar Games Social Club account that you're using to play GTA Online.</p>
-
-                  <p>Follow this instruction to complete the registration:</p>
-
-                  <ol>
-                    <li>Fill the form down below;</li>
-                    <li>Go to GTA Online > Pause > Online > Creator;</li>
-                    <li>Create any job, fullfill the requirements, give the specific name (that will be given to you after completing the step <span class="tag is-rounded">1</span>), test and <b>publish</b> it;</li>
-                    <li>When you will be ready, follow the further instructions.</li>
-                  </ol>
-                </div>
-                <b-notification
-                  type="is-warning"
-                  has-icon
-                  :closable="false"
-                >
-                  <div class="notification__header">Registration is limited</div>
-                  Note that the registration is not open for everybody as of now and most likely you won't be able to sign up (unless you don't have an invite). Nevertheless your chances are higher if you have previously published some relatively popular jobs.
-                </b-notification>
+                <div class="notification__header">Registration is limited</div>
+                Note that the registration is not open for everybody as of now and most likely you won't be able to sign up (unless you don't have an invite). Nevertheless your chances are higher if you have previously published some relatively popular jobs.
+              </b-notification>
               <form
                 method="post"
                 @submit.prevent="auth"
