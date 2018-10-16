@@ -1,4 +1,6 @@
 .notification__header {
-  font-family: 'Oswald';
-  font-size: $size-4;
+  font: {
+    size: $size-4;
+    family: "Oswald", sans-serif;
+  }
 }

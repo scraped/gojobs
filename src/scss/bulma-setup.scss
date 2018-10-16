@@ -1,6 +1,5 @@
 @import "~bulma/sass/utilities/initial-variables";
 @import "~bulma/sass/utilities/functions";
-
 @import "./custom-vars";
 
 $primary: $rockstar-light;
@@ -18,16 +17,15 @@ $family-primary: "Lato", sans-serif;
 
 @import "~bulma/sass/utilities/derived-variables";
 
-.input, .button {
-  transition-duration: $speed;
+.input {
+  transition-duration: $speed * 2;
 }
 
 // input
 // $input-hover-border-color: $grey-lighter;
 $input-shadow: none;
 $input-focus-box-shadow-size: 0 0 10px 0;
-$input-focus-border-color: $grey;
-$input-focus-box-shadow-color: rgba($input-focus-border-color, 0.25);
+// $input-focus-box-shadow-color: rgba($input-focus-border-color, 0.1);
 
 // section
 $section-padding: 1rem 1rem; // 3rem 1.5rem
@@ -41,7 +39,7 @@ $button-focus-box-shadow-size: 0 0 10px 0;
 // $button-background-color: $white-ter;
 
 $button-border-color: $grey-lighter;
-$button-hover-border-color: $grey-light;
+$button-hover-border-color: $button-border-color;
 $button-active-border-color: $button-hover-border-color;
 $button-focus-border-color: $button-border-color;
 
@@ -67,13 +65,13 @@ $tabs-link-padding: 0.5em 0; // 0.5em 1em
 }
 
 // pagination
-$pagination-margin: 0;
-$pagination-border-color: $rockstar;
-$pagination-current-color: $gtaonline;
-$pagination-current-background-color: $rockstar;
-$pagination-hover-border-color: $pagination-border-color;
-$pagination-focus-border-color: $pagination-border-color;
-$pagination-active-border-color: $pagination-border-color;
+// $pagination-margin: 0;
+// $pagination-border-color: $rockstar;
+// $pagination-current-color: $gtaonline;
+// $pagination-current-background-color: $rockstar;
+// $pagination-hover-border-color: $pagination-border-color;
+// $pagination-focus-border-color: $pagination-border-color;
+// $pagination-active-border-color: $pagination-border-color;
 
 // footer
 $footer-background-color: $dark;

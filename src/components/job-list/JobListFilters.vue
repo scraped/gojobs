@@ -433,6 +433,6 @@ export default {
 }
 
 .filters__main {
-  background: linear-gradient(to bottom, rgba(132, 0, 0, 0.1), transparent);
+  background: linear-gradient(to bottom, rgba($gtaonline, 0.1), transparent);
 }
 </style>

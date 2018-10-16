@@ -18,13 +18,13 @@
     <section class="section">
       <div class="container">
         <h1 class="title" style="text-align: center;">GTA Online Jobs</h1>
-        <jobs-list></jobs-list>
+        <jobs-list/>
       </div>
     </section>
 
     <section
       v-if="count"
-      class="hero is-primary is-bold"
+      class="hero"
     >
       <div class="hero-body">
         <div class="container">
@@ -35,7 +35,7 @@
             :per-page="perPage"
             :loading="loading"
             @load-more="loadMore"
-          ></custom-pagination>
+          />
         </div>
       </div>
     </section>

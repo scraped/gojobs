@@ -5,8 +5,8 @@
       class="content"
     >
       <div
-        class="button is-primary is-inverted is-large is-fullwidth"
-        :class="{ 'is-loading': loading }"
+        :class="{'is-loading': loading}"
+        class="button button_shadow button_responsible is-primary has-backgroud-grey is-rounded is-large is-fullwidth"
         @click="loadMore()"
       >
         <span>Load more</span>
@@ -15,23 +15,23 @@
 
     <div class="buttons has-addons is-pulled-right">
       <router-link
-        class="button is-primary is-inverted"
         v-if="hasPrev()"
-        :to="{ name: routeName, query: Object.assign({}, $route.query, { page: prevPage }) }"
+        :to="genPageRoute(prevPage)"
         :aria-label="`Go to page ${prevPage}`"
+        class="button"
       >
-        <i class="icon fa fa-angle-left"></i>
+        <i class="icon fa fa-angle-left"/>
         <span class="is-hidden-mobile">Previous page</span>
       </router-link>
 
       <router-link
-        class="button is-primary is-inverted"
         v-if="hasNext()"
-        :to="{ name: routeName, query: Object.assign({}, $route.query, { page: nextPage }) }"
         :aria-label="`Go to page ${nextPage}`"
+        :to="genPageRoute(nextPage)"
+        class="button"
       >
         <span class="is-hidden-mobile">Next page</span>
-        <i class="icon fa fa-angle-right"></i>
+        <i class="icon fa fa-angle-right"/>
       </router-link>
     </div>
 
@@ -42,16 +42,16 @@
     >
       <router-link
         v-if="hasFirst()"
-        :to="{ name: routeName, query: Object.assign({}, $route.query, { page: 1 }) }"
-        class="button is-primary is-inverted"
+        :to="genPageRoute(1)"
+        class="button"
         aria-label="Go to page 1"
       >
         1
       </router-link>
 
       <span
-        class="button is-primary is-inverted"
         v-if="hasFirst() & leftBound > 3"
+        class="button "
       >
         &hellip;
       </span>
@@ -59,28 +59,28 @@
       <router-link
         v-for="page in pages"
         :key="page"
-        :to="{ name: routeName, query: Object.assign({}, $route.query, { page }) }"
-        class="button is-primary is-inverted"
-        :class="{ 'is-dark': currPage === page }"
+        :to="genPageRoute(page)"
         :aria-label="`Go to page ${page}`"
+        :class="{[currPageButtonClass]: currPage === page}"
+        class="button"
       >
-        {{ page }}
+        {{page}}
       </router-link>
 
       <span
-        class="button is-primary is-inverted"
         v-if="hasLast() & totalPages - rightBound > 2"
+        class="button"
       >
         &hellip;
       </span>
 
       <router-link
         v-if="hasLast()"
-        :to="{ name: routeName, query: Object.assign({}, $route.query, { page: totalPages }) }"
-        class="button is-primary is-inverted"
+        :to="genPageRoute(totalPages)"
         :aria-label="`Go to page ${totalPages}`"
+        class="button"
       >
-        {{ totalPages }}
+        {{totalPages}}
       </router-link>
     </div>
   </div>
@@ -89,14 +89,19 @@
 <script>
 export default {
   props: {
-    currPage: { type: Number, default: 1 },
-    totalItems: { type: Number, default: 0 },
-    perPage: { type: Number, default: 30 },
-    offset: { type: Number, default: 3 },
-    routeName: { type: String, default: 'main' },
+    currPage: {type: Number, default: 1},
+    totalItems: {type: Number, default: 0},
+    perPage: {type: Number, default: 30},
+    offset: {type: Number, default: 3},
+    routeName: {type: String, default: 'main'},
 
-    loadMoreButton: { type: Boolean, default: true },
-    loading: { type: Boolean, default: false }
+    loadMoreButton: {type: Boolean, default: true},
+    loading: {type: Boolean, default: false},
+
+    currPageButtonClass: {
+      type: String,
+      default: 'is-primary',
+    },
   },
 
   computed: {
@@ -136,14 +141,20 @@ export default {
 
     prevPage() {
       return this.currPage - 1;
-    }
+    },
   },
 
   methods: {
+    genPageRoute(page) {
+      return {
+        query: {...this.$route.query, page}
+      };
+    },
+
     showLoadMoreButton() {
       return this.loadMoreButton
         && this.totalItems > 0
-        && this.currPage != this.totalPages;
+        && this.currPage !== this.totalPages;
     },
 
     loadMore() {
@@ -164,7 +175,7 @@ export default {
 
     hasNext() {
       return this.currPage < this.totalPages;
-    }
-  }
+    },
+  },
 };
 </script>

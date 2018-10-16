@@ -35,11 +35,10 @@
       </div>
 
       <div
-        class="navbar-menu"
         :class="{'is-active': menuOpened}"
+        class="navbar-menu"
       >
-        <div class="navbar-start">
-        </div>
+        <div class="navbar-start"/>
 
         <div class="navbar-end">
           <router-link
@@ -59,19 +58,19 @@
           </router-link>
 
           <template v-else>
-          <router-link
-            :to="{name: 'auth'}"
-            class="navbar-item"
-          >
-            <span>Sign Up</span>
-          </router-link>
+            <router-link
+              :to="{name: 'auth'}"
+              class="navbar-item"
+            >
+              <span>Sign Up</span>
+            </router-link>
 
-          <a
-            class="navbar-item"
-            @click="isLogInModal = true"
-          >
-            Log In
-          </a>
+            <a
+              class="navbar-item"
+              @click="isLogInModal = true"
+            >
+              Log In
+            </a>
           </template>
         </div>
       </div>
@@ -82,7 +81,7 @@
       scroll="keep"
       has-modal-card
     >
-      <log-in></log-in>
+      <log-in/>
     </b-modal>
   </nav>
 </template>
@@ -96,7 +95,7 @@ import LogIn from '@/components/LogIn.vue';
 
 export default {
   components: {
-    LogIn
+    LogIn,
   },
 
   data() {
@@ -131,17 +130,13 @@ export default {
   transition-duration: $speed;
 }
 
-// .navbar-menu.is-active {
-//   background: $dark;
-// }
-
 .navbar-burger {
   color: $white;
 }
 
 .navbar__icon-addition {
   padding-left: 0.6em;
-  font-family: 'SignPainter-HouseScript';
+  font-family: "SignPainter-HouseScript", sans-serif;
 }
 </style>
 
