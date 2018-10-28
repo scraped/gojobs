@@ -16,11 +16,11 @@ module.exports = function ssrMiddleware(app) {
       // https://ssr.vuejs.org/ru/api.html#webpack-plugins
       cache: lru({
         max: 1000,
-        maxAge: 1000 * 60 * 15
+        maxAge: 1000 * 60 * 15,
       }),
-      runInNewContext: false
+      runInNewContext: false,
     });
-  }
+  };
 
   if (production) {
     // PRODUCTION: generate renderer.
@@ -37,19 +37,21 @@ module.exports = function ssrMiddleware(app) {
     readyPromise = setupDevServer(app, updateRenderer);
   }
 
-  app.use(asyncHandler(async (req, res) => {
-    await readyPromise;
+  app.use(
+    asyncHandler(async (req, res) => {
+      await readyPromise;
 
-    let context = {req};
+      let context = {req};
 
-    const html = await renderer.renderToString(context);
+      const html = await renderer.renderToString(context);
 
-    const {errorCode} = context;
+      const {errorCode} = context;
 
-    if (errorCode) {
-      res.status(errorCode);
-    }
+      if (errorCode) {
+        res.status(errorCode);
+      }
 
-    res.send(html);
-  }));
+      res.send(html);
+    }),
+  );
 };

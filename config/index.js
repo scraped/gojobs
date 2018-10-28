@@ -1,8 +1,7 @@
 const {env} = process;
 
-let config = {
+const config = {
   port: env.PORT || 3000,
-  kuePort: 4000,
   production: env.NODE_ENV === 'production',
   jwtSecret: env.JWT_SECRET || '',
 
@@ -16,7 +15,5 @@ let config = {
     },
   },
 };
-
-config.development = !config.production;
 
 module.exports = config;
