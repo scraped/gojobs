@@ -62,24 +62,20 @@
             <div class="columns">
               <div class="column is-two-fifths">
                 <div class="box">
-                  <section class="block">
+                  <section
+                    v-if="job.author"
+                    class="block"
+                  >
                     <h3 class="subtitle is-size-6 has-text-grey">Author</h3>
 
                     <div class="">
                       <div class="media">
                         <div class="media-left">
-                          <router-link
-                            :to="{name: 'profile', params: {username: job.author}}">
+                          <router-link :to="{name: 'profile', params: {username: job.author}}">
                             <figure class="image image-avatar is-48x48">
                               <img
-                                v-if="job.author"
                                 :src="avatars.small"
                                 class="is-rounded"
-                              >
-                              <img
-                                v-else
-                                class="is-rounded"
-                                src="@/images/rockstar-avatar-48.png"
                               >
                             </figure>
                           </router-link>
@@ -103,23 +99,16 @@
                   <section class="block">
                     <h3 class="subtitle is-size-6 has-text-grey">Official category & platform</h3>
                     <div class="buttons">
-                      <router-link
-                        :to="{name: 'main', query: {type: job.scType}}"
-                        class="button is-small is-rounded"
-                        style="border-width: 2px;"
-                      ><icon-gta :icon="jobExt.scTypeIcon"/><span>{{jobExt.scTypeName}}</span></router-link>
                       <template v-if="jobExt.scModeName">
                         <router-link
                           :to="{name: 'main', query: {type: job.scType, mode: job.scMode}}"
-                          class="button is-small is-rounded"
-                          style="border-width: 2px;"
+                          class="button button_responsible is-light is-rounded"
                         ><icon-gta :icon="jobExt.scModeIcon"/><span>{{jobExt.scModeName}}</span></router-link>
                       </template>
                       <router-link
                         v-if="!job.rockstar"
                         :to="{name: 'main', query: {platform: job.plat}}"
-                        class="button is-small is-rounded"
-                        style="border-width: 2px;"
+                        class="button button_responsible is-light is-rounded"
                       >{{jobExt.platformName}}</router-link>
                     </div>
                   </section>
@@ -135,19 +124,16 @@
                         v-for="tag in job.tags"
                         :key="tag"
                         to="/"
-                        class="button is-small is-rounded is-capitalized"
-                        style="border-width: 2px;"
+                        class="button button_responsible is-rounded is-capitalized"
                       >{{tag}}</router-link>
                     </div>
                   </section>
 
                   <section class="block">
-                    <h3 class="subtitle is-size-6 has-text-grey">RGSC job page</h3>
-
+                    <hr>
                     <a
-                      :style="`background: rgb(${job.background[0]})`"
                       :href="`https://socialclub.rockstargames.com/games/gtav/jobs/job/${job.jobCurrId}`"
-                      class="button is-fullwidth is-primary"
+                      class="button button_shadow button_responsible is-fullwidth is-primary"
                       target="_blank"
                     >
                       <span>Go to RGSC job page</span>
@@ -163,18 +149,16 @@
                 <div class="content">
                   <div class="box">
                     <section class="block">
-                      <h3 class="subtitle is-size-6 has-text-grey has-text-weight-normal">Description</h3>
-
                       <p
-                        class="is-size-5 is-italic"
+                        class="is-size-4 is-italic"
                         v-html="job.desc"
                       />
                     </section>
 
                     <section class="block">
-                      <h3 class="subtitle is-size-6 has-text-grey has-text-weight-normal">Versions</h3>
+                      <hr>
 
-                      <div class="content">
+                      <div class="content has-text-grey">
                         <p>
                           Updated
                           <span
@@ -316,7 +300,8 @@
                 <h3 class="subtitle is-size-6 has-text-grey">Locations</h3>
                 <div class="tags">
                   <span
-                    v-for="locShortName in job.locs"
+                    v-for="(locShortName, i) in job.locs"
+                    v-if="i < 3 || allLocationsShowing"
                     :key="locShortName"
                     class="tag is-small is-rounded"
                   >
@@ -326,6 +311,12 @@
                     />
                     <span>{{locations[locShortName.toLowerCase()]}}</span>
                   </span>
+
+                  <span
+                    v-if="showMoreLocationsButton"
+                    class="tag is-rounded"
+                    @click="allLocationsShowing = true"
+                  >Show all</span>
                 </div>
               </template>
 
@@ -360,12 +351,11 @@
 
               <template v-if="job.specific.classes && job.specific.classes.length">
                 <div class="subtitle is-size-6 has-text-grey">Vehicle classes</div>
-                <div class="buttons">
+                <div class="tags">
                   <span
                     v-for="classShortName in job.specific.classes"
                     :key="classShortName"
-                    class="button is-small is-rounded"
-                    style="border-width: 2px;"
+                    class="tag is-small is-rounded"
                   >{{vehClasses[classShortName].name}}</span>
                 </div>
               </template>
@@ -466,6 +456,8 @@ export default {
       vehicles,
       vehClasses,
       locations,
+
+      allLocationsShowing: false,
     };
   },
 
@@ -477,6 +469,12 @@ export default {
     ...mapGetters('job', {
       jobExtGetter: 'jobExt',
     }),
+
+    showMoreLocationsButton() {
+      return this.job.locs
+        && this.job.locs.length > 3
+        && !this.allLocationsShowing;
+    },
 
     jobExt() {
       return this.jobExtGetter(this.job);

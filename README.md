@@ -12,7 +12,7 @@
 
 - [1] `POST https://socialclub.rockstargames.com/games/gtav/ajax/search` - jobs bunches (20 jobs per request, used for search)
 - [2] `GET https://socialclub.rockstargames.com/games/gtav/ajax/mission?missionid=<MissionId>` - extended object for a single job
-- [3] `GET http://prod.cloud.rockstargames.com/ugc/gta5mission/<number>/<MissionId>/0_0_ru.json` - complete job info object (have no idea how and where retrieve the "number")
+- [3] `GET http://prod.cloud.rockstargames.com/ugc/gta5mission/<number>/<MissionId>/0_0_en.json` - complete job info object ("number" is the same as it is on the avatar URL)
 
 # RGSC jobs search request structure ([1])
 

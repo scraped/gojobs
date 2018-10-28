@@ -1,4 +1,7 @@
 module.exports = {
-  fetchJobs: 'rgsc-jobs-fetcher',
+  fetchJobs(platform) {
+    return `rgsc-jobs-fetcher_${platform}`;
+  },
+
   jobsToFetch: 'jobs-to-fetch',
 };
