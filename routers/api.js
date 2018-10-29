@@ -5,9 +5,9 @@ const {
   profileDetails,
 } = require('../controllers/profileController');
 
-const {
-  signUpPost
-} = require('../controllers/auth');
+// const {
+//   signUpPost,
+// } = require('../controllers/auth');
 
 const {
   signUp,
@@ -21,17 +21,17 @@ const {
   jobListPost,
   rawJobsListPost,
   jobDetailsPost,
-  jobUploadPost,
+  // jobUploadPost,
   jobsFetchPost,
 } = require('../controllers/job');
 
 const {
-  basicInfo
+  basicInfo,
 } = require('../controllers/userController');
 
 const {
   crewListPost,
-  fetchCrewPost
+  fetchCrewPost,
 } = require('../controllers/crewController');
 
 // Profile

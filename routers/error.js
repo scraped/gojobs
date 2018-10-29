@@ -3,20 +3,21 @@ const Boom = require('boom');
 const SERVER_ERROR_CODE = 500;
 
 // eslint-disable-next-line
-module.exports = (err, req, res, next) => {
-  if (!err.isBoom) {
-    err = Boom.boomify(err, {
-      statusCode: SERVER_ERROR_CODE
+module.exports = (err, req, res) => {
+  let finalError = err;
+
+  if (!finalError.isBoom) {
+    finalError = Boom.boomify(finalError, {
+      statusCode: SERVER_ERROR_CODE,
     });
   }
 
-  const { payload } = err.output;
-  const { statusCode, error, message } = payload;
+  const {payload} = finalError.output;
+  const {statusCode, error, message} = payload;
 
   // Only show an error stack for actual server errors
   if (statusCode >= SERVER_ERROR_CODE) {
-    // eslint-disable-next-line
-    console.log(err.stack);
+    console.log(finalError.stack);
   }
 
   const errMessage = req.xhr

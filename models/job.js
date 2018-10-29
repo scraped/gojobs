@@ -1,4 +1,4 @@
-const {mongoose} = require('../lib/db');
+const {mongoose} = require('../config/mongoose');
 const {
   platforms,
   jobTypes,
@@ -17,225 +17,232 @@ function nonRockstar() {
   return !this.rockstar;
 }
 
-let schema = new Schema(
-  {
-    jobId: {
-      type: String,
-      unique: true,
-    },
+const {validateFn} = require('../validators');
 
-    jobCurrId: {
-      type: String,
-      required: true,
-    },
+const jobIdValidator = validateFn('jobId');
+const usernameValidator = validateFn('username');
 
-    rockstar: {
-      type: Boolean,
-      default: false,
-      required: true,
-    },
+let schema = new Schema({
+  jobId: {
+    type: String,
+    validate: jobIdValidator,
+    unique: true,
+  },
 
-    star: {
-      type: Boolean,
-      default: false,
-      required: true,
-    },
+  jobCurrId: {
+    type: String,
+    validate: jobIdValidator,
+    required: true,
+  },
 
-    author: {
-      type: String,
-      required: nonRockstar,
-    },
+  rockstar: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
 
-    name: {
-      type: String,
-      trim: true,
-      required: true,
-    },
+  star: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
 
-    desc: {
-      type: String,
-      trim: true,
-      required: true,
-    },
+  author: {
+    type: String,
+    validate: usernameValidator,
+    required: nonRockstar,
+  },
 
-    slug: {
-      type: String,
-      required: true,
-    },
+  name: {
+    type: String,
+    trim: true,
+    required: true,
+  },
 
-    background: {
-      type: [String],
-    },
+  desc: {
+    type: String,
+    trim: true,
+    required: true,
+  },
 
-    image: {
-      type: String,
-      set(imageUrl) {
-        const str = imageUrl.split('/');
-        return `${str[5]}.${str[7]}`;
+  slug: {
+    type: String,
+    required: true,
+  },
+
+  background: {
+    type: [String],
+  },
+
+  image: {
+    type: String,
+    set(imageUrl) {
+      const str = imageUrl.split('/');
+      return `${str[5]}.${str[7]}`;
+    },
+    required: true,
+  },
+
+  players: {
+    type: [
+      {
+        type: Number,
+        validate: Number.isInteger,
+        min: 1,
+        max: 30,
       },
-      required: true,
+    ],
+    validate(pl) {
+      return pl.length === 2
+        && pl[0] <= pl[1];
     },
+  },
 
-    players: {
-      type: [
-        {
-          type: Number,
-          min: 1,
-          max: 30,
-        },
-      ],
-      validate(pl) {
-        return pl.length === 2
-          && pl[0] <= pl[1];
+  teams: {
+    type: Number,
+    validate: Number.isInteger,
+    min: 2,
+    max: 4,
+  },
+
+  plat: {
+    type: String,
+    enum: Object.keys(platforms),
+    required: nonRockstar,
+  },
+
+  ver: {
+    type: Number,
+    min: 1,
+    validate: Number.isInteger,
+    required: true,
+  },
+
+  scType: {
+    type: String,
+    enum: Object.keys(jobTypes),
+    required: true,
+  },
+
+  scMode: {
+    type: String,
+  },
+
+  tags: {
+    type: [String],
+    // async validate(tags) {
+    //   const allTags = await JobTag.find();
+
+    //   return tags.every(tag => {
+    //     return allTags.some(currTag => {
+    //       const {mode, shortName} = currTag;
+    //       return shortName === tag
+    //         && (!mode || mode === this.scMode);
+    //     });
+    //   });
+    // }
+  },
+
+  locs: {
+    type: [
+      {
+        type: String,
+        lowercase: true,
       },
+    ],
+    validate(locs) {
+      return locs.every(locName => Object.keys(locations)
+        .some(currLocName => currLocName === locName.toLowerCase()));
     },
+  },
 
-    teams: {
-      type: Number,
-      min: 2,
-      max: 4,
-    },
+  stats: {
+    trend: {type: Number, default: 1},
+    growth: {type: Number, default: 1},
 
-    plat: {
-      type: String,
-      enum: Object.keys(platforms),
-      required: nonRockstar,
-    },
+    plTot: {type: Number, validate: Number.isInteger, required: true},
+    plUnq: {type: Number, validate: Number.isInteger, required: true},
 
-    ver: {
-      type: Number,
-      min: 1,
-      required: true,
-      validate(value) {
-        return Math.ceil(value) === value;
-      },
-    },
+    like: {type: Number, validate: Number.isInteger, required: true},
+    dislike: {type: Number, validate: Number.isInteger, required: true},
+    quit: {type: Number, validate: Number.isInteger, required: true},
 
-    scType: {
-      type: String,
-      enum: Object.keys(jobTypes),
-      required: true,
-    },
+    rating: {type: Number, validate: Number.isInteger, required: true},
+    rstRating: {type: Number, validate: Number.isInteger, required: true},
+  },
 
-    scMode: {
-      type: String,
-    },
+  specific: {
+    default: {},
+    required: true,
 
-    tags: {
-      type: [String],
-      // async validate(tags) {
-      //   const allTags = await JobTag.find();
-
-      //   return tags.every(tag => {
-      //     return allTags.some(currTag => {
-      //       const {mode, shortName} = currTag;
-      //       return shortName === tag
-      //         && (!mode || mode === this.scMode);
-      //     });
-      //   });
-      // }
-    },
-
-    locs: {
-      type: [
+    type: {
+      classes: [
         {
           type: String,
-          lowercase: true,
+          enum: Object.keys(vehClasses),
         },
       ],
-      validate(locs) {
-        return locs.every(locName => Object.keys(locations)
-          .some(currLocName => currLocName === locName.toLowerCase()));
+
+      laps: {
+        type: Number,
+        validate: Number.isInteger,
+        min: 1,
+        max: 99,
       },
-    },
 
-    stats: {
-      trend: {type: Number, default: 1},
-      growth: {type: Number, default: 1},
+      dist: {
+        type: Number,
+        min: 0,
+        required: isRace,
+      },
 
-      plTot: {type: Number, required: true},
-      plUnq: {type: Number, required: true},
+      p2p: {
+        type: Boolean,
+      },
 
-      like: {type: Number, required: true},
-      dislike: {type: Number, required: true},
-      quit: {type: Number, required: true},
+      defVeh: {
+        type: String,
+        enum: Object.keys(vehicles),
+      },
 
-      rating: {type: Number, required: true},
-      rstRating: {type: Number, required: true},
-    },
+      chpLocs: {
+        type: [[Number]],
+        required: isRace,
+      },
 
-    specific: {
-      default: {},
-      required: true,
+      chpSecLocs: {
+        type: [[Number]],
+      },
 
-      type: {
-        classes: [
-          {
-            type: String,
-            enum: Object.keys(vehClasses),
-          },
-        ],
-
-        laps: {
-          type: Number,
-          min: 1,
-          max: 99,
-        },
-
-        dist: {
-          type: Number,
-          min: 0,
-          required: isRace,
-        },
-
-        p2p: {
-          type: Boolean,
-        },
-
-        defVeh: {
+      trfVeh: [
+        {
           type: String,
           enum: Object.keys(vehicles),
         },
-
-        chpLocs: {
-          type: [[Number]],
-          required: isRace,
-        },
-
-        chpSecLocs: {
-          type: [[Number]],
-        },
-
-        trfVeh: [
-          {
-            type: String,
-            enum: Object.keys(vehicles),
-          },
-        ],
-      },
-    },
-
-    scAdded: {
-      type: Date,
-    },
-
-    scUpdated: {
-      type: Date,
-      required: true,
-    },
-
-    fetchDate: {
-      type: Date,
-      required: true,
+      ],
     },
   },
-  {
-    id: false,
-    toObject: {
-      versionKey: false,
-    },
+
+  scAdded: {
+    type: Date,
   },
-);
+
+  scUpdated: {
+    type: Date,
+    required: true,
+  },
+
+  fetchDate: {
+    type: Date,
+    required: true,
+  },
+},
+{
+  id: false,
+  toObject: {
+    versionKey: false,
+  },
+});
 
 schema.pre('save', function (next) {
   const {scType, scMode} = this;

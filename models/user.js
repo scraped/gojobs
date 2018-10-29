@@ -1,6 +1,6 @@
 const random = require('lodash/random');
 const bcrypt = require('bcrypt');
-const {mongoose} = require('../lib/db');
+const {mongoose} = require('../config/mongoose');
 
 const {Schema} = mongoose;
 
@@ -13,53 +13,56 @@ function setPassword(password) {
   return bcrypt.hashSync(password, salt);
 }
 
-let schema = new Schema(
-  {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
+const {validateFn} = require('../validators');
 
-    userId: {
-      type: Number,
-      required: true,
-      unique: true,
-    },
+const usernameValidator = validateFn('username');
 
-    crewId: {
-      type: Number,
-    },
-
-    verified: {
-      type: Boolean,
-      default: false,
-      required: true,
-    },
-
-    verifyDate: {
-      type: Date,
-      required: isVerified,
-    },
-
-    password: {
-      type: String,
-      set: setPassword,
-      required: isVerified,
-    },
-
-    email: {
-      type: String,
-    },
+let schema = new Schema({
+  username: {
+    type: String,
+    validate: usernameValidator,
+    unique: true,
+    required: true,
   },
-  {
-    id: false,
-    toObject: {
-      versionKey: false,
-      virtuals: true,
-    },
+
+  userId: {
+    type: Number,
+    unique: true,
+    required: true,
   },
-);
+
+  crewId: {
+    type: Number,
+  },
+
+  verified: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
+
+  verifyDate: {
+    type: Date,
+    required: isVerified,
+  },
+
+  password: {
+    type: String,
+    set: setPassword,
+    required: isVerified,
+  },
+
+  email: {
+    type: String,
+  },
+},
+{
+  id: false,
+  toObject: {
+    versionKey: false,
+    virtuals: true,
+  },
+});
 
 schema.methods.checkPassword = function (password) {
   return bcrypt.compareSync(password, this.password);

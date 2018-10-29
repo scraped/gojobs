@@ -3,5 +3,5 @@ const errorHandler = require('./error');
 
 module.exports = {
   apiRouter,
-  errorHandler
+  errorHandler,
 };

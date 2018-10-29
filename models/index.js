@@ -1,9 +1,17 @@
+const Crew = require('./crew');
+const FetchInfo = require('./fetch-info');
+const JobCollection = require('./job-collection');
+const Job = require('./job');
+const RawJob = require('./raw-job');
+const JobTag = require('./job-tag');
+const User = require('./user');
+
 module.exports = {
-  Crew: require('./crew'),
-  FetchInfo: require('./fetch-info'),
-  JobCollection: require('./job-collection'),
-  Job: require('./job'),
-  RawJob: require('./raw-job'),
-  JobTag: require('./job-tag'),
-  User: require('./user')
+  Crew,
+  FetchInfo,
+  JobCollection,
+  Job,
+  RawJob,
+  JobTag,
+  User,
 };

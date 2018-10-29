@@ -1,5 +1,5 @@
-const {mongoose} = require('../lib/db');
-const {usernameSchema, validateFn} = require('../validators');
+const {mongoose} = require('../config/mongoose');
+const {validate} = require('../validators');
 
 const {Schema} = mongoose;
 
@@ -26,13 +26,15 @@ const schema = new Schema({
 
   leader: {
     type: String,
+    validate(value) {
+      return validate('username', value);
+    },
     required: nonRockstar,
   },
 
   name: {
     type: String,
     trim: true,
-    validate: validateFn('username'),
     required: true,
   },
 
@@ -60,9 +62,8 @@ const schema = new Schema({
 
   memberCount: {
     type: Number,
-    validate(count) {
-      return Number.isInteger(count) && count >= 0;
-    },
+    min: 0,
+    validate: Number.isInteger,
     required: true,
   },
 

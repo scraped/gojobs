@@ -1,5 +1,4 @@
-const _get = require('lodash/get');
-const {mongoose} = require('../lib/db');
+const {mongoose} = require('../config/mongoose');
 const {jobTypes} = require('../config/static');
 
 const {Schema} = mongoose;
@@ -11,18 +10,18 @@ const schema = new Schema({
       return Object.keys(jobTypes).includes(mode);
     },
     // Just to point out that a tag without a "mode" field considered as global
-    required: false
+    required: false,
   },
 
   name: {
     type: String,
-    unique: true
+    unique: true,
   },
 
   shortName: {
     type: String,
-    unique: true
-  }
+    unique: true,
+  },
 });
 
 module.exports = mongoose.model('JobTag', schema);

@@ -1,8 +1,9 @@
-const config = require('../config');
 const passport = require('passport');
 const passportJwt = require('passport-jwt');
-const JwtStrategy = passportJwt.Strategy;
 const {User} = require('../models');
+const config = require('../config');
+
+const JwtStrategy = passportJwt.Strategy;
 
 function cookieExtractor(req) {
   let token = null;
@@ -20,26 +21,28 @@ const strategyOptions = {
   // verifier. (i. e. maxAge)
   // see https://github.com/auth0/node-jsonwebtoken
   jsonWebTokenOptions: {
-    maxAge: '7d'
-  }
+    maxAge: '7d',
+  },
 };
 
-passport.use(new JwtStrategy(strategyOptions, async (payload, done) => {
-  const { username } = payload;
+passport.use(
+  new JwtStrategy(strategyOptions, async (payload, done) => {
+    const {username} = payload;
 
-  if (!username) {
-    return done(null, false);
-  }
-
-  try {
-    const user = await User.findOne({ username });
-
-    if (!user) {
+    if (!username) {
       return done(null, false);
     }
 
-    return done(null, user);
-  } catch (e) {
-    return done(e);
-  }
-}));
+    try {
+      const user = await User.findOne({username});
+
+      if (!user) {
+        return done(null, false);
+      }
+
+      return done(null, user);
+    } catch (e) {
+      return done(e);
+    }
+  }),
+);

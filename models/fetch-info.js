@@ -1,4 +1,4 @@
-const {mongoose} = require('../lib/db');
+const {mongoose} = require('../config/mongoose');
 const {platforms} = require('../config/static');
 
 const {Schema} = mongoose;
@@ -92,6 +92,9 @@ const schema = new Schema({
   },
 }, {
   id: false,
+  toObject: {
+    versionKey: false,
+  },
 });
 
 schema.index(

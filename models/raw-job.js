@@ -1,16 +1,22 @@
-const {mongoose} = require('../lib/db');
+const {mongoose} = require('../config/mongoose');
 
 const {Schema} = mongoose;
+
+const {validateFn} = require('../validators');
+
+const jobIdValidator = validateFn('jobId');
 
 const schema = new Schema({
   jobId: {
     type: String,
+    validate: jobIdValidator,
     unique: true,
     required: true,
   },
 
   jobCurrId: {
     type: String,
+    validate: jobIdValidator,
     required: true,
   },
 
@@ -35,11 +41,13 @@ const schema = new Schema({
     type: [{
       v: {
         type: Number,
+        validate: Number.isInteger,
         min: 1,
         required: true,
       },
       jobId: {
         type: String,
+        validate: jobIdValidator,
         required: true,
       },
       diff: {

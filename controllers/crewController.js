@@ -1,8 +1,7 @@
 const Joi = require('joi');
 const Boom = require('boom');
 const {Crew} = require('../models');
-const {fetchQueue} = require('../lib/queue');
-const {genJobName} = require('../lib/queue/utils');
+const {queue} = require('../config/queue');
 
 exports.crewListPost = async (req, res) => {
   const CREWS_PER_PAGE = 100;
@@ -22,37 +21,37 @@ exports.crewListPost = async (req, res) => {
 exports.fetchCrewPost = async (req, res, next) => {
   const {slug} = req.body;
 
-  const schema = Joi.string()
-    .token()
-    .min(3)
-    .max(30)
-    .required();
+  // const schema = Joi.string()
+  //   .token()
+  //   .min(3)
+  //   .max(30)
+  //   .required();
 
-  const {error} = Joi.validate(slug, schema);
+  // const {error} = Joi.validate(slug, schema);
 
-  if (error) {
-    return next(Boom.badRequest('Incorrect slug'));
-  }
+  // if (error) {
+  //   return next(Boom.badRequest('Incorrect slug'));
+  // }
 
-  const sameJob = await fetchQueue.getJob(slug);
+  // const sameJob = await fetchQueue.getJob(slug);
 
-  if (sameJob !== null) {
-    return next(Boom.badRequest('Whoops, this crew is being fetched still.'));
-  }
+  // if (sameJob !== null) {
+  //   return next(Boom.badRequest('Whoops, this crew is being fetched still.'));
+  // }
 
-  fetchQueue.add(
-    'fetch',
-    {
-      type: 'crew',
-      data: {
-        slug,
-      },
-    },
-    {
-      jobId: genJobName(slug),
-      priority: 10,
-    },
-  );
+  // fetchQueue.add(
+  //   'fetch',
+  //   {
+  //     type: 'crew',
+  //     data: {
+  //       slug,
+  //     },
+  //   },
+  //   {
+  //     jobId: genJobName(slug),
+  //     priority: 10,
+  //   },
+  // );
 
   res.json({
     message: 'Crew info will be fetched very shortly.',
