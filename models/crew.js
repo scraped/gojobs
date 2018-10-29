@@ -1,4 +1,5 @@
 const {mongoose} = require('../lib/db');
+const {usernameSchema, validateFn} = require('../validators');
 
 const {Schema} = mongoose;
 
@@ -31,28 +32,29 @@ const schema = new Schema({
   name: {
     type: String,
     trim: true,
+    validate: validateFn('username'),
     required: true,
   },
 
   motto: {
     type: String,
     trim: true,
+    maxlength: 64,
   },
 
   tag: {
     type: String,
     uppercase: true,
+    minlength: 3,
+    maxlength: 4,
     required: true,
   },
 
   color: {
     type: String,
-    validate(color) {
-      return color.length === 6;
-    },
-    set(color) {
-      return color.toLowerCase();
-    },
+    minlength: 6,
+    maxlength: 6,
+    lowercase: true,
     required: nonRockstar,
   },
 
@@ -66,19 +68,23 @@ const schema = new Schema({
 
   avatarId: {
     type: String,
+    minlength: 4,
+    maxlength: 4,
   },
 
   lastInfoFetch: {
     type: Date,
   },
+
+  nextFetch: {
+    type: Date,
+    required: true,
+  },
 }, {
   id: false,
+  toObject: {
+    versionKey: false,
+  },
 });
-
-// schema.virtual('avatarUrl')
-//   .get(function() {
-//     const {avatarId, crewId} = this;
-//     return `https://prod.cloud.rockstargames.com/crews/sc/${avatarId}/${crewId}/publish/emblem/emblem_128.png`;
-//   });
 
 module.exports = mongoose.model('Crew', schema);
