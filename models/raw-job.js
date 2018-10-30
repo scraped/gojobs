@@ -1,4 +1,5 @@
 const {mongoose} = require('../config/mongoose');
+const {platforms} = require('../config/static');
 
 const {Schema} = mongoose;
 
@@ -30,6 +31,12 @@ const schema = new Schema({
 
   job: {
     type: Schema.Types.Mixed,
+    required: true,
+  },
+
+  normPlat: {
+    type: String,
+    enum: Object.keys(platforms),
     required: true,
   },
 

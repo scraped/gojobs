@@ -32,6 +32,11 @@ const schema = new Schema({
     required: nonRockstar,
   },
 
+  fetchAllowed: {
+    type: Boolean,
+    required: true,
+  },
+
   fetches: {
     type: Number,
     min: 0,

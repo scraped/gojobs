@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const Boom = require('boom');
 const {Crew} = require('../models');
-const {queue} = require('../config/queue');
+const {queue} = require('../lib/queue/queue');
 
 exports.crewListPost = async (req, res) => {
   const CREWS_PER_PAGE = 100;

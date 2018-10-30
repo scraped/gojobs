@@ -1,9 +1,9 @@
 const difference = require('lodash/difference');
 const {FetchInfo} = require('../models');
 const {createRedisClient} = require('./redis');
-const setupQueues = require('../lib/queue/setup-queues');
+const queueSetup = require('../lib/queue/queue-setup');
 
-module.exports = async function boostrap() {
+module.exports = async function bootstrap() {
   // =======================
   // Setup redis client
   // =======================
@@ -12,7 +12,7 @@ module.exports = async function boostrap() {
   // =======================
   // Setup queues server & frontend
   // =======================
-  setupQueues();
+  queueSetup();
 
   // =======================
   // Rockstar jobs' stats documents
@@ -31,10 +31,11 @@ module.exports = async function boostrap() {
     rockstarJobsFetchInfo.map(({id}) => id),
   );
 
-  await Promise.all(rockstarFetchInfoTypesToCreate.map(id => {
-    return new FetchInfo({
+  await Promise.all(
+    rockstarFetchInfoTypesToCreate.map(id => new FetchInfo({
       type: 'rockstar',
       id,
-    }).save();
-  }));
+      fetchAllowed: true,
+    }).save()),
+  );
 };

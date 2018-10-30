@@ -1,5 +1,5 @@
 const Boom = require('boom');
-const {queue} = require('../../config/queue');
+const {queue} = require('../../lib/queue/queue');
 const {validate} = require('../../validators');
 
 exports.jobsFetchPost = (req, res, next) => {
