@@ -1,14 +1,9 @@
 const difference = require('lodash/difference');
 const {FetchInfo} = require('../models');
-const {createRedisClient} = require('./redis');
 const queueSetup = require('../lib/queue/queue-setup');
+require('./redis');
 
 module.exports = async function bootstrap() {
-  // =======================
-  // Setup redis client
-  // =======================
-  createRedisClient();
-
   // =======================
   // Setup queues server & frontend
   // =======================

@@ -5,16 +5,10 @@ const bluebird = require('bluebird');
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
-module.exports = {
-  redisClient: null,
+const client = redis.createClient();
 
-  createRedisClient() {
-    const client = redis.createClient();
+client.on('error', err => {
+  console.log('Redis error occured:', err);
+});
 
-    client.on('error', err => {
-      console.log('Redis error occured:', err);
-    });
-
-    this.redisClient = client;
-  },
-};
+exports.redisClient = client;
