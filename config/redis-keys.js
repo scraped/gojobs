@@ -1,7 +1,7 @@
 module.exports = {
-  fetchJobs(platform) {
-    return `rgsc-jobs-fetcher_${platform}`;
+  rgscFetchCredentials(platform) {
+    return `rgsc-fetcher:credentials:${platform}`;
   },
 
-  jobsToFetch: 'jobs-to-fetch',
+  rgscFetchDelay: 'rgsc-fetcher:delay',
 };
