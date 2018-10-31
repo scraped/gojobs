@@ -31,8 +31,8 @@ let schema = new Schema({
     required: true,
   },
 
-  crewId: {
-    type: Number,
+  crew: {
+    type: String,
   },
 
   verified: {

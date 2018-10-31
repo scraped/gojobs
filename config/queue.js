@@ -12,7 +12,7 @@ module.exports = {
 
     limiter: {
       max: 1,
-      duration: 3000,
+      duration: 5000,
       bounceBack: true,
     },
 
