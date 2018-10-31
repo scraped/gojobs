@@ -1,9 +1,14 @@
 <template>
   <div id="app">
-    <vue-progress-bar></vue-progress-bar>
-    <ui-navbar></ui-navbar>
-    <router-view></router-view>
-    <ui-footer></ui-footer>
+    <vue-progress-bar/>
+    <ui-navbar/>
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <router-view/>
+    </transition>
+    <ui-footer/>
   </div>
 </template>
 
@@ -16,7 +21,7 @@ const sharedTitle = 'GTA Online Jobs';
 export default {
   metaInfo: {
     htmlAttrs: {
-      lang: 'en'
+      lang: 'en',
     },
 
     titleTemplate(title) {
@@ -26,10 +31,10 @@ export default {
     },
 
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-      { 'http-equiv': 'X-UA-Compatible', content: 'ie-edge' },
-      { vmid: 'description', name: 'description', content: '' }
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1.0'},
+      {'http-equiv': 'X-UA-Compatible', content: 'ie-edge'},
+      {vmid: 'description', name: 'description', content: ''},
     ],
 
     link: [
@@ -41,15 +46,15 @@ export default {
         'https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css',
       ].map(href => ({
         rel: 'stylesheet',
-        href
+        href,
       })),
-      { rel: 'favicon', href: 'favicon.ico' }
-    ]
+      {rel: 'favicon', href: 'favicon.ico'}
+    ],
   },
 
   components: {
     UiNavbar,
-    UiFooter
-  }
+    UiFooter,
+  },
 };
 </script>

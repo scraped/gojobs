@@ -89,6 +89,7 @@
     "vee-validate": "^2.1.0-beta.11",
     "vue": "^2.5.17",
     "vue-cookie": "^1.1.4",
+    "vue-lazyload": "^1.2.6",
     "vue-meta": "^1.5.5",
     "vue-progressbar": "^0.7.5",
     "vue-router": "^3.0.1",

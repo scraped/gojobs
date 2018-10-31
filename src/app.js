@@ -3,6 +3,7 @@ import {sync} from 'vuex-router-sync';
 import VueProgressBar from 'vue-progressbar';
 import VueCookie from 'vue-cookie';
 import VueMeta from 'vue-meta';
+import VueLazyload from 'vue-lazyload';
 import Buefy from 'buefy';
 
 import App from './App.vue';
@@ -32,6 +33,7 @@ Vue.use(VueProgressBar, progressBarOptions);
 Vue.use(VueCookie);
 Vue.use(Buefy, buefyOptions);
 Vue.use(VueMeta);
+Vue.use(VueLazyload);
 
 export default function createApp() {
   const store = createStore();

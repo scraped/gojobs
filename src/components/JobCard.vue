@@ -1,30 +1,23 @@
 <template>
-  <div
-    class="card"
-    style="height: 100%;"
-  >
-    <!-- <div style="position: absolute; bottom: 0%; right: 15%; opacity: 0.08; font-size: 100px;">
-      <icon-gta
-        v-if="job.scModeIcon"
-        :icon="job.scModeIcon">
-      </icon-gta>
-    </div> -->
-    <router-link :to="{
-      name: 'job',
-      params: { id: job.jobId, slug: job.slug }
-    }">
+  <div class="card">
+    <router-link
+      :to="{
+        name: 'job',
+        params: {id: job.jobId, slug: job.slug}
+      }"
+    >
       <div class="card__image">
-        <figure class="image is-2by1 is-clipped">
+        <figure class="image is-2by1 is-clipped has-background-grey-lighter">
           <img
-            :src="jobExt.imageUrl"
+            v-lazy="jobExt.imageUrl"
             :alt="job.name"
           >
         </figure>
         <div
-          class="card__strip"
           :class="ratingCssClass(job.stats.rstRating)"
           :style="`width: ${job.stats.rating}%;`"
-        ></div>
+          class="card__strip"
+        />
         <div class="card__tags">
           <div class="tags">
             <span
@@ -36,11 +29,15 @@
         <div class="card__title">
           <div class="is-size-5 has-text-white">
             <span
-              class="tooltip"
               :data-tooltip="`Game mode: ${jobExt.scTypeName}`"
+              class="tooltip"
             >
-              <icon-gta :icon="jobExt.scTypeIcon"></icon-gta>
-            </span><span class="has-text-weight-bold" v-html="job.name"></span>
+              <icon-gta :icon="jobExt.scTypeIcon"/>
+            </span>
+            <span
+              class="has-text-weight-bold"
+              v-html="job.name"
+            />
             <span
               v-if="jobExt.recentlyAdded"
               class="tooltip"
@@ -58,11 +55,11 @@
         <div class="media-left">
           <figure class="image is-48x48">
             <router-link
-              :to="{ name: 'profile', params: { username: job.author }}"
+              :to="{name: 'profile', params: {username: job.author}}"
             >
               <img
-                class="is-rounded"
                 :src="avatars.small"
+                class="is-rounded"
               >
             </router-link>
           </figure>
@@ -72,9 +69,9 @@
           <div class="is-size-6">
             <template v-if="job.author">
               <router-link
-                :to="{ name: 'profile', params: { username: job.author }}"
+                :to="{name: 'profile', params: {username: job.author}}"
               >
-                @{{ job.author }}
+                @{{job.author}}
               </router-link>
             </template>
             <template v-if="job.rockstar">
@@ -95,24 +92,23 @@
             pack="fa"
             icon="bookmark"
             type="is-dark"
-          ></b-icon>
+          />
         </div>
       </div>
 
       <div class="is-size-7 has-text-grey">
         <div>
           <template v-if="!job.rockstar">
-            {{ jobExt.platformName }} ·
+            {{jobExt.platformName}} ·
           </template>
           <template v-if="jobExt.playersNumberText">
             {{jobExt.playersNumberText}} ·
           </template>
-          {{ updatedDate }}
-          <!-- <br>Points: {{ job.stats.points }} -->
+          updated {{job.scUpdated | formatDateRelative}} (version {{job.ver}})
         </div>
         <div>
-          <router-link :to="{ query: Object.assign({}, $route.query, { type: job.scType, mode: job.scMode }) }">
-            {{ jobExt.scModeName || jobExt.scTypeName }}
+          <router-link :to="{query: Object.assign({}, $route.query, { type: job.scType, mode: job.scMode })}">
+            {{jobExt.scModeName || jobExt.scTypeName}}
           </router-link>
           within the game
         </div>
@@ -122,28 +118,34 @@
       <div class="field is-grouped is-grouped-multiline">
         <div class="control">
           <div
+            :class="{tooltip: !primaryInfo}"
             class="tags has-addons"
-            :class="{ tooltip: !primaryInfo }"
             data-tooltip="R* also takes into account unfinished jobs"
           >
             <span
-              class="tag is-rounded is-medium"
               :class="ratingCssClass(job.stats.rstRating)"
+              class="tag is-rounded is-medium"
             >
               <span class="icon">
-                <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+                <i
+                  class="fa fa-thumbs-up fa-lg"
+                  aria-hidden="true"
+                />
               </span>
-              <span v-if="primaryInfo">{{ job.stats.like | formatNumber }}</span>
-              <span v-else>{{ job.stats.rating + '%' }}</span>
+              <span v-if="primaryInfo">{{job.stats.like | formatNumber}}</span>
+              <span v-else>{{job.stats.rating + '%'}}</span>
             </span>
             <span class="tag is-light is-rounded is-medium has-text-grey-light">
               <span
                 v-if="primaryInfo"
                 class="icon"
               >
-                <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
+                <i
+                  class="fa fa-thumbs-down fa-lg"
+                  aria-hidden="true"
+                />
               </span>
-              <span v-if="primaryInfo">{{ job.stats.dislike | formatNumber }}</span>
+              <span v-if="primaryInfo">{{job.stats.dislike | formatNumber}}</span>
               <span v-else>{{job.stats.rstRating}}% (rockstar)</span>
             </span>
           </div>
@@ -153,13 +155,13 @@
           <span class="tag is-light is-rounded is-medium">
             <span class="icon">
               <i
-                class="fa fa-gamepad fa-lg"
                 :class="primaryInfo ? 'fa-gamepad' : 'fa-users'"
+                class="fa fa-gamepad fa-lg"
                 aria-hidden="true"
-              ></i>
+              />
             </span>
-            <span v-if="primaryInfo">{{ job.stats.plTot | formatNumber }}</span>
-            <span v-else>{{ job.stats.plUnq | formatNumber }}</span>
+            <span v-if="primaryInfo">{{job.stats.plTot | formatNumber}}</span>
+            <span v-else>{{job.stats.plUnq | formatNumber}}</span>
           </span>
         </div>
 
@@ -169,7 +171,7 @@
             data-tooltip="Click here to see different stats"
             @click="primaryInfo = !primaryInfo"
           >
-            <b-icon icon="ellipsis-h"></b-icon>
+            <b-icon icon="ellipsis-h"/>
           </span>
         </div>
       </div>
@@ -191,29 +193,29 @@ import {ratingMixin} from '@/mixins';
 import IconGta from '@/components/IconGta.vue';
 
 export default {
+  components: {
+    IconGta,
+  },
+
   mixins: [
-    ratingMixin
+    ratingMixin,
   ],
 
   props: {
     job: {
-      type: Object
-    }
-  },
-
-  components: {
-    IconGta
+      type: Object,
+    },
   },
 
   data() {
     return {
-      primaryInfo: true
+      primaryInfo: true,
     };
   },
 
   computed: {
     ...mapGetters('job', {
-      jobExtGetter: 'jobExt'
+      jobExtGetter: 'jobExt',
     }),
 
     jobExt() {
@@ -226,8 +228,8 @@ export default {
 
     updatedDate() {
       return '';
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -235,21 +237,24 @@ export default {
 @import "@/scss/vars.scss";
 
 $card-image-hover-scale: 1.03;
-$card-image-hover-transition-duration: 350ms;
+$card-image-hover-duration: 350ms;
 
 $card-strip-height: 4px;
 $card-strip-opacity: 0.5;
 
 .card__image {
   position: relative;
+
   img {
-    transition-duration: $card-image-hover-transition-duration;
+    transition-duration: $card-image-hover-duration;
   }
+
   &:hover img {
     transform: scale($card-image-hover-scale);
   }
+
   &:hover .card__tags {
-    opacity: 1.0;
+    opacity: 1;
   }
 }
 
@@ -260,6 +265,7 @@ $card-strip-opacity: 0.5;
   left: 0;
   padding: 1rem 1.5rem;
   background: linear-gradient(to top, rgba($black, 0.45), transparent);
+
   .title {
     color: rgba($white, 0.85);
     text-shadow: 1px 1px 10px rgba($black, 0.4);
@@ -272,12 +278,15 @@ $card-strip-opacity: 0.5;
   left: 0;
   height: $card-strip-height;
   opacity: $card-strip-opacity;
+
   &.is-success {
     background: $success;
   }
+
   &.is-warning {
     background: $warning;
   }
+
   &.is-danger {
     background: $danger;
   }
@@ -288,13 +297,14 @@ $card-strip-opacity: 0.5;
   top: $card-strip-height;
   opacity: 0.6;
   padding: 1rem 1.5rem;
-  transition-duration: $card-image-hover-transition-duration;
+  transition-duration: $card-image-hover-duration;
 }
 
 .card__footer {
   cursor: pointer;
   opacity: 0.9;
   transition-duration: 100ms;
+
   &:hover {
     opacity: 1;
   }

@@ -19,3 +19,8 @@
 
 // BEM-style components
 @import "./components/_all";
+
+img[lazy="loading"] {
+  transition: opacity $speed;
+  opacity: 0;
+}
