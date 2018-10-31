@@ -1,13 +1,18 @@
 <template>
   <div id="app">
     <vue-progress-bar/>
+
     <ui-navbar/>
+
     <transition
       name="fade"
       mode="out-in"
     >
-      <router-view/>
+      <main>
+        <router-view/>
+      </main>
     </transition>
+
     <ui-footer/>
   </div>
 </template>

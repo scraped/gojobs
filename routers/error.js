@@ -3,7 +3,7 @@ const Boom = require('boom');
 const SERVER_ERROR_CODE = 500;
 
 // eslint-disable-next-line
-module.exports = (err, req, res) => {
+module.exports = (err, req, res, next) => {
   let finalError = err;
 
   if (!finalError.isBoom) {
