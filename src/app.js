@@ -4,6 +4,7 @@ import VueProgressBar from 'vue-progressbar';
 import VueCookie from 'vue-cookie';
 import VueMeta from 'vue-meta';
 import VueLazyload from 'vue-lazyload';
+import VeeValidate from 'vee-validate';
 import Buefy from 'buefy';
 
 import App from './App.vue';
@@ -34,6 +35,7 @@ Vue.use(VueCookie);
 Vue.use(Buefy, buefyOptions);
 Vue.use(VueMeta);
 Vue.use(VueLazyload);
+Vue.use(VeeValidate);
 
 export default function createApp() {
   const store = createStore();

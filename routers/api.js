@@ -5,9 +5,9 @@ const {
   profileDetails,
 } = require('../controllers/profileController');
 
-// const {
-//   signUpPost,
-// } = require('../controllers/auth');
+const {
+  signUpPost,
+} = require('../controllers/auth');
 
 const {
   signUp,
@@ -38,7 +38,7 @@ const {
 router.get('/profile/:username', asyncHandler(profileDetails));
 
 // Auth
-router.post('/auth/signup', asyncHandler(signUp));
+router.post('/auth/signup', asyncHandler(signUpPost));
 router.post('/auth/login', asyncHandler(logIn));
 router.post('/auth/logout', asyncHandler(logOut));
 router.post('/auth/recovery', asyncHandler(recoveryPass));

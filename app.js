@@ -15,12 +15,13 @@ const config = require('./config');
 const bootstrap = require('./config/bootstrap');
 
 const {apiRouter, errorHandler} = require('./routers');
-const {ssrMiddleware} = require('./middleware');
+const {initMiddleware, ssrMiddleware} = require('./middleware');
 
 const app = express();
 
 app.set('port', config.port);
 
+app.use(initMiddleware);
 app.use(logger('dev'));
 app.use(helmet());
 app.use(compression());

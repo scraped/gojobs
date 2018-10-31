@@ -9,6 +9,14 @@ const schemas = {
     .min(6)
     .max(16)
     .regex(/^[\w_.-]{6,16}$/),
+
+  email: Joi.string()
+    .email(),
+
+  password: Joi.string()
+    .min(6)
+    .max(40)
+    .token(),
 };
 
 const validate = (schemaName, value) => (
