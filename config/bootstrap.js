@@ -7,7 +7,7 @@ module.exports = async function bootstrap() {
   // =======================
   // Setup queues server & frontend
   // =======================
-  queueSetup();
+  await queueSetup();
 
   // =======================
   // Rockstar jobs' stats documents

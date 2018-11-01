@@ -15,11 +15,11 @@ module.exports = {
 
     limiter: {
       max: 1,
-      duration: 1000,
+      duration: 3000,
     },
 
     defaultJobOptions: {
-      attempts: 10,
+      attempts: 100,
       backoff: {
         type: 'jitter',
       },
