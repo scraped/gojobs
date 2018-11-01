@@ -150,7 +150,7 @@
                   <div class="box">
                     <section class="block">
                       <p
-                        class="is-size-4 is-italic"
+                        class="is-size-5 is-italic"
                         v-html="job.desc"
                       />
                     </section>
@@ -165,7 +165,7 @@
                             :data-tooltip="job.scUpdated | formatDate"
                             class="tooltip"
                             style="border-bottom: 1px dashed currentColor;"
-                          >{{job.scUpdated | formatDateRelative}} (version {{job.ver}})</span>,
+                          >{{job.scUpdated | formatDateRelative}}</span> (version {{job.ver}}),
                           added
                           <span
                             :data-tooltip="job.scAdded | formatDate"
@@ -186,18 +186,18 @@
                   </div>
                 </div>
 
-                <div style="height: 3rem; border-radius: 3px; position: relative;" :class="`has-background-${ratingCssClass(job.stats.rstRating, false)}`">
+                <div style="height: 4rem; border-radius: 3px; position: relative;" :class="`has-background-${ratingCssClass(job.stats.rstRating, false)}`" class="is-size-5">
                   <div
-                    style="position: absolute; top: 3px; bottom: 0; left: 0; border-radius: 3px; background: rgba(0, 0, 0, 0.15);"
+                    style="position: absolute; top: 7%; bottom: 0; left: 0; border-radius: 3px; background: rgba(0, 0, 0, 0.15);"
                     :style="`right: calc(${100 - job.stats.rating}% + 3px);`"
                   ></div>
                   <div
-                    style="position: absolute; top: 6px; bottom: 0; left: 0; border-radius: 3px; background: rgba(0, 0, 0, 0.15);"
+                    style="position: absolute; top: 14%; bottom: 0; left: 0; border-radius: 3px; background: rgba(0, 0, 0, 0.15);"
                     :style="`right: calc(${100 - job.stats.rstRating}% + 6px);`"
                   ></div>
                   <div
                     class="has-text-white-bis"
-                    style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; text-align: center; line-height: 3rem;"
+                    style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; text-align: center; line-height: 4rem;"
                   >
                     <b-icon
                       pack="fa"
