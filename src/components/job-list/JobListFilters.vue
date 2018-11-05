@@ -325,13 +325,13 @@ export default {
   mounted() {
     const {filters} = this.$refs;
     // 12 means 10px + "a little bit"
-    this.filtersInitialTopCoord = Math.floor(filters.getBoundingClientRect().top + window.pageYOffset) - 12;
-    filters.style.width = `${filters.clientWidth}px`;
-    window.addEventListener('scroll', this.filterFixingOnScroll);
+    // this.filtersInitialTopCoord = Math.floor(filters.getBoundingClientRect().top + window.pageYOffset) - 12;
+    // filters.style.width = `${filters.clientWidth}px`;
+    // window.addEventListener('scroll', this.filterFixingOnScroll);
   },
 
   beforeDestroy() {
-    window.removeEventListener('scroll', this.filterFixingOnScroll);
+    // window.removeEventListener('scroll', this.filterFixingOnScroll);
   },
 
   methods: {
@@ -415,9 +415,9 @@ export default {
 <style lang="scss">
 @import "@/scss/vars.scss";
 
-// .title__special {
-//   font-family: 'Oswald', sans-serif;
-// }
+.title__special {
+  font-family: "Oswald", sans-serif;
+}
 
 .dropdown__trigger {
   cursor: pointer;
@@ -427,8 +427,8 @@ export default {
   }
 }
 
-.filters_fixed {
-  position: fixed;
+.filters {
+  position: sticky;
   top: 1rem;
 }
 

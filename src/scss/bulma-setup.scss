@@ -11,7 +11,8 @@ $danger: hsl(348, 90%, 47%); // 100%, 61%
 
 $body-background-color: $white-ter;
 
-$family-primary: "Lato", sans-serif;
+$family-primary: "Lato", $family-sans-serif;
+$family-secondary: "Rubik", $family-sans-serif;
 
 // Bulma derived variables
 
@@ -97,7 +98,4 @@ $menu-item-active-background-color: $primary;
 
 // title
 $title-weight: 400;
-
-.title {
-  font-family: 'Oswald', sans-serif;
-}
+$title-size: $size-2;

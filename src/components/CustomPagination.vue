@@ -1,11 +1,11 @@
 <template>
   <div>
     <div
-      v-if="showLoadMoreButton()"
       class="content"
     >
       <div
         :class="{'is-loading': loading}"
+        :disabled="!showLoadMoreButton"
         class="button button_shadow button_responsible is-primary has-backgroud-grey is-rounded is-large is-fullwidth"
         @click="loadMore()"
       >
@@ -142,6 +142,12 @@ export default {
     prevPage() {
       return this.currPage - 1;
     },
+
+    showLoadMoreButton() {
+      return this.loadMoreButton
+        && this.totalItems > 0
+        && this.currPage !== this.totalPages;
+    },
   },
 
   methods: {
@@ -151,14 +157,10 @@ export default {
       };
     },
 
-    showLoadMoreButton() {
-      return this.loadMoreButton
-        && this.totalItems > 0
-        && this.currPage !== this.totalPages;
-    },
-
     loadMore() {
-      this.$emit('load-more');
+      if (this.showLoadMoreButton) {
+        this.$emit('load-more');
+      }
     },
 
     hasFirst() {

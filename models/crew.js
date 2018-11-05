@@ -16,6 +16,7 @@ const schema = new Schema({
 
   slug: {
     type: String,
+    trim: true,
     unique: true,
     required: true,
   },
@@ -29,6 +30,7 @@ const schema = new Schema({
     validate(value) {
       return validate('username', value);
     },
+    trim: true,
     required: nonRockstar,
   },
 
@@ -46,6 +48,7 @@ const schema = new Schema({
 
   tag: {
     type: String,
+    trim: true,
     uppercase: true,
     minlength: 3,
     maxlength: 4,
@@ -69,6 +72,7 @@ const schema = new Schema({
 
   avatarId: {
     type: String,
+    trim: true,
     minlength: 4,
     maxlength: 4,
   },

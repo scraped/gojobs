@@ -157,18 +157,18 @@ let schema = new Schema({
   },
 
   stats: {
-    trend: {type: Number, default: 1},
-    growth: {type: Number, default: 1},
+    trend: {type: Number, min: 1, default: 1},
+    growth: {type: Number, min: 1, default: 1},
 
-    plTot: {type: Number, validate: Number.isInteger, required: true},
-    plUnq: {type: Number, validate: Number.isInteger, required: true},
+    plTot: {type: Number, min: 0, validate: Number.isInteger, required: true},
+    plUnq: {type: Number, min: 0, validate: Number.isInteger, required: true},
 
-    like: {type: Number, validate: Number.isInteger, required: true},
-    dislike: {type: Number, validate: Number.isInteger, required: true},
-    quit: {type: Number, validate: Number.isInteger, required: true},
+    like: {type: Number, min: 0, validate: Number.isInteger, required: true},
+    dislike: {type: Number, min: 0, validate: Number.isInteger, required: true},
+    quit: {type: Number, min: 0, validate: Number.isInteger, required: true},
 
-    rating: {type: Number, validate: Number.isInteger, required: true},
-    rstRating: {type: Number, validate: Number.isInteger, required: true},
+    rating: {type: Number, min: 0, max: 100, validate: Number.isInteger, required: true},
+    rstRating: {type: Number, min: 0, max: 100, validate: Number.isInteger, required: true},
   },
 
   specific: {

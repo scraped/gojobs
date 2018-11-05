@@ -88,11 +88,12 @@
         </div>
 
         <div class="media-right">
-          <b-icon
-            pack="fa"
-            icon="bookmark"
-            type="is-dark"
-          />
+          <span class="bookmark">
+            <b-icon
+              pack="fa"
+              icon="bookmark"
+            />
+          </span>
         </div>
       </div>
 
@@ -241,6 +242,16 @@ $card-image-hover-duration: 350ms;
 
 $card-strip-height: 4px;
 $card-strip-opacity: 0.5;
+
+.bookmark {
+  transition-duration: $speed;
+  cursor: pointer;
+
+  &:hover {
+    color: $primary;
+    transform: rotate(90deg);
+  }
+}
 
 .card__image {
   position: relative;

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import {jobTypes, platforms} from '@/../config/static';
-const differenceInDays = require('date-fns/difference_in_days');
+import differenceInDays from 'date-fns/difference_in_days';
 
 const currState = {
   job: null,
@@ -69,10 +69,14 @@ const actions = {
   async fetchJob({commit}, {id}) {
     const response = await Vue.$http.post(`/api/jobs/${id}`);
 
-    let {job} = response.data;
+    let {job, crew} = response.data;
 
     if (!job.specific) {
       job.specific = {};
+    }
+
+    if (crew) {
+      job.crew = crew;
     }
 
     commit('setJob', {job});

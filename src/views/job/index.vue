@@ -35,6 +35,12 @@
                   </span>
                 </h1>
                 <p class="has-text-dark is-size-7">
+                  <template v-if="!job.rockstar">
+                    <router-link :to="{name: 'main', query: {platform: job.plat}}">
+                      {{jobExt.platformName}}
+                    </router-link>
+                    ·
+                  </template>
                   <template v-if="isRace">
                     {{job.specific.laps ? 'Lap': 'Point to point'}}
                   </template>
@@ -63,7 +69,6 @@
               <div class="column is-two-fifths">
                 <div class="box">
                   <section
-                    v-if="job.author"
                     class="block"
                   >
                     <h3 class="subtitle is-size-6 has-text-grey">Author</h3>
@@ -71,13 +76,17 @@
                     <div class="">
                       <div class="media">
                         <div class="media-left">
-                          <router-link :to="{name: 'profile', params: {username: job.author}}">
-                            <figure class="image image-avatar is-48x48">
-                              <img
-                                :src="avatars.small"
-                                class="is-rounded"
-                              >
-                            </figure>
+                          <router-link
+                            v-if="job.author"
+                            :to="{name: 'profile', params: {username: job.author}}"
+                          >
+                            <img
+                              :src="avatars.small"
+                              :style="job.crew ? imageOutlined(job.crew.color, 2) : ''"
+                              class="rounded"
+                              width="48"
+                              height="48"
+                            >
                           </router-link>
                         </div>
 
@@ -88,28 +97,35 @@
                               :to="{name: 'profile', params: {username: job.author}}">
                               @{{job.author}}
                             </router-link>
+                            <span
+                              v-else
+                              class="tag is-primary is-medium is-rounded"
+                              style="font-family: 'Lato', sans-serif; opacity: 0.8;"
+                            ><b-icon
+                              icon="check"
+                              size="is-small"
+                            /><span>Rockstar</span></span>
                           </div>
 
-                          <p class="has-text-grey is-size-7">Crew name</p>
+                          <p
+                            v-if="job.crew"
+                            class="has-text-grey is-size-7"
+                          >{{job.crew.name}}</p>
                         </div>
                       </div>
                     </div>
                   </section>
 
-                  <section class="block">
-                    <h3 class="subtitle is-size-6 has-text-grey">Official category & platform</h3>
+                  <section
+                    v-if="jobExt.scModeName"
+                    class="block"
+                  >
+                    <h3 class="subtitle is-size-6 has-text-grey">Official category</h3>
                     <div class="buttons">
-                      <template v-if="jobExt.scModeName">
-                        <router-link
-                          :to="{name: 'main', query: {type: job.scType, mode: job.scMode}}"
-                          class="button button_responsible is-light is-rounded"
-                        ><icon-gta :icon="jobExt.scModeIcon"/><span>{{jobExt.scModeName}}</span></router-link>
-                      </template>
                       <router-link
-                        v-if="!job.rockstar"
-                        :to="{name: 'main', query: {platform: job.plat}}"
+                        :to="{name: 'main', query: {type: job.scType, mode: job.scMode}}"
                         class="button button_responsible is-light is-rounded"
-                      >{{jobExt.platformName}}</router-link>
+                      ><icon-gta :icon="jobExt.scModeIcon"/><span>{{jobExt.scModeName}}</span></router-link>
                     </div>
                   </section>
 
@@ -397,7 +413,7 @@
               scroll="keep"
             >
               <section class="section has-background-white">
-                <h2 class="title has-text-weight-normal">{{job.name}} - Race Map</h2>
+                <h2 class="subtitle">{{job.name}} - Race Map</h2>
                 <div class="content">
                   The first checkpoint (start/finish line for lap races) is a green checkpoint, and the last checkpoint (finish for point to point races) is a red one. Knowing these two checkpoints you can figure out the race direction.
                 </div>
@@ -417,13 +433,12 @@
 
 <script>
 import {mapState, mapGetters} from 'vuex';
-
 import {userAvatars} from '@/helpers';
-
-import {ratingMixin} from '@/mixins';
+import {ratingMixin, imageOutlined} from '@/mixins';
 
 import IconGta from '@/components/IconGta.vue';
 import RaceMap from './RaceMap.vue';
+
 import {vehicles, vehClasses, locations} from '@/../config/static';
 
 export default {
@@ -447,6 +462,7 @@ export default {
 
   mixins: [
     ratingMixin,
+    imageOutlined,
   ],
 
   data() {
@@ -528,6 +544,10 @@ export default {
   border-radius: 30px;
   border: 1px solid $grey-lighter;
   box-shadow: 1px 1px 10px $grey-lighter;
+}
+
+.title {
+  font-family: "Rubik", sans-serif;
 }
 
 .title__special {

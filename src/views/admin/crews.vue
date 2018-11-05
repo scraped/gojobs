@@ -127,7 +127,6 @@ export default {
         await this.$store.dispatch('crews/fetch', { query: {} });
         changeButton('is-success', 'Success');
       } catch (error) {
-        console.log(error);
         changeButton('is-danger', 'Error');
       }
 

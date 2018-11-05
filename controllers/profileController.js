@@ -1,16 +1,30 @@
-const {User} = require('../models');
+const Boom = require('boom');
+const {User, Crew} = require('../models');
 
 exports.profileDetails = async (req, res) => {
   const {username} = req.params;
 
-  const user = await User.findOne({username})
-    .populate('crew', 'name slug tag color -_id');
+  const user = await User.findOne({username});
 
   if (!user) {
-    return res.json();
+    return res.send(Boom.notFound('User not found'));
   }
 
-  const {crew} = user;
+  let userCrew;
 
-  return res.json({username, crew});
+  if (user.crew) {
+    const crewInfo = await Crew.findOne({slug: user.crew});
+
+    if (crewInfo) {
+      userCrew = crewInfo;
+    }
+  }
+
+  let response = {user};
+
+  if (userCrew) {
+    response.crew = userCrew;
+  }
+
+  return res.send(response);
 };

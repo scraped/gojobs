@@ -35,6 +35,18 @@ let schema = new Schema({
     type: String,
   },
 
+  role: {
+    type: String,
+    enum: [
+      'user',
+      'mod',
+      'admin',
+    ],
+    required() {
+      return this.verified;
+    },
+  },
+
   verified: {
     type: Boolean,
     default: false,
@@ -68,7 +80,6 @@ schema.methods.checkPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-// static methods
 schema.statics.generateTestJobName = function () {
   const values = 'abcdefghijklmnopqrstuvwxyz';
   const VALUES_NUMBER = values.length;

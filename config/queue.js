@@ -6,16 +6,16 @@ module.exports = {
   queueOptions: {
     settings: {
       backoffStrategies: {
-        // 20-40 mins
+        // 10-60 mins
         jitter() {
-          return 1000 * 60 * (20 + random(0, 20));
+          return 1000 * 60 * (10 + random(0, 60));
         },
       },
     },
 
     limiter: {
       max: 1,
-      duration: 3000,
+      duration: 500,
     },
 
     defaultJobOptions: {

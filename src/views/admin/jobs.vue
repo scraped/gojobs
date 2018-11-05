@@ -7,22 +7,42 @@
           @submit.prevent="fetch"
         >
           <h2 class="subtitle">Add job</h2>
-          <b-field grouped>
-            <b-input
-              v-model.trim="jobId"
-              size="is-medium"
-              placeholder="vyssmboIF0KPxGArqfW9Ww"
-              minlength="22"
-              maxlength="22"
-              :has-counter="false"
-              expanded>
-            </b-input>
-            <p class="control">
-              <button class="button is-primary is-medium is-rounded">
-                <b-icon icon="angle-right"></b-icon>
-              </button>
-            </p>
-          </b-field>
+          <div class="columns">
+            <div class="column is-two-thirds">
+              <div class="field">
+                <label for="" class="label">Job ID</label>
+                <div class="control">
+                  <b-input
+                    v-model.trim="jobId"
+                    size="is-medium"
+                    placeholder="vyssmboIF0KPxGArqfW9Ww"
+                    minlength="22"
+                    maxlength="22"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <label class="label">Platform</label>
+                <div class="control">
+                  <div class="select is-medium is-fullwidth">
+                    <select
+                      v-model="jobPlatform"
+                      required
+                    >
+                      <option value="pc">PC</option>
+                      <option value="ps4">PS4</option>
+                      <option value="xboxone">Xbox One</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="button is-primary button_shadow">Send</button>
         </form>
       </div>
 
@@ -67,7 +87,60 @@
     </div>
     <div class="column is-one-third">
       <div class="box">
+        <div class="block">
+          <form @submit.prevent="retrieveJobs">
+            <h2 class="subtitle">Retrieve jobs</h2>
+            <div class="field">
+              <label class="label">Type</label>
+              <div class="control">
+                <div class="select">
+                  <select
+                    v-model="userOrCrew"
+                    required
+                  >
+                    <option value="user">User</option>
+                    <option value="crew">Crew</option>
+                  </select>
+                </div>
+              </div>
+            </div>
 
+            <div class="field">
+              <label class="label">Platform</label>
+              <div class="control">
+                <div class="select">
+                  <select
+                    :model="userOrCrewPlat"
+                    required
+                  >
+                    <option value="pc">PC</option>
+                    <option value="ps4">PS4</option>
+                    <option value="xboxone">Xbox One</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Username/Crew</label>
+              <div class="control">
+                <input
+                  :model="userOrCrewId"
+                  class="input"
+                  type="text"
+                  placeholder="Username/Crew"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <button class="button is-primary button_shadow">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -82,8 +155,12 @@ export default {
   data() {
     return {
       jobId: '',
-      jobs: []
-    }
+      jobPlatform: 'pc',
+      jobs: [],
+      userOrCrew: '',
+      userOrCrewId: '',
+      userOrCrewPlat: 'pc',
+    };
   },
 
   async created() {
@@ -94,10 +171,23 @@ export default {
 
   methods: {
     async fetch() {
-      const {jobId} = this;
+      const {
+        jobId,
+        jobPlatform,
+      } = this;
 
-      await this.$http.post('/api/jobs/fetch', {jobId});
-    }
-  }
+      await this.$http.post('/api/jobs/fetch', {jobId, plat: jobPlatform});
+    },
+
+    async retrieveJobs() {
+      const {userOrCrew, userOrCrewId, userOrCrewPlat} = this;
+
+      await this.$http.post('/api/jobs/fetch', {
+        type: userOrCrew,
+        id: userOrCrewId,
+        plat: userOrCrewPlat,
+      });
+    },
+  },
 };
 </script>

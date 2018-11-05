@@ -17,6 +17,9 @@
     "plugin:vue/recommended"
   ],
   "rules": {
+    "node/no-unsupported-features/es-syntax": ["error", {
+      "ignores": ["modules"]
+    }],
     "arrow-parens": ["error", "as-needed"],
     "import/no-extraneous-dependencies": [
       "error",

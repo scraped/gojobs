@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <section class="hero is-fullheight is-dark hero__welcome" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6)), url('https://media.rockstargames.com/rockstargames-newsite/uploads/25d22aa4973a9a13d94c5df860eb6ecc1ba86021.jpg') 50% 50%;">
+    <section class="hero is-fullheight is-dark hero__welcome" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6)), url('https://media.rockstargames.com/rockstargames-newsite/uploads/25d22aa4973a9a13d94c5df860eb6ecc1ba86021.jpg') 50% 50%;" v-if="false">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title">
@@ -14,10 +14,10 @@
           </p>
         </div>
       </div>
-    </section> -->
+    </section>
     <section class="section">
       <div class="container">
-        <h1 class="title" style="text-align: center;">GTA Online Jobs</h1>
+        <h1 class="title">GTA Online Jobs</h1>
         <jobs-list/>
       </div>
     </section>

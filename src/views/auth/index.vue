@@ -1,32 +1,28 @@
 <template>
-  <div>
+  <div class="has-background-dark">
     <section class="section">
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-half">
-            <h1 class="title">
-              Welcome to GTA Online Jobs site
-            </h1>
-            <div
-              v-if="signup"
-              class="box"
-            >
-              <b-message
+            <h1 class="title has-text-white">Registration</h1>
+            <div class="block">
+              <b-notification
                 type="is-warning"
                 has-icon
               >
                 <div class="notification__header">Registration is limited</div>
                 Note that the registration is not open for everybody as of now and most likely you won't be able to sign up (unless you don't have an invite). Nevertheless your chances are higher if you have previously published some relatively popular jobs.
-              </b-message>
-              <b-message
+              </b-notification>
+              <b-notification
                 type="is-danger"
                 has-icon
               >
                 <div class="notification__header">You'll have to access to GTA Online in the next hour</div>
                 <p>Please make sure you'll be able to run GTA Online in the next hour.</p>
-              </b-message>
+              </b-notification>
+            </div>
 
-              <hr>
+            <div class="box">
               <form
                 method="post"
                 @submit.prevent="auth"
@@ -40,8 +36,7 @@
                     <input
                       id="username"
                       v-model="username"
-                      class="input"
-                      size="is-large"
+                      class="input is-large"
                       name="username"
                       minlength="6"
                       maxlength="16"
@@ -61,9 +56,10 @@
                     <input
                       id="email"
                       v-model="email"
-                      class="input"
+                      class="input is-large"
                       type="email"
                       name="email"
+                      autocomplete="off"
                       placeholder="test@gmail.com"
                       required
                     >
@@ -79,7 +75,7 @@
                     <input
                       id="password"
                       v-model="password"
-                      class="input"
+                      class="input is-large"
                       type="password"
                       name="password"
                       minlength="6"

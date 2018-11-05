@@ -5,7 +5,7 @@ const currState = {
 };
 
 const mutations = {
-  set(state, {crews}) {
+  setCrews(state, {crews}) {
     state.crews = crews;
   },
 };
@@ -16,7 +16,7 @@ const actions = {
 
     const {crews} = response.data;
 
-    commit('set', {crews});
+    commit('setCrews', {crews});
   },
 };
 

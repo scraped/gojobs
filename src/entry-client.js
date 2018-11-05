@@ -1,4 +1,5 @@
 import '@/scss/main.scss';
+import '@/services/load-fonts';
 
 import Vue from 'vue';
 import createApp from '@/app';

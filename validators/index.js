@@ -8,7 +8,7 @@ const schemas = {
   username: Joi.string()
     .min(6)
     .max(16)
-    .regex(/^[\w_.-]{6,16}$/),
+    .regex(/^[\w_.-]+$/),
 
   email: Joi.string()
     .email(),

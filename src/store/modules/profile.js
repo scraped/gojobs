@@ -1,13 +1,13 @@
 import Vue from 'vue';
 
 const currState = {
-  username: '',
+  user: null,
   crew: null,
 };
 
 const mutations = {
-  setUsername(state, {username}) {
-    state.username = username;
+  setUser(state, {user}) {
+    state.user = user;
   },
 
   setCrew(state, {crew}) {
@@ -16,13 +16,13 @@ const mutations = {
 };
 
 const actions = {
-  async fetchUserInfo({commit}, {user}) {
-    const response = await Vue.$http.get(`/api/profile/${user}`);
+  async fetchUserInfo({commit}, {username}) {
+    const response = await Vue.$http.get(`/api/profile/${username}`);
 
-    const {username, crew} = response.data;
+    const {user, crew} = response.data;
 
-    if (username) {
-      commit('setUsername', {username});
+    if (user) {
+      commit('setUser', {user});
     }
 
     if (crew) {

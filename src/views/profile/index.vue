@@ -18,40 +18,41 @@
     <template v-else>
       <section class="section">
         <div class="container">
-          <h1 class="title">{{title}}</h1>
+          <h1 class="title">Profile</h1>
 
           <div class="media box">
-            <figure class="media-left">
-              <p class="image is-128x128">
-                <img class="is-rounded" :src="avatars.large">
-              </p>
-            </figure>
+            <div class="media-left">
+              <img
+                :src="avatars.large"
+                :style="crew ? imageOutlined(crew.color, 3) : ''"
+                class="rounded"
+                width="128"
+                height="128"
+              >
+            </div>
 
             <div class="media-content">
-              <div class="content">
-                <h1 class="title">@{{ username }}
+              <div class="block">
+                <h2 class="subtitle is-size-4">@{{user.username}}
                   <span
                     v-if="crew"
-                    class="tag is-white is-medium tooltip has-text-weight-normal"
                     :style="`border: 1px solid #${crew.color};`"
-                    :data-tooltip="crew.name">
-                    {{ crew.tag }}
+                    :data-tooltip="crew.name"
+                    class="tag is-white is-medium tooltip has-text-weight-normal"
+                  >
+                    {{crew.tag}}
                   </span>
-                </h1>
-                <!-- <p
-                  v-if="crew"
-                  class="has-text-grey">
-                  Active crew:
-                  <a :href="`/crews/${crew.slug}`">{{ crew.name }}</a>
-                </p> -->
-                <div>
+                </h2>
+                <h3 class="has-text-grey is-size-6">
+                  <template v-if="crew">{{crew.name}}</template>
+                  ·
                   <a
-                    class="button is-light"
-                    :href="`https://socialclub.rockstargames.com/member/${username}`"
-                    target="_blank">
-                    Go to RGSC profile
+                    :href="`https://socialclub.rockstargames.com/member/${user.username}`"
+                    target="_blank"
+                  >
+                    Go to their RGSC profile
                   </a>
-                </div>
+                </h3>
               </div>
             </div>
           </div>
@@ -59,7 +60,7 @@
       </section>
 
       <section
-        v-if="authUsername === username && !verified"
+        v-if="authUsername === user.username && !verified"
         class="section">
         <div class="container">
           <div class="columns">
@@ -166,8 +167,9 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from 'vuex';
-import {userAvatars} from '@/helpers'
+import {mapState} from 'vuex';
+import {userAvatars} from '@/helpers';
+import {imageOutlined} from '@/mixins';
 
 import JobList from '@/components/job-list/JobList.vue';
 import CustomPagination from '@/components/CustomPagination.vue';
@@ -180,11 +182,11 @@ export default {
   },
 
   fetchData({store, route}) {
-    const {username: user} = route.params;
+    const {username} = route.params;
 
     return Promise.all([
-      store.dispatch('profile/fetchUserInfo', {user}),
-      store.dispatch('jobs/fetch', {user}),
+      store.dispatch('profile/fetchUserInfo', {username}),
+      store.dispatch('jobs/fetch', {user: username}),
     ]);
   },
 
@@ -192,6 +194,10 @@ export default {
     JobList,
     CustomPagination,
   },
+
+  mixins: [
+    imageOutlined,
+  ],
 
   data() {
     return {
@@ -204,11 +210,11 @@ export default {
 
   computed: {
     notFound() {
-      return !this.username;
+      return !this.user;
     },
 
     ...mapState('profile', [
-      'username',
+      'user',
       'crew',
     ]),
 
@@ -233,7 +239,7 @@ export default {
     }),
 
     avatars() {
-      return userAvatars(this.username);
+      return userAvatars(this.user.username);
     },
 
     title() {

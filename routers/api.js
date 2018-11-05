@@ -1,4 +1,4 @@
-const asyncHandler = require('express-async-handler');
+const ash = require('express-async-handler');
 const router = require('express').Router();
 
 const {
@@ -35,26 +35,26 @@ const {
 } = require('../controllers/crewController');
 
 // Profile
-router.get('/profile/:username', asyncHandler(profileDetails));
+router.get('/profile/:username', ash(profileDetails));
 
 // Auth
-router.post('/auth/signup', asyncHandler(signUpPost));
-router.post('/auth/login', asyncHandler(logIn));
-router.post('/auth/logout', asyncHandler(logOut));
-router.post('/auth/recovery', asyncHandler(recoveryPass));
-router.post('/auth/verify', asyncHandler(verify));
+router.post('/auth/signup', ash(signUpPost));
+router.post('/auth/login', ash(logIn));
+router.post('/auth/logout', ash(logOut));
+router.post('/auth/recovery', ash(recoveryPass));
+router.post('/auth/verify', ash(verify));
 
 // User
-router.post('/user/basicinfo', asyncHandler(basicInfo));
+router.post('/user/basicinfo', ash(basicInfo));
 
 // Job
-router.post('/jobs', asyncHandler(jobListPost));
-router.post('/jobs/raw', asyncHandler(rawJobsListPost));
-router.post('/jobs/fetch', asyncHandler(jobsFetchPost));
-router.post('/jobs/:id', asyncHandler(jobDetailsPost));
+router.post('/jobs', ash(jobListPost));
+router.post('/jobs/raw', ash(rawJobsListPost));
+router.post('/jobs/fetch', ash(jobsFetchPost));
+router.post('/jobs/:id', ash(jobDetailsPost));
 
 // Crew
-router.post('/crews', asyncHandler(crewListPost));
-router.post('/crews/fetch', asyncHandler(fetchCrewPost));
+router.post('/crews', ash(crewListPost));
+router.post('/crews/fetch', ash(fetchCrewPost));
 
 module.exports = router;
