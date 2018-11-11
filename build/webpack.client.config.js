@@ -73,9 +73,6 @@ const webpackConfig = {
   },
 
   plugins: [
-    // https://github.com/webpack/webpack/issues/3128#issuecomment-311418452
-    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en/),
-
     new VueSSRClientPlugin(),
 
     new BundleAnalyzerPlugin({
