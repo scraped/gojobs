@@ -1,11 +1,12 @@
 <template>
   <div>
     <div
-      :style="`background: linear-gradient(to bottom, transparent${gradient(0.3)}, transparent);`"
+      :style="`background: linear-gradient(45deg, transparent${gradient(0)}, transparent);`"
       class="is-overlay"
     />
     <section class="section">
       <div class="container">
+        <h1 class="title">Job</h1>
         <div class="columns is-multiline">
           <div class="column">
             <section class="section" :style="`text-align: center; background: radial-gradient(farthest-side at 50%, transparent${gradient(0)}, transparent 90%);`">
@@ -71,7 +72,7 @@
                   <section
                     class="block"
                   >
-                    <h3 class="subtitle is-size-6 has-text-grey">Author</h3>
+                    <h3 class="title is-size-5 has-text-grey">Author</h3>
 
                     <div class="">
                       <div class="media">
@@ -120,7 +121,7 @@
                     v-if="jobExt.scModeName"
                     class="block"
                   >
-                    <h3 class="subtitle is-size-6 has-text-grey">Official category</h3>
+                    <h3 class="title is-size-5 has-text-grey">Official category</h3>
                     <div class="buttons">
                       <router-link
                         :to="{name: 'main', query: {type: job.scType, mode: job.scMode}}"
@@ -161,9 +162,11 @@
                   </section>
                 </div>
               </div>
+
               <div class="column">
-                <div class="content">
+                <div class="">
                   <div class="box">
+                    <h3 class="title is-size-5 has-text-grey">Description</h3>
                     <section class="block">
                       <p
                         class="is-size-5 is-italic"
@@ -311,9 +314,8 @@
 
           <div class="column is-one-third-widescreen is-two-fifths-desktop is-12-tablet">
             <div class="box">
-              <h2 class="subtitle">Job Info</h2>
               <template v-if="job.locs && job.locs.length">
-                <h3 class="subtitle is-size-6 has-text-grey">Locations</h3>
+                <h3 class="title is-size-5 has-text-grey">Locations</h3>
                 <div class="tags">
                   <span
                     v-for="(locShortName, i) in job.locs"
@@ -366,7 +368,7 @@
               </template>
 
               <template v-if="job.specific.classes && job.specific.classes.length">
-                <div class="subtitle is-size-6 has-text-grey">Vehicle classes</div>
+                <div class="title is-size-5 has-text-grey">Available classes</div>
                 <div class="tags">
                   <span
                     v-for="classShortName in job.specific.classes"
@@ -376,25 +378,12 @@
                 </div>
               </template>
 
-              <template v-if="job.specific.laps">
-                <div class="subtitle is-size-6">
-                  <span>Default number of laps</span>
-                  <span class="has-text-weight-bold is-pulled-right">{{job.specific.laps}}</span>
-                </div>
-              </template>
-
               <template v-if="job.specific.defVeh">
-                <div class="subtitle is-size-6">
-                  <span>Tested with</span>
-                  <span class="has-text-weight-bold is-pulled-right">
-                    <b-icon
-                      pack="fa"
-                      icon="car"
-                      size="is-small"
-                      aria-hidden="true"
-                    />
-                    <span>{{vehicles[job.specific.defVeh]}}</span>
-                  </span>
+                <h3 class="title is-size-5 has-text-grey">
+                  Default vehicle
+                </h3>
+                <div class="tags">
+                  <div class="tag is-small is-rounded">{{vehicles[job.specific.defVeh]}}</div>
                 </div>
               </template>
             </div>
@@ -432,6 +421,8 @@
 </template>
 
 <script>
+import {AllHtmlEntities} from 'html-entities';
+
 import {mapState, mapGetters} from 'vuex';
 import {userAvatars} from '@/helpers';
 import {ratingMixin, imageOutlined} from '@/mixins';
@@ -444,7 +435,7 @@ import {vehicles, vehClasses, locations} from '@/../config/static';
 export default {
   metaInfo() {
     return {
-      title: this.job.name,
+      title: new AllHtmlEntities().decode(this.job.name),
     };
   },
 
