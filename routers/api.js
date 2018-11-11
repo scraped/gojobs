@@ -10,18 +10,9 @@ const {
 } = require('../controllers/auth');
 
 const {
-  signUp,
-  logIn,
-  logOut,
-  recoveryPass,
-  verify,
-} = require('../controllers/authController');
-
-const {
   jobListPost,
   rawJobsListPost,
   jobDetailsPost,
-  // jobUploadPost,
   jobsFetchPost,
 } = require('../controllers/job');
 
@@ -39,10 +30,6 @@ router.get('/profile/:username', ash(profileDetails));
 
 // Auth
 router.post('/auth/signup', ash(signUpPost));
-router.post('/auth/login', ash(logIn));
-router.post('/auth/logout', ash(logOut));
-router.post('/auth/recovery', ash(recoveryPass));
-router.post('/auth/verify', ash(verify));
 
 // User
 router.post('/user/basicinfo', ash(basicInfo));
