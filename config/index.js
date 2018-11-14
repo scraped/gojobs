@@ -5,9 +5,10 @@ const config = {
   production: env.NODE_ENV === 'production',
   development: !this.production,
   jwtSecret: env.JWT_SECRET || '',
+  redisUri: env.REDIS_URI || '',
 
   mongo: {
-    uri: env.MONGODB_URI || 'mongodb://127.0.0.1:27017/goj-jobs',
+    uri: env.MONGODB_URI || 'mongodb://127.0.0.1:27017/gtaonlinejobs',
 
     options: {
       useNewUrlParser: true,
