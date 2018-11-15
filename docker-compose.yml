@@ -4,7 +4,12 @@ services:
   website:
     build: .
     ports:
-      - '5555:3000'
+      - '3000:3000'
+      - '4567:4567'
+    volumes:
+      - ./:/usr/src/app
+      # Avoid mapping host's node_modules
+      - /usr/src/app/node_modules
     links:
       - mongodb
       - redis
