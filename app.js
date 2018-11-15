@@ -49,6 +49,6 @@ bootstrap().then(() => {
 });
 
 process.on('unhandledRejection', err => {
-  console.error('Unhandled rejection occured:', err.stack);
+  console.error('Unhandled rejection occured:', err);
   process.exit(1);
 });

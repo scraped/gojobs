@@ -2,8 +2,13 @@ FROM node:10.12
 
 WORKDIR /usr/src/app
 
-COPY . .
+# For caching
+COPY package*.json ./
 
 RUN npm i
 
-CMD ["node", "app.js"]
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npx", "nodemon", "app"]

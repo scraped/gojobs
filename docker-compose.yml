@@ -3,11 +3,9 @@ version: '3'
 services:
   website:
     build: .
-    volumes:
-      - './:/usr/src/app'
     ports:
-      - '3000:3000'
-    depends_on:
+      - '5555:3000'
+    links:
       - mongodb
       - redis
     environment:
@@ -18,15 +16,18 @@ services:
     image: mongo
     restart: always
     expose:
-      - 27017
+      - '27017'
     volumes:
-      - ./data/mongo:/data/db
+      - db-data:/data/db
 
   redis:
     image: redis
     restart: always
     expose:
-      - 6379
+      - '6379'
     volumes:
-      - ./data/redis:/data
+      - redis-data:/data
 
+volumes:
+  db-data:
+  redis-data:

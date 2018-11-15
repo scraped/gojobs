@@ -5,9 +5,10 @@ import {setupHttpService} from '@/services/http';
 
 export default context => {
   const {req} = context;
+  const host = process.env.HOST || 'localhost';
 
   const http = axios.create({
-    baseURL: `http://${req.hostname}:${req.app.get('port')}/`,
+    baseURL: `http://${host}:${req.app.get('port')}/`,
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
     },

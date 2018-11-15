@@ -12,4 +12,8 @@ client.on('error', err => {
   console.log('Redis error occured:', err);
 });
 
+client.on('ready', () => {
+  console.log('Redis is ready');
+});
+
 exports.redisClient = client;
