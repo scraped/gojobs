@@ -1,110 +1,93 @@
-import {Schema, Document, Model, model} from 'mongoose';
-import random from 'lodash/random';
+import {Typegoose, prop, instanceMethod, InstanceType, staticMethod} from 'typegoose'; import random from 'lodash/random';
 import bcrypt from 'bcrypt';
 
-export interface IUserModel extends Document {
-  username: string;
-  rgscUserId: number;
-  crew?: string;
-  role: string;
-  verified: boolean;
-  verifyDate?: Date;
-  password: string;
-  email?: string;
-  checkPassword: (password: string) => boolean;
-}
-
-export enum userRoles {
+export enum UserRoles {
   Admin = 'admin',
   Moderator = 'mod',
   User = 'user',
 }
 
-function isVerified() {
+function isVerified(this: User) {
   return this.verified;
 }
 
-function setPassword(password: string) {
-  const salt = bcrypt.genSaltSync(12);
-  return bcrypt.hashSync(password, salt);
-}
-
-const {validateFn} = require('../validators');
-
-const usernameValidator = validateFn('username');
-
-const schema: Schema = new Schema({
-  username: {
-    type: String,
-    validate: usernameValidator,
+class User extends Typegoose {
+  @prop({
     unique: true,
     required: true,
-  },
+  })
+  username!: string;
 
-  userId: {
-    type: Number,
+  @prop({
     unique: true,
     required: true,
-  },
+  })
+  rgscUserId!: number;
 
-  crew: {
-    type: String,
-  },
+  @prop()
+  crew?: string;
 
-  role: {
-    type: String,
-    enum: userRoles,
-    required() {
-      return this.verified;
-    },
-  },
+  @prop({
+    enum: UserRoles,
+    default: UserRoles.User,
+    required: true,
+  })
+  role!: UserRoles;
 
-  verified: {
-    type: Boolean,
-  },
+  @prop()
+  verified?: boolean;
 
-  verifyDate: {
-    type: Date,
+  @prop({
     required: isVerified,
-  },
+  })
+  verifyDate?: Date;
 
-  password: {
-    type: String,
-    set: setPassword,
+  @prop({
     required: isVerified,
-  },
+  })
+  password?: string;
 
-  email: {
-    type: String,
-  },
-},
-{
-  id: false,
-  timestamps: {
-    createdAt: true,
-    updatedAt: true,
-  },
-  toObject: {
-    versionKey: false,
-  },
-});
+  @prop({
+    required: isVerified,
+  })
+  email?: string;
 
-schema.methods.checkPassword = function (password: string) {
-  return bcrypt.compareSync(password, this.password);
-};
-
-schema.statics.generateTestJobName = function () {
-  const values = 'abcdefghijklmnopqrstuvwxyz';
-  const VALUES_NUMBER = values.length;
-  const NAME_LENGTH = 18;
-
-  let jobNameArray = [];
-
-  for (let i = 0; i < NAME_LENGTH; i++) {
-    jobNameArray[i] = values[random(0, VALUES_NUMBER - 1)];
+  @prop()
+  set rawPassword(password: string) {
+    const salt = bcrypt.genSaltSync(12);
+    this.password = bcrypt.hashSync(password, salt);
   }
 
-  return jobNameArray.join('');
-};
+  @instanceMethod
+  checkPassword(this: InstanceType<User>, password: string) {
+    return bcrypt.compareSync(password, <string>this.password);
+  }
 
-export const User: Model<IUserModel> = model<IUserModel>('User', schema);
+  @staticMethod
+  static generateTestJobName() {
+    const values = 'abcdefghijklmnopqrstuvwxyz';
+    const VALUES_NUMBER = values.length;
+    const NAME_LENGTH = 18;
+
+    let jobNameArray = [];
+
+    for (let i = 0; i < NAME_LENGTH; i++) {
+      jobNameArray[i] = values[random(0, VALUES_NUMBER - 1)];
+    }
+
+    return jobNameArray.join('');
+  }
+}
+
+export const UserModel = new User().getModelForClass(User, {
+  schemaOptions: {
+    id: false,
+    timestamps: {
+      createdAt: true,
+      updatedAt: true,
+    },
+    toObject: {
+      versionKey: false,
+    },
+  }
+});

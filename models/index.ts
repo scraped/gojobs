@@ -1,3 +1,12 @@
+
+export {UserModel as User} from './user';
+export {CrewModel as Crew} from './crew';
+export {FetchInfoModel as FetchInfo} from './fetch-info';
+export { as } from './';
+export { as } from './';
+export { as } from './';
+export { as } from './';
+export { as } from './';
 export {RgscJobModel as RgscJob} from './rgsc-job';
 
 // export {User} from './user';

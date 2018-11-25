@@ -28,7 +28,7 @@ class FetchInfo extends Typegoose {
 
   @prop({
     validate(this: FetchInfo, value: string) {
-      return !(this.by === ByTypes.Rockstar && !RockstarIds[<any>value])
+      return !(this.by === ByTypes.Rockstar && !RockstarIds[<any>value]);
     },
     required: true,
   })
