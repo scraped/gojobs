@@ -1,4 +1,6 @@
-export {User} from './user';
+export {RgscJobModel as RgscJob} from './rgsc-job';
+
+// export {User} from './user';
 
 // const Crew = require('./crew');
 // const FetchInfo = require('./fetch-info');
